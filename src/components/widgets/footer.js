@@ -1,84 +1,57 @@
-import { Button, TextField } from "@mui/material";
 import React from "react";
+import { LinkdeanSvg } from "../../assets/icon/linkdeansvg";
+import { FacebookSvg } from "../../assets/icon/facebooksvg";
+import { BallSvg } from "../../assets/icon/ballsvg";
+import logo from "../../assets/images/logo.png";
 
 export const Footer = () => {
-  const [email, setEmail] = React.useState();
-
   return (
     <footer>
-      <div className="flex justify-between items-center px-10 pt-8">
-        <div className="flex gap-5">
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            Xenspire
-          </a>
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            About Us
-          </a>
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            Company
-          </a>
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            Blog
-          </a>
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            Help
-          </a>
-          <a
-            style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}
-            href="#">
-            Careers
-          </a>
+      <div className="mx-10 py-5">
+        <div className="flex gap-2 items-center mb-5">
+          <img src={logo} alt="logo" />
+          <p style={{ fontSize: 25, color: "#101828" }}>Xenhire</p>
         </div>
-        <div className="grid grid-flow-row">
-          <p style={{ fontSize: 16, fontWeight: 600, color: "#344054" }}>
-            Send Message
-          </p>
-          <div className="flex gap-3">
-            <TextField
-              value={email}
-              size="small"
-              type="email"
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Button
-              style={{
-                color: "#66B2B2",
-                borderColor: "#66B2B2",
-                textTransform: "none",
-              }}
-              variant="outlined">
-              Send
-            </Button>
-          </div>
-        </div>
+        <p style={{ fontSize: 16, color: "#475467" }}>
+          Learn more about our mission, vision, and values.
+        </p>
       </div>
-      <div className="flex mt-5 py-5 border-t justify-between mx-10">
+      <div className="flex gap-5 mx-10">
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          About Us
+        </a>
+
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          Careers
+        </a>
+
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          Contact Us
+        </a>
+
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          Help Center
+        </a>
+
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          Terms & Conditions
+        </a>
+
+        <a style={{ fontSize: 16, fontWeight: 600, color: "#101828" }} href="#">
+          Privacy Policy
+        </a>
+      </div>
+
+      <div className="flex mt-5 py-5 border-t justify-between mx-10 items-center">
         <div>
           <p style={{ color: "#667085", fontSize: 16 }}>
             © 2024 Xenhire. All rights reserved.
           </p>
         </div>
         <div className="flex gap-4">
-          <a style={{ fontSize: 16, color: "#667085" }} href="#">
-            Terms
-          </a>
-          <a style={{ fontSize: 16, color: "#667085" }} href="#">
-            Privacy
-          </a>
-          <a style={{ fontSize: 16, color: "#667085" }} href="#">
-            Cookies
-          </a>
+          <LinkdeanSvg />
+          <FacebookSvg />
+          <BallSvg />
         </div>
       </div>
     </footer>

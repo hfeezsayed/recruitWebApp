@@ -19,12 +19,12 @@ export const CandidateForm = () => {
   const [summary, setSummary] = useState();
   const [education, setEducation] = useState([
     {
-      degree: "",
-      filedStudy: "",
-      institutions: "",
-      certificate: "",
-      city: "",
-      state: "",
+      degree: null,
+      filedStudy: null,
+      institutions: null,
+      certificate: null,
+      city: null,
+      state: null,
     },
   ]);
 
@@ -42,8 +42,40 @@ export const CandidateForm = () => {
   const [teamHandling, setTeamHandling] = useState();
   const [teamSize, setTeamSize] = useState();
   const [indusrtyExperience, setIndustryExperience] = useState([
-    { type: "", experience: "" },
+    { type: null, experience: null },
   ]);
+  const [primarySkills, setPrimarySkill] = useState([
+    { skill: null, expertise: null },
+  ]);
+  const [secoundrySkills, setSecoundrykill] = useState([
+    { skill: null, expertise: null },
+  ]);
+  const [softwareApplication, setSoftwareApplication] = useState({
+    app: null,
+    experience: null,
+  });
+
+  // form 3
+  const [workSetting, setWorkSetting] = useState();
+  const [workShift, setWorkShift] = useState();
+  const [preffrredLocation, setPrefferedLocation] = useState();
+  const [openToRelocate, setOpenToRelocate] = useState();
+  const [requiredForTravel, setRequiredForTravel] = useState();
+  const [workSchedule, setWorkSchedule] = useState();
+  const [workIndepandently, setWorkIndepandently] = useState();
+  const [expectedSelary, setExpectedSelary] = useState({
+    range: null,
+    frequency: null,
+  });
+  const [expectedRange, setExpectedRange] = useState({
+    range: null,
+    frequency: null,
+  });
+  const [typeOfJobOpening, setTypeOfJobOpening] = useState();
+  const [appealingWork, setAppealingWork] = useState();
+  const [workEnvironment, setWorkEnvironment] = useState();
+  const [companyOutlook, setCompanyOutlook] = useState();
+  const [visaStatus, setVisaStatus] = useState();
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -55,33 +87,91 @@ export const CandidateForm = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
+  // education
   const addEducation = () => {
     setEducation([
       ...education,
       {
-        degree: "",
-        filedStudy: "",
-        institutions: "",
-        certificate: "",
-        city: "",
-        state: "",
+        degree: null,
+        filedStudy: null,
+        institutions: null,
+        certificate: null,
+        city: null,
+        state: null,
       },
     ]);
   };
 
-  let handleChangeEducation = (e, value, i) => {
+  const handleChangeEducation = (e, value, i) => {
     let newFormValues = [...education];
     newFormValues[i][e] = value;
     setEducation(newFormValues);
   };
 
-  let removeEducation = (i) => {
+  const removeEducation = (i) => {
     let newFormValues = [...education];
     newFormValues.splice(i, 1);
     setEducation(newFormValues);
   };
 
-  const onSubmit = () => {
+  // industry experiance
+  const addIndustryExperience = () => {
+    setIndustryExperience([
+      ...indusrtyExperience,
+      {
+        type: null,
+        experience: null,
+      },
+    ]);
+  };
+
+  const handleChangeIndustryExperience = (e, value, i) => {
+    let newFormValues = [...indusrtyExperience];
+    newFormValues[i][e] = value;
+    setIndustryExperience(newFormValues);
+  };
+
+  const removeIndustryExperience = (i) => {
+    let newFormValues = [...indusrtyExperience];
+    newFormValues.splice(i, 1);
+    setIndustryExperience(newFormValues);
+  };
+
+  // primary skill
+  const addPrimarySkill = () => {
+    setPrimarySkill([...primarySkills, { skill: null, expertise: null }]);
+  };
+
+  const handleChangePrimarySkill = (e, value, i) => {
+    let newFormValues = [...primarySkills];
+    newFormValues[i][e] = value;
+    setPrimarySkill(newFormValues);
+  };
+
+  const removePrimarySkill = (i) => {
+    let newFormValues = [...primarySkills];
+    newFormValues.splice(i, 1);
+    setPrimarySkill(newFormValues);
+  };
+
+  // secoundry skill
+  const addSecoundrySkill = () => {
+    setSecoundrykill([...secoundrySkills, { skill: null, expertise: null }]);
+  };
+
+  const handleChangeSecoundrySkill = (e, value, i) => {
+    let newFormValues = [...secoundrySkills];
+    newFormValues[i][e] = value;
+    setSecoundrykill(newFormValues);
+  };
+
+  const removeSecoundrySkill = (i) => {
+    let newFormValues = [...secoundrySkills];
+    newFormValues.splice(i, 1);
+    setSecoundrykill(newFormValues);
+  };
+
+  const onPersonalInfoSubmit = () => {
     console.log(
       file?.name,
       fullName,
@@ -89,7 +179,50 @@ export const CandidateForm = () => {
       contactNumber,
       url,
       summary,
-      education
+      education,
+      "---------form 1"
+    );
+  };
+
+  const onPrefrenceSubmit = () => {
+    console.log(
+      academicQualification,
+      specialization,
+      academicBackGround,
+      specificLicense,
+      yearsOfExperience,
+      experienceRole,
+      workInIndustry,
+      workRole,
+      experienceStackHolder,
+      noticePeriod,
+      teamHandling,
+      teamSize,
+      indusrtyExperience,
+      primarySkills,
+      secoundrySkills,
+      softwareApplication,
+      "---------form 2"
+    );
+  };
+
+  const onWorkPrefrenceSumnit = () => {
+    console.log(
+      workSetting,
+      workShift,
+      preffrredLocation,
+      openToRelocate,
+      requiredForTravel,
+      workSchedule,
+      workIndepandently,
+      expectedSelary,
+      expectedRange,
+      typeOfJobOpening,
+      appealingWork,
+      workEnvironment,
+      companyOutlook,
+      visaStatus,
+      "---------form 3"
     );
   };
 
@@ -393,7 +526,7 @@ export const CandidateForm = () => {
                       </div>
                     </div>
                     {education.length > 1 && (
-                      <div className="py-3 flex justify-end">
+                      <div className="pt-3 flex justify-end">
                         <Button
                           variant="outlined"
                           size="small"
@@ -443,7 +576,7 @@ export const CandidateForm = () => {
                 style={{ backgroundColor: "#008080", color: "#ffffff" }}
                 onClick={() => {
                   setActiveScreen(2);
-                  onSubmit();
+                  onPersonalInfoSubmit();
                 }}>
                 NEXT
               </Button>
@@ -683,6 +816,712 @@ export const CandidateForm = () => {
                   />
                 </div>
               </div>
+              {/* indusrtyExperience */}
+              <div className="mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Please select the industry and specify the industry experience
+                </p>
+                {indusrtyExperience.map((value, index) => {
+                  return (
+                    <>
+                      <div className="grid grid-cols-2 gap-8 mt-5">
+                        <TextField
+                          size="small"
+                          fullWidth
+                          placeholder="Type"
+                          value={value.type}
+                          onChange={(e) =>
+                            handleChangeIndustryExperience(
+                              "type",
+                              e.target.value,
+                              index
+                            )
+                          }
+                        />
+                        <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={options.map((option) => option.label)}
+                          value={value.experience || null}
+                          onChange={(e, newvalue) =>
+                            handleChangeIndustryExperience(
+                              "experience",
+                              newvalue,
+                              index
+                            )
+                          }
+                          renderInput={(params) => (
+                            <TextField {...params} placeholder="Select" />
+                          )}
+                        />
+                      </div>
+                      {indusrtyExperience.length > 1 && (
+                        <div className="pt-3 flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removeIndustryExperience(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }>
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+                <div className="py-3 flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "#404040",
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
+                    }}
+                    onClick={addIndustryExperience}
+                    startIcon={<FiPlus />}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* skills */}
+            <div>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Skills
+              </p>
+              <p
+                style={{
+                  color: "#787879",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  marginTop: 5,
+                }}>
+                Mention the skills along with your status against it:
+              </p>
+              {/* primary skill */}
+              <div className="mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Primary Skills
+                </p>
+                {primarySkills.map((value, index) => {
+                  return (
+                    <>
+                      <div className="grid grid-cols-2 gap-8 mt-5">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Skills {index + 1}
+                          </p>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={options.map((option) => option.label)}
+                            value={value.skill || null}
+                            onChange={(e, value) =>
+                              handleChangePrimarySkill("skill", value, index)
+                            }
+                            renderInput={(params) => (
+                              <TextField {...params} placeholder="Select" />
+                            )}
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Expertise
+                          </p>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={options.map((option) => option.label)}
+                            value={value.expertise || null}
+                            onChange={(e, value) =>
+                              handleChangePrimarySkill(
+                                "expertise",
+                                value,
+                                index
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField {...params} placeholder="Select" />
+                            )}
+                          />
+                        </div>
+                      </div>
+                      {primarySkills.length > 1 && (
+                        <div className="pt-3 flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removePrimarySkill(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }>
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+                <div className="py-3 flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "#404040",
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
+                    }}
+                    onClick={addPrimarySkill}
+                    startIcon={<FiPlus />}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+              {/* secoundry skill */}
+              <div>
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Secoundry Skills
+                </p>
+                {secoundrySkills.map((value, index) => {
+                  return (
+                    <>
+                      <div className="grid grid-cols-2 gap-8 mt-5">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Skills {index + 1}
+                          </p>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={options.map((option) => option.label)}
+                            value={value.skill || null}
+                            onChange={(e, value) =>
+                              handleChangeSecoundrySkill("skill", value, index)
+                            }
+                            renderInput={(params) => (
+                              <TextField {...params} placeholder="Select" />
+                            )}
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Expertise
+                          </p>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={options.map((option) => option.label)}
+                            value={value.expertise || null}
+                            onChange={(e, value) =>
+                              handleChangeSecoundrySkill(
+                                "expertise",
+                                value,
+                                index
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField {...params} placeholder="Select" />
+                            )}
+                          />
+                        </div>
+                      </div>
+                      {secoundrySkills.length > 1 && (
+                        <div className="pt-3 flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removeSecoundrySkill(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }>
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+                <div className="py-3 flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "#404040",
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
+                    }}
+                    onClick={addSecoundrySkill}
+                    startIcon={<FiPlus />}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3">
+              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                Please add the tools or software application you have used in
+                the past
+              </p>
+              <div className="grid grid-cols-2 gap-8">
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={options.map((option) => option.label)}
+                  value={softwareApplication.app || null}
+                  onChange={(e, value) =>
+                    setSoftwareApplication({
+                      ...softwareApplication,
+                      app: value,
+                    })
+                  }
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={options.map((option) => option.label)}
+                  value={softwareApplication.experience || null}
+                  onChange={(e, value) =>
+                    setSoftwareApplication({
+                      ...softwareApplication,
+                      experience: value,
+                    })
+                  }
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Experience" />
+                  )}
+                />
+              </div>
+            </div>
+            {/* buttons */}
+            <div className="flex justify-end py-8 gap-5">
+              <Button
+                variant="outlined"
+                style={{ borderColor: "#787879", color: "#787879" }}>
+                Clear
+              </Button>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                onClick={() => {
+                  setActiveScreen(3);
+                  onPrefrenceSubmit();
+                }}>
+                NEXT
+              </Button>
+            </div>
+          </div>
+        )}
+        {activeScreen === 3 && (
+          <div className="p-8">
+            <div>
+              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                Candidate’s Preference Form
+              </p>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Work Preference
+              </p>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Which work setting do you prefer in-office?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={workSetting || null}
+                    onChange={(e, value) => setWorkSetting(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What is your preference on work shifts?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={workShift || null}
+                    onChange={(e, value) => setWorkShift(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What are your preferred locations for the job?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={preffrredLocation || null}
+                    onChange={(e, value) => setPrefferedLocation(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Are you open to relocation if required for the job?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={openToRelocate || null}
+                    onChange={(e, value) => setOpenToRelocate(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    If your work requires you to travel, how comfortable are you
+                    to travel?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={requiredForTravel || null}
+                    onChange={(e, value) => setRequiredForTravel(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What is your preferred work schedule?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={workSchedule || null}
+                    onChange={(e, value) => setWorkSchedule(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Do you prefer working independently or as part of a small
+                  team, or as a part of a large team?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={options.map((option) => option.label)}
+                  value={workIndepandently || null}
+                  onChange={(e, value) => setWorkIndepandently(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+            </div>
+            {/* job type */}
+            <div className="mt-8">
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Compensation and Job Type
+              </p>
+              <div className="grid grid-flow-row  mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  What are the salary expectations?
+                </p>
+                <div className="grid grid-cols-2 gap-8">
+                  <TextField
+                    fullWidth
+                    placeholder="Type Range"
+                    size="small"
+                    value={expectedSelary.range}
+                    onChange={(e) =>
+                      setExpectedSelary({
+                        ...expectedSelary,
+                        range: e.target.value,
+                      })
+                    }
+                  />
+
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={expectedSelary.frequency || null}
+                    onChange={(e, value) =>
+                      setExpectedSelary({ ...expectedSelary, frequency: value })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row  mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  What is the expected compensation range?
+                </p>
+                <div className="grid grid-cols-2 gap-8">
+                  <TextField
+                    fullWidth
+                    placeholder="Type Range"
+                    size="small"
+                    value={expectedRange.range}
+                    onChange={(e) =>
+                      setExpectedRange({
+                        ...expectedRange,
+                        range: e.target.value,
+                      })
+                    }
+                  />
+
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={expectedRange.frequency || null}
+                    onChange={(e, value) =>
+                      setExpectedRange({ ...expectedRange, frequency: value })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What is the type of job openings are you interested in ?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={typeOfJobOpening || null}
+                    onChange={(e, value) => setTypeOfJobOpening(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* environment and values */}
+            <div className="mt-8">
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Work Environment and Values
+              </p>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What is appealing to you at work?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={appealingWork || null}
+                    onChange={(e, value) => setAppealingWork(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What kind of work environment are you looking for?
+                  </p>
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={options.map((option) => option.label)}
+                    value={workEnvironment || null}
+                    onChange={(e, value) => setWorkEnvironment(value)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Is the company outlook on environment important? Like
+                  sustainability initiatives, being carbon neutral etc.
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={options.map((option) => option.label)}
+                  value={companyOutlook || null}
+                  onChange={(e, value) => setCompanyOutlook(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+            </div>
+            {/* legal and visa status */}
+            <div className="mt-8">
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Legal and Visa Status
+              </p>
+              <div className="grid grid-flow-row mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  What is your current Visa or Work status?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={options.map((option) => option.label)}
+                  value={visaStatus || null}
+                  onChange={(e, value) => setVisaStatus(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+            </div>
+            {/* buttons */}
+            <div className="flex justify-end py-8 gap-5">
+              <Button
+                variant="outlined"
+                style={{ borderColor: "#787879", color: "#787879" }}>
+                Clear
+              </Button>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                onClick={() => {
+                  setActiveScreen(4);
+                  onWorkPrefrenceSumnit();
+                }}>
+                NEXT
+              </Button>
             </div>
           </div>
         )}

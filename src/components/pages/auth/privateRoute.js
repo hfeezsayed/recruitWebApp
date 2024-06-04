@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, requiredRole, ...rest }) => {
       if (role === "ROLE_ADMIN")
         return <Navigate replace to={`admin/unauthorized`} />;
       if (role === "ROLE_CANDIDATE")
-        return <Navigate replace to={`/candidateform`} />;
+        return <Navigate replace to={`/candidatepreferenceform`} />;
     }
   } else {
     return <Navigate replace to={`login`} />;

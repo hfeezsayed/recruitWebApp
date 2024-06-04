@@ -19,7 +19,7 @@ export const Login = () => {
         navigate("/admin");
       }
       if (isAuthenticated.role === "ROLE_CANDIDATE") {
-        navigate("/candidateform");
+        navigate("/candidatepreferenceform");
       }
     }
   }, []);
@@ -59,12 +59,12 @@ export const Login = () => {
         navigate("/admin");
       }
       if (role === "ROLE_CANDIDATE") {
-        navigate("/candidateform");
+        navigate("/candidatepreferenceform");
       }
     } catch (error) {
       console.error(error.message);
     }
-    navigate("/candidateform");
+    navigate("/candidatepreferenceform");
   };
 
   return (
