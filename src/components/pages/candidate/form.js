@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import { FiPlus } from "react-icons/fi";
-import { Autocomplete, Button, TextField, styled } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Radio,
+  Rating,
+  TextField,
+  styled,
+} from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import axios from "axios";
+import { FaArrowRight } from "react-icons/fa6";
 import { SideNav } from "../../widgets/sidenav";
 import pdflogo from "../../../assets/images/fileUpload.png";
 import { Footer } from "../../widgets/footer";
 import { TopNav } from "../../widgets/topNav";
+import { ValueAssesmentData, ValuseAssesmentRating } from "../../dummy/Data";
 
 export const CandidateForm = () => {
-  const [activeScreen, setActiveScreen] = useState(1);
+  const [activeScreen, setActiveScreen] = useState(4);
 
   // form 1
   const [file, setFile] = useState();
@@ -77,6 +87,14 @@ export const CandidateForm = () => {
   const [companyOutlook, setCompanyOutlook] = useState();
   const [visaStatus, setVisaStatus] = useState();
 
+  // form 4
+  const [questionList, setQuestionList] = useState(ValueAssesmentData);
+  const [ratingList, setRatingList] = useState(ValuseAssesmentRating);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [mostLikelyOption, setMostLikelyOption] = useState({});
+  const [leastLikelyOption, setLeastLikelyOption] = useState({});
+  const [currentSection, setCurrentSection] = useState(1);
+  const ValueAssesmentQuestion = questionList[currentQuestion];
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
     { label: "The Godfather", year: 1972 },
@@ -171,7 +189,76 @@ export const CandidateForm = () => {
     setSecoundrykill(newFormValues);
   };
 
-  const onPersonalInfoSubmit = () => {
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
+
+  const handleLeastlike = (question, option) => {
+    setLeastLikelyOption({
+      ...leastLikelyOption,
+      [question.questionNo]: option,
+    });
+    question.leastLikely = option;
+    if (mostLikelyOption[question.questionNo] === option) {
+      setMostLikelyOption({
+        ...mostLikelyOption,
+        [question.questionNo]: "",
+      });
+      question.mostLikely = "";
+    }
+  };
+
+  const handleMostlike = (question, option) => {
+    setMostLikelyOption({
+      ...mostLikelyOption,
+      [question.questionNo]: option,
+    });
+    question.mostLikely = option;
+    if (leastLikelyOption[question.questionNo] === option) {
+      setLeastLikelyOption({
+        ...leastLikelyOption,
+        [question.questionNo]: "",
+      });
+      question.leastLikely = "";
+    }
+  };
+
+  const handleNext = (event) => {
+    event.preventDefault();
+    if (ValueAssesmentQuestion) {
+      if (
+        ValueAssesmentQuestion?.mostLikely &&
+        ValueAssesmentQuestion?.leastLikely
+      ) {
+        if (currentQuestion === questionList.length - 1) {
+          setCurrentSection(2);
+        } else {
+          setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+        }
+      }
+    }
+  };
+
+  const handlePrev = (event) => {
+    event.preventDefault();
+    setCurrentQuestion((prevQuestion) => prevQuestion - 1);
+  };
+
+  const handleChangeRating = (value, i) => {
+    let newFormValues = [...ratingList];
+    newFormValues[i].rating = value;
+    setRatingList(newFormValues);
+  };
+
+  const onPersonalInfoSubmit = async () => {
     console.log(
       file?.name,
       fullName,
@@ -182,9 +269,23 @@ export const CandidateForm = () => {
       education,
       "---------form 1"
     );
+
+    await axios
+      .post(
+        "http://localhost/3000",
+        file,
+        fullName,
+        title,
+        contactNumber,
+        url,
+        summary,
+        education
+      )
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
   };
 
-  const onPrefrenceSubmit = () => {
+  const onPrefrenceSubmit = async () => {
     console.log(
       academicQualification,
       specialization,
@@ -204,9 +305,31 @@ export const CandidateForm = () => {
       softwareApplication,
       "---------form 2"
     );
+    await axios
+      .post(
+        "http://localhost/3000",
+        academicQualification,
+        specialization,
+        academicBackGround,
+        specificLicense,
+        yearsOfExperience,
+        experienceRole,
+        workInIndustry,
+        workRole,
+        experienceStackHolder,
+        noticePeriod,
+        teamHandling,
+        teamSize,
+        indusrtyExperience,
+        primarySkills,
+        secoundrySkills,
+        softwareApplication
+      )
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
   };
 
-  const onWorkPrefrenceSumnit = () => {
+  const onWorkPrefrenceSumnit = async () => {
     console.log(
       workSetting,
       workShift,
@@ -224,19 +347,332 @@ export const CandidateForm = () => {
       visaStatus,
       "---------form 3"
     );
+
+    await axios
+      .post(
+        "http://localhost/3000",
+        workSetting,
+        workShift,
+        preffrredLocation,
+        openToRelocate,
+        requiredForTravel,
+        workSchedule,
+        workIndepandently,
+        expectedSelary,
+        expectedRange,
+        typeOfJobOpening,
+        appealingWork,
+        workEnvironment,
+        companyOutlook,
+        visaStatus
+      )
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
   };
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
+  const handleValueSave = async () => {
+    console.log("questionsData ", questionList, ratingList);
+
+    await axios
+      .post("http://localhost/3000", questionList, ratingList)
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+  };
+
+  const ValueAssesment = () => {
+    return (
+      <div className="p-8">
+        <div className="flex gap-2 items-center py-5">
+          <p style={{ color: "#008080", fontWeight: 500, fontSize: 14 }}>
+            Value Assessment
+          </p>
+          <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
+          <p
+            style={{
+              color: currentSection > 0 ? "#008080" : "#475467",
+              fontWeight: 500,
+              fontSize: 14,
+            }}>
+            Section 1
+          </p>
+          <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
+          <p
+            style={{
+              color: currentSection > 1 ? "#008080" : "#475467",
+              fontWeight: 500,
+              fontSize: 14,
+            }}>
+            Section 2
+          </p>
+          <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
+          <p
+            style={{
+              color: currentSection > 2 ? "#008080" : "#475467",
+              fontWeight: 500,
+              fontSize: 14,
+            }}>
+            Submit Assessment Confirmation
+          </p>
+        </div>
+        {currentSection === 1 && (
+          <>
+            <div>
+              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                Value Assessment
+              </p>
+              <p style={{ color: "#475467", fontSize: 14 }}>
+                Please thoroughly evaluate and clearly indicate which value you
+                believe should be regarded as the highest priority for immediate
+                attention, as well as those which, while still important, may be
+                considered of lower priority and can be addressed at a later
+                stage.
+              </p>
+            </div>
+            <div className="mt-4">
+              <p style={{ color: "#101828", fontSize: 14, textAlign: "right" }}>
+                Statement {currentQuestion + 1}/{questionList.length}
+              </p>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}>
+                Statement {currentQuestion + 1}
+              </p>
+            </div>
+            <form
+              className="grid grid-flow-row justify-start"
+              onSubmit={handleNext}>
+              {/* question */}
+              <div>
+                {/* header */}
+                <div className="grid grid-cols-4 py-2 border-app-tableBorder mt-2">
+                  <div className="flex justify-center items-center text-center border">
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Most Like Me
+                    </p>
+                  </div>
+                  <div className="col-span-2 flex justify-center items-center text-center py-2 mx-1 border">
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Self-Direction Value
+                    </p>
+                  </div>
+                  <div className="flex justify-center items-center text-center py-2 border">
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Least Like Me
+                    </p>
+                  </div>
+                </div>
+                {/* body */}
+                {ValueAssesmentQuestion.options.map((value, index) => {
+                  return (
+                    <div className="grid grid-cols-4 py-1" key={index}>
+                      <div className="flex justify-center items-center text-center border">
+                        <Radio
+                          required
+                          value={
+                            mostLikelyOption[
+                              ValueAssesmentQuestion.questionNo
+                            ] === value
+                          }
+                          checked={
+                            mostLikelyOption[
+                              ValueAssesmentQuestion.questionNo
+                            ] === value
+                          }
+                          onChange={() =>
+                            handleMostlike(ValueAssesmentQuestion, value)
+                          }
+                          sx={{
+                            color: "#D0D5DD",
+                            " &.Mui-checked": {
+                              color: "#66B2B2",
+                            },
+                          }}
+                        />
+                      </div>
+                      <div className="col-span-2 flex justify-center items-center text-center  px-3 mx-1 border">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 14,
+                          }}>
+                          {value}
+                        </p>
+                      </div>
+                      <div className="flex justify-center items-center text-center border">
+                        <Radio
+                          required
+                          checked={
+                            leastLikelyOption[
+                              ValueAssesmentQuestion.questionNo
+                            ] === value
+                          }
+                          onChange={() =>
+                            handleLeastlike(ValueAssesmentQuestion, value)
+                          }
+                          sx={{
+                            color: "#D0D5DD",
+                            " &.Mui-checked": {
+                              color: "#66B2B2",
+                            },
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* button */}
+              <div className="flex justify-end  gap-4 mt-5">
+                {!(currentQuestion === 0) && (
+                  <Button
+                    variant="contained"
+                    onClick={handlePrev}
+                    disabled={currentQuestion === 0}
+                    sx={{ bgcolor: "#008080" }}>
+                    Back
+                  </Button>
+                )}
+
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{ bgcolor: "#008080" }}>
+                  Next
+                </Button>
+              </div>
+            </form>
+          </>
+        )}
+        {currentSection === 2 && (
+          <>
+            <div>
+              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                Value Assessment
+              </p>
+              <p style={{ color: "#475467", fontSize: 14 }}>
+                Please carefully evaluate the following statements and indicate
+                their importance to you in a work setting on a scale from 1 to
+                6. There are no right or wrong answers; this test is designed to
+                help understand your individual preferences and priorities in
+                the workplace.
+              </p>
+            </div>
+            <div className="mt-10">
+              {/* header */}
+              <div className="grid grid-cols-4 mt-4 border-app-tableBorder border">
+                <div className="flex p-2  items-center ">
+                  <p
+                    style={{
+                      color: "#101828",
+                      fontWeight: 500,
+                      fontSize: 14,
+                    }}>
+                    Value
+                  </p>
+                </div>
+                <div className="col-span-2 flex p-2  items-center ">
+                  <p
+                    style={{
+                      color: "#101828",
+                      fontWeight: 500,
+                      fontSize: 14,
+                    }}>
+                    Statements
+                  </p>
+                </div>
+                <div className="flex  items-center p-2">
+                  <p
+                    style={{
+                      color: "#101828",
+                      fontWeight: 500,
+                      fontSize: 14,
+                    }}>
+                    Ratings
+                  </p>
+                </div>
+              </div>
+              {/* bodey */}
+              {ratingList.map((data, index) => {
+                return (
+                  <div
+                    className="grid grid-cols-4 border-app-tableBorder border"
+                    key={index}>
+                    <div className="flex p-2  items-center ">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 14,
+                        }}>
+                        {data.value}
+                      </p>
+                    </div>
+                    <div className="col-span-2 flex p-2  items-center ">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 14,
+                        }}>
+                        {data.statement}
+                      </p>
+                    </div>
+                    <div className="flex  items-center p-2">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontWeight: 500,
+                          fontSize: 14,
+                        }}>
+                        <Rating
+                          value={data?.rating}
+                          onChange={(e, newvalue) =>
+                            handleChangeRating(newvalue, index)
+                          }
+                          max={6}
+                          sx={{ color: "#66B2B2" }}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-end gap-5 py-5">
+              <Button
+                variant="outlined"
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                Clear
+              </Button>
+              <Button
+                variant="contained"
+                style={{ colorL: "#ffffff", backgroundColor: "#008080" }}
+                onClick={handleValueSave}>
+                Submit
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="flex">
@@ -244,7 +680,12 @@ export const CandidateForm = () => {
       <div className="w-full">
         <TopNav />
         {activeScreen === 1 && (
-          <div className="p-8">
+          <form
+            className="p-8"
+            onSubmit={() => {
+              setActiveScreen(2);
+              onPersonalInfoSubmit();
+            }}>
             {/* file upload */}
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
@@ -289,6 +730,7 @@ export const CandidateForm = () => {
                   Candidate Full Name
                 </p>
                 <TextField
+                  required
                   fullWidth
                   size="small"
                   variant="outlined"
@@ -302,6 +744,7 @@ export const CandidateForm = () => {
                   Title
                 </p>
                 <TextField
+                  required
                   fullWidth
                   size="small"
                   variant="outlined"
@@ -315,6 +758,7 @@ export const CandidateForm = () => {
                   Mobile Number
                 </p>
                 <TextField
+                  required
                   fullWidth
                   size="small"
                   variant="outlined"
@@ -328,6 +772,7 @@ export const CandidateForm = () => {
                   LinkedIn Profile
                 </p>
                 <TextField
+                  required
                   fullWidth
                   size="small"
                   variant="outlined"
@@ -342,6 +787,7 @@ export const CandidateForm = () => {
                 Summary.
               </p>
               <TextField
+                required
                 fullWidth
                 size="small"
                 variant="outlined"
@@ -357,7 +803,7 @@ export const CandidateForm = () => {
               </p>
               {education.map((value, index) => {
                 return (
-                  <>
+                  <div key={index}>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
                       <div className="grid grid-flow-row">
                         <p
@@ -378,7 +824,11 @@ export const CandidateForm = () => {
                             handleChangeEducation("degree", value, index)
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -401,7 +851,11 @@ export const CandidateForm = () => {
                             handleChangeEducation("filedStudy", value, index)
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -424,7 +878,11 @@ export const CandidateForm = () => {
                             handleChangeEducation("institutions", value, index)
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -448,7 +906,11 @@ export const CandidateForm = () => {
                               handleChangeEducation("city", value, index)
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -471,7 +933,11 @@ export const CandidateForm = () => {
                               handleChangeEducation("state", value, index)
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -497,7 +963,11 @@ export const CandidateForm = () => {
                             handleChangeEducation("institutions", value, index)
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -520,7 +990,11 @@ export const CandidateForm = () => {
                             handleChangeEducation("certificate", value, index)
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -545,7 +1019,7 @@ export const CandidateForm = () => {
                         </Button>
                       </div>
                     )}
-                  </>
+                  </div>
                 );
               })}
 
@@ -574,17 +1048,19 @@ export const CandidateForm = () => {
               <Button
                 variant="contained"
                 style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                onClick={() => {
-                  setActiveScreen(2);
-                  onPersonalInfoSubmit();
-                }}>
+                type="submit">
                 NEXT
               </Button>
             </div>
-          </div>
+          </form>
         )}
         {activeScreen === 2 && (
-          <div className="p-8">
+          <form
+            className="p-8"
+            onSubmit={() => {
+              setActiveScreen(3);
+              onPrefrenceSubmit();
+            }}>
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
                 Candidate’s Preference Form
@@ -612,7 +1088,7 @@ export const CandidateForm = () => {
                     value={academicQualification || null}
                     onChange={(e, value) => setAcademicQualification(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -629,7 +1105,7 @@ export const CandidateForm = () => {
                     value={specialization || null}
                     onChange={(e, value) => setSpecialization(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -640,6 +1116,7 @@ export const CandidateForm = () => {
                   this role?
                 </p>
                 <textarea
+                  required
                   value={academicBackGround}
                   onChange={(e) => setAcademicBackground(e.target.value)}
                   rows={3}
@@ -666,7 +1143,7 @@ export const CandidateForm = () => {
                   value={specificLicense || null}
                   onChange={(e, value) => setSpecificLicense(value)}
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
+                    <TextField {...params} placeholder="Select" required />
                   )}
                 />
               </div>
@@ -696,7 +1173,7 @@ export const CandidateForm = () => {
                     value={yearsOfExperience || null}
                     onChange={(e, value) => setYearOfExperience(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -714,7 +1191,7 @@ export const CandidateForm = () => {
                     value={experienceRole || null}
                     onChange={(e, value) => setExperienceRole(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -733,7 +1210,7 @@ export const CandidateForm = () => {
                     value={workInIndustry || null}
                     onChange={(e, value) => setWorkInIndustry(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                   <Autocomplete
@@ -744,7 +1221,7 @@ export const CandidateForm = () => {
                     value={workRole || null}
                     onChange={(e, value) => setWorkRole(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -764,7 +1241,7 @@ export const CandidateForm = () => {
                     value={experienceStackHolder || null}
                     onChange={(e, value) => setExperienceStachHolder(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -781,7 +1258,7 @@ export const CandidateForm = () => {
                     value={noticePeriod || null}
                     onChange={(e, value) => setNoticePeriod(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -800,7 +1277,7 @@ export const CandidateForm = () => {
                     value={teamHandling || null}
                     onChange={(e, value) => setTeamHandling(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                   <Autocomplete
@@ -811,7 +1288,7 @@ export const CandidateForm = () => {
                     value={teamSize || null}
                     onChange={(e, value) => setTeamSize(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -831,6 +1308,7 @@ export const CandidateForm = () => {
                     <>
                       <div className="grid grid-cols-2 gap-8 mt-5">
                         <TextField
+                          required
                           size="small"
                           fullWidth
                           placeholder="Type"
@@ -857,7 +1335,11 @@ export const CandidateForm = () => {
                             )
                           }
                           renderInput={(params) => (
-                            <TextField {...params} placeholder="Select" />
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
                           )}
                         />
                       </div>
@@ -949,7 +1431,11 @@ export const CandidateForm = () => {
                               handleChangePrimarySkill("skill", value, index)
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -976,7 +1462,11 @@ export const CandidateForm = () => {
                               )
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -1026,7 +1516,7 @@ export const CandidateForm = () => {
                 </p>
                 {secoundrySkills.map((value, index) => {
                   return (
-                    <>
+                    <div key={index}>
                       <div className="grid grid-cols-2 gap-8 mt-5">
                         <div className="grid grid-flow-row">
                           <p
@@ -1047,7 +1537,11 @@ export const CandidateForm = () => {
                               handleChangeSecoundrySkill("skill", value, index)
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -1074,7 +1568,11 @@ export const CandidateForm = () => {
                               )
                             }
                             renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
                             )}
                           />
                         </div>
@@ -1099,7 +1597,7 @@ export const CandidateForm = () => {
                           </Button>
                         </div>
                       )}
-                    </>
+                    </div>
                   );
                 })}
                 <div className="py-3 flex justify-end">
@@ -1137,7 +1635,7 @@ export const CandidateForm = () => {
                     })
                   }
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
+                    <TextField {...params} placeholder="Select" required />
                   )}
                 />
                 <Autocomplete
@@ -1153,7 +1651,7 @@ export const CandidateForm = () => {
                     })
                   }
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Experience" />
+                    <TextField {...params} placeholder="Experience" required />
                   )}
                 />
               </div>
@@ -1168,17 +1666,19 @@ export const CandidateForm = () => {
               <Button
                 variant="contained"
                 style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                onClick={() => {
-                  setActiveScreen(3);
-                  onPrefrenceSubmit();
-                }}>
+                type="submit">
                 NEXT
               </Button>
             </div>
-          </div>
+          </form>
         )}
         {activeScreen === 3 && (
-          <div className="p-8">
+          <form
+            className="p-8"
+            onSubmit={() => {
+              setActiveScreen(4);
+              onWorkPrefrenceSumnit();
+            }}>
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
                 Candidate’s Preference Form
@@ -1206,7 +1706,7 @@ export const CandidateForm = () => {
                     value={workSetting || null}
                     onChange={(e, value) => setWorkSetting(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1223,7 +1723,7 @@ export const CandidateForm = () => {
                     value={workShift || null}
                     onChange={(e, value) => setWorkShift(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1240,7 +1740,7 @@ export const CandidateForm = () => {
                     value={preffrredLocation || null}
                     onChange={(e, value) => setPrefferedLocation(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1257,7 +1757,7 @@ export const CandidateForm = () => {
                     value={openToRelocate || null}
                     onChange={(e, value) => setOpenToRelocate(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1275,7 +1775,7 @@ export const CandidateForm = () => {
                     value={requiredForTravel || null}
                     onChange={(e, value) => setRequiredForTravel(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1292,7 +1792,7 @@ export const CandidateForm = () => {
                     value={workSchedule || null}
                     onChange={(e, value) => setWorkSchedule(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1310,7 +1810,7 @@ export const CandidateForm = () => {
                   value={workIndepandently || null}
                   onChange={(e, value) => setWorkIndepandently(value)}
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
+                    <TextField {...params} placeholder="Select" required />
                   )}
                 />
               </div>
@@ -1332,6 +1832,7 @@ export const CandidateForm = () => {
                 </p>
                 <div className="grid grid-cols-2 gap-8">
                   <TextField
+                    required
                     fullWidth
                     placeholder="Type Range"
                     size="small"
@@ -1354,7 +1855,7 @@ export const CandidateForm = () => {
                       setExpectedSelary({ ...expectedSelary, frequency: value })
                     }
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1365,6 +1866,7 @@ export const CandidateForm = () => {
                 </p>
                 <div className="grid grid-cols-2 gap-8">
                   <TextField
+                    required
                     fullWidth
                     placeholder="Type Range"
                     size="small"
@@ -1387,7 +1889,7 @@ export const CandidateForm = () => {
                       setExpectedRange({ ...expectedRange, frequency: value })
                     }
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1406,7 +1908,7 @@ export const CandidateForm = () => {
                     value={typeOfJobOpening || null}
                     onChange={(e, value) => setTypeOfJobOpening(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1438,7 +1940,7 @@ export const CandidateForm = () => {
                     value={appealingWork || null}
                     onChange={(e, value) => setAppealingWork(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1455,7 +1957,7 @@ export const CandidateForm = () => {
                     value={workEnvironment || null}
                     onChange={(e, value) => setWorkEnvironment(value)}
                     renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
+                      <TextField {...params} placeholder="Select" required />
                     )}
                   />
                 </div>
@@ -1473,7 +1975,7 @@ export const CandidateForm = () => {
                   value={companyOutlook || null}
                   onChange={(e, value) => setCompanyOutlook(value)}
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
+                    <TextField {...params} placeholder="Select" required />
                   )}
                 />
               </div>
@@ -1501,7 +2003,7 @@ export const CandidateForm = () => {
                   value={visaStatus || null}
                   onChange={(e, value) => setVisaStatus(value)}
                   renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
+                    <TextField {...params} placeholder="Select" required />
                   )}
                 />
               </div>
@@ -1516,15 +2018,13 @@ export const CandidateForm = () => {
               <Button
                 variant="contained"
                 style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                onClick={() => {
-                  setActiveScreen(4);
-                  onWorkPrefrenceSumnit();
-                }}>
+                type="submit">
                 NEXT
               </Button>
             </div>
-          </div>
+          </form>
         )}
+        {activeScreen === 4 && <ValueAssesment />}
         <Footer />
       </div>
     </div>
