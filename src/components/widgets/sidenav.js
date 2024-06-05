@@ -14,6 +14,7 @@ import { DashboardSvg } from "../../assets/icon/dashboardsvg";
 import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../assets/icon/jobsvg";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 256;
 
@@ -65,6 +66,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const SideNav = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const [showAcordian, setShowAcordian] = React.useState(false);
 
@@ -180,7 +182,9 @@ export const SideNav = () => {
           </ListItem>
           {/* collapse */}
           <Collapse in={showAcordian} timeout="auto" unmountOnExit>
-            <div className="pl-16 py-2">
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/personalinfromation")}>
               <p
                 style={{
                   color: "#66B2B2",
@@ -190,7 +194,9 @@ export const SideNav = () => {
                 Personal Information
               </p>
             </div>
-            <div className="pl-16 py-2">
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/preferenceform")}>
               <p
                 style={{
                   color: "#475467",
@@ -201,7 +207,9 @@ export const SideNav = () => {
                 Preference Form
               </p>
             </div>
-            <div className="pl-16 py-2">
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/valueassessmentform")}>
               <p
                 style={{
                   color: "#475467",
@@ -212,7 +220,9 @@ export const SideNav = () => {
                 Value Assessment
               </p>
             </div>
-            <div className="pl-16 py-2">
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/analysisassessmentform")}>
               <p
                 style={{
                   color: "#475467",

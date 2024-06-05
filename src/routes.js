@@ -6,8 +6,11 @@ import { SignupOtp } from "./components/pages/auth/signupOtp";
 import { ForgotPass } from "./components/pages/auth/forgotPass";
 import { ForgotOtp } from "./components/pages/auth/forgotOtp";
 import { NewPassword } from "./components/pages/auth/newPassword";
-import { CandidateForm } from "./components/pages/candidate/form";
 import PrivateRoute from "./components/pages/auth/privateRoute";
+import { AnalysisAssessment } from "./components/pages/candidate/analysisAssessment";
+import { PersonalInformation } from "./components/pages/candidate/personalInformation";
+import { PreferenceForm } from "./components/pages/candidate/preferenceForm";
+import { ValueAssessment } from "./components/pages/candidate/valueAssessment";
 
 export const Routes = () => {
   return (
@@ -20,7 +23,10 @@ export const Routes = () => {
       <Route path="forgotpasswordotp" element={<ForgotOtp />} />
       <Route path="newpassword" element={<NewPassword />} />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
-        <Route path="candidatepreferenceform" element={<CandidateForm />} />
+        <Route path="personalinfromation" element={<PersonalInformation />} />
+        <Route path="preferenceform" element={<PreferenceForm />} />
+        <Route path="valueassessmentform" element={<ValueAssessment />} />
+        <Route path="analysisassessmentform" element={<AnalysisAssessment />} />
         <Route path="*" element={<Navigate to="login" replace />} />
       </Route>
       <Route path="*" element={<Navigate to="login" replace />} />
