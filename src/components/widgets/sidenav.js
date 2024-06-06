@@ -365,9 +365,16 @@ export const SideNav = () => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
+                bgcolor:
+                  currentState === "/authorisedclients" ? "#008080" : "#ffffff",
+                color:
+                  currentState === "/authorisedclients" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
+              }}
+              onClick={() => {
+                navigate("/authorisedclients");
               }}>
               <ListItemIcon
                 sx={{
@@ -375,12 +382,15 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AuthorizedSvg />
+                <AuthorizedSvg focus={currentState === "/authorisedclients"} />
               </ListItemIcon>
               <ListItemText
                 primary={"Authorized Clients"}
                 primaryTypographyProps={{
-                  color: "#475467",
+                  color:
+                    currentState === "/authorisedclients"
+                      ? "#ffffff"
+                      : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}

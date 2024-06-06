@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { IoSearch } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { FaRegBell } from "react-icons/fa";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";

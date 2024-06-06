@@ -548,3 +548,96 @@ export const ClientAssessmentData = [
     status: "April 25, 2024",
   },
 ];
+
+export const AuthorisedClients = [
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+];

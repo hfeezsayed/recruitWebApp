@@ -11,7 +11,9 @@ import { AnalysisAssessment } from "./components/pages/candidate/PrefrenceForm/a
 import { PersonalInformation } from "./components/pages/candidate/PrefrenceForm/personalInformation";
 import { PreferenceForm } from "./components/pages/candidate/PrefrenceForm/preferenceForm";
 import { ValueAssessment } from "./components/pages/candidate/PrefrenceForm/valueAssessment";
-import { AssesmentForm } from "./components/pages/candidate/AssessmentForm/assesmentForm";
+import { AssesmentForm } from "./components/pages/candidate/AssessmentForm";
+import { AuthorisedClient } from "./components/pages/candidate/AuthorisedClients";
+import { Error404 } from "./components/pages/common/Error404";
 
 export const Routes = () => {
   return (
@@ -41,9 +43,10 @@ export const Routes = () => {
           element={<AnalysisAssessment />}
         />
         <Route path="assesmentform" element={<AssesmentForm />} />
-        <Route path="*" element={<Navigate to="login" replace />} />
+        <Route path="authorisedclients" element={<AuthorisedClient />} />
+        <Route path="*" element={<Error404 />} />
       </Route>
-      <Route path="*" element={<Navigate to="login" replace />} />
+      <Route path="*" element={<Error404 />} />
     </MainRoute>
   );
 };
