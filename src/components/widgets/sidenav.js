@@ -9,12 +9,12 @@ import ListItemText from "@mui/material/ListItemText";
 import { Collapse } from "@mui/material";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { DashboardSvg } from "../../assets/icon/dashboardsvg";
 import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../assets/icon/jobsvg";
-import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 256;
 
@@ -67,12 +67,16 @@ const Drawer = styled(MuiDrawer, {
 
 export const SideNav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = React.useState(true);
   const [showAcordian, setShowAcordian] = React.useState(false);
+  const [showAssesment, setShowAssesment] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen(!open);
   };
+
+  const currentState = location.pathname;
 
   return (
     <>
@@ -113,9 +117,7 @@ export const SideNav = () => {
                 px: 1,
                 borderRadius: 2,
                 ":hover": {
-                  bgcolor: "#008080",
-                  opacity: 0.8,
-                  color: "#ffffff",
+                  bgcolor: "#d5d5d5",
                 },
               }}>
               <ListItemIcon
@@ -137,6 +139,7 @@ export const SideNav = () => {
               />
             </ListItemButton>
           </ListItem>
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -145,12 +148,15 @@ export const SideNav = () => {
                 mx: open ? 2.5 : 1.5,
                 my: 1,
                 px: 1,
-                bgcolor: "#008080",
+                bgcolor: currentState.includes("digitalTalentProfile")
+                  ? "#008080"
+                  : "#ffffff",
+                color: currentState.includes("digitalTalentProfile")
+                  ? "#ffffff"
+                  : "#475467",
                 borderRadius: 2,
                 ":hover": {
-                  bgcolor: "#008080",
-                  opacity: 0.8,
-                  color: "#ffffff",
+                  bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
@@ -162,21 +168,37 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AssesmentSvg focus={true} />
+                <AssesmentSvg
+                  focus={currentState.includes("digitalTalentProfile")}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Digital Talent Profile"}
                 primaryTypographyProps={{
-                  color: "#ffffff",
+                  color: currentState.includes("digitalTalentProfile")
+                    ? "#ffffff"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
               {showAcordian ? (
-                <IoIosArrowUp style={{ color: "#ffffff" }} />
+                <IoIosArrowUp
+                  style={{
+                    color: currentState.includes("digitalTalentProfile")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
               ) : (
-                <IoIosArrowDown style={{ color: "#ffffff" }} />
+                <IoIosArrowDown
+                  style={{
+                    color: currentState.includes("digitalTalentProfile")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
               )}
             </ListItemButton>
           </ListItem>
@@ -184,22 +206,29 @@ export const SideNav = () => {
           <Collapse in={showAcordian} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/personalinfromation")}>
+              onClick={() =>
+                navigate("/digitalTalentProfile/personalinfromation")
+              }>
               <p
                 style={{
-                  color: "#66B2B2",
+                  color: currentState.includes("personalinfromation")
+                    ? "#008080"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
+                  opacity: 0.6,
                 }}>
                 Personal Information
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/preferenceform")}>
+              onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
               <p
                 style={{
-                  color: "#475467",
+                  color: currentState.includes("preferenceform")
+                    ? "#008080"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
@@ -209,10 +238,14 @@ export const SideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/valueassessmentform")}>
+              onClick={() =>
+                navigate("/digitalTalentProfile/valueassessmentform")
+              }>
               <p
                 style={{
-                  color: "#475467",
+                  color: currentState.includes("valueassessmentform")
+                    ? "#008080"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
@@ -222,10 +255,14 @@ export const SideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/analysisassessmentform")}>
+              onClick={() =>
+                navigate("/digitalTalentProfile/analysisassessmentform")
+              }>
               <p
                 style={{
-                  color: "#475467",
+                  color: currentState.includes("analysisassessmentform")
+                    ? "#008080"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
@@ -244,11 +281,16 @@ export const SideNav = () => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
+                bgcolor:
+                  currentState === "/assesmentform" ? "#008080" : "#ffffff",
+                color:
+                  currentState === "/assesmentform" ? "#ffffff" : "#475467",
                 ":hover": {
-                  bgcolor: "#008080",
-                  opacity: 0.8,
-                  color: "#ffffff",
+                  bgcolor: "#d5d5d5",
                 },
+              }}
+              onClick={() => {
+                setShowAssesment(!showAssesment);
               }}>
               <ListItemIcon
                 sx={{
@@ -256,20 +298,64 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AssesmentSvg />
+                <AssesmentSvg focus={currentState === "/assesmentform"} />
               </ListItemIcon>
               <ListItemText
                 primary={"Assessments"}
                 primaryTypographyProps={{
-                  color: "#475467",
+                  color:
+                    currentState === "/assesmentform" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {showAcordian ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </ListItemButton>
           </ListItem>
+          {/* collapse */}
+          <Collapse in={showAssesment} timeout="auto" unmountOnExit>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/assesmentform", { state: 1 })}>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}>
+                All - Assessments
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/assesmentform", { state: 2 })}>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}>
+                Self - Assessments
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/assesmentform", { state: 3 })}>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}>
+                Clients - Assessment
+              </p>
+            </div>
+          </Collapse>
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -280,9 +366,7 @@ export const SideNav = () => {
                 px: 1,
                 borderRadius: 2,
                 ":hover": {
-                  bgcolor: "#008080",
-                  opacity: 0.8,
-                  color: "#ffffff",
+                  bgcolor: "#d5d5d5",
                 },
               }}>
               <ListItemIcon
@@ -314,9 +398,7 @@ export const SideNav = () => {
                 px: 1,
                 borderRadius: 2,
                 ":hover": {
-                  bgcolor: "#008080",
-                  opacity: 0.8,
-                  color: "#ffffff",
+                  bgcolor: "#d5d5d5",
                 },
               }}>
               <ListItemIcon

@@ -4,9 +4,9 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { SideNav } from "../../widgets/sidenav";
-import { TopNav } from "../../widgets/topNav";
-import { Footer } from "../../widgets/footer";
+import { SideNav } from "../../../widgets/sidenav";
+import { TopNav } from "../../../widgets/topNav";
+import { Footer } from "../../../widgets/footer";
 
 export const PreferenceForm = () => {
   const navigate = useNavigate();

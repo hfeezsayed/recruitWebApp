@@ -19,7 +19,7 @@ export const Login = () => {
         navigate("/admin");
       }
       if (isAuthenticated.role === "ROLE_CANDIDATE") {
-        navigate("/personalinfromation");
+        navigate("/digitalTalentProfile/personalinfromation");
       }
     }
   }, []);
@@ -59,12 +59,12 @@ export const Login = () => {
         navigate("/admin");
       }
       if (role === "ROLE_CANDIDATE") {
-        navigate("/personalinfromation");
+        navigate("/digitalTalentProfile/personalinfromation");
       }
     } catch (error) {
       console.error(error.message);
     }
-    navigate("/personalinfromation");
+    navigate("/digitalTalentProfile/personalinfromation");
   };
 
   return (

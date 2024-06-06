@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Autocomplete, Button, TextField, styled } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
-import pdflogo from "../../../assets/images/fileUpload.png";
-import axios from "axios";
-import { SideNav } from "../../widgets/sidenav";
-import { Footer } from "../../widgets/footer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import pdflogo from "../../../../assets/images/fileUpload.png";
+import { SideNav } from "../../../widgets/sidenav";
+import { Footer } from "../../../widgets/footer";
 
 export const PersonalInformation = () => {
   const navigate = useNavigate();

@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa6";
-import { SideNav } from "../../widgets/sidenav";
-import { TopNav } from "../../widgets/topNav";
-import { Footer } from "../../widgets/footer";
-import { QUESTIONS } from "../../dummy/Data";
+import { SideNav } from "../../../widgets/sidenav";
+import { TopNav } from "../../../widgets/topNav";
+import { Footer } from "../../../widgets/footer";
+import { QUESTIONS } from "../../../dummy/Data";
 
 export const AnalysisAssessment = () => {
   const [questionList, setQuestionList] = useState(QUESTIONS);

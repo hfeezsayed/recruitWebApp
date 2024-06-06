@@ -448,3 +448,103 @@ export const QUESTIONS = [
     questionType: "RATING",
   },
 ];
+
+export const AllAssessmentData = [
+  {
+    date: "Jan 10, 2024",
+    retake: "1 Day Left",
+    name: "Assessment 1: Value Assessment",
+    notes:
+      "Assessing your work values involves examining the principles and beliefs that drive your professional behavior and decision-making, ultimately helping you understand your professional preferences and priorities.",
+    status: "completed",
+  },
+  {
+    name: "Assessment 1: Value Assessment",
+    notes:
+      "Assessing your work values involves examining the principles and beliefs that drive your professional behavior and decision-making, ultimately helping you understand your professional preferences and priorities.",
+    status: "not-taken",
+  },
+  {
+    name: "Assessment 1: Value Assessment",
+    notes:
+      "Assessing your work values involves examining the principles and beliefs that drive your professional behavior and decision-making, ultimately helping you understand your professional preferences and priorities.",
+    status: "not-taken",
+  },
+  {
+    date: "Jan 10, 2024",
+    retake: "1 Day Left",
+    name: "Assessment 1: Value Assessment",
+    notes:
+      "Assessing your work values involves examining the principles and beliefs that drive your professional behavior and decision-making, ultimately helping you understand your professional preferences and priorities.",
+    status: "completed",
+  },
+];
+
+export const ClientAssessmentData = [
+  {
+    companyName: "Microsoft",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "Not Taken",
+  },
+  {
+    companyName: "Key Venture",
+    assesmentName: "Work Values Assessment",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+  {
+    companyName: "Accenture",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+  {
+    companyName: "Tata Consultancy Services",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "Not Taken",
+  },
+  {
+    companyName: "Accenture",
+    assesmentName: "Work Values Assessment",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+  {
+    companyName: "Microsoft",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+  {
+    companyName: "Tata Consultancy Services",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "Not Taken",
+  },
+  {
+    companyName: "Accenture",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "Not Taken",
+  },
+  {
+    companyName: "Tata Consultancy Services",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "Not Taken",
+  },
+  {
+    companyName: "Accenture",
+    assesmentName: "Work Values Assessment",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+  {
+    companyName: "Microsoft",
+    assesmentName: "Leadership Skills Evaluation",
+    date: "Jan 25, 2024",
+    status: "April 25, 2024",
+  },
+];

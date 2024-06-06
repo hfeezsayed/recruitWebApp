@@ -3,10 +3,10 @@ import { Button, Radio, Rating } from "@mui/material";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { SideNav } from "../../widgets/sidenav";
-import { Footer } from "../../widgets/footer";
-import { TopNav } from "../../widgets/topNav";
-import { ValueAssesmentData, ValuseAssesmentRating } from "../../dummy/Data";
+import { SideNav } from "../../../widgets/sidenav";
+import { Footer } from "../../../widgets/footer";
+import { TopNav } from "../../../widgets/topNav";
+import { ValueAssesmentData, ValuseAssesmentRating } from "../../../dummy/Data";
 
 export const ValueAssessment = () => {
   const navigate = useNavigate();

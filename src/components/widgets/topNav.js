@@ -68,13 +68,13 @@ export const TopNav = () => {
 
         <IconButton>
           <Badge
-            variant="dot"
+            badgeContent={4}
             color="error"
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
             }}
-            classes={{ colorError: "#EB5757" }}>
+            classes={{ colorError: "#E05880" }}>
             <FaRegBell style={{ color: "#FFA412", fontSize: 18 }} />
           </Badge>
         </IconButton>
