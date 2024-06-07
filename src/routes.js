@@ -7,13 +7,14 @@ import { ForgotPass } from "./components/pages/auth/forgotPass";
 import { ForgotOtp } from "./components/pages/auth/forgotOtp";
 import { NewPassword } from "./components/pages/auth/newPassword";
 import PrivateRoute from "./components/pages/auth/privateRoute";
-import { AnalysisAssessment } from "./components/pages/candidate/PrefrenceForm/analysisAssessment";
-import { PersonalInformation } from "./components/pages/candidate/PrefrenceForm/personalInformation";
-import { PreferenceForm } from "./components/pages/candidate/PrefrenceForm/preferenceForm";
-import { ValueAssessment } from "./components/pages/candidate/PrefrenceForm/valueAssessment";
+import { AnalysisAssessment } from "./components/pages/candidate/DigitalTalentProfile/analysisAssessment";
+import { PersonalInformation } from "./components/pages/candidate/DigitalTalentProfile/personalInformation";
+import { PreferenceForm } from "./components/pages/candidate/DigitalTalentProfile/preferenceForm";
+import { ValueAssessment } from "./components/pages/candidate/DigitalTalentProfile/valueAssessment";
 import { AssesmentForm } from "./components/pages/candidate/AssessmentForm";
 import { AuthorisedClient } from "./components/pages/candidate/AuthorisedClients";
 import { Error404 } from "./components/pages/common/Error404";
+import { HomePage } from "./components/pages/candidate/HomePage";
 
 export const Routes = () => {
   return (
@@ -26,6 +27,7 @@ export const Routes = () => {
       <Route path="forgotpasswordotp" element={<ForgotOtp />} />
       <Route path="newpassword" element={<NewPassword />} />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
+        <Route path="homepage" element={<HomePage />} />
         <Route
           path="digitalTalentProfile/personalinfromation"
           element={<PersonalInformation />}

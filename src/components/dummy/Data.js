@@ -641,3 +641,37 @@ export const AuthorisedClients = [
     email: "abc@test.com",
   },
 ];
+
+export const DashBoardData = {
+  name: "Johnny Mathews",
+  email: "Info@mathewjohhny.com.au",
+  resume: true,
+  linkedin: true,
+  image:
+    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+  profileCompletd: 78,
+  candidateTaken: 100,
+  prefrenceTaken: 100,
+  valueTaken: 100,
+  analysisTaken: 0,
+  authorisedClient: 7,
+  clientAssessment: 14,
+  selfAssessment: 11,
+};
+
+export const DigitalTalentProfileData = {
+  name: "Johnny Mathews",
+  email: "Info@mathewjohhny.com.au",
+  resume: true,
+  linkedin: true,
+  image:
+    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+  profileCompletd: 78,
+  candidateTaken: 100,
+  prefrenceTaken: 100,
+  valueTaken: 100,
+  analysisTaken: 0,
+  authorisedClient: 7,
+  clientAssessment: 14,
+  selfAssessment: 11,
+};

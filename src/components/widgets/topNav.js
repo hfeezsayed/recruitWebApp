@@ -92,7 +92,7 @@ export const TopNav = () => {
             />
           </IconButton>
           <p style={{ fontSize: 18, fontWeight: 600, color: "#101828" }}>
-            {JSON.parse(localStorage.getItem("token")).username}
+            {JSON.parse(localStorage.getItem("token"))?.username}
           </p>
           <IoIosArrowDown />
         </div>
