@@ -15,6 +15,8 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaRegBell } from "react-icons/fa";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
+import { GoPerson } from "react-icons/go";
+import { FiBookOpen } from "react-icons/fi";
 
 export const TopNav = () => {
   const navigate = useNavigate();
@@ -29,8 +31,8 @@ export const TopNav = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 py-2">
-      <div className="px-8">
+    <div className="grid grid-cols-2 py-2 w-full">
+      <div className="px-8 flex items-center">
         <TextField
           size="small"
           placeholder="Search or type"
@@ -132,10 +134,20 @@ export const TopNav = () => {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
           <MenuItem onClick={handleClose}>
-            <Avatar /> Profile
+            <ListItemIcon>
+              <GoPerson
+                style={{ color: "#475467", fontWeight: 800, fontSize: 20 }}
+              />
+            </ListItemIcon>
+            Profile
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Avatar /> My account
+            <ListItemIcon>
+              <FiBookOpen
+                style={{ color: "#475467", fontWeight: 600, fontSize: 18 }}
+              />
+            </ListItemIcon>
+            Password
           </MenuItem>
           <Divider />
 
@@ -145,7 +157,9 @@ export const TopNav = () => {
               navigate("/login");
             }}>
             <ListItemIcon>
-              <FiLogOut fontSize="small" />
+              <FiLogOut
+                style={{ color: "#475467", fontWeight: 600, fontSize: 18 }}
+              />
             </ListItemIcon>
             Logout
           </MenuItem>

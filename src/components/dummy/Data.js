@@ -675,3 +675,14 @@ export const DigitalTalentProfileData = {
   clientAssessment: 14,
   selfAssessment: 11,
 };
+
+export const TalentProfileResultData = {
+  name: "Johnny Mathews",
+  mobileNo: 8975678940,
+  email: "Info@mathewjohhny.com.au",
+  location: "Hyderabad",
+  gender: "Male",
+  education: "Computer Science MSc",
+  summary:
+    "Experienced software engineer proficient in full-stack development with a focus on web applications. Over the course of her childhood and throughout her school, she won numerous design prizes at various well known competitions across the United Statesand Canada. ",
+};

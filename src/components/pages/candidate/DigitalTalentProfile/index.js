@@ -23,12 +23,10 @@ import { BsFillCameraFill } from "react-icons/bs";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { DashBoardData } from "../../../dummy/Data";
-import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
-import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
+import { DigitalTalentProfileData } from "../../../dummy/Data";
 
-export const HomePage = () => {
-  const [userData, setUserData] = useState(DashBoardData);
+export const DigitalTalentProfile = () => {
+  const [userData, setUserData] = useState(DigitalTalentProfileData);
 
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -57,7 +55,7 @@ export const HomePage = () => {
         profileCompletd: 28,
       });
     } else {
-      setUserData(DashBoardData);
+      setUserData(DigitalTalentProfileData);
     }
   };
 
@@ -184,7 +182,7 @@ export const HomePage = () => {
                 required assessments to get started
               </p>
               {/* card */}
-              <div className="grid grid-cols-2 gap-5 py-5">
+              <div className="grid grid-cols-2 gap-5 mt-5">
                 <Card sx={{ borderRadius: 5 }}>
                   <CardContent>
                     <div className="flex gap-2">
@@ -501,129 +499,6 @@ export const HomePage = () => {
                     </Button>
                   </CardActions>
                 </Card>
-              </div>
-              {/* Actions need to be taken */}
-              <div className="mt-5">
-                <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                  Actions need to be taken
-                </p>
-                <p style={{ color: "#475467", fontSize: 16 }}>
-                  Please review and complete the following actions that are
-                  currently pending
-                </p>
-                <div className="grid grid-cols-3 gap-5 mt-5">
-                  <Card sx={{ borderRadius: 5 }}>
-                    <CardContent>
-                      <div className="flex gap-3 items-center pb-5">
-                        <AuthorizedSvg COLOR={"#F78F54"} />
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                            fontWeight: 600,
-                          }}>
-                          Add Authorised Clients
-                        </p>
-                      </div>
-                      <p
-                        style={{
-                          color: "#1D1F2C",
-                          fontWeight: 600,
-                          fontSize: 30,
-                        }}>
-                        {userData?.authorisedClient || "00"}
-                      </p>
-                      <div className="flex items-center justify-between ">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 14,
-                          }}>
-                          Client request that are pending
-                        </p>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card sx={{ borderRadius: 5 }}>
-                    <CardContent>
-                      <div className="flex gap-3 items-center pb-5">
-                        <AssesmentSvg COLOR={"#A1CBB3"} />
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                            fontWeight: 600,
-                          }}>
-                          Client Assessments
-                        </p>
-                      </div>
-                      <p
-                        style={{
-                          color: "#1D1F2C",
-                          fontWeight: 600,
-                          fontSize: 30,
-                        }}>
-                        {userData?.clientAssessment || "00"}
-                      </p>
-                      <div className="flex items-center justify-between ">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 14,
-                          }}>
-                          Client Assessments needs to be taken
-                        </p>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card sx={{ borderRadius: 5 }}>
-                    <CardContent>
-                      <div className="flex gap-3 items-center pb-5">
-                        <AssesmentSvg COLOR={"#6A0DAD"} />
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                            fontWeight: 600,
-                          }}>
-                          Self- Assessments
-                        </p>
-                      </div>
-                      <p
-                        style={{
-                          color: "#1D1F2C",
-                          fontWeight: 600,
-                          fontSize: 30,
-                        }}>
-                        {userData?.selfAssessment || "00"}
-                      </p>
-                      <div className="flex items-center justify-between ">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 14,
-                          }}>
-                          Assessments needs to be taken
-                        </p>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
               </div>
             </div>
           </div>
