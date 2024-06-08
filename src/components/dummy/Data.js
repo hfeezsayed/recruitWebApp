@@ -548,3 +548,141 @@ export const ClientAssessmentData = [
     status: "April 25, 2024",
   },
 ];
+
+export const AuthorisedClients = [
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Andrew Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Microsoft",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Xenspire Group",
+    managerName: "Johnny Mathew",
+    date: "April 25, 2024",
+    email: "abc@test.com",
+  },
+  {
+    clientName: "Tata Consultancy Services",
+    managerName: "Johnny Mathew",
+    date: "Jan 25, 2024",
+    email: "abc@test.com",
+  },
+];
+
+export const DashBoardData = {
+  name: "Johnny Mathews",
+  email: "Info@mathewjohhny.com.au",
+  resume: true,
+  linkedin: true,
+  image:
+    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+  profileCompletd: 78,
+  candidateTaken: 100,
+  prefrenceTaken: 100,
+  valueTaken: 100,
+  analysisTaken: 0,
+  authorisedClient: 7,
+  clientAssessment: 14,
+  selfAssessment: 11,
+};
+
+export const DigitalTalentProfileData = {
+  name: "Johnny Mathews",
+  email: "Info@mathewjohhny.com.au",
+  resume: true,
+  linkedin: true,
+  image:
+    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+  profileCompletd: 78,
+  candidateTaken: 100,
+  prefrenceTaken: 100,
+  valueTaken: 100,
+  analysisTaken: 0,
+  authorisedClient: 7,
+  clientAssessment: 14,
+  selfAssessment: 11,
+};
+
+export const TalentProfileResultData = {
+  name: "Johnny Mathews",
+  mobileNo: 8975678940,
+  email: "Info@mathewjohhny.com.au",
+  location: "Hyderabad",
+  gender: "Male",
+  education: "Computer Science MSc",
+  summary:
+    "Experienced software engineer proficient in full-stack development with a focus on web applications. Over the course of her childhood and throughout her school, she won numerous design prizes at various well known competitions across the United Statesand Canada. ",
+};

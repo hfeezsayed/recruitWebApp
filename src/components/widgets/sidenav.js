@@ -116,9 +116,14 @@ export const SideNav = () => {
                 mb: 1,
                 px: 1,
                 borderRadius: 2,
+                bgcolor: currentState === "/homepage" ? "#008080" : "#ffffff",
+                color: currentState === "/homepage" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
+              }}
+              onClick={() => {
+                navigate("/homepage");
               }}>
               <ListItemIcon
                 sx={{
@@ -126,12 +131,14 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <DashboardSvg />
+                <DashboardSvg
+                  COLOR={currentState === "/homepage" ? "#ffffff" : "#475467"}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Dashboard"}
                 primaryTypographyProps={{
-                  color: "#475467",
+                  color: currentState === "/homepage" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -169,7 +176,11 @@ export const SideNav = () => {
                   justifyContent: "center",
                 }}>
                 <AssesmentSvg
-                  focus={currentState.includes("digitalTalentProfile")}
+                  COLOR={
+                    currentState.includes("digitalTalentProfile")
+                      ? "#ffffff"
+                      : "#475467"
+                  }
                 />
               </ListItemIcon>
               <ListItemText
@@ -298,7 +309,11 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AssesmentSvg focus={currentState === "/assesmentform"} />
+                <AssesmentSvg
+                  COLOR={
+                    currentState === "/assesmentform" ? "#ffffff" : "#475467"
+                  }
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Assessments"}
@@ -365,9 +380,16 @@ export const SideNav = () => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
+                bgcolor:
+                  currentState === "/authorisedclients" ? "#008080" : "#ffffff",
+                color:
+                  currentState === "/authorisedclients" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
+              }}
+              onClick={() => {
+                navigate("/authorisedclients");
               }}>
               <ListItemIcon
                 sx={{
@@ -375,12 +397,21 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AuthorizedSvg />
+                <AuthorizedSvg
+                  COLOR={
+                    currentState === "/authorisedclients"
+                      ? "#ffffff"
+                      : "#475467"
+                  }
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Authorized Clients"}
                 primaryTypographyProps={{
-                  color: "#475467",
+                  color:
+                    currentState === "/authorisedclients"
+                      ? "#ffffff"
+                      : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -407,7 +438,9 @@ export const SideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <JobSvg />
+                <JobSvg
+                  COLOR={currentState === "/jobs" ? "#ffffff" : "#475467"}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Jobs"}
