@@ -16,9 +16,10 @@ export const SignUp = () => {
     e.preventDefault();
 
     console.log(name, email, password, conPassword);
-    navigation("/signupotp");
+    navigation("/signupotp/"+email);
+    const username = name;
     axios
-      .post("localhost:3000/send", { name, email, password, conPassword })
+      .post("http://localhost:8080/xen/signup", { username, email, password })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

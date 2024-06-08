@@ -25,20 +25,20 @@ export const Login = () => {
   }, []);
 
   const onSubmit = async (e) => {
-    const dummy = {
-      userId: 3,
-      username: "Ram",
-      email: "ram@xenspire.co",
-      accessToken:
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
-      role: "ROLE_CANDIDATE",
-    };
+    // const dummy = {
+    //   userId: 3,
+    //   username: "Ram",
+    //   email: "ram@xenspire.co",
+    //   accessToken:
+    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
+    //   role: "ROLE_CANDIDATE",
+    // };
     const username = email;
     e.preventDefault();
-    localStorage.setItem("token", JSON.stringify(dummy));
+    //localStorage.setItem("token", JSON.stringify(response.data));
     try {
       const response = await axios.post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/login",
+        "http://localhost:8080/xen/login",
         {
           username,
           password,

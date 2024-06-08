@@ -12,9 +12,9 @@ export const ForgotPass = () => {
 
   const onSubmit = () => {
     console.log(email);
-    navigation("/forgotpasswordotp");
+    navigation("/forgotpasswordotp", { state: { email: email } });
     axios
-      .post("localhost:3000/send", { email })
+      .get("http://localhost:8080/xen/forgotPassword?emailId="+email)
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

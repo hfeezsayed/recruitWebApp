@@ -7,9 +7,10 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backImage from "../../../assets/images/Background pattern decorative.png";
+import { useParams } from "react-router-dom";
 
 export const SignupOtp = () => {
-  let email = "olivia@untitledui.com";
+  const { email } = useParams();
   const navigation = useNavigate();
   const [otp, setOtp] = useState("");
   const [verified, setVerified] = useState(false);
@@ -19,7 +20,7 @@ export const SignupOtp = () => {
     if (otp.length === 4) {
       setVerified(true);
       axios
-        .post("localhost:3000/send", { otp })
+        .post("http://localhost:8080/xen/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }

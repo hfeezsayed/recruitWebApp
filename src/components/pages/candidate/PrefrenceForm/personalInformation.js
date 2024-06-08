@@ -7,6 +7,7 @@ import axios from "axios";
 import pdflogo from "../../../../assets/images/fileUpload.png";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
+import { useEffect } from "react";
 
 export const PersonalInformation = () => {
   const navigate = useNavigate();
@@ -17,14 +18,14 @@ export const PersonalInformation = () => {
   const [url, setUrl] = useState();
   const [summary, setSummary] = useState();
   const [education, setEducation] = useState([
-    {
-      degree: null,
-      filedStudy: null,
-      institutions: null,
-      certificate: null,
-      city: null,
-      state: null,
-    },
+    // {
+    //   degree: null,
+    //   fieldOfStudy: null,
+    //   institution: null,
+    //   certificate: null,
+    //   city: null,
+    //   state: null,
+    // },
   ]);
 
   const options = [
@@ -43,8 +44,8 @@ export const PersonalInformation = () => {
       ...education,
       {
         degree: null,
-        filedStudy: null,
-        institutions: null,
+        fieldOfStudy: null,
+        institution: null,
         certificate: null,
         city: null,
         state: null,
@@ -76,6 +77,26 @@ export const PersonalInformation = () => {
     width: 1,
   });
 
+  useEffect(() => {
+    const isAuthenticated = JSON.parse(localStorage.getItem("token"));
+    axios
+      .get(
+        "http://localhost:8080/xen/getCandidatePersonalInfo?candidateId="+1
+      )
+      .then((response) => {
+        console.log(response.data.education.length);
+        setFullName((response.data.fullName !== null) ? response.data.fullName : "");
+        setSummary((response.data.summary !== null) ? response.data.summary : "");
+        setTitle((response.data.title !== null) ? response.data.title : "");
+        setUrl((response.data.url !== null) ? response.data.url : "");
+        setContactNumber((response.data.contactNumber != null) ? response.data.contactNumber : "");
+        if(response.data.education.length > 0){
+          setEducation(...education, response.data.education);
+        }
+      })
+      .catch((e) => console.log(e))
+  }, []);
+
   const onPersonalInfoSubmit = async (e) => {
     e.preventDefault();
     console.log(
@@ -92,18 +113,22 @@ export const PersonalInformation = () => {
 
     await axios
       .post(
-        "http://localhost/3000",
-        file,
-        fullName,
-        title,
-        contactNumber,
-        url,
-        summary,
-        education
+        "http://localhost:8080/xen/postCandidatePersonalInfo?candidateId="+1,
+        {
+          file,
+          fullName,
+          title,
+          contactNumber,
+          url,
+          summary,
+          education
+        }
       )
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
   };
+
+
   return (
     <div>
       <div className="flex">
@@ -276,9 +301,9 @@ export const PersonalInformation = () => {
                         size="small"
                         fullWidth
                         options={options.map((option) => option.label)}
-                        value={value.filedStudy || null}
+                        value={value.fieldOfStudy || null}
                         onChange={(e, value) =>
-                          handleChangeEducation("filedStudy", value, index)
+                          handleChangeEducation("fieldOfStudy", value, index)
                         }
                         renderInput={(params) => (
                           <TextField
@@ -296,16 +321,16 @@ export const PersonalInformation = () => {
                           fontSize: 14,
                           fontWeight: 500,
                         }}>
-                        Institutions
+                        institution
                       </p>
                       <Autocomplete
                         disablePortal
                         size="small"
                         fullWidth
                         options={options.map((option) => option.label)}
-                        value={value.institutions || null}
+                        value={value.institution || null}
                         onChange={(e, value) =>
-                          handleChangeEducation("institutions", value, index)
+                          handleChangeEducation("institution", value, index)
                         }
                         renderInput={(params) => (
                           <TextField
@@ -381,16 +406,16 @@ export const PersonalInformation = () => {
                           fontSize: 14,
                           fontWeight: 500,
                         }}>
-                        Institutions
+                        institution
                       </p>
                       <Autocomplete
                         disablePortal
                         size="small"
                         fullWidth
                         options={options.map((option) => option.label)}
-                        value={value.institutions || null}
+                        value={value.institution || null}
                         onChange={(e, value) =>
-                          handleChangeEducation("institutions", value, index)
+                          handleChangeEducation("institution", value, index)
                         }
                         renderInput={(params) => (
                           <TextField

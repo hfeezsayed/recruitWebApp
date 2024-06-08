@@ -6,18 +6,20 @@ import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backImage from "../../../assets/images/Background pattern decorative.png";
+import { useLocation } from "react-router-dom";
 
 export const ForgotOtp = () => {
-  let email = "olivia@untitledui.com";
+  //let email = "olivia@untitledui.com";
   const navigation = useNavigate();
   const [otp, setOtp] = useState("");
+  const { email } = useLocation().state || {};
 
   const onSubmit = () => {
     console.log(otp);
     if (otp.length === 4) {
-      navigation("/newpassword");
+      navigation("/newpassword", { state : {email : email}});
       axios
-        .post("localhost:3000/send", { otp })
+        .post("http://localhost:8080/xen/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }
@@ -25,9 +27,8 @@ export const ForgotOtp = () => {
 
   const reSendOtp = () => {
     console.log("resenf otp");
-
     axios
-      .post("localhost:3000/send", { email })
+      .post("localhost:8080/xen/resendOTP", { email })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

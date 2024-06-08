@@ -19,7 +19,7 @@ export const Routes = () => {
       <Route path="/" element={<Navigate to="login" replace />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="signupotp" element={<SignupOtp />} />
+      <Route path="signupotp/:email" element={<SignupOtp />} />
       <Route path="forgotpassword" element={<ForgotPass />} />
       <Route path="forgotpasswordotp" element={<ForgotOtp />} />
       <Route path="newpassword" element={<NewPassword />} />

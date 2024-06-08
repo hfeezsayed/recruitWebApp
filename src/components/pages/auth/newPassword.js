@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CiLock } from "react-icons/ci";
 import { Button, TextField } from "@mui/material";
 import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import axios from "axios";
@@ -15,12 +15,14 @@ export const NewPassword = () => {
   const [changed, setChanged] = useState(false);
   let format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
+  const { email } = useLocation().state || {};
+  
   const onSubmit = () => {
     console.log(password, confPassword);
     if (password.length > 7) {
       setChanged(true);
       axios
-        .post("localhost:3000/send", { password, confPassword })
+        .post("http://localhost:8080/xen/updatePassword", { password, email})
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }

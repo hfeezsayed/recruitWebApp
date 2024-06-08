@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { qualifications, specializations, team, skills, skillLevel, PreferOffice, workShifts, locations, yes_No, travels, work_Comapny, schedules, appealings, currency, salary_Rate, envonments, job_Interests, experiences, visa_status, certifications, notice, industry, softwares, environments
+ } from "../seedData";
 
 export const PreferenceForm = () => {
   const navigate = useNavigate();
@@ -45,13 +47,13 @@ export const PreferenceForm = () => {
   const [requiredForTravel, setRequiredForTravel] = useState();
   const [workSchedule, setWorkSchedule] = useState();
   const [workIndepandently, setWorkIndepandently] = useState();
-  const [expectedSelary, setExpectedSelary] = useState({
+  const [expectedSalary, setexpectedSalary] = useState({
     range: null,
-    frequency: null,
+    currency: null,
   });
   const [expectedRange, setExpectedRange] = useState({
     range: null,
-    frequency: null,
+    currency: null,
   });
   const [typeOfJobOpening, setTypeOfJobOpening] = useState();
   const [appealingWork, setAppealingWork] = useState();
@@ -81,6 +83,7 @@ export const PreferenceForm = () => {
   };
 
   const handleChangeIndustryExperience = (e, value, i) => {
+    console.log(value, i, e);
     let newFormValues = [...indusrtyExperience];
     newFormValues[i][e] = value;
     setIndustryExperience(newFormValues);
@@ -98,6 +101,7 @@ export const PreferenceForm = () => {
   };
 
   const handleChangePrimarySkill = (e, value, i) => {
+    console.log(value);
     let newFormValues = [...primarySkills];
     newFormValues[i][e] = value;
     setPrimarySkill(newFormValues);
@@ -160,7 +164,7 @@ export const PreferenceForm = () => {
       requiredForTravel,
       workSchedule,
       workIndepandently,
-      expectedSelary,
+      expectedSalary,
       expectedRange,
       typeOfJobOpening,
       appealingWork,
@@ -190,37 +194,39 @@ export const PreferenceForm = () => {
 
     await axios
       .post(
-        "http://localhost/3000",
-        workSetting,
-        workShift,
-        preffrredLocation,
-        openToRelocate,
-        requiredForTravel,
-        workSchedule,
-        workIndepandently,
-        expectedSelary,
-        expectedRange,
-        typeOfJobOpening,
-        appealingWork,
-        workEnvironment,
-        companyOutlook,
-        visaStatus,
-        academicQualification,
-        specialization,
-        academicBackGround,
-        specificLicense,
-        yearsOfExperience,
-        experienceRole,
-        workInIndustry,
-        workRole,
-        experienceStackHolder,
-        noticePeriod,
-        teamHandling,
-        teamSize,
-        indusrtyExperience,
-        primarySkills,
-        secoundrySkills,
-        softwareApplication
+        "http://localhost:8080/xen/saveCandidateForm?candidateId=1",
+        {
+          workSetting,
+          workShift,
+          preffrredLocation,
+          openToRelocate,
+          requiredForTravel,
+          workSchedule,
+          workIndepandently,
+          expectedSalary,
+          expectedRange,
+          typeOfJobOpening,
+          appealingWork,
+          workEnvironment,
+          companyOutlook,
+          visaStatus,
+          academicQualification,
+          specialization,
+          academicBackGround,
+          specificLicense,
+          yearsOfExperience,
+          experienceRole,
+          workInIndustry,
+          workRole,
+          experienceStackHolder,
+          noticePeriod,
+          teamHandling,
+          teamSize,
+          indusrtyExperience,
+          primarySkills,
+          secoundrySkills,
+          softwareApplication
+        }
       )
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
@@ -261,7 +267,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={qualifications.map((option) => option.label)}
                       value={academicQualification || null}
                       onChange={(e, value) => setAcademicQualification(value)}
                       renderInput={(params) => (
@@ -282,7 +288,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={specializations.map((option) => option.label)}
                       value={specialization || null}
                       onChange={(e, value) => setSpecialization(value)}
                       renderInput={(params) => (
@@ -330,7 +336,7 @@ export const PreferenceForm = () => {
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={certifications.map((option) => option.label)}
                     value={specificLicense || null}
                     onChange={(e, value) => setSpecificLicense(value)}
                     renderInput={(params) => (
@@ -360,16 +366,14 @@ export const PreferenceForm = () => {
                       }}>
                       How many years of experience do you have?
                     </p>
-                    <Autocomplete
-                      disablePortal
+                    <TextField
+                      label="Experience"
+                      type="number"
+                      variant="outlined"
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
-                      value={yearsOfExperience || null}
-                      onChange={(e, value) => setYearOfExperience(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
+                      value={yearsOfExperience}
+                      onChange={(e) => setYearOfExperience(e.target.value)}
                     />
                   </div>
                   <div className="grid grid-flow-row">
@@ -382,17 +386,17 @@ export const PreferenceForm = () => {
                       Could you elaborate on your experience in [specific area
                       relevant to the role]
                     </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
+                    <TextField
+                      required
+                      multiline
+                      rows={2}
                       fullWidth
-                      options={options.map((option) => option.label)}
-                      value={experienceRole || null}
-                      onChange={(e, value) => setExperienceRole(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
+                      size="small"
+                      variant="outlined"
+                      placeholder="Type"
+                      value={experienceRole}
+                      onChange={(e) => setExperienceRole(e.target.value)}
+                  />
                   </div>
                 </div>
                 <div className="mt-5">
@@ -410,24 +414,21 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={yes_No.map((option) => option.label)}
                       value={workInIndustry || null}
                       onChange={(e, value) => setWorkInIndustry(value)}
                       renderInput={(params) => (
                         <TextField {...params} placeholder="Select" required />
                       )}
                     />
-                    <Autocomplete
-                      disablePortal
-                      size="small"
+                    <TextField
                       fullWidth
-                      options={options.map((option) => option.label)}
-                      value={workRole || null}
-                      onChange={(e, value) => setWorkRole(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
+                      size="small"
+                      variant="outlined"
+                      placeholder="Type"
+                      value={workRole}
+                      onChange={(e) => setWorkRole(e.target.value)}
+                  />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-8 mt-5">
@@ -445,7 +446,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={yes_No.map((option) => option.label)}
                       value={experienceStackHolder || null}
                       onChange={(e, value) => setExperienceStachHolder(value)}
                       renderInput={(params) => (
@@ -466,7 +467,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={notice.map((option) => option.label)}
                       value={noticePeriod || null}
                       onChange={(e, value) => setNoticePeriod(value)}
                       renderInput={(params) => (
@@ -490,7 +491,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={yes_No.map((option) => option.label)}
                       value={teamHandling || null}
                       onChange={(e, value) => setTeamHandling(value)}
                       renderInput={(params) => (
@@ -501,7 +502,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={team.map((option) => option.label)}
                       value={teamSize || null}
                       onChange={(e, value) => setTeamSize(value)}
                       renderInput={(params) => (
@@ -525,25 +526,32 @@ export const PreferenceForm = () => {
                     return (
                       <>
                         <div className="grid grid-cols-2 gap-8 mt-5">
-                          <TextField
-                            required
+                        <Autocomplete
+                            disablePortal
                             size="small"
                             fullWidth
-                            placeholder="Type"
-                            value={value.type}
-                            onChange={(e) =>
+                            options={industry.map((option) => option.label)}
+                            value={value.type || null}
+                            onChange={(e, newValue) =>
                               handleChangeIndustryExperience(
                                 "type",
-                                e.target.value,
+                                newValue,
                                 index
                               )
                             }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
+                            )}
                           />
                           <Autocomplete
                             disablePortal
                             size="small"
                             fullWidth
-                            options={options.map((option) => option.label)}
+                            options={skillLevel.map((option) => option.label)}
                             value={value.experience || null}
                             onChange={(e, newvalue) =>
                               handleChangeIndustryExperience(
@@ -648,7 +656,7 @@ export const PreferenceForm = () => {
                               disablePortal
                               size="small"
                               fullWidth
-                              options={options.map((option) => option.label)}
+                              options={skills.map((option) => option.label)}
                               value={value.skill || null}
                               onChange={(e, value) =>
                                 handleChangePrimarySkill("skill", value, index)
@@ -675,7 +683,7 @@ export const PreferenceForm = () => {
                               disablePortal
                               size="small"
                               fullWidth
-                              options={options.map((option) => option.label)}
+                              options={skillLevel.map((option) => option.label)}
                               value={value.expertise || null}
                               onChange={(e, value) =>
                                 handleChangePrimarySkill(
@@ -759,7 +767,7 @@ export const PreferenceForm = () => {
                               disablePortal
                               size="small"
                               fullWidth
-                              options={options.map((option) => option.label)}
+                              options={skills.map((option) => option.label)}
                               value={value.skill || null}
                               onChange={(e, value) =>
                                 handleChangeSecoundrySkill(
@@ -790,7 +798,7 @@ export const PreferenceForm = () => {
                               disablePortal
                               size="small"
                               fullWidth
-                              options={options.map((option) => option.label)}
+                              options={skillLevel.map((option) => option.label)}
                               value={value.expertise || null}
                               onChange={(e, value) =>
                                 handleChangeSecoundrySkill(
@@ -858,7 +866,7 @@ export const PreferenceForm = () => {
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={softwares.map((option) => option.label)}
                     value={softwareApplication.app || null}
                     onChange={(e, value) =>
                       setSoftwareApplication({
@@ -874,7 +882,7 @@ export const PreferenceForm = () => {
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={skillLevel.map((option) => option.label)}
                     value={softwareApplication.experience || null}
                     onChange={(e, value) =>
                       setSoftwareApplication({
@@ -932,7 +940,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={PreferOffice.map((option) => option.label)}
                       value={workSetting || null}
                       onChange={(e, value) => setWorkSetting(value)}
                       renderInput={(params) => (
@@ -953,7 +961,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={workShifts.map((option) => option.label)}
                       value={workShift || null}
                       onChange={(e, value) => setWorkShift(value)}
                       renderInput={(params) => (
@@ -974,7 +982,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={locations.map((option) => option.label)}
                       value={preffrredLocation || null}
                       onChange={(e, value) => setPrefferedLocation(value)}
                       renderInput={(params) => (
@@ -995,7 +1003,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={yes_No.map((option) => option.label)}
                       value={openToRelocate || null}
                       onChange={(e, value) => setOpenToRelocate(value)}
                       renderInput={(params) => (
@@ -1017,7 +1025,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={travels.map((option) => option.label)}
                       value={requiredForTravel || null}
                       onChange={(e, value) => setRequiredForTravel(value)}
                       renderInput={(params) => (
@@ -1038,7 +1046,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={schedules.map((option) => option.label)}
                       value={workSchedule || null}
                       onChange={(e, value) => setWorkSchedule(value)}
                       renderInput={(params) => (
@@ -1061,7 +1069,7 @@ export const PreferenceForm = () => {
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={work_Comapny.map((option) => option.label)}
                     value={workIndepandently || null}
                     onChange={(e, value) => setWorkIndepandently(value)}
                     renderInput={(params) => (
@@ -1090,16 +1098,17 @@ export const PreferenceForm = () => {
                     }}>
                     What are the salary expectations?
                   </p>
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-3 gap-8">
                     <TextField
                       required
+                      type="number"
                       fullWidth
                       placeholder="Type Range"
                       size="small"
-                      value={expectedSelary.range}
+                      value={expectedSalary.range}
                       onChange={(e) =>
-                        setExpectedSelary({
-                          ...expectedSelary,
+                        setexpectedSalary({
+                          ...expectedSalary,
                           range: e.target.value,
                         })
                       }
@@ -1109,12 +1118,12 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
-                      value={expectedSelary.frequency || null}
+                      options={currency.map((option) => option.label)}
+                      value={expectedSalary.currency || null}
                       onChange={(e, value) =>
-                        setExpectedSelary({
-                          ...expectedSelary,
-                          frequency: value,
+                        setexpectedSalary({
+                          ...expectedSalary,
+                          currency: value,
                         })
                       }
                       renderInput={(params) => (
@@ -1132,9 +1141,10 @@ export const PreferenceForm = () => {
                     }}>
                     What is the expected compensation range?
                   </p>
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-3 gap-8">
                     <TextField
                       required
+                      type="number"
                       fullWidth
                       placeholder="Type Range"
                       size="small"
@@ -1150,13 +1160,14 @@ export const PreferenceForm = () => {
                     <Autocomplete
                       disablePortal
                       size="small"
+                      placeholder="select currency"
                       fullWidth
-                      options={options.map((option) => option.label)}
-                      value={expectedRange.frequency || null}
+                      options={currency.map((option) => option.label)}
+                      value={expectedRange.currency || null}
                       onChange={(e, value) =>
                         setExpectedRange({
                           ...expectedRange,
-                          frequency: value,
+                          currency: value,
                         })
                       }
                       renderInput={(params) => (
@@ -1179,7 +1190,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={job_Interests.map((option) => option.label)}
                       value={typeOfJobOpening || null}
                       onChange={(e, value) => setTypeOfJobOpening(value)}
                       renderInput={(params) => (
@@ -1215,7 +1226,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={appealings.map((option) => option.label)}
                       value={appealingWork || null}
                       onChange={(e, value) => setAppealingWork(value)}
                       renderInput={(params) => (
@@ -1236,7 +1247,7 @@ export const PreferenceForm = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={options.map((option) => option.label)}
+                      options={environments.map((option) => option.label)}
                       value={workEnvironment || null}
                       onChange={(e, value) => setWorkEnvironment(value)}
                       renderInput={(params) => (
@@ -1255,17 +1266,19 @@ export const PreferenceForm = () => {
                     Is the company outlook on environment important? Like
                     sustainability initiatives, being carbon neutral etc.
                   </p>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
                   <Autocomplete
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={yes_No.map((option) => option.label)}
                     value={companyOutlook || null}
                     onChange={(e, value) => setCompanyOutlook(value)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" required />
                     )}
                   />
+                </div>
                 </div>
               </div>
               {/* legal and visa status */}
@@ -1288,17 +1301,19 @@ export const PreferenceForm = () => {
                     }}>
                     What is your current Visa or Work status?
                   </p>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
                   <Autocomplete
                     disablePortal
                     size="small"
                     fullWidth
-                    options={options.map((option) => option.label)}
+                    options={visa_status.map((option) => option.label)}
                     value={visaStatus || null}
                     onChange={(e, value) => setVisaStatus(value)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" required />
                     )}
                   />
+                  </div>
                 </div>
               </div>
               {/* buttons */}
