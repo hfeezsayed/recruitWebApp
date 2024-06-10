@@ -15,6 +15,7 @@ import { MdEmail } from "react-icons/md";
 import { HiOutlineDownload } from "react-icons/hi";
 import { FaStar } from "react-icons/fa6";
 import { LuRectangleHorizontal } from "react-icons/lu";
+import { BarChart, PieChart } from "@mui/x-charts";
 import { TopNav } from "../../../widgets/topNav";
 import logo from "../../../../assets/images/logo.png";
 import { Footer } from "../../../widgets/footer";
@@ -24,7 +25,6 @@ import Location from "../../../../assets/images/Location.png";
 import Rocket from "../../../../assets/images/Rocket.png";
 import { HumanBody } from "../../../../assets/icon/humanBody";
 import { checkSkillLevel } from "../../../utils/function";
-import { BarChart, PieChart, axisClasses } from "@mui/x-charts";
 
 export const TalentProfileResult = () => {
   const [userData, setUserData] = useState(TalentProfileResultData);

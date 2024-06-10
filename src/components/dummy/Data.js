@@ -837,3 +837,16 @@ export const TalentProfileResultData = {
     },
   ],
 };
+
+export const valueAssesmentResult = [
+  { name: "Universalism", x: 3 },
+  { name: "Benevolence", x: 4 },
+  { name: "Tradition", x: 0 },
+  { name: "Confirmity", x: 0 },
+  { name: "Security", x: 1 },
+  { name: "Power", x: 2 },
+  { name: "Achievements", x: 2 },
+  { name: "Hedonism", x: 4 },
+  { name: "Stimulation", x: 0 },
+  { name: "Self-Direction", x: 1 },
+];
