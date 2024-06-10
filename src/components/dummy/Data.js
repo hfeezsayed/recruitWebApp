@@ -685,4 +685,155 @@ export const TalentProfileResultData = {
   education: "Computer Science MSc",
   summary:
     "Experienced software engineer proficient in full-stack development with a focus on web applications. Over the course of her childhood and throughout her school, she won numerous design prizes at various well known competitions across the United Statesand Canada. ",
+  expert: 5,
+  openTo: ["part-time", "Remote", "Hybrid"],
+  readyToTravel: true,
+  readyToRelocate: true,
+  credantials: [
+    "Bachelor of Science in Computer Science",
+    "Certified Scrum Master",
+    "AWS Certified Solutions Architect",
+  ],
+  technicalSkill: [
+    { skill: "Java Script", value: 5 },
+    { skill: "Python", value: 50 },
+    { skill: "Java", value: 95 },
+    { skill: "Java Script", value: 5 },
+    { skill: "C", value: 95 },
+  ],
+  coreValues: [
+    { name: "Universalism", point: 10 },
+    { name: "Universalism", point: 9 },
+    { name: "Universalism", point: 8 },
+    { name: "Universalism", point: 7 },
+    { name: "Universalism", point: 6 },
+  ],
+  emotionalFlexibilityBar: [
+    {
+      empathy: 3.7,
+      resilience: 2.5,
+      stressManagment: 1.6,
+      selfAwarness: 0.8,
+    },
+  ],
+  emotionalFlexibilityCircle: [
+    {
+      innerRadius: 55,
+      outerRadius: 45,
+      data: [
+        { label: "Self - Awareness", value: 100, color: "#BFE1F4" },
+        { value: 0, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 70,
+      outerRadius: 60,
+      data: [
+        { label: "Stress- Managment", value: 40, color: "#F9D4DE" },
+        { value: 60, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 85,
+      outerRadius: 75,
+      data: [
+        { label: "Resilience", value: 70, color: "#A8A3CF" },
+        { value: 30, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 100,
+      outerRadius: 90,
+      data: [
+        { label: "Empathy", value: 90, color: "#AED7B7" },
+        { value: 10, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+  ],
+  cognitiveAgilityBar: [
+    { empathy: 3.7, resilience: 2.5, stressManagment: 1.6, selfAwarness: 0.8 },
+  ],
+  cognitiveAgilityCircle: [
+    {
+      innerRadius: 55,
+      outerRadius: 45,
+      data: [
+        { label: "Self - Awareness", value: 100, color: "#9BDFC4" },
+        { value: 0, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 70,
+      outerRadius: 60,
+      data: [
+        { label: "Stress- Managment", value: 40, color: "#FFB44F" },
+        { value: 60, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 85,
+      outerRadius: 75,
+      data: [
+        { label: "Resilience", value: 70, color: "#F99BAB" },
+        { value: 30, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 100,
+      outerRadius: 90,
+      data: [
+        { label: "Empathy", value: 90, color: "#62B2FD" },
+        { value: 10, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+  ],
+  sociabilitySkillsBar: [
+    { empathy: 3.7, resilience: 2.5, stressManagment: 1.6, selfAwarness: 0.8 },
+  ],
+  sociabilitySkillsCircle: [
+    {
+      innerRadius: 55,
+      outerRadius: 45,
+      data: [
+        { label: "Self - Awareness", value: 100, color: "#9BBFE0" },
+        { value: 0, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 70,
+      outerRadius: 60,
+      data: [
+        { label: "Stress- Managment", value: 40, color: "#C6D68F" },
+        { value: 60, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 85,
+      outerRadius: 75,
+      data: [
+        { label: "Resilience", value: 70, color: "#E8A09A" },
+        { value: 30, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+    {
+      innerRadius: 100,
+      outerRadius: 90,
+      data: [
+        { label: "Empathy", value: 90, color: "#FBE29F" },
+        { value: 10, color: "#D0D5DD45" },
+      ],
+      cornerRadius: 10,
+    },
+  ],
 };
