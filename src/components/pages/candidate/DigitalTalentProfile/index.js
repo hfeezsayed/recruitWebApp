@@ -24,6 +24,8 @@ import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { DigitalTalentProfileData } from "../../../dummy/Data";
+import { useEffect } from "react";
+import axios from 'axios';
 
 export const DigitalTalentProfile = () => {
   const [userData, setUserData] = useState(DigitalTalentProfileData);
@@ -46,6 +48,19 @@ export const DigitalTalentProfile = () => {
       }%, #008080 100%)`,
     },
   }));
+
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId=1")
+    .then(response => {
+        console.log(response.data);
+        setUserData(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
+
+
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -160,14 +175,14 @@ export const DigitalTalentProfile = () => {
                   <Box sx={{ width: "50%", mr: 1 }}>
                     <BorderLinearProgress
                       variant="determinate"
-                      value={userData?.profileCompletd || 0}
+                      value={userData?.personalInfo ? 100 : 0}
                     />
                   </Box>
                   <Box sx={{ minWidth: 35 }}>
                     <Typography
                       variant="body2"
                       color="text.secondary">{`${Math.round(
-                      userData?.profileCompletd || 0
+                      userData?.personalInfo ? 100 : 0
                     )}%`}</Typography>
                   </Box>
                 </Box>
@@ -189,7 +204,7 @@ export const DigitalTalentProfile = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.valueTaken || 0}
+                          value={userData?.personalInfo ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -208,7 +223,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueTaken ? "#58A20F" : "#101828",
+                            color: userData?.personalInfo ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -251,13 +266,13 @@ export const DigitalTalentProfile = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueTaken ? "#1E90FF" : "#E05880",
+                        color: userData?.personalInfo ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.valueTaken ? "Edit" : "Not taken"}
+                      {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -267,7 +282,7 @@ export const DigitalTalentProfile = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.prefrenceTaken || 0}
+                          value={userData?.preferenes ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -286,7 +301,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.prefrenceTaken
+                            color: userData?.preferenes
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -331,13 +346,13 @@ export const DigitalTalentProfile = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.prefrenceTaken ? "#1E90FF" : "#E05880",
+                        color: userData?.preferenes ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.prefrenceTaken ? "Edit" : "Not taken"}
+                      {userData?.preferenes ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -347,7 +362,7 @@ export const DigitalTalentProfile = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.valueTaken || 0}
+                          value={userData?.valueAssessment ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -366,7 +381,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueTaken ? "#58A20F" : "#101828",
+                            color: userData?.valueAssessment ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -409,13 +424,13 @@ export const DigitalTalentProfile = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueTaken ? "#FFA500" : "#E05880",
+                        color: userData?.valueAssessment ? "#FFA500" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.valueTaken ? "RE- TAKE" : "Not taken"}
+                      {userData?.valueAssessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -425,7 +440,7 @@ export const DigitalTalentProfile = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.analysisTaken || 0}
+                          value={userData?.assessment ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -444,7 +459,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.analysisTaken
+                            color: userData?.assessment
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -489,13 +504,13 @@ export const DigitalTalentProfile = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.analysisTaken ? "#FFA500" : "#E05880",
+                        color: userData?.assessment ? "#FFA500" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.analysisTaken ? "RE- TAKE" : "Not taken"}
+                      {userData?.assessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

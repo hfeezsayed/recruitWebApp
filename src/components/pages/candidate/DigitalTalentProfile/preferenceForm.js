@@ -9,6 +9,8 @@ import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { qualifications, specializations, team, skills, skillLevel, PreferOffice, workShifts, locations, yes_No, travels, work_Comapny, schedules, appealings, currency, salary_Rate, envonments, job_Interests, experiences, visa_status, certifications, notice, industry, softwares, environments
  } from "../seedData";
+import { useEffect } from "react";
+
 
 export const PreferenceForm = () => {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ export const PreferenceForm = () => {
   const [primarySkills, setPrimarySkill] = useState([
     { skill: null, expertise: null },
   ]);
-  const [secoundrySkills, setSecoundrykill] = useState([
+  const [secoundrySkills, setSecoundrySkill] = useState([
     { skill: null, expertise: null },
   ]);
   const [softwareApplication, setSoftwareApplication] = useState({
@@ -42,7 +44,7 @@ export const PreferenceForm = () => {
   // form 2
   const [workSetting, setWorkSetting] = useState();
   const [workShift, setWorkShift] = useState();
-  const [preffrredLocation, setPrefferedLocation] = useState();
+  const [prefferedLocation, setPrefferedLocation] = useState();
   const [openToRelocate, setOpenToRelocate] = useState();
   const [requiredForTravel, setRequiredForTravel] = useState();
   const [workSchedule, setWorkSchedule] = useState();
@@ -82,6 +84,47 @@ export const PreferenceForm = () => {
     ]);
   };
 
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidatePreferences?candidateId=1")
+    .then(response => {
+      const data = response.data;
+      setWorkSetting(data.workSetting)
+      setWorkShift(data.workShift)
+      setPrefferedLocation(data.prefferedLocation)
+      setOpenToRelocate(data.openToRelocate)
+      setRequiredForTravel(data.requiredForTravel)
+      setWorkSchedule(data.workSchedule)
+      setWorkIndepandently(data.workIndepandently)
+      setexpectedSalary(data.expectedSalary)
+      setExpectedRange(data.expectedRange)
+      setTypeOfJobOpening(data.typeOfJobOpening)
+      setAppealingWork(data.appealingWork)
+      setWorkEnvironment(data.workEnvironment)
+      setCompanyOutlook(data.companyOutlook)
+      setVisaStatus(data.visaStatus)
+      setAcademicQualification(data.academicQualification)
+      setSpecialization(data.specialization)
+      setAcademicBackground(data.academicBackGround)
+      setSpecificLicense(data.specificLicense)
+      setYearOfExperience(data.yearsOfExperience)
+      setExperienceRole(data.experienceRole)
+      setWorkInIndustry(data.workInIndustry)
+      setWorkRole(data.workRole)
+      setExperienceStachHolder(data.experienceStackHolder)
+      setNoticePeriod(data.noticePeriod)
+      setTeamHandling(data.teamHandling)
+      setTeamSize(data.teamSize)
+      setIndustryExperience(data.indusrtyExperience)
+      setPrimarySkill(data.primarySkills)
+      setSecoundrySkill(data.secoundrySkills)
+      setSoftwareApplication(data.softwareApplication)
+    })
+    .catch(error => {
+      console.log(error);
+    })
+}, []);
+
+
   const handleChangeIndustryExperience = (e, value, i) => {
     console.log(value, i, e);
     let newFormValues = [...indusrtyExperience];
@@ -115,19 +158,19 @@ export const PreferenceForm = () => {
 
   // secoundry skill
   const addSecoundrySkill = () => {
-    setSecoundrykill([...secoundrySkills, { skill: null, expertise: null }]);
+    setSecoundrySkill([...secoundrySkills, { skill: null, expertise: null }]);
   };
 
   const handleChangeSecoundrySkill = (e, value, i) => {
     let newFormValues = [...secoundrySkills];
     newFormValues[i][e] = value;
-    setSecoundrykill(newFormValues);
+    setSecoundrySkill(newFormValues);
   };
 
   const removeSecoundrySkill = (i) => {
     let newFormValues = [...secoundrySkills];
     newFormValues.splice(i, 1);
-    setSecoundrykill(newFormValues);
+    setSecoundrySkill(newFormValues);
   };
 
   const onPrefrenceSubmit = async (e) => {
@@ -159,7 +202,7 @@ export const PreferenceForm = () => {
     console.log(
       workSetting,
       workShift,
-      preffrredLocation,
+      prefferedLocation,
       openToRelocate,
       requiredForTravel,
       workSchedule,
@@ -198,7 +241,7 @@ export const PreferenceForm = () => {
         {
           workSetting,
           workShift,
-          preffrredLocation,
+          prefferedLocation,
           openToRelocate,
           requiredForTravel,
           workSchedule,
@@ -983,7 +1026,7 @@ export const PreferenceForm = () => {
                       size="small"
                       fullWidth
                       options={locations.map((option) => option.label)}
-                      value={preffrredLocation || null}
+                      value={prefferedLocation || null}
                       onChange={(e, value) => setPrefferedLocation(value)}
                       renderInput={(params) => (
                         <TextField {...params} placeholder="Select" required />

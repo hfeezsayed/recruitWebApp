@@ -28,7 +28,7 @@ export const Routes = () => {
       <Route path="forgotpasswordotp" element={<ForgotOtp />} />
       <Route path="newpassword" element={<NewPassword />} />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
-        <Route path="homepage" element={<HomePage />} />
+        <Route path="candidate" element={<HomePage />} />
         <Route path="digitalTalentProfile" element={<DigitalTalentProfile />} />
         <Route
           path="digitalTalentProfile/personalinfromation"

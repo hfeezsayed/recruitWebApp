@@ -13,6 +13,7 @@ import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { QUESTIONS } from "../../../dummy/Data";
+import { useEffect } from "react";
 
 export const AnalysisAssessment = () => {
   const [questionList, setQuestionList] = useState(QUESTIONS);
@@ -48,11 +49,21 @@ export const AnalysisAssessment = () => {
     setCurrentQuestion(currentQuestion - 1);
   };
 
+  useEffect( () => {
+      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId=1&versionNo=-1")
+      .then(response => {
+          setQuestionList(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }, []);
+
   const handleSubmitData = async () => {
     console.log(questionList);
 
     axios
-      .post("localhost:3000/question", questionList)
+      .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId=1", questionList)
       .then((data) => {
         console.log(data.data);
       })

@@ -26,6 +26,9 @@ import { TopNav } from "../../../widgets/topNav";
 import { DashBoardData } from "../../../dummy/Data";
 import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
+import { useEffect } from "react";
+import axios from 'axios';
+
 
 export const HomePage = () => {
   const [userData, setUserData] = useState(DashBoardData);
@@ -60,6 +63,17 @@ export const HomePage = () => {
       setUserData(DashBoardData);
     }
   };
+
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId=1")
+    .then(response => {
+        console.log(response.data);
+        setUserData(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
 
   return (
     <div>
@@ -184,14 +198,14 @@ export const HomePage = () => {
                 required assessments to get started
               </p>
               {/* card */}
-              <div className="grid grid-cols-2 gap-5 py-5">
+              <div className="grid grid-cols-2 gap-5 mt-5">
                 <Card sx={{ borderRadius: 5 }}>
                   <CardContent>
                     <div className="flex gap-2">
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.valueTaken || 0}
+                          value={userData?.personalInfo ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -210,7 +224,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueTaken ? "#58A20F" : "#101828",
+                            color: userData?.personalInfo ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -253,13 +267,13 @@ export const HomePage = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueTaken ? "#1E90FF" : "#E05880",
+                        color: userData?.personalInfo ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.valueTaken ? "Edit" : "Not taken"}
+                      {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -269,7 +283,7 @@ export const HomePage = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.prefrenceTaken || 0}
+                          value={userData?.preferenes ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -288,7 +302,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.prefrenceTaken
+                            color: userData?.preferenes
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -333,13 +347,13 @@ export const HomePage = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.prefrenceTaken ? "#1E90FF" : "#E05880",
+                        color: userData?.preferenes ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.prefrenceTaken ? "Edit" : "Not taken"}
+                      {userData?.preferenes ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -349,7 +363,7 @@ export const HomePage = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.valueTaken || 0}
+                          value={userData?.valueAssessment ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -368,7 +382,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueTaken ? "#58A20F" : "#101828",
+                            color: userData?.valueAssessment ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -411,13 +425,13 @@ export const HomePage = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueTaken ? "#FFA500" : "#E05880",
+                        color: userData?.valueAssessment ? "#FFA500" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.valueTaken ? "RE- TAKE" : "Not taken"}
+                      {userData?.valueAssessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -427,7 +441,7 @@ export const HomePage = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.analysisTaken || 0}
+                          value={userData?.assessment ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -446,7 +460,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.analysisTaken
+                            color: userData?.assessment
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -491,13 +505,13 @@ export const HomePage = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.analysisTaken ? "#FFA500" : "#E05880",
+                        color: userData?.assessment ? "#FFA500" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={changeUserData}>
-                      {userData?.analysisTaken ? "RE- TAKE" : "Not taken"}
+                      {userData?.assessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

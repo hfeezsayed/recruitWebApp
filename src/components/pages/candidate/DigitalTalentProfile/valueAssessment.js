@@ -7,6 +7,7 @@ import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { ValueAssesmentData, ValuseAssesmentRating } from "../../../dummy/Data";
+import { useEffect } from "react";
 
 export const ValueAssessment = () => {
   const navigate = useNavigate();
@@ -75,12 +76,23 @@ export const ValueAssessment = () => {
     setRatingList(newFormValues);
   };
 
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidateValuesQuestionnaire?candidateId=1")
+    .then(response => {
+        setQuestionList(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
+
+  
   const handleValueSave = async () => {
     console.log("questionsData ", questionList, ratingList);
 
     // navigate("/analysisassessmentform");
     await axios
-      .post("http://localhost/3000", questionList, ratingList)
+      .post("http://localhost:8080/xen/saveCandidateValueAssessment?candidateId=1", questionList) //ratingList)
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
   };
@@ -268,12 +280,21 @@ export const ValueAssessment = () => {
                       </Button>
                     )}
 
-                    <Button
+                    {(currentQuestion < questionList.length -1) ? 
+                     (<Button
                       variant="contained"
                       type="submit"
                       sx={{ bgcolor: "#008080" }}>
                       Next
+                    </Button>)
+                    : ( 
+                      <Button
+                      variant="contained"
+                      style={{ colorL: "#ffffff", backgroundColor: "#008080" }}
+                      onClick={handleValueSave}>
+                      Submit
                     </Button>
+                    )}
                   </div>
                 </form>
               </>

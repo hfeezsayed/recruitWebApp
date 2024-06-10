@@ -22,10 +22,8 @@ export const AssesmentForm = () => {
   const location = useLocation();
   const [value, setValue] = React.useState(0);
   const [AllAssessmentList, setAllAssessmentList] = useState(AllAssessmentData);
-  const [selfAssessmentList, setSelftAssessmentList] =
-    useState(ClientAssessmentData);
-  const [clientAssessmentList, setClientAssessmentList] =
-    useState(ClientAssessmentData);
+  const [selfAssessmentList, setSelftAssessmentList] = useState(ClientAssessmentData);
+  const [clientAssessmentList, setClientAssessmentList] = useState(ClientAssessmentData);
 
   useEffect(() => {
     if (location.state !== null) {
@@ -35,6 +33,7 @@ export const AssesmentForm = () => {
   }, [location.state]);
 
   const handleChange = (event, newValue) => {
+    console.log("value = ", value);
     setValue(newValue);
   };
   const AllAssessment = () => {

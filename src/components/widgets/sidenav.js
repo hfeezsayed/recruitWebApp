@@ -116,14 +116,14 @@ export const SideNav = () => {
                 mb: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "/homepage" ? "#008080" : "#ffffff",
-                color: currentState === "/homepage" ? "#ffffff" : "#475467",
+                bgcolor: currentState === "/candidate" ? "#008080" : "#ffffff",
+                color: currentState === "/candidate" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
-                navigate("/homepage");
+                navigate("/candidate");
               }}>
               <ListItemIcon
                 sx={{
@@ -132,13 +132,13 @@ export const SideNav = () => {
                   justifyContent: "center",
                 }}>
                 <DashboardSvg
-                  COLOR={currentState === "/homepage" ? "#ffffff" : "#475467"}
+                  COLOR={currentState === "/candidate" ? "#ffffff" : "#475467"}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Dashboard"}
                 primaryTypographyProps={{
-                  color: currentState === "/homepage" ? "#ffffff" : "#475467",
+                  color: currentState === "/candidate" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -167,6 +167,7 @@ export const SideNav = () => {
                 },
               }}
               onClick={() => {
+                navigate("/digitalTalentProfile")
                 setShowAcordian(!showAcordian);
               }}>
               <ListItemIcon
@@ -195,6 +196,7 @@ export const SideNav = () => {
                 sx={{ opacity: open ? 1 : 0 }}
               />
               {showAcordian ? (
+                
                 <IoIosArrowUp
                   style={{
                     color: currentState.includes("digitalTalentProfile")
