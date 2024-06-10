@@ -13,6 +13,7 @@ import { AnalysisAssessment } from "./components/pages/candidate/DigitalTalentPr
 import { PersonalInformation } from "./components/pages/candidate/DigitalTalentProfile/personalInformation";
 import { PreferenceForm } from "./components/pages/candidate/DigitalTalentProfile/preferenceForm";
 import { ValueAssessment } from "./components/pages/candidate/DigitalTalentProfile/valueAssessment";
+import { TalentProfileResult } from "./components/pages/candidate/DigitalTalentProfile/talentProfileResult";
 import { AssesmentForm } from "./components/pages/candidate/AssessmentForm";
 import { AuthorisedClient } from "./components/pages/candidate/AuthorisedClients";
 import { Error404 } from "./components/pages/common/Error404";
@@ -30,6 +31,10 @@ export const Routes = () => {
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
         <Route path="homepage" element={<HomePage />} />
         <Route path="digitalTalentProfile" element={<DigitalTalentProfile />} />
+        <Route
+          path="digitalTalentProfileResult"
+          element={<TalentProfileResult />}
+        />
         <Route
           path="digitalTalentProfile/personalinfromation"
           element={<PersonalInformation />}
