@@ -26,6 +26,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { DigitalTalentProfileData } from "../../../dummy/Data";
 import { useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export const DigitalTalentProfile = () => {
   const [userData, setUserData] = useState(DigitalTalentProfileData);
@@ -48,6 +49,7 @@ export const DigitalTalentProfile = () => {
       }%, #008080 100%)`,
     },
   }));
+  const navigate = useNavigate();
 
   useEffect( () => {
     axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId=1")
@@ -271,7 +273,7 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/personalinfromation")}>
                       {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -351,7 +353,7 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
                       {userData?.preferenes ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -429,7 +431,7 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/valueassessmentform")}>
                       {userData?.valueAssessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -509,7 +511,7 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/analysisassessmentform")}>
                       {userData?.assessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>

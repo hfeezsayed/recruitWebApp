@@ -271,7 +271,10 @@ export const PreferenceForm = () => {
           softwareApplication
         }
       )
-      .then((data) => console.log(data))
+      .then((data) => 
+        console.log(data),
+        navigate("/digitalTalentProfile")
+    )
       .catch((e) => console.log(e));
   };
 

@@ -28,6 +28,7 @@ export const PersonalInformation = () => {
     // },
   ]);
 
+
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
     { label: "The Godfather", year: 1972 },
@@ -124,7 +125,10 @@ export const PersonalInformation = () => {
           education
         }
       )
-      .then((data) => console.log(data))
+      .then((data) =>
+         console.log(data),
+         navigate("/digitalTalentProfile")
+    )
       .catch((e) => console.log(e));
   };
 

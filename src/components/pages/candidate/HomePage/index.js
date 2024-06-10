@@ -28,6 +28,7 @@ import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
 import { useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 export const HomePage = () => {
@@ -51,6 +52,7 @@ export const HomePage = () => {
       }%, #008080 100%)`,
     },
   }));
+  const navigate = useNavigate(); 
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -176,14 +178,14 @@ export const HomePage = () => {
                   <Box sx={{ width: "50%", mr: 1 }}>
                     <BorderLinearProgress
                       variant="determinate"
-                      value={userData?.profileCompletd || 0}
+                      value={userData?.personalInfo ? 100 : 0}
                     />
                   </Box>
                   <Box sx={{ minWidth: 35 }}>
                     <Typography
                       variant="body2"
                       color="text.secondary">{`${Math.round(
-                      userData?.profileCompletd || 0
+                      userData?.personalInfo ? 100 : 0
                     )}%`}</Typography>
                   </Box>
                 </Box>
@@ -272,7 +274,7 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/personalinfromation")}>
                       {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -352,7 +354,7 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
                       {userData?.preferenes ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -430,7 +432,7 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/valueassessmentform")}>
                       {userData?.valueAssessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -510,7 +512,7 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={changeUserData}>
+                      onClick={() => navigate("/digitalTalentProfile/analysisassessmentform")}>
                       {userData?.assessment ? "RE- TAKE" : "Not taken"}
                     </Button>
                   </CardActions>

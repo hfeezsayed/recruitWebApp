@@ -14,12 +14,14 @@ import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { QUESTIONS } from "../../../dummy/Data";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AnalysisAssessment = () => {
   const [questionList, setQuestionList] = useState(QUESTIONS);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentSection, setCurrentSection] = useState(1);
   const AnalysisAssessmentQuestion = questionList[currentQuestion];
+  const navigate = useNavigate();
 
   const handleRatingChange = (question, option) => {
     question.selectedOption = option;
@@ -66,6 +68,7 @@ export const AnalysisAssessment = () => {
       .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId=1", questionList)
       .then((data) => {
         console.log(data.data);
+        navigate("/digitalTalentProfile");
       })
       .catch((error) => console.log(error));
   };
