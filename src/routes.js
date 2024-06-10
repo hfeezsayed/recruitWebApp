@@ -17,6 +17,7 @@ import { TalentProfileResult } from "./components/pages/candidate/DigitalTalentP
 import { AssesmentForm } from "./components/pages/candidate/AssessmentForm";
 import { AuthorisedClient } from "./components/pages/candidate/AuthorisedClients";
 import { Error404 } from "./components/pages/common/Error404";
+import { ValueAssessmentResult } from "./components/pages/candidate/DigitalTalentProfile/valueAssessmentResult";
 
 export const Routes = () => {
   return (
@@ -46,6 +47,10 @@ export const Routes = () => {
         <Route
           path="digitalTalentProfile/valueassessmentform"
           element={<ValueAssessment />}
+        />
+        <Route
+          path="digitalTalentProfile/valueassessmentresult"
+          element={<ValueAssessmentResult />}
         />
         <Route
           path="digitalTalentProfile/analysisassessmentform"
