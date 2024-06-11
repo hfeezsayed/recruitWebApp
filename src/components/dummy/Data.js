@@ -708,132 +708,121 @@ export const TalentProfileResultData = {
     { name: "Universalism", point: 7 },
     { name: "Universalism", point: 6 },
   ],
-  emotionalFlexibilityBar: [
+
+  cognitiveAgility: [
     {
-      empathy: 3.7,
-      resilience: 2.5,
-      stressManagment: 1.6,
-      selfAwarness: 0.8,
+      pillar1: "Cognitive Agility",
+      competencies: [
+        {
+          empathy: 3.7,
+          resilience: 2.5,
+          stressManagment: 1.6,
+          selfAwarness: 0.8,
+        },
+      ],
+    },
+    {
+      pillar2: "Cognitive Agility",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
+      ],
     },
   ],
-  emotionalFlexibilityCircle: [
+
+  sociabilitySkills: [
     {
-      innerRadius: 55,
-      outerRadius: 45,
-      data: [
-        { label: "Self - Awareness", value: 100, color: "#BFE1F4" },
-        { value: 0, color: "#D0D5DD45" },
+      pillar1: "Sociability Skill",
+      competencies: [
+        {
+          empathy: 3.7,
+          resilience: 2.5,
+          stressManagment: 1.6,
+          selfAwarness: 0.8,
+        },
       ],
-      cornerRadius: 10,
     },
     {
-      innerRadius: 70,
-      outerRadius: 60,
-      data: [
-        { label: "Stress- Managment", value: 40, color: "#F9D4DE" },
-        { value: 60, color: "#D0D5DD45" },
+      pillar2: "Sociability Skill",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
       ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 85,
-      outerRadius: 75,
-      data: [
-        { label: "Resilience", value: 70, color: "#A8A3CF" },
-        { value: 30, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 100,
-      outerRadius: 90,
-      data: [
-        { label: "Empathy", value: 90, color: "#AED7B7" },
-        { value: 10, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-  ],
-  cognitiveAgilityBar: [
-    { empathy: 3.7, resilience: 2.5, stressManagment: 1.6, selfAwarness: 0.8 },
-  ],
-  cognitiveAgilityCircle: [
-    {
-      innerRadius: 55,
-      outerRadius: 45,
-      data: [
-        { label: "Self - Awareness", value: 100, color: "#9BDFC4" },
-        { value: 0, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 70,
-      outerRadius: 60,
-      data: [
-        { label: "Stress- Managment", value: 40, color: "#FFB44F" },
-        { value: 60, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 85,
-      outerRadius: 75,
-      data: [
-        { label: "Resilience", value: 70, color: "#F99BAB" },
-        { value: 30, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 100,
-      outerRadius: 90,
-      data: [
-        { label: "Empathy", value: 90, color: "#62B2FD" },
-        { value: 10, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
     },
   ],
-  sociabilitySkillsBar: [
-    { empathy: 3.7, resilience: 2.5, stressManagment: 1.6, selfAwarness: 0.8 },
-  ],
-  sociabilitySkillsCircle: [
+
+  emtionalFlexibility: [
     {
-      innerRadius: 55,
-      outerRadius: 45,
-      data: [
-        { label: "Self - Awareness", value: 100, color: "#9BBFE0" },
-        { value: 0, color: "#D0D5DD45" },
+      pillar1: "Emtional Flexibility",
+      competencies: [
+        {
+          empathy: 3,
+          resilience: 4,
+          stressManagment: 3.5,
+          selfAwarness: 2.5,
+        },
       ],
-      cornerRadius: 10,
     },
     {
-      innerRadius: 70,
-      outerRadius: 60,
-      data: [
-        { label: "Stress- Managment", value: 40, color: "#C6D68F" },
-        { value: 60, color: "#D0D5DD45" },
+      pillar2: "Emtional Flexibility",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
       ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 85,
-      outerRadius: 75,
-      data: [
-        { label: "Resilience", value: 70, color: "#E8A09A" },
-        { value: 30, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
-    },
-    {
-      innerRadius: 100,
-      outerRadius: 90,
-      data: [
-        { label: "Empathy", value: 90, color: "#FBE29F" },
-        { value: 10, color: "#D0D5DD45" },
-      ],
-      cornerRadius: 10,
     },
   ],
 };
@@ -850,3 +839,122 @@ export const valueAssesmentResult = [
   { name: "Stimulation", x: 0 },
   { name: "Self-Direction", x: 1 },
 ];
+
+export const talentAnalysisResultData = {
+  cognitiveAgility: [
+    {
+      pillar1: "Cognitive Agility",
+      competencies: [
+        {
+          empathy: 3.7,
+          resilience: 2.5,
+          stressManagment: 1.6,
+          selfAwarness: 0.8,
+        },
+      ],
+    },
+    {
+      pillar2: "Cognitive Agility",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
+      ],
+    },
+  ],
+
+  sociabilitySkills: [
+    {
+      pillar1: "Sociability Skill",
+      competencies: [
+        {
+          empathy: 3.7,
+          resilience: 2.5,
+          stressManagment: 1.6,
+          selfAwarness: 0.8,
+        },
+      ],
+    },
+    {
+      pillar2: "Sociability Skill",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
+      ],
+    },
+  ],
+
+  emtionalFlexibility: [
+    {
+      pillar1: "Emtional Flexibility",
+      competencies: [
+        {
+          empathy: 3,
+          resilience: 4,
+          stressManagment: 3.5,
+          selfAwarness: 2.5,
+        },
+      ],
+    },
+    {
+      pillar2: "Emtional Flexibility",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress- Managment",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self- Awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
+      ],
+    },
+  ],
+};
