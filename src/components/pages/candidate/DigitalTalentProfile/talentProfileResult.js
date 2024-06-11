@@ -24,7 +24,7 @@ import Briefcase from "../../../../assets/images/Briefcase.png";
 import Location from "../../../../assets/images/Location.png";
 import Rocket from "../../../../assets/images/Rocket.png";
 import { HumanBody } from "../../../../assets/icon/humanBody";
-import { checkSkillLevel } from "../../../utils/function";
+import { checkSkillLevel, convertCompetencies } from "../../../utils/function";
 
 export const TalentProfileResult = () => {
   const [userData, setUserData] = useState(TalentProfileResultData);
@@ -37,6 +37,21 @@ export const TalentProfileResult = () => {
       color: "#A2C4D4",
     },
   });
+
+  const convertedEmtional = convertCompetencies(
+    userData?.emtionalFlexibility[1].competencies,
+    "Emtional"
+  );
+
+  const convertSociability = convertCompetencies(
+    userData?.sociabilitySkills[1].competencies,
+    "Sociability"
+  );
+
+  const convertCognitive = convertCompetencies(
+    userData?.cognitiveAgility[1].competencies,
+    "Cognitive"
+  );
 
   return (
     <div>
@@ -587,10 +602,10 @@ export const TalentProfileResult = () => {
                   xAxis={[
                     {
                       scaleType: "band",
-                      data: ["Emotional Flexibility"],
+                      data: [userData?.emtionalFlexibility[0].pillar1],
                     },
                   ]}
-                  dataset={userData?.emotionalFlexibilityBar}
+                  dataset={userData?.emtionalFlexibility[0].competencies}
                   series={[
                     { dataKey: "empathy", color: "#AED7B7" },
                     {
@@ -660,7 +675,7 @@ export const TalentProfileResult = () => {
               <div className="py-5">
                 <div className="flex justify-end">
                   <PieChart
-                    series={userData?.emotionalFlexibilityCircle}
+                    series={convertedEmtional}
                     width={300}
                     height={200}
                     slotProps={{
@@ -706,150 +721,48 @@ export const TalentProfileResult = () => {
                   </div>
                   {/* body */}
                   <div className="grid grid-flow-row gap-3">
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#AED7B7",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
+                    {convertedEmtional.map((data, index) => {
+                      let row = data.data[0];
+                      return (
+                        <div
+                          className="grid grid-cols-4"
                           style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Empathy
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          3.7
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          90 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#A8A3CF",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Resilience
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          2.5
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          70 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#F9D4DE",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Stress- Managment
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          1.6
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          40 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#BFE1F4",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Self - Awareness
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          0.8
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          100 %
-                        </p>
-                      </div>
-                    </div>
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.rating}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.value} %
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -865,10 +778,10 @@ export const TalentProfileResult = () => {
                   xAxis={[
                     {
                       scaleType: "band",
-                      data: ["Cognitive Agility"],
+                      data: [userData?.cognitiveAgility[0].pillar1],
                     },
                   ]}
-                  dataset={userData?.cognitiveAgilityBar}
+                  dataset={userData?.cognitiveAgility[0].competencies}
                   series={[
                     { dataKey: "empathy", color: "#62B2FD" },
                     {
@@ -938,7 +851,7 @@ export const TalentProfileResult = () => {
               <div className="py-5">
                 <div className="flex justify-end">
                   <PieChart
-                    series={userData?.cognitiveAgilityCircle}
+                    series={convertCognitive}
                     width={300}
                     height={200}
                     slotProps={{
@@ -984,150 +897,48 @@ export const TalentProfileResult = () => {
                   </div>
                   {/* body */}
                   <div className="grid grid-flow-row gap-3">
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#62B2FD",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
+                    {convertCognitive.map((data, index) => {
+                      let row = data.data[0];
+                      return (
+                        <div
+                          className="grid grid-cols-4"
                           style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Empathy
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          3.7
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          90 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#F99BAB",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Resilience
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          2.5
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          70 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#FFB44F",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Stress- Managment
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          1.6
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          40 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#9BDFC4",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Self - Awareness
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          0.8
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          100 %
-                        </p>
-                      </div>
-                    </div>
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.rating}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.value} %
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -1143,10 +954,10 @@ export const TalentProfileResult = () => {
                   xAxis={[
                     {
                       scaleType: "band",
-                      data: ["Sociability Skills"],
+                      data: [userData?.sociabilitySkills[0].pillar1],
                     },
                   ]}
-                  dataset={userData?.sociabilitySkillsBar}
+                  dataset={userData?.sociabilitySkills[0].competencies}
                   series={[
                     { dataKey: "empathy", color: "#FBE29F" },
                     {
@@ -1216,7 +1027,7 @@ export const TalentProfileResult = () => {
               <div className="py-5">
                 <div className="flex justify-end">
                   <PieChart
-                    series={userData?.sociabilitySkillsCircle}
+                    series={convertSociability}
                     width={300}
                     height={200}
                     slotProps={{
@@ -1262,150 +1073,48 @@ export const TalentProfileResult = () => {
                   </div>
                   {/* body */}
                   <div className="grid grid-flow-row gap-3">
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#FBE29F",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
+                    {convertSociability.map((data, index) => {
+                      let row = data.data[0];
+                      return (
+                        <div
+                          className="grid grid-cols-4"
                           style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Empathy
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          3.7
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          90 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#E8A09A",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Resilience
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          2.5
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          70 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#C6D68F",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Stress- Managment
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          1.6
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          40 %
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="grid grid-cols-4"
-                      style={{
-                        borderLeftWidth: 3,
-                        borderLeftColor: "#9BBFE0",
-                        borderRadius: 3,
-                        paddingLeft: 5,
-                      }}>
-                      <div className="col-span-2">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          Self - Awareness
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          0.8
-                        </p>
-                      </div>
-                      <div className="flex justify-center">
-                        <p
-                          style={{
-                            color: "#475467",
-                            fontSize: 16,
-                          }}>
-                          100 %
-                        </p>
-                      </div>
-                    </div>
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.rating}
+                            </p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.value} %
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
