@@ -13,45 +13,45 @@ export const checkSkillLevel = (value) => {
 const getCompetencyObject = (competency, name) => {
   const mappings = [];
 
-  if (name === "Sociability") {
+  if (name === "Sociability Skill") {
     mappings.push(
-      { name: "Empathy", innerRadius: 100, outerRadius: 90, color: "#FBE29F" },
+      { name: "Communication skills", innerRadius: 100, outerRadius: 90, color: "#FBE29F" },
       {
-        name: "Resilience",
+        name: "Collaboration",
         innerRadius: 85,
         outerRadius: 75,
         color: "#E8A09A",
       },
       {
-        name: "Stress- Managment",
+        name: "Relationship building",
         innerRadius: 70,
         outerRadius: 60,
         color: "#C6D68F",
       },
       {
-        name: "Self- Awareness",
+        name: "Conflict management",
         innerRadius: 55,
         outerRadius: 45,
         color: "#9BBFE0",
       }
     );
-  } else if (name === "Cognitive") {
+  } else if (name === "Cognitive Agility") {
     mappings.push(
-      { name: "Empathy", innerRadius: 100, outerRadius: 90, color: "#62B2FD" },
+      { name: "Adaptability", innerRadius: 100, outerRadius: 90, color: "#62B2FD" },
       {
-        name: "Resilience",
+        name: "Decision Making",
         innerRadius: 85,
         outerRadius: 75,
         color: "#F99BAB",
       },
       {
-        name: "Stress- Managment",
+        name: "Problem Solving",
         innerRadius: 70,
         outerRadius: 60,
         color: "#FFB44F",
       },
       {
-        name: "Self- Awareness",
+        name: "Time Management",
         innerRadius: 55,
         outerRadius: 45,
         color: "#9BDFC4",
@@ -67,13 +67,13 @@ const getCompetencyObject = (competency, name) => {
         color: "#A8A3CF",
       },
       {
-        name: "Stress- Managment",
+        name: "Stress management",
         innerRadius: 70,
         outerRadius: 60,
         color: "#F9D4DE",
       },
       {
-        name: "Self- Awareness",
+        name: "Self-awareness",
         innerRadius: 55,
         outerRadius: 45,
         color: "#BFE1F4",
@@ -82,8 +82,11 @@ const getCompetencyObject = (competency, name) => {
   }
 
   console.log(mappings);
+  console.log(competency);
 
   const mapping = mappings.find((data) => data.name === competency.name);
+
+  console.log(mapping);
 
   return {
     innerRadius: mapping.innerRadius,
@@ -101,7 +104,11 @@ const getCompetencyObject = (competency, name) => {
   };
 };
 
-export const convertCompetencies = (competencies, name) => {
+export const convertCompetencies = (competencyList) => {
+  console.log(competencyList.competencies);
+  const name = competencyList.pillar2
+  console.log(name);
+  const competencies = competencyList.competencies
   return competencies.map((competency) =>
     getCompetencyObject(competency, name)
   );

@@ -19,7 +19,7 @@ export const Login = () => {
         navigate("/admin");
       }
       if (isAuthenticated.role === "ROLE_CANDIDATE") {
-        navigate("/digitalTalentProfile/personalinfromation");
+        navigate("/candidate");
       }
     }
   }, []);

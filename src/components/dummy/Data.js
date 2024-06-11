@@ -857,22 +857,22 @@ export const talentAnalysisResultData = {
       pillar2: "Cognitive Agility",
       competencies: [
         {
-          name: "Empathy",
+          name: "Adaptability",
           rating: 3,
           percentage: 90,
         },
         {
-          name: "Resilience",
+          name: "Decision Making",
           rating: 1.8,
           percentage: 70,
         },
         {
-          name: "Stress- Managment",
+          name: "Problem Solving",
           rating: 1.8,
           percentage: 40,
         },
         {
-          name: "Self- Awareness",
+          name: "Time Management",
           rating: 1.8,
           percentage: 100,
         },
@@ -896,22 +896,22 @@ export const talentAnalysisResultData = {
       pillar2: "Sociability Skill",
       competencies: [
         {
-          name: "Empathy",
+          name: "Communication skills",
           rating: 3,
           percentage: 90,
         },
         {
-          name: "Resilience",
+          name: "Collaboration",
           rating: 1.8,
           percentage: 70,
         },
         {
-          name: "Stress- Managment",
+          name: "Relationship building",
           rating: 1.8,
           percentage: 40,
         },
         {
-          name: "Self- Awareness",
+          name: "Conflict management",
           rating: 1.8,
           percentage: 100,
         },
@@ -945,12 +945,12 @@ export const talentAnalysisResultData = {
           percentage: 70,
         },
         {
-          name: "Stress- Managment",
+          name: "Stress management",
           rating: 1.8,
           percentage: 40,
         },
         {
-          name: "Self- Awareness",
+          name: "Self-awareness",
           rating: 1.8,
           percentage: 100,
         },

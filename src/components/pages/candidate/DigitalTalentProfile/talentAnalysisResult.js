@@ -10,21 +10,57 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { talentAnalysisResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
+import { useEffect } from "react";
+import axios from "axios";
 
 export const TalentAnalysisResult = () => {
   const [userData, setUserData] = useState(talentAnalysisResultData);
+  const [emotional, setEmotional] = useState(null);
+  const [cognitive, setCongnitive] = useState(null);
+  const [sociability, setSociability] = useState(null);
 
-  const convertedEmtional = convertCompetencies(
-    userData?.emtionalFlexibility[1].competencies
+
+
+  // useEffect(() => {
+  //   console.log("userData ", userData);
+  //   setEmotional(convertCompetencies(
+  //     userData?.emtionalFlexibility[1].competencies
+  //   ));
+  //   setCongnitive(convertCompetencies( 
+  //     userData?.cognitiveAgility[1].competencies, "Cognitive"
+  //   ));
+  //   setSociability(convertCompetencies(
+  //     userData?.sociabilitySkills[1].competencies, "Sociability"
+  //   ));
+
+  //   console.log("emotional = ", emotional);
+  // }, []);
+
+
+  const  convertedEmtional = convertCompetencies(
+    userData?.emtionalFlexibility[1]
   );
 
-  const convertSociability = convertCompetencies(
-    userData?.sociabilitySkills[1].competencies
-  );
+  const convertSociability =  convertCompetencies(
+      userData?.sociabilitySkills[1]
+    );
 
-  const convertCognitive = convertCompetencies(
-    userData?.cognitiveAgility[1].competencies
-  );
+  const convertCognitive =  convertCompetencies( 
+      userData?.cognitiveAgility[1]
+    );
+
+
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidateSpectrumResults?candidateId=1&versionNo=18")
+    .then(response => {
+        console.log(response.data);
+        setUserData(response.data);
+        //console.log(response.data?.emtionalFlexibility[1].competencies);
+    }) 
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
 
   return (
     <div>
@@ -63,17 +99,17 @@ export const TalentAnalysisResult = () => {
                     ]}
                     dataset={userData?.emtionalFlexibility[0]?.competencies}
                     series={[
-                      { dataKey: "empathy", color: "#AED7B7" },
+                      { dataKey: "Empathy", color: "#AED7B7" },
                       {
-                        dataKey: "resilience",
+                        dataKey: "Resilience",
                         color: "#A8A3CF",
                       },
                       {
-                        dataKey: "stressManagment",
+                        dataKey: "Stress management",
                         color: "#F9D4DE",
                       },
                       {
-                        dataKey: "selfAwarness",
+                        dataKey: "Self-awareness",
                         color: "#BFE1F4",
                       },
                     ]}
@@ -255,17 +291,17 @@ export const TalentAnalysisResult = () => {
                     ]}
                     dataset={userData?.cognitiveAgility[0]?.competencies}
                     series={[
-                      { dataKey: "empathy", color: "#62B2FD" },
+                      { dataKey: "Adaptability", color: "#62B2FD" },
                       {
-                        dataKey: "resilience",
+                        dataKey: "Decision Making",
                         color: "#F99BAB",
                       },
                       {
-                        dataKey: "stressManagment",
+                        dataKey: "Problem Solving",
                         color: "#FFB44F",
                       },
                       {
-                        dataKey: "selfAwarness",
+                        dataKey: "Time Management",
                         color: "#9BDFC4",
                       },
                     ]}
@@ -447,17 +483,17 @@ export const TalentAnalysisResult = () => {
                     ]}
                     dataset={userData?.sociabilitySkills[0]?.competencies}
                     series={[
-                      { dataKey: "empathy", color: "#FBE29F" },
+                      { dataKey: "Communication skills", color: "#FBE29F" },
                       {
-                        dataKey: "resilience",
+                        dataKey: "Collaboration",
                         color: "#E8A09A",
                       },
                       {
-                        dataKey: "stressManagment",
+                        dataKey: "Relationship building",
                         color: "#C6D68F",
                       },
                       {
-                        dataKey: "selfAwarness",
+                        dataKey: "Conflict management",
                         color: "#9BBFE0",
                       },
                     ]}

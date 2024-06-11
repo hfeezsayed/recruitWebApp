@@ -93,10 +93,10 @@ export const ValueAssessment = () => {
     // navigate("/analysisassessmentform");
     await axios
       .post("http://localhost:8080/xen/saveCandidateValueAssessment?candidateId=1", questionList) //ratingList)
-      .then((data) =>
-        console.log(data),
-        navigate("/digitalTalentProfile")
-    )
+      .then(response => {
+        console.log(response.data)
+        navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: response.data.versionNo } })
+  })
       .catch((e) => console.log(e));
   };
 

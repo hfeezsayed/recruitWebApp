@@ -16,9 +16,25 @@ import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { valueAssesmentResult } from "../../../dummy/Data";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import axios from 'axios';
 
 export const ValueAssessmentResult = () => {
   const [assesmentData, setAssessmentData] = useState(valueAssesmentResult);
+
+  const { version } = useLocation().state || {};
+
+
+  useEffect( () => {
+    axios.get("http://localhost:8080/xen/getCandidateValueResult?candidateId=1&versionNo="+version)
+    .then(response => {
+        setAssessmentData(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
 
   return (
     <div>

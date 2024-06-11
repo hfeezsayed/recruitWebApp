@@ -68,7 +68,7 @@ export const AnalysisAssessment = () => {
       .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId=1", questionList)
       .then((data) => {
         console.log(data.data);
-        navigate("/digitalTalentProfile");
+        //navigate("/digitalTalentProfile");
       })
       .catch((error) => console.log(error));
   };
