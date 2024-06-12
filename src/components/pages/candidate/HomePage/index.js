@@ -27,9 +27,8 @@ import { DashBoardData } from "../../../dummy/Data";
 import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
 import { useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 
 export const HomePage = () => {
   const [userData, setUserData] = useState(DashBoardData);
@@ -52,7 +51,12 @@ export const HomePage = () => {
       }%, #008080 100%)`,
     },
   }));
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  let assessment = false;
+  let valueAssessment = false;
+  let prefereness = true;
+  let personalInfos = true;
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -66,16 +70,20 @@ export const HomePage = () => {
     }
   };
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId="+user.userId)
-    .then(response => {
+    axios
+      .get(
+        "http://localhost:8080/xen/getCandidateDTPInfo?candidateId=" +
+          user.userId
+      )
+      .then((response) => {
         console.log(response.data);
         setUserData(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -171,25 +179,54 @@ export const HomePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full py-2">
-                <p style={{ color: "#101828", fontSize: 14 }}>
-                  Profile completion
-                </p>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Box sx={{ width: "50%", mr: 1 }}>
-                    <BorderLinearProgress
-                      variant="determinate"
-                      value={userData?.personalInfo ? 100 : 0}
-                    />
+              <div className="flex w-full py-2">
+                <div className="w-full">
+                  <p style={{ color: "#101828", fontSize: 14 }}>
+                    Profile completion
+                  </p>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ width: "50%", mr: 1 }}>
+                      <BorderLinearProgress
+                        variant="determinate"
+                        value={userData?.personalInfo ? 100 : 0}
+                      />
+                    </Box>
+                    <Box sx={{ minWidth: 35 }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary">{`${Math.round(
+                        userData?.personalInfo ? 100 : 0
+                      )}%`}</Typography>
+                    </Box>
                   </Box>
-                  <Box sx={{ minWidth: 35 }}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary">{`${Math.round(
-                      userData?.personalInfo ? 100 : 0
-                    )}%`}</Typography>
-                  </Box>
-                </Box>
+                </div>
+                <div className="w-32">
+                  <Button
+                    size="small"
+                    variant="text"
+                    disabled={
+                      !assessment ||
+                      !valueAssessment ||
+                      !prefereness ||
+                      !personalInfos
+                    }
+                    style={{
+                      color:
+                        !assessment ||
+                        !valueAssessment ||
+                        !prefereness ||
+                        !personalInfos
+                          ? "#9b84cf"
+                          : "#6633df",
+                      textTransform: "none",
+                      backgroundColor: "#F9F5FF",
+                      borderRadius: 16,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}>
+                    show DTP
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="py-10">
@@ -227,7 +264,9 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.personalInfo ? "#58A20F" : "#101828",
+                            color: userData?.personalInfo
+                              ? "#58A20F"
+                              : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -275,7 +314,9 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/personalinfromation")}>
+                      onClick={() =>
+                        navigate("/digitalTalentProfile/personalinfromation")
+                      }>
                       {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -305,9 +346,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.preferenes
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.preferenes ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -355,7 +394,9 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
+                      onClick={() =>
+                        navigate("/digitalTalentProfile/preferenceform")
+                      }>
                       {userData?.preferenes ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -385,7 +426,9 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueAssessment ? "#58A20F" : "#101828",
+                            color: userData?.valueAssessment
+                              ? "#58A20F"
+                              : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -428,12 +471,20 @@ export const HomePage = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueAssessment ? "#FFA500" : "#E05880",
+                        color: userData?.valueAssessment
+                          ? "#FFA500"
+                          : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => userData?.valueAssessment ? "" : navigate("/digitalTalentProfile/valueassessmentform")}>
+                      onClick={() =>
+                        userData?.valueAssessment
+                          ? ""
+                          : navigate(
+                              "/digitalTalentProfile/valueassessmentform"
+                            )
+                      }>
                       {userData?.valueAssessment ? "Done" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -463,9 +514,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.assessment
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.assessment ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -513,7 +562,13 @@ export const HomePage = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => userData?.assessment ? "" : navigate("/digitalTalentProfile/analysisassessmentform")}>
+                      onClick={() =>
+                        userData?.assessment
+                          ? ""
+                          : navigate(
+                              "/digitalTalentProfile/analysisassessmentform"
+                            )
+                      }>
                       {userData?.assessment ? "Done" : "Not taken"}
                     </Button>
                   </CardActions>
