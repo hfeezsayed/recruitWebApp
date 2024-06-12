@@ -16,14 +16,18 @@ import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { AllAssessmentData, ClientAssessmentData } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
+import axios  from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export const AssesmentForm = () => {
   const [search, setSearch] = useState();
   const location = useLocation();
   const [value, setValue] = React.useState(0);
   const [AllAssessmentList, setAllAssessmentList] = useState(AllAssessmentData);
-  const [selfAssessmentList, setSelftAssessmentList] = useState(ClientAssessmentData);
+  const [selfAssessmentList, setSelfAssessmentList] = useState(ClientAssessmentData);
   const [clientAssessmentList, setClientAssessmentList] = useState(ClientAssessmentData);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state !== null) {
@@ -31,6 +35,30 @@ export const AssesmentForm = () => {
       setValue(Number(location.state - 1));
     }
   }, [location.state]);
+
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getSelfAssessments?candidateId="+user.userId)
+    .then(response => {
+        console.log(response.data);
+        setSelfAssessmentList(response.data);
+        //console.log(response.data?.emtionalFlexibility[1].competencies);
+    }) 
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
+
+
+  const handleShowResult = (name, versionNo) => {
+    if(name === "Values"){
+      navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: versionNo } })
+    }
+    else{
+      navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: versionNo } }) 
+    }
+
+  }
 
   const handleChange = (event, newValue) => {
     console.log("value = ", value);
@@ -213,7 +241,7 @@ export const AssesmentForm = () => {
                     component="th"
                     scope="row"
                     sx={{ color: "#475467", fontSize: 14 }}>
-                    {row.assesmentName}
+                    {row.assessmentName}
                   </TableCell>
                   <TableCell sx={{ color: "#475467", fontSize: 14 }}>
                     {row.date}
@@ -251,12 +279,14 @@ export const AssesmentForm = () => {
                       </p>
                     ) : (
                       <p
+                        onClick={() => handleShowResult(row.assessmentName, row.versionNo)}
                         style={{
                           color: "#5FAEDA",
                           fontSize: 14,
                           fontWeight: 500,
+                          cursor: 'pointer' 
                         }}>
-                        View Score
+                        View Results
                       </p>
                     )}
                   </TableCell>

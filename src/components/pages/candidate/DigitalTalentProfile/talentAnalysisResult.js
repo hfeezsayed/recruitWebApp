@@ -10,7 +10,8 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { talentAnalysisResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
-import { useEffect, useLocation } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 export const TalentAnalysisResult = () => {
@@ -18,24 +19,7 @@ export const TalentAnalysisResult = () => {
   const [emotional, setEmotional] = useState(null);
   const [cognitive, setCongnitive] = useState(null);
   const [sociability, setSociability] = useState(null);
-
-
-
-  // useEffect(() => {
-  //   console.log("userData ", userData);
-  //   setEmotional(convertCompetencies(
-  //     userData?.emtionalFlexibility[1].competencies
-  //   ));
-  //   setCongnitive(convertCompetencies( 
-  //     userData?.cognitiveAgility[1].competencies, "Cognitive"
-  //   ));
-  //   setSociability(convertCompetencies(
-  //     userData?.sociabilitySkills[1].competencies, "Sociability"
-  //   ));
-
-  //   console.log("emotional = ", emotional);
-  // }, []);
-
+  const { version } = useLocation().state || {};
 
   const  convertedEmtional = convertCompetencies(
     userData?.emtionalFlexibility[1]
@@ -49,11 +33,9 @@ export const TalentAnalysisResult = () => {
       userData?.cognitiveAgility[1]
     );
 
-    const { version } = useLocation().state || {};
-
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateSpectrumResults?candidateId="+user.userId+"&versionNo="+version)
+    axios.get("http://localhost:8080/xen/getCandidateSpectrumResults?candidateId="+user.userId+"&versionNo="+ version)
     .then(response => {
         console.log(response.data);
         setUserData(response.data);
