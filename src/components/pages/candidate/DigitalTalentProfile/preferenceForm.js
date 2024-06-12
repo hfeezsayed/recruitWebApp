@@ -85,7 +85,8 @@ export const PreferenceForm = () => {
   };
 
   useEffect( () => {
-    axios.get("http://localhost:8080/xen/getCandidatePreferences?candidateId=1")
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidatePreferences?candidateId="+user.userId)
     .then(response => {
       const data = response.data;
       setWorkSetting(data.workSetting)
@@ -234,10 +235,10 @@ export const PreferenceForm = () => {
     );
 
     // navigate("/valueassessmentform");
-
+    const user = JSON.parse(localStorage.getItem("token"));
     await axios
       .post(
-        "http://localhost:8080/xen/saveCandidateForm?candidateId=1",
+        "http://localhost:8080/xen/saveCandidateForm?candidateId="+user.userId,
         {
           workSetting,
           workShift,

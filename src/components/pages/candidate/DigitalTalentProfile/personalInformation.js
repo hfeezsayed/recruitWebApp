@@ -79,10 +79,11 @@ export const PersonalInformation = () => {
   });
 
   useEffect(() => {
-    const isAuthenticated = JSON.parse(localStorage.getItem("token"));
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(user);
     axios
       .get(
-        "http://localhost:8080/xen/getCandidatePersonalInfo?candidateId="+1
+        "http://localhost:8080/xen/getCandidatePersonalInfo?candidateId="+user.userId
       )
       .then((response) => {
         console.log(response.data.education.length);
@@ -111,10 +112,10 @@ export const PersonalInformation = () => {
       "---------form 1"
     );
     // navigate("/preferenceform");
-
+    const user = JSON.parse(localStorage.getItem("token"));
     await axios
       .post(
-        "http://localhost:8080/xen/postCandidatePersonalInfo?candidateId="+1,
+        "http://localhost:8080/xen/postCandidatePersonalInfo?candidateId="+user.userId,
         {
           file,
           fullName,
@@ -247,6 +248,8 @@ export const PersonalInformation = () => {
             </p>
             <TextField
               required
+              multiline
+              rows={4}
               fullWidth
               size="small"
               variant="outlined"

@@ -25,9 +25,16 @@ import Location from "../../../../assets/images/Location.png";
 import Rocket from "../../../../assets/images/Rocket.png";
 import { HumanBody } from "../../../../assets/icon/humanBody";
 import { checkSkillLevel, convertCompetencies } from "../../../utils/function";
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export const TalentProfileResult = () => {
   const [userData, setUserData] = useState(TalentProfileResultData);
+  const [spectrum1, setSpectrum1] = useState("spectrum1");
+  const [spectrum2, setSpectrum2] = useState("spectrum2");
+  const [spectrum3, setSpectrum3] = useState("spectrum3");
+  const [spectrum4, setSpectrum4] = useState("spectrum4");
+  const [spectrum5, setSpectrum5] = useState("spectrum5");
 
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
@@ -38,19 +45,34 @@ export const TalentProfileResult = () => {
     },
   });
 
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidateDtpReport?candidateId="+user.userId)
+    .then(response => {
+        console.log(response.data);
+        setUserData(response.data);
+        setSpectrum1(response.data.pillars[0]);
+        setSpectrum2(response.data.pillars[1]);
+        setSpectrum3(response.data.pillars[2]);
+        setSpectrum4(response.data.pillars[3]);
+        setSpectrum5(response.data.pillars[4]);
+        //console.log(response.data?.emtionalFlexibility[1].competencies);
+    }) 
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
+
   const convertedEmtional = convertCompetencies(
-    userData?.emtionalFlexibility[1].competencies,
-    "Emtional"
+    userData?.emtionalFlexibility[1]
   );
 
   const convertSociability = convertCompetencies(
-    userData?.sociabilitySkills[1].competencies,
-    "Sociability"
+    userData?.sociabilitySkills[1]
   );
 
   const convertCognitive = convertCompetencies(
-    userData?.cognitiveAgility[1].competencies,
-    "Cognitive"
+    userData?.cognitiveAgility[1]
   );
 
   return (
@@ -279,7 +301,7 @@ export const TalentProfileResult = () => {
                   );
                 })}
               </div>
-              <div className="mt-5">
+              {/* <div className="mt-5">
                 <p style={{ color: "#008080", fontSize: 18 }}>
                   Technical Skills
                 </p>
@@ -310,7 +332,7 @@ export const TalentProfileResult = () => {
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
             </div>
           </div>
           {/* card 3 human body spectrum analysis */}
@@ -354,7 +376,7 @@ export const TalentProfileResult = () => {
                         fontSize: 16,
                         fontWeight: 500,
                       }}>
-                      CORE VALUES
+                      {spectrum1}
                     </p>
                     <p style={{ color: "#7FAD89", fontSize: 12 }}>
                       They serve as guiding <br /> principles that influence
@@ -391,7 +413,7 @@ export const TalentProfileResult = () => {
                         fontSize: 16,
                         fontWeight: 500,
                       }}>
-                      SKILLS
+                      {spectrum2}
                     </p>
                     <p style={{ color: "#E1756B", fontSize: 12 }}>
                       They serve as guiding <br /> principles that influence
@@ -428,7 +450,7 @@ export const TalentProfileResult = () => {
                         fontSize: 16,
                         fontWeight: 500,
                       }}>
-                      CORE VALUES
+                      {spectrum3}
                     </p>
                     <p style={{ color: "#0F71CD", fontSize: 12 }}>
                       They serve as guiding <br /> principles that influence
@@ -465,7 +487,7 @@ export const TalentProfileResult = () => {
                         fontSize: 16,
                         fontWeight: 500,
                       }}>
-                      SKILLS
+                      {spectrum4}
                     </p>
                     <p style={{ color: "#FFB44F", fontSize: 12 }}>
                       They serve as guiding <br /> principles that influence
@@ -502,7 +524,7 @@ export const TalentProfileResult = () => {
                         fontSize: 16,
                         fontWeight: 500,
                       }}>
-                      SKILLS
+                      {spectrum5}
                     </p>
                     <p style={{ color: "#A8A3CF", fontSize: 12 }}>
                       They serve as guiding <br /> principles that influence
@@ -525,7 +547,7 @@ export const TalentProfileResult = () => {
             Core Values
           </p>
           <div className="flex mt-3 gap-40">
-            <div className="grid grid-flow-row gap-3">
+            {/* <div className="grid grid-flow-row gap-3">
               {userData?.coreValues.map((data, index) => {
                 return (
                   <div key={index}>
@@ -539,7 +561,7 @@ export const TalentProfileResult = () => {
                     </p>
                     <StyledRating
                       name="customized-color"
-                      value={data?.point || 0}
+                      value={data?.x || 0}
                       max={10}
                       sx={{
                         "& .MuiRating-icon": {
@@ -552,7 +574,7 @@ export const TalentProfileResult = () => {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
             <div className="grid grid-flow-row gap-3">
               {userData?.coreValues.map((data, index) => {
                 return (
@@ -567,7 +589,7 @@ export const TalentProfileResult = () => {
                     </p>
                     <StyledRating
                       name="customized-color"
-                      value={data?.point || 0}
+                      value={data?.x || 0}
                       max={10}
                       sx={{
                         "& .MuiRating-icon": {
@@ -607,17 +629,17 @@ export const TalentProfileResult = () => {
                   ]}
                   dataset={userData?.emtionalFlexibility[0].competencies}
                   series={[
-                    { dataKey: "empathy", color: "#AED7B7" },
+                    { dataKey: "Empathy", color: "#AED7B7" },
                     {
-                      dataKey: "resilience",
+                      dataKey: "Resilience",
                       color: "#A8A3CF",
                     },
                     {
-                      dataKey: "stressManagment",
+                      dataKey: "Stress management",
                       color: "#F9D4DE",
                     },
                     {
-                      dataKey: "selfAwarness",
+                      dataKey: "Self-awareness",
                       color: "#BFE1F4",
                     },
                   ]}
@@ -667,7 +689,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#BFE1F4", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Self- Awarness
+                    Self Awarness
                   </p>
                 </div>
               </div>
@@ -783,17 +805,17 @@ export const TalentProfileResult = () => {
                   ]}
                   dataset={userData?.cognitiveAgility[0].competencies}
                   series={[
-                    { dataKey: "empathy", color: "#62B2FD" },
+                    { dataKey: "Adaptability", color: "#62B2FD" },
                     {
-                      dataKey: "resilience",
+                      dataKey: "Decision Making",
                       color: "#F99BAB",
                     },
                     {
-                      dataKey: "stressManagment",
+                      dataKey: "Problem Solving",
                       color: "#FFB44F",
                     },
                     {
-                      dataKey: "selfAwarness",
+                      dataKey: "Time Management",
                       color: "#9BDFC4",
                     },
                   ]}
@@ -810,7 +832,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#62B2FD", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Empathy
+                    Adaptability
                   </p>
                   <p
                     style={{
@@ -821,7 +843,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#F99BAB", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Resilience
+                    Decision Making
                   </p>
                   <p
                     style={{
@@ -832,7 +854,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#FFB44F", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Stress Managment
+                    Problem Solving
                   </p>
                   <p
                     style={{
@@ -843,7 +865,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#9BDFC4", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Self- Awarness
+                    Time Management
                   </p>
                 </div>
               </div>
@@ -959,17 +981,17 @@ export const TalentProfileResult = () => {
                   ]}
                   dataset={userData?.sociabilitySkills[0].competencies}
                   series={[
-                    { dataKey: "empathy", color: "#FBE29F" },
+                    { dataKey: "Communication skills", color: "#FBE29F" },
                     {
-                      dataKey: "resilience",
+                      dataKey: "Collaboration",
                       color: "#E8A09A",
                     },
                     {
-                      dataKey: "stressManagment",
+                      dataKey: "Relationship building",
                       color: "#C6D68F",
                     },
                     {
-                      dataKey: "selfAwarness",
+                      dataKey: "Conflict management",
                       color: "#9BBFE0",
                     },
                   ]}
@@ -986,7 +1008,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#FBE29F", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Empathy
+                    Communication skills
                   </p>
                   <p
                     style={{
@@ -997,7 +1019,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#E8A09A", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Resilience
+                    Collaboration
                   </p>
                   <p
                     style={{
@@ -1008,7 +1030,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#C6D68F", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Stress Managment
+                    Relationship building
                   </p>
                   <p
                     style={{
@@ -1019,7 +1041,7 @@ export const TalentProfileResult = () => {
                       style={{ fontSize: 24, color: "#9BBFE0", padding: 2 }}>
                       &#x2022;
                     </span>
-                    Self- Awarness
+                    Conflict management
                   </p>
                 </div>
               </div>

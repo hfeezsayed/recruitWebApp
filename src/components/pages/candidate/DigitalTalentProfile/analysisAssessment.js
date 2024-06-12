@@ -52,7 +52,8 @@ export const AnalysisAssessment = () => {
   };
 
   useEffect( () => {
-      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId=1&versionNo=-1")
+      const user = JSON.parse(localStorage.getItem("token"));
+      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1")
       .then(response => {
           setQuestionList(response.data);
       })
@@ -63,12 +64,12 @@ export const AnalysisAssessment = () => {
 
   const handleSubmitData = async () => {
     console.log(questionList);
-
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId=1", questionList)
+      .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId="+user.userId, questionList)
       .then((data) => {
         console.log(data.data);
-        //navigate("/digitalTalentProfile");
+        navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: data.data.versionNo } });
       })
       .catch((error) => console.log(error));
   };

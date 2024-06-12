@@ -77,7 +77,8 @@ export const ValueAssessment = () => {
   };
 
   useEffect( () => {
-    axios.get("http://localhost:8080/xen/getCandidateValuesQuestionnaire?candidateId=1")
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidateValuesQuestionnaire?candidateId="+user.userId)
     .then(response => {
         setQuestionList(response.data);
     })
@@ -89,10 +90,10 @@ export const ValueAssessment = () => {
   
   const handleValueSave = async () => {
     console.log("questionsData ", questionList, ratingList);
-
+    const user = JSON.parse(localStorage.getItem("token"));
     // navigate("/analysisassessmentform");
     await axios
-      .post("http://localhost:8080/xen/saveCandidateValueAssessment?candidateId=1", questionList) //ratingList)
+      .post("http://localhost:8080/xen/saveCandidateValueAssessment?candidateId="+user.userId, questionList) //ratingList)
       .then(response => {
         console.log(response.data)
         navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: response.data.versionNo } })

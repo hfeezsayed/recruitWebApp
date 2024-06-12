@@ -52,7 +52,8 @@ export const DigitalTalentProfile = () => {
   const navigate = useNavigate();
 
   useEffect( () => {
-    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId=1")
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId="+user.userId)
     .then(response => {
         console.log(response.data);
         setUserData(response.data);
@@ -431,8 +432,8 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/valueassessmentform")}>
-                      {userData?.valueAssessment ? "RE- TAKE" : "Not taken"}
+                      onClick={() => userData?.valueAssessment ? "" : navigate("/digitalTalentProfile/valueassessmentform")}>
+                      {userData?.valueAssessment ? "Done" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -511,8 +512,8 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/analysisassessmentform")}>
-                      {userData?.assessment ? "RE- TAKE" : "Not taken"}
+                      onClick={() => userData?.assessment ? "" : navigate("/digitalTalentProfile/analysisassessmentform")}>
+                      {userData?.assessment ? "Done" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

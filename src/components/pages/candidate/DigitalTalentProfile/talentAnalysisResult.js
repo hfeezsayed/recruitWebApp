@@ -10,7 +10,7 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { talentAnalysisResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
-import { useEffect } from "react";
+import { useEffect, useLocation } from "react";
 import axios from "axios";
 
 export const TalentAnalysisResult = () => {
@@ -49,9 +49,11 @@ export const TalentAnalysisResult = () => {
       userData?.cognitiveAgility[1]
     );
 
+    const { version } = useLocation().state || {};
 
   useEffect( () => {
-    axios.get("http://localhost:8080/xen/getCandidateSpectrumResults?candidateId=1&versionNo=18")
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidateSpectrumResults?candidateId="+user.userId+"&versionNo="+version)
     .then(response => {
         console.log(response.data);
         setUserData(response.data);
