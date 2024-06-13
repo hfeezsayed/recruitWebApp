@@ -21,33 +21,33 @@ export const Login = () => {
       if (isAuthenticated.role === "ROLE_CANDIDATE") {
         navigate("/candidate");
       }
+      if (isAuthenticated.role === "ROLE_CLIENT") {
+        navigate("/assesmentBatchDetails");
+      }
     }
   }, []);
 
   const onSubmit = async (e) => {
-    // const dummy = {
-    //   userId: 3,
-    //   username: "Ram",
-    //   email: "ram@xenspire.co",
-    //   accessToken:
-    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
-    //   role: "ROLE_CANDIDATE",
-    // };
+    const dummy = {
+      userId: 3,
+      username: "Ram",
+      email: "ram@xenspire.co",
+      accessToken:
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
+      role: "ROLE_CLIENT",
+    };
     const username = email;
     e.preventDefault();
-    //localStorage.setItem("token", JSON.stringify(response.data));
+    localStorage.setItem("token", JSON.stringify(dummy));
     try {
-      const response = await axios.post(
-        "http://localhost:8080/xen/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/xen/login", {
+        username,
+        password,
+      });
       console.log(response);
       if (response.status === 200) {
-        console.log(response.data);
-        localStorage.setItem("token", JSON.stringify(response.data));
+        console.log(response?.data);
+        // localStorage.setItem("token", JSON.stringify(response?.data));
 
         // role = response.data.role;
       } else {
@@ -61,10 +61,13 @@ export const Login = () => {
       if (role === "ROLE_CANDIDATE") {
         navigate("/digitalTalentProfile/personalinfromation");
       }
+      if (role === "ROLE_CLIENT") {
+        navigate("/assesmentBatchDetails");
+      }
     } catch (error) {
       console.error(error.message);
     }
-    navigate("/digitalTalentProfile/personalinfromation");
+    navigate("/assesmentBatchDetails");
   };
 
   return (

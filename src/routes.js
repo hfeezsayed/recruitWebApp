@@ -19,6 +19,8 @@ import { AuthorisedClient } from "./components/pages/candidate/AuthorisedClients
 import { Error404 } from "./components/pages/common/Error404";
 import { ValueAssessmentResult } from "./components/pages/candidate/DigitalTalentProfile/valueAssessmentResult";
 import { TalentAnalysisResult } from "./components/pages/candidate/DigitalTalentProfile/talentAnalysisResult";
+import { AssesmentBatchDetails } from "./components/pages/client/assessments/batchDetails";
+import { Assesments } from "./components/pages/client/assessments/assesments";
 
 export const Routes = () => {
   return (
@@ -63,6 +65,14 @@ export const Routes = () => {
         />
         <Route path="assesmentform" element={<AssesmentForm />} />
         <Route path="authorisedclients" element={<AuthorisedClient />} />
+        <Route path="*" element={<Error404 />} />
+      </Route>
+      <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
+        <Route
+          path="assesmentBatchDetails"
+          element={<AssesmentBatchDetails />}
+        />
+        <Route path="assesments" element={<Assesments />} />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

@@ -958,3 +958,22 @@ export const talentAnalysisResultData = {
     },
   ],
 };
+
+export const clientAssessmentTableData = [
+  { id: 1, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 2, name: "Work Values Assessment", date: "Jan 25, 2024" },
+  { id: 3, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 4, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 5, name: "Work Values Assessment", date: "Jan 25, 2024" },
+  { id: 6, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 7, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 8, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 9, name: "Work Values Assessment", date: "Jan 25, 2024" },
+  { id: 10, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 11, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 12, name: "Work Values Assessment", date: "Jan 25, 2024" },
+  { id: 13, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 14, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  { id: 15, name: "Work Values Assessment", date: "Jan 25, 2024" },
+  { id: 16, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+];
