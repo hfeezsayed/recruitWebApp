@@ -21,7 +21,6 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { clientAssessmentTableData } from "../../../dummy/Data";
-import axios from "axios";
 
 export const Assesments = () => {
   const navigation = useNavigate();
@@ -142,10 +141,12 @@ export const Assesments = () => {
                             }}
                           />
                         </TableCell>
-                        <TableCell sx={{ bgcolor: "#F8F9FA" }}>
+                        <TableCell
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                           Assessment Name
                         </TableCell>
-                        <TableCell sx={{ bgcolor: "#F8F9FA" }}>
+                        <TableCell
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                           Date Added
                         </TableCell>
                       </TableRow>
@@ -175,13 +176,12 @@ export const Assesments = () => {
                                 }}
                               />
                             </TableCell>
-                            <TableCell
-                              component="th"
-                              scope="row"
-                              padding="none">
+                            <TableCell sx={{ color: "#475467" }}>
                               {row.name}
                             </TableCell>
-                            <TableCell>{row.date}</TableCell>
+                            <TableCell sx={{ color: "#475467" }}>
+                              {row.date}
+                            </TableCell>
                           </TableRow>
                         );
                       })}
@@ -233,7 +233,7 @@ export const Assesments = () => {
             </div>
             <div className="flex justify-end py-5 gap-5">
               <Button
-                onClick={() => navigation("/assesments")}
+                onClick={() => navigation("/assignCandidate")}
                 variant="contained"
                 style={{ backgroundColor: "#008080", color: "#ffffff" }}>
                 Next

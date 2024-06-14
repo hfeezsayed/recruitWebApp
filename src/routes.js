@@ -21,6 +21,7 @@ import { ValueAssessmentResult } from "./components/pages/candidate/DigitalTalen
 import { TalentAnalysisResult } from "./components/pages/candidate/DigitalTalentProfile/talentAnalysisResult";
 import { AssesmentBatchDetails } from "./components/pages/client/assessments/batchDetails";
 import { Assesments } from "./components/pages/client/assessments/assesments";
+import { AssignCandidate } from "./components/pages/client/assessments/assignCandidate";
 
 export const Routes = () => {
   return (
@@ -73,6 +74,7 @@ export const Routes = () => {
           element={<AssesmentBatchDetails />}
         />
         <Route path="assesments" element={<Assesments />} />
+        <Route path="assignCandidate" element={<AssignCandidate />} />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />
