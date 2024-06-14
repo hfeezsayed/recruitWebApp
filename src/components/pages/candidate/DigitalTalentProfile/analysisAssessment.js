@@ -53,7 +53,7 @@ export const AnalysisAssessment = () => {
 
   useEffect( () => {
       const user = JSON.parse(localStorage.getItem("token"));
-      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1")
+      axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1")
       .then(response => {
           setQuestionList(response.data);
       })
@@ -66,7 +66,7 @@ export const AnalysisAssessment = () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId="+user.userId, questionList)
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateAssessment?candidateId="+user.userId, questionList)
       .then(response => {
         console.log(response.data);
         navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: response.data.versionNo } });

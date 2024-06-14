@@ -86,7 +86,7 @@ export const PreferenceForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidatePreferences?candidateId="+user.userId)
+    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidatePreferences?candidateId="+user.userId)
     .then(response => {
       const data = response.data;
       setWorkSetting(data.workSetting)
@@ -238,7 +238,7 @@ export const PreferenceForm = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axios
       .post(
-        "http://localhost:8080/xen/saveCandidateForm?candidateId="+user.userId,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateForm?candidateId="+user.userId,
         {
           workSetting,
           workShift,

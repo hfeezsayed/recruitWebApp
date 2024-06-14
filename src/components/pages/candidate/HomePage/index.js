@@ -74,7 +74,7 @@ export const HomePage = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getCandidateDTPInfo?candidateId=" +
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId=" +
           user.userId
       )
       .then((response) => {

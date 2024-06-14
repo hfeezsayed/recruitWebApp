@@ -50,13 +50,27 @@ export const DigitalTalentProfile = () => {
     },
   }));
   const navigate = useNavigate();
+  const [disableDTP, setDisableDTP] = useState(true);
+  const [assessment, setAssessment] = useState(false);
+  const [valueAssessment, setValueAssessment] = useState(false);
+  const [prefereness, setPreferences] = useState(false);
+  const [personalInfo, setPersonalInfo] = useState(false);
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId="+user.userId)
+    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId="+user.userId)
     .then(response => {
         console.log(response.data);
         setUserData(response.data);
+        console.log(response.data.assessment === true);
+        if(response.data.assessment && response.data.valueAssessment && response.data.preferenes && response.data.personalInfo ){
+          console.log("dtp = ", disableDTP);
+          setDisableDTP(false);
+        }
+        // setAssessment(response.data.assessment);
+        // setValueAssessment(response.data.valueAssessment);
+        // setPreferences(response.data.preferenes);
+        // setPersonalInfo(response.data.personalInfo);
     })
     .catch(error => {
       console.log(error);
@@ -64,6 +78,24 @@ export const DigitalTalentProfile = () => {
   }, []);
 
 
+  const showAssessmentResult = () => {
+    if(userData.assessment === true) {
+      navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: userData?.assessmentVersionId } })
+    } 
+    else{
+      navigate("/digitalTalentProfile/analysisassessmentform")
+    }
+  }
+
+
+  const showValueAssessmentResult = () => {
+    if(userData.assessment === true) {
+      navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: userData?.valuesVersionId } })
+    } 
+    else{
+      navigate("/digitalTalentProfile/valueassessmentform")
+    }
+  }
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -170,7 +202,8 @@ export const DigitalTalentProfile = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full py-2">
+              <div className="flex w-full py-2">
+                <div className="w-full">
                 <p style={{ color: "#101828", fontSize: 14 }}>
                   Profile completion
                 </p>
@@ -189,6 +222,29 @@ export const DigitalTalentProfile = () => {
                     )}%`}</Typography>
                   </Box>
                 </Box>
+              </div>
+              <div className="w-32">
+                  <Button
+                    size="large"
+                    variant="text"
+                    disabled={
+                      disableDTP
+                    }
+                    onClick={() => navigate("/digitalTalentProfileResult")}
+                    style={{
+                      color:
+                        disableDTP
+                          ? "#9b84cf"
+                          : "#6633df",
+                      textTransform: "none",
+                      backgroundColor: "#F9F5FF",
+                      borderRadius: 16,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}>
+                    show DTP
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="py-10">
@@ -432,8 +488,8 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => userData?.valueAssessment ? "" : navigate("/digitalTalentProfile/valueassessmentform")}>
-                      {userData?.valueAssessment ? "Done" : "Not taken"}
+                      onClick={() => showValueAssessmentResult()}>
+                      {userData?.valueAssessment ? "view results" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -512,8 +568,8 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => userData?.assessment ? "" : navigate("/digitalTalentProfile/analysisassessmentform")}>
-                      {userData?.assessment ? "Done" : "Not taken"}
+                      onClick={() => showAssessmentResult()}>
+                      {userData?.assessment ? "view results" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

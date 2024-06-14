@@ -38,7 +38,7 @@ export const Login = () => {
     //localStorage.setItem("token", JSON.stringify(response.data));
     try {
       const response = await axios.post(
-        "http://localhost:8080/xen/login",
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/login",
         {
           username,
           password,
@@ -59,12 +59,12 @@ export const Login = () => {
         navigate("/admin");
       }
       if (role === "ROLE_CANDIDATE") {
-        navigate("/digitalTalentProfile/personalinfromation");
+        navigate("/candidate");
       }
     } catch (error) {
       console.error(error.message);
     }
-    navigate("/digitalTalentProfile/personalinfromation");
+    navigate("/candidate");
   };
 
   return (

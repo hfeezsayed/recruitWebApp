@@ -47,7 +47,7 @@ export const TalentProfileResult = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDtpReport?candidateId="+user.userId)
+    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId="+user.userId)
     .then(response => {
         console.log(response.data);
         setUserData(response.data);
