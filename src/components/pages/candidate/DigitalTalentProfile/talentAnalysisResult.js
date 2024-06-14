@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { BarChart, PieChart } from "@mui/x-charts";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { talentAnalysisResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
+import { HumanBody } from "../../../../assets/icon/humanBody";
 
 export const TalentAnalysisResult = () => {
   const [userData, setUserData] = useState(talentAnalysisResultData);
@@ -20,30 +20,39 @@ export const TalentAnalysisResult = () => {
   const [cognitive, setCongnitive] = useState(null);
   const [sociability, setSociability] = useState(null);
   const { version } = useLocation().state || {};
+  const [spectrum1, setSpectrum1] = useState("spectrum1");
+  const [spectrum2, setSpectrum2] = useState("spectrum2");
+  const [spectrum3, setSpectrum3] = useState("spectrum3");
+  const [spectrum4, setSpectrum4] = useState("spectrum4");
+  const [spectrum5, setSpectrum5] = useState("spectrum5");
 
-  const  convertedEmtional = convertCompetencies(
+  const convertedEmtional = convertCompetencies(
     userData?.emtionalFlexibility[1]
   );
 
-  const convertSociability =  convertCompetencies(
-      userData?.sociabilitySkills[1]
-    );
+  const convertSociability = convertCompetencies(
+    userData?.sociabilitySkills[1]
+  );
 
-  const convertCognitive =  convertCompetencies( 
-      userData?.cognitiveAgility[1]
-    );
+  const convertCognitive = convertCompetencies(userData?.cognitiveAgility[1]);
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateSpectrumResults?candidateId="+user.userId+"&versionNo="+ version)
-    .then(response => {
+    axios
+      .get(
+        "http://localhost:8080/xen/getCandidateSpectrumResults?candidateId=" +
+          user.userId +
+          "&versionNo=" +
+          version
+      )
+      .then((response) => {
         console.log(response.data);
         setUserData(response.data);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
-    }) 
-    .catch(error => {
-      console.log(error);
-    })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -65,6 +74,381 @@ export const TalentAnalysisResult = () => {
               Along with the table, a bar and pie chart has been shown,
               visualizing your scores across different spectrums
             </p>
+            <div className="flex gap-5 py-8">
+              {/* spectrum analysis */}
+              <div
+                className="border rounded-lg p-4"
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderColor: "#D0D5DD",
+                }}>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                  Spectrum Analysis
+                </p>
+                <div className="py-8 absolute">
+                  <HumanBody />
+                </div>
+                <div className="grid justify-end relative pt-5 pl-[180px]">
+                  <div className="grid grid-flow-row gap-4">
+                    <div className="grid grid-flow-col">
+                      <div className="flex items-center justify-end p-2">
+                        <p
+                          style={{
+                            color: "#7FAD89",
+                            fontSize: 33,
+                          }}>
+                          <span style={{ fontSize: 30 }}>&#x2022;</span>
+                          &#x2015;
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                          borderLeftColor: "#7FAD89",
+                          borderRightColor: "#7FAD89",
+                          padding: 5,
+                          borderRadius: 8,
+                        }}>
+                        <p
+                          style={{
+                            color: "#7FAD89",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          {spectrum1}
+                        </p>
+                        <p style={{ color: "#7FAD89", fontSize: 12 }}>
+                          They serve as guiding <br /> principles that influence
+                          <br />
+                          decision-making, behavior, and <br />
+                          interactions in both personal
+                          <br /> and professional settings.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-flow-col">
+                      <div className="flex items-center justify-end p-2">
+                        <p
+                          style={{
+                            color: "#E1756B",
+                            fontSize: 33,
+                          }}>
+                          <span style={{ fontSize: 30 }}>&#x2022;</span>
+                          &#x2015;
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                          borderLeftColor: "#E1756B",
+                          borderRightColor: "#E1756B",
+                          padding: 5,
+                          borderRadius: 8,
+                        }}>
+                        <p
+                          style={{
+                            color: "#E1756B",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          {spectrum2}
+                        </p>
+                        <p style={{ color: "#E1756B", fontSize: 12 }}>
+                          They serve as guiding <br /> principles that influence
+                          <br />
+                          decision-making, behavior, and <br />
+                          interactions in both personal
+                          <br /> and professional settings.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-flow-col">
+                      <div className="flex items-center justify-end p-2">
+                        <p
+                          style={{
+                            color: "#0F71CD",
+                            fontSize: 33,
+                          }}>
+                          <span style={{ fontSize: 30 }}>&#x2022;</span>
+                          &#x2015;
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                          borderLeftColor: "#0F71CD",
+                          borderRightColor: "#0F71CD",
+                          padding: 5,
+                          borderRadius: 8,
+                        }}>
+                        <p
+                          style={{
+                            color: "#0F71CD",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          {spectrum3}
+                        </p>
+                        <p style={{ color: "#0F71CD", fontSize: 12 }}>
+                          They serve as guiding <br /> principles that influence
+                          <br />
+                          decision-making, behavior, and <br />
+                          interactions in both personal
+                          <br /> and professional settings.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-flow-col">
+                      <div className="flex items-center justify-end p-2">
+                        <p
+                          style={{
+                            color: "#FFB44F",
+                            fontSize: 33,
+                          }}>
+                          <span style={{ fontSize: 30 }}>&#x2022;</span>
+                          &#x2015;
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                          borderLeftColor: "#FFB44F",
+                          borderRightColor: "#FFB44F",
+                          padding: 5,
+                          borderRadius: 8,
+                        }}>
+                        <p
+                          style={{
+                            color: "#FFB44F",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          {spectrum4}
+                        </p>
+                        <p style={{ color: "#FFB44F", fontSize: 12 }}>
+                          They serve as guiding <br /> principles that influence
+                          <br />
+                          decision-making, behavior, and <br />
+                          interactions in both personal
+                          <br /> and professional settings.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-flow-col">
+                      <div className="flex items-center justify-end p-2">
+                        <p
+                          style={{
+                            color: "#A8A3CF",
+                            fontSize: 33,
+                          }}>
+                          <span style={{ fontSize: 30 }}>&#x2022;</span>
+                          &#x2015;
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                          borderLeftColor: "#A8A3CF",
+                          borderRightColor: "#A8A3CF",
+                          padding: 5,
+                          borderRadius: 8,
+                        }}>
+                        <p
+                          style={{
+                            color: "#A8A3CF",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          {spectrum5}
+                        </p>
+                        <p style={{ color: "#A8A3CF", fontSize: 12 }}>
+                          They serve as guiding <br /> principles that influence
+                          <br />
+                          decision-making, behavior, and <br />
+                          interactions in both personal
+                          <br /> and professional settings.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* table */}
+              <div>
+                <Table
+                  sx={{
+                    width: 625,
+                    borderWidth: 1,
+                  }}>
+                  <TableHead>
+                    <Fragment>
+                      <TableRow>
+                        <TableCell
+                          rowSpan={5}
+                          sx={{
+                            color: "#101828",
+                            fontSize: 14,
+                            fontWeight: 600,
+                            borderWidth: 1,
+                            bgcolor: "#F8F9FA",
+                          }}>
+                          Dimensions
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#101828",
+                            fontSize: 14,
+                            fontWeight: 600,
+                            borderWidth: 1,
+                            bgcolor: "#F8F9FA",
+                          }}>
+                          Competencies
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#101828",
+                            fontSize: 14,
+                            fontWeight: 600,
+                            borderWidth: 1,
+                            bgcolor: "#F8F9FA",
+                          }}>
+                          Ratings out of 5
+                        </TableCell>
+                      </TableRow>
+                    </Fragment>
+                  </TableHead>
+                  <TableBody>
+                    <Fragment>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{
+                            color: "#475467",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}
+                          rowSpan={5}>
+                          Emotional Flexibility
+                        </TableCell>
+                      </TableRow>
+                      {convertedEmtional?.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell
+                            sx={{
+                              color: "#475467",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].label}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              color: "#008080",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].rating}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </Fragment>
+                    <Fragment>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{
+                            color: "#475467",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}
+                          rowSpan={5}>
+                          Cognitive Agility
+                        </TableCell>{" "}
+                      </TableRow>
+                      {convertCognitive?.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell
+                            sx={{
+                              color: "#475467",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].label}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              color: "#008080",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].rating}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </Fragment>
+                    <Fragment>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{
+                            color: "#475467",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}
+                          rowSpan={5}>
+                          Sociability Skills
+                        </TableCell>
+                      </TableRow>
+                      {convertSociability?.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell
+                            sx={{
+                              color: "#475467",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].label}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              color: "#008080",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              borderWidth: 1,
+                            }}>
+                            {row.data[0].rating}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </Fragment>
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
             {/* charts */}
             <div className="grid grid-cols-3 gap-5 py-3">
               {/* chart 1 Emotional Flexibility */}
@@ -72,97 +456,7 @@ export const TalentAnalysisResult = () => {
                 <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
                   Emotional Flexibility
                 </p>
-                {/* bar chart */}
-                <div>
-                  <BarChart
-                    xAxis={[
-                      {
-                        scaleType: "band",
-                        data: [userData?.emtionalFlexibility[0]?.pillar1 || ""],
-                      },
-                    ]}
-                    dataset={userData?.emtionalFlexibility[0]?.competencies}
-                    series={[
-                      { dataKey: "Empathy", color: "#AED7B7" },
-                      {
-                        dataKey: "Resilience",
-                        color: "#A8A3CF",
-                      },
-                      {
-                        dataKey: "Stress management",
-                        color: "#F9D4DE",
-                      },
-                      {
-                        dataKey: "Self-awareness",
-                        color: "#BFE1F4",
-                      },
-                    ]}
-                    height={200}
-                    borderRadius={4}
-                  />
-                  <div className="flex gap-5 ">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#AED7B7",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Empathy
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#A8A3CF",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Resilience
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#F9D4DE",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Stress Managment
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#BFE1F4",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Self- Awarness
-                    </p>
-                  </div>
-                </div>
+
                 {/* circle chart */}
                 <div className="py-5">
                   <div className="flex justify-end">
@@ -264,97 +558,7 @@ export const TalentAnalysisResult = () => {
                 <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
                   Cognitive Agility
                 </p>
-                {/* bar chart */}
-                <div>
-                  <BarChart
-                    xAxis={[
-                      {
-                        scaleType: "band",
-                        data: [userData?.cognitiveAgility[0]?.pillar1],
-                      },
-                    ]}
-                    dataset={userData?.cognitiveAgility[0]?.competencies}
-                    series={[
-                      { dataKey: "Adaptability", color: "#62B2FD" },
-                      {
-                        dataKey: "Decision Making",
-                        color: "#F99BAB",
-                      },
-                      {
-                        dataKey: "Problem Solving",
-                        color: "#FFB44F",
-                      },
-                      {
-                        dataKey: "Time Management",
-                        color: "#9BDFC4",
-                      },
-                    ]}
-                    height={200}
-                    borderRadius={4}
-                  />
-                  <div className="flex gap-5 ">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#62B2FD",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Empathy
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#F99BAB",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Resilience
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#FFB44F",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Stress Managment
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#9BDFC4",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Self- Awarness
-                    </p>
-                  </div>
-                </div>
+
                 {/* circle chart */}
                 <div className="py-5">
                   <div className="flex justify-end">
@@ -456,97 +660,7 @@ export const TalentAnalysisResult = () => {
                 <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
                   Sociability Skills
                 </p>
-                {/* bar chart */}
-                <div>
-                  <BarChart
-                    xAxis={[
-                      {
-                        scaleType: "band",
-                        data: [userData?.sociabilitySkills[0]?.pillar1],
-                      },
-                    ]}
-                    dataset={userData?.sociabilitySkills[0]?.competencies}
-                    series={[
-                      { dataKey: "Communication skills", color: "#FBE29F" },
-                      {
-                        dataKey: "Collaboration",
-                        color: "#E8A09A",
-                      },
-                      {
-                        dataKey: "Relationship building",
-                        color: "#C6D68F",
-                      },
-                      {
-                        dataKey: "Conflict management",
-                        color: "#9BBFE0",
-                      },
-                    ]}
-                    height={200}
-                    borderRadius={4}
-                  />
-                  <div className="flex gap-5 ">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#FBE29F",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Empathy
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#E8A09A",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Resilience
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#C6D68F",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Stress Managment
-                    </p>
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                      }}>
-                      <span
-                        style={{
-                          fontSize: 24,
-                          color: "#9BBFE0",
-                          padding: 2,
-                        }}>
-                        &#x2022;
-                      </span>
-                      Self- Awarness
-                    </p>
-                  </div>
-                </div>
+
                 {/* circle chart */}
                 <div className="py-5">
                   <div className="flex justify-end">
@@ -643,151 +757,6 @@ export const TalentAnalysisResult = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            {/* table */}
-            <div>
-              <Table
-                sx={{
-                  width: 625,
-                }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      sx={{ color: "#101828", fontSize: 14, fontWeight: 600 }}>
-                      Dimensions
-                    </TableCell>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 600,
-                        }}>
-                        Competencies
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 600,
-                        }}>
-                        Ratings out of 5
-                      </TableCell>
-                    </TableRow>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{
-                        color: "#475467",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      Emotional Flexibility
-                    </TableCell>
-                    {convertedEmtional?.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell
-                          sx={{
-                            color: "#475467",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].label}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "#008080",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].rating}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableRow>
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{
-                        color: "#475467",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      Cognitive Agility
-                    </TableCell>
-                    {convertCognitive?.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell
-                          sx={{
-                            color: "#475467",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].label}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "#008080",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].rating}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableRow>
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{
-                        color: "#475467",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      Sociability Skills
-                    </TableCell>
-                    {convertSociability?.map((row, index) => (
-                      <TableRow
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                        key={index}>
-                        <TableCell
-                          sx={{
-                            color: "#475467",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].label}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "#008080",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          {row.data[0].rating}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableRow>
-                </TableBody>
-              </Table>
             </div>
           </div>
         </div>

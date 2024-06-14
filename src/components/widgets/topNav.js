@@ -17,6 +17,7 @@ import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
 import { FiBookOpen } from "react-icons/fi";
+import usIcon from "../../assets/images/us.png";
 
 export const TopNav = () => {
   const navigate = useNavigate();
@@ -57,10 +58,7 @@ export const TopNav = () => {
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}>
-            <Avatar
-              sx={{ width: 32, height: 32 }}
-              src="https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=mail@ashallendesign.co.uk"
-            />
+            <Avatar sx={{ width: 24, height: 24 }} src={usIcon} />
           </IconButton>
           <p style={{ fontSize: 18, fontWeight: 600, color: "#101828" }}>
             Eng (US)

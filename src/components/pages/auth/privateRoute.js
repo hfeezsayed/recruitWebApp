@@ -19,6 +19,8 @@ const PrivateRoute = ({ component: Component, requiredRole, ...rest }) => {
         return (
           <Navigate replace to={`/digitalTalentProfile/personalinfromation`} />
         );
+      if (role === "ROLE_CLIENT")
+        return <Navigate replace to={`/assesmentBatchDetails`} />;
     }
   } else {
     return <Navigate replace to={`login`} />;
