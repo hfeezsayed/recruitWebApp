@@ -40,7 +40,7 @@ export const TalentAnalysisResult = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getCandidateSpectrumResults?candidateId=" +
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateSpectrumResults?candidateId=" +
           user.userId +
           "&versionNo=" +
           version
@@ -48,6 +48,11 @@ export const TalentAnalysisResult = () => {
       .then((response) => {
         console.log(response.data);
         setUserData(response.data);
+        setSpectrum1(response.data.pillars[0]);
+        setSpectrum2(response.data.pillars[1]);
+        setSpectrum3(response.data.pillars[2]);
+        setSpectrum4(response.data.pillars[3]);
+        setSpectrum5(response.data.pillars[4]);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
       })
       .catch((error) => {
