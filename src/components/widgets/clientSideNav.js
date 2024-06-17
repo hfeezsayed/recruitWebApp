@@ -250,13 +250,10 @@ export const ClientSideNav = () => {
           <Collapse in={showAcordian} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              onClick={() =>
-                // navigate("/digitalTalentProfile/personalinfromation")
-                {}
-              }>
+              onClick={() => navigate("/templates/jobTemplate")}>
               <p
                 style={{
-                  color: currentState.includes("personalinfromation")
+                  color: currentState.includes("jobTemplate")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,
@@ -268,13 +265,10 @@ export const ClientSideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() =>
-                //   navigate("/digitalTalentProfile/preferenceform")
-                {}
-              }>
+              onClick={() => navigate("/templates/workValueTemplate")}>
               <p
                 style={{
-                  color: currentState.includes("preferenceform")
+                  color: currentState.includes("workValueTemplate")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,

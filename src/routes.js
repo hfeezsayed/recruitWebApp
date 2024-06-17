@@ -20,7 +20,13 @@ import { Error404 } from "./components/pages/common/Error404";
 import { ValueAssessmentResult } from "./components/pages/candidate/DigitalTalentProfile/valueAssessmentResult";
 import { TalentAnalysisResult } from "./components/pages/candidate/DigitalTalentProfile/talentAnalysisResult";
 import { AssesmentBatchDetails } from "./components/pages/client/assessments/batchDetails";
-import { Assesments } from "./components/pages/client/assessments/assesments";
+import { AssignCandidate } from "./components/pages/client/assessments/assignCandidate";
+import { JobTemplate } from "./components/pages/client/templates/jobTemplate";
+import { JobTemplateEdit } from "./components/pages/client/templates/jobTemplateEdit";
+import { WorkValueTemplate } from "./components/pages/client/templates/workValueTemplate";
+import { WorkValueTemplateEdit } from "./components/pages/client/templates/workValueTemplateEdit";
+import { WorkValueTemplateView } from "./components/pages/client/templates/workValueTemplateView";
+import { AsssessmentResult } from "./components/pages/client/assessments/assessmentResult";
 
 export const Routes = () => {
   return (
@@ -68,11 +74,26 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
+        <Route path="templates/jobTemplate" element={<JobTemplate />} />
+        <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
+        <Route
+          path="templates/workValueTemplate"
+          element={<WorkValueTemplate />}
+        />
+        <Route
+          path="templates/workValueTemplateEdit"
+          element={<WorkValueTemplateEdit />}
+        />
+        <Route
+          path="templates/workValueTemplateView"
+          element={<WorkValueTemplateView />}
+        />
         <Route
           path="assesmentBatchDetails"
           element={<AssesmentBatchDetails />}
         />
-        <Route path="assesments" element={<Assesments />} />
+        <Route path="assesmentResult" element={<AsssessmentResult />} />
+        <Route path="assignCandidate" element={<AssignCandidate />} />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />
