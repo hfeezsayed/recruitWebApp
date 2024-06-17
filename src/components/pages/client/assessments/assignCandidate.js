@@ -20,6 +20,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { FiUpload } from "react-icons/fi";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
@@ -105,6 +106,32 @@ export const AssignCandidate = () => {
     whiteSpace: "nowrap",
     width: 1,
   });
+
+  const handleAddAsignment = async () => {
+    navigation("/assesmentResult");
+    axios
+      .post("localhost:3000", {
+        addCandidateDatabase,
+        candidateName,
+        candidateEmail,
+        candidateNo,
+        candidateLinkedin,
+        candidateResume,
+      })
+      .then((data) => console.log(data.data))
+      .catch((e) => console.log(e));
+  };
+
+  const handleAsignCandidates = async () => {
+    navigation("/assesmentResult");
+    axios
+      .post("localhost:3000", {
+        selected,
+        data,
+      })
+      .then((data) => console.log(data.data))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div>
@@ -312,6 +339,14 @@ export const AssignCandidate = () => {
                       }
                     />
                   </div>
+                  <div className="flex justify-end py-5 gap-5">
+                    <Button
+                      onClick={handleAsignCandidates}
+                      variant="contained"
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      Submit
+                    </Button>
+                  </div>
                 </div>
               )}
               {actions === "Add Candidate" && (
@@ -491,15 +526,16 @@ export const AssignCandidate = () => {
                       }
                     />
                   </div>
+                  <div className="flex justify-end py-5 gap-5">
+                    <Button
+                      onClick={handleAddAsignment}
+                      variant="contained"
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      Submit
+                    </Button>
+                  </div>
                 </div>
               )}
-            </div>
-            <div className="flex justify-end py-5 gap-5">
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#008080", color: "#ffffff" }}>
-                Next
-              </Button>
             </div>
           </div>
         </div>

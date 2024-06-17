@@ -1100,3 +1100,309 @@ export const assignCandidateData = [
     no: 109876543,
   },
 ];
+
+export const jobTemplateData = [
+  { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 10, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 12, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 14, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 16, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+];
+
+export const jobWorkValueData = [
+  { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 10, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 12, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 14, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  { no: 16, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+  { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+];
+
+export const workValueViewData = [
+  { attribute: "Self- Direction", rank: 4 },
+  { attribute: "Stimulation", rank: 3 },
+  { attribute: "Hedonism", rank: 3 },
+  { attribute: "Achievements", rank: 3 },
+  { attribute: "Power", rank: 2 },
+  { attribute: "Security", rank: 1 },
+  { attribute: "Conformity", rank: 2 },
+  { attribute: "Tradition", rank: 0 },
+  { attribute: "Benevolence", rank: 0 },
+  { attribute: "Universalism", rank: 2 },
+];
+
+export const workValueEditData = [
+  {
+    attribute: "Self- Direction",
+    Statements:
+      "Structured work goals, clear instructions, frequent supervision",
+  },
+  {
+    attribute: "Stimulation",
+    Statements: "Comfort routine & stability. Prefer familiarity over newness",
+  },
+  {
+    attribute: "Hedonism",
+    Statements: "Comfort routine & stability. Prefer familiarity over newness",
+  },
+  {
+    attribute: "Achievements",
+    Statements:
+      "Work-life balance, helping others over hyperfocusing on self-growth",
+  },
+  {
+    attribute: "Power",
+    Statements:
+      "Avoid imposing authority, being in leadership roles, listen to others",
+  },
+  {
+    attribute: "Security",
+    Statements:
+      "Always prioritize innovation over stability and predictability",
+  },
+  {
+    attribute: "Conformity",
+    Statements: "Value individuality over being a part of the group",
+  },
+
+  {
+    attribute: "Benevolence",
+    Statements:
+      "Prioritize personal responsibilities over team goals & helping others",
+  },
+  {
+    attribute: "Universalism",
+    Statements:
+      "Leverage my privileges to lead assertively without much consultation ",
+  },
+];
+
+export const assesmentResultData = [
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+  {
+    candidateName: "Johnny Mathew Adams",
+    assessments: [
+      {
+        name: "Leadership Skills Evaluation",
+        date: "Jan 25, 2024",
+        status: false,
+        timePased: "1 day",
+      },
+      {
+        name: "Communication Skills Assessments",
+        date: "Jan 25, 2024",
+        status: true,
+        timePased: "1 day",
+      },
+    ],
+  },
+];
