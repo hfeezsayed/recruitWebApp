@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
   FormControlLabel,
   MenuItem,
   OutlinedInput,
+  Pagination,
   Radio,
   Select,
-  TablePagination,
   TextField,
   styled,
 } from "@mui/material";
@@ -35,7 +35,6 @@ export const AssignCandidate = () => {
   const [selected, setSelected] = React.useState([]);
   const [data, setData] = useState(assignCandidateData);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const [allocateAssignment, setAllocateAssignment] = useState(false);
 
@@ -69,7 +68,7 @@ export const AssignCandidate = () => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = data.map((n) => n.id);
+      const newSelected = data.data.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -78,21 +77,24 @@ export const AssignCandidate = () => {
 
   // pagination
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const pageChangeHandle = (pageNO) => {
+    setPage(pageNO - 1);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  useEffect(() => {
+    setPage(data?.pageNo - 1 || 0);
+  }, [data]);
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+  const PAGECOUNT =
+    data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
 
   const visibleRows = React.useMemo(
-    () => data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, rowsPerPage]
+    () =>
+      data?.data.slice(
+        page * data.pageSize,
+        page * data.pageSize + data.pageSize
+      ),
+    [page, data.pageSize]
   );
 
   const VisuallyHiddenInput = styled("input")({
@@ -226,11 +228,11 @@ export const AssignCandidate = () => {
                                   color="primary"
                                   indeterminate={
                                     selected.length > 0 &&
-                                    selected.length < data.length
+                                    selected.length < data.data.length
                                   }
                                   checked={
-                                    data.length > 0 &&
-                                    selected.length === data.length
+                                    data.data.length > 0 &&
+                                    selected.length === data.data.length
                                   }
                                   onChange={handleSelectAllClick}
                                   sx={{
@@ -294,29 +296,24 @@ export const AssignCandidate = () => {
                                 </TableRow>
                               );
                             })}
-                            {emptyRows > 0 && (
-                              <TableRow
-                                style={{
-                                  height: 53 * emptyRows,
-                                }}>
-                                <TableCell colSpan={4} />
-                              </TableRow>
-                            )}
                           </TableBody>
                         </Table>
                       </TableContainer>
-                      <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
+                    </Paper>
+                    <div className="flex justify-between items-center">
+                      <p style={{ color: "#475467", fontSize: 14 }}>
+                        Showing {data.totalCount} results found
+                      </p>
+                      <Pagination
+                        count={PAGECOUNT}
+                        page={page + 1}
                         variant="outlined"
                         shape="rounded"
-                        count={data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        onChange={(e, newvalue) => {
+                          pageChangeHandle(newvalue);
+                        }}
                       />
-                    </Paper>
+                    </div>
                   </Box>
                   <div className="py-2">
                     <FormControlLabel

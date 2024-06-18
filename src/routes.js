@@ -27,6 +27,10 @@ import { WorkValueTemplate } from "./components/pages/client/templates/workValue
 import { WorkValueTemplateEdit } from "./components/pages/client/templates/workValueTemplateEdit";
 import { WorkValueTemplateView } from "./components/pages/client/templates/workValueTemplateView";
 import { AsssessmentResult } from "./components/pages/client/assessments/assessmentResult";
+import { TeamTemplate } from "./components/pages/client/templates/teamTemplate";
+import { TeamTemplateEdit } from "./components/pages/client/templates/teamTemplateEdit";
+import { JobPreferenceTemplate } from "./components/pages/client/templates/jobPreferenceTemplate";
+import { JobPreferenceTemplateEdit } from "./components/pages/client/templates/jobPreferenceTemplateEdit";
 
 export const Routes = () => {
   return (
@@ -87,6 +91,19 @@ export const Routes = () => {
         <Route
           path="templates/workValueTemplateView"
           element={<WorkValueTemplateView />}
+        />
+        <Route path="templates/teamTemplate" element={<TeamTemplate />} />
+        <Route
+          path="templates/teamTemplateEdit"
+          element={<TeamTemplateEdit />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplate"
+          element={<JobPreferenceTemplate />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplateEdit"
+          element={<JobPreferenceTemplateEdit />}
         />
         <Route
           path="assesmentBatchDetails"

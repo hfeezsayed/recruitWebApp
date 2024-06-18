@@ -280,13 +280,10 @@ export const ClientSideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() =>
-                // navigate("/digitalTalentProfile/valueassessmentform")
-                {}
-              }>
+              onClick={() => navigate("/templates/teamTemplate")}>
               <p
                 style={{
-                  color: currentState.includes("valueassessmentform")
+                  color: currentState.includes("teamTemplate")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,
@@ -298,13 +295,10 @@ export const ClientSideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() =>
-                //   navigate("/digitalTalentProfile/analysisassessmentform")
-                {}
-              }>
+              onClick={() => navigate("/templates/jobPreferenceTemplate")}>
               <p
                 style={{
-                  color: currentState.includes("analysisassessmentform")
+                  color: currentState.includes("jobPreferenceTemplate")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,
