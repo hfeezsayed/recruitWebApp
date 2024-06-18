@@ -37,7 +37,7 @@ export const AssesmentBatchDetails = () => {
 
   //  assessments
   const [selected, setSelected] = React.useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(clientAssessmentTableData);
   const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState("");
   const [allocateAssessments, setAllocateAssessments] = useState(false);
