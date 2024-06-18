@@ -1,11 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  InputAdornment,
-  TablePagination,
-  TextField,
-} from "@mui/material";
+import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -24,27 +19,27 @@ export const JobPreferenceTemplate = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = useState("");
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+  const pageChangeHandle = (pageNO) => {
+    setPage(pageNO - 1);
+  };
+
+  useEffect(() => {
+    setPage(data?.pageNo - 1 || 0);
+  }, [data]);
+
+  const PAGECOUNT =
+    data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
 
   const visibleRows = React.useMemo(
-    () => data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, rowsPerPage]
+    () =>
+      data?.data.slice(
+        page * data.pageSize,
+        page * data.pageSize + data.pageSize
+      ),
+    [page, data.pageSize]
   );
-
-  // pagination
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   return (
     <div>
@@ -144,29 +139,24 @@ export const JobPreferenceTemplate = () => {
                             </TableRow>
                           );
                         })}
-                        {emptyRows > 0 && (
-                          <TableRow
-                            style={{
-                              height: 53 * emptyRows,
-                            }}>
-                            <TableCell colSpan={3} />
-                          </TableRow>
-                        )}
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
+                </Paper>
+                <div className="flex justify-between items-center">
+                  <p style={{ color: "#475467", fontSize: 14 }}>
+                    Showing {data.totalCount} results found
+                  </p>
+                  <Pagination
+                    count={PAGECOUNT}
+                    page={page + 1}
                     variant="outlined"
                     shape="rounded"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    onChange={(e, newvalue) => {
+                      pageChangeHandle(newvalue);
+                    }}
                   />
-                </Paper>
+                </div>
               </Box>
             </div>
           </div>

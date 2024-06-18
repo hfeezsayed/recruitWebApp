@@ -22,15 +22,24 @@ export const TeamTemplate = () => {
   const [search, setSearch] = useState("");
 
   const pageChangeHandle = (pageNO) => {
-    setPage(pageNO);
+    setPage(pageNO - 1);
   };
 
   useEffect(() => {
-    setPage(data?.pageNo || 0);
+    setPage(data?.pageNo - 1 || 0);
   }, [data]);
 
   const PAGECOUNT =
     data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
+
+  const visibleRows = React.useMemo(
+    () =>
+      data?.data.slice(
+        page * data.pageSize,
+        page * data.pageSize + data.pageSize
+      ),
+    [page, data.pageSize]
+  );
 
   return (
     <div>
@@ -95,7 +104,7 @@ export const TeamTemplate = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data.data.map((row, index) => {
+                      {visibleRows.map((row, index) => {
                         return (
                           <TableRow key={index}>
                             <TableCell align="center">{row.no}</TableCell>
@@ -131,10 +140,13 @@ export const TeamTemplate = () => {
                   </Table>
                 </TableContainer>
               </Paper>
-              <div className="flex justify-end">
+              <div className="flex justify-between items-center">
+                <p style={{ color: "#475467", fontSize: 14 }}>
+                  Showing {data.totalCount} results found
+                </p>
                 <Pagination
                   count={PAGECOUNT}
-                  page={page}
+                  page={page + 1}
                   variant="outlined"
                   shape="rounded"
                   onChange={(e, newvalue) => {

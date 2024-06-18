@@ -959,187 +959,247 @@ export const talentAnalysisResultData = {
   ],
 };
 
-export const clientAssessmentTableData = [
-  { id: 1, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 2, name: "Work Values Assessment", date: "Jan 25, 2024" },
-  { id: 3, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 4, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 5, name: "Work Values Assessment", date: "Jan 25, 2024" },
-  { id: 6, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 7, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 8, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 9, name: "Work Values Assessment", date: "Jan 25, 2024" },
-  { id: 10, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 11, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 12, name: "Work Values Assessment", date: "Jan 25, 2024" },
-  { id: 13, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 14, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-  { id: 15, name: "Work Values Assessment", date: "Jan 25, 2024" },
-  { id: 16, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
-];
+export const clientAssessmentTableData = {
+  data: [
+    { id: 1, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 2, name: "Work Values Assessment", date: "Jan 25, 2024" },
+    { id: 3, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 4, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 5, name: "Work Values Assessment", date: "Jan 25, 2024" },
+    { id: 6, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 7, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 8, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 9, name: "Work Values Assessment", date: "Jan 25, 2024" },
+    { id: 10, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 11, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 12, name: "Work Values Assessment", date: "Jan 25, 2024" },
+    { id: 13, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 14, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+    { id: 15, name: "Work Values Assessment", date: "Jan 25, 2024" },
+    { id: 16, name: "Leadership Skills Evaluation", date: "Jan 25, 2024" },
+  ],
+  totalCount: 16,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
 
-export const assignCandidateData = [
-  {
-    id: 1,
-    name: "Leadership Skills Evaluation",
-    email: "arpitamathewsharma.09@gmail.com",
-    no: 9849656871,
-  },
-  {
-    id: 2,
-    name: "Project Management Workshop",
-    email: "john.doe@example.com",
-    no: 1234567890,
-  },
-  {
-    id: 3,
-    name: "Data Analysis Training",
-    email: "jane.smith@example.com",
-    no: 9876543210,
-  },
-  {
-    id: 4,
-    name: "Team Building Seminar",
-    email: "alex.wilson@example.com",
-    no: 8765432109,
-  },
-  {
-    id: 5,
-    name: "Effective Communication Workshop",
-    email: "sara.johnson@example.com",
-    no: 7654321098,
-  },
-  {
-    id: 6,
-    name: "Time Management Training",
-    email: "michael.brown@example.com",
-    no: 6543210987,
-  },
-  {
-    id: 7,
-    name: "Conflict Resolution Seminar",
-    email: "emily.clark@example.com",
-    no: 5432109876,
-  },
-  {
-    id: 8,
-    name: "Negotiation Skills Workshop",
-    email: "david.miller@example.com",
-    no: 4321098765,
-  },
-  {
-    id: 9,
-    name: "Leadership Development Program",
-    email: "lisa.jones@example.com",
-    no: 3210987654,
-  },
-  {
-    id: 10,
-    name: "Problem-Solving Techniques Training",
-    email: "robert.white@example.com",
-    no: 2109876543,
-  },
-  {
-    id: 11,
-    name: "Creativity and Innovation Workshop",
-    email: "mary.anderson@example.com",
-    no: 1098765432,
-  },
-  {
-    id: 12,
-    name: "Stress Management Seminar",
-    email: "william.harris@example.com",
-    no: 987654321,
-  },
-  {
-    id: 13,
-    name: "Team Leadership Training",
-    email: "olivia.thomas@example.com",
-    no: 876543210,
-  },
-  {
-    id: 14,
-    name: "Effective Presentation Skills Workshop",
-    email: "james.robinson@example.com",
-    no: 765432109,
-  },
-  {
-    id: 15,
-    name: "Decision-Making Techniques Training",
-    email: "ava.green@example.com",
-    no: 654321098,
-  },
-  {
-    id: 16,
-    name: "Motivational Leadership Seminar",
-    email: "ethan.hall@example.com",
-    no: 543210987,
-  },
-  {
-    id: 17,
-    name: "Change Management Workshop",
-    email: "mia.lewis@example.com",
-    no: 432109876,
-  },
-  {
-    id: 18,
-    name: "Emotional Intelligence Training",
-    email: "noah.clark@example.com",
-    no: 321098765,
-  },
-  {
-    id: 19,
-    name: "Inclusive Leadership Seminar",
-    email: "ava.martin@example.com",
-    no: 210987654,
-  },
-  {
-    id: 20,
-    name: "Effective Feedback Techniques Workshop",
-    email: "liam.wilson@example.com",
-    no: 109876543,
-  },
-];
+export const assignCandidateData = {
+  data: [
+    {
+      id: 1,
+      name: "Leadership Skills Evaluation",
+      email: "arpitamathewsharma.09@gmail.com",
+      no: 9849656871,
+    },
+    {
+      id: 2,
+      name: "Project Management Workshop",
+      email: "john.doe@example.com",
+      no: 1234567890,
+    },
+    {
+      id: 3,
+      name: "Data Analysis Training",
+      email: "jane.smith@example.com",
+      no: 9876543210,
+    },
+    {
+      id: 4,
+      name: "Team Building Seminar",
+      email: "alex.wilson@example.com",
+      no: 8765432109,
+    },
+    {
+      id: 5,
+      name: "Effective Communication Workshop",
+      email: "sara.johnson@example.com",
+      no: 7654321098,
+    },
+    {
+      id: 6,
+      name: "Time Management Training",
+      email: "michael.brown@example.com",
+      no: 6543210987,
+    },
+    {
+      id: 7,
+      name: "Conflict Resolution Seminar",
+      email: "emily.clark@example.com",
+      no: 5432109876,
+    },
+    {
+      id: 8,
+      name: "Negotiation Skills Workshop",
+      email: "david.miller@example.com",
+      no: 4321098765,
+    },
+    {
+      id: 9,
+      name: "Leadership Development Program",
+      email: "lisa.jones@example.com",
+      no: 3210987654,
+    },
+    {
+      id: 10,
+      name: "Problem-Solving Techniques Training",
+      email: "robert.white@example.com",
+      no: 2109876543,
+    },
+    {
+      id: 11,
+      name: "Creativity and Innovation Workshop",
+      email: "mary.anderson@example.com",
+      no: 1098765432,
+    },
+    {
+      id: 12,
+      name: "Stress Management Seminar",
+      email: "william.harris@example.com",
+      no: 987654321,
+    },
+    {
+      id: 13,
+      name: "Team Leadership Training",
+      email: "olivia.thomas@example.com",
+      no: 876543210,
+    },
+    {
+      id: 14,
+      name: "Effective Presentation Skills Workshop",
+      email: "james.robinson@example.com",
+      no: 765432109,
+    },
+    {
+      id: 15,
+      name: "Decision-Making Techniques Training",
+      email: "ava.green@example.com",
+      no: 654321098,
+    },
+    {
+      id: 16,
+      name: "Motivational Leadership Seminar",
+      email: "ethan.hall@example.com",
+      no: 543210987,
+    },
+    {
+      id: 17,
+      name: "Change Management Workshop",
+      email: "mia.lewis@example.com",
+      no: 432109876,
+    },
+    {
+      id: 18,
+      name: "Emotional Intelligence Training",
+      email: "noah.clark@example.com",
+      no: 321098765,
+    },
+    {
+      id: 19,
+      name: "Inclusive Leadership Seminar",
+      email: "ava.martin@example.com",
+      no: 210987654,
+    },
+    {
+      id: 20,
+      name: "Effective Feedback Techniques Workshop",
+      email: "liam.wilson@example.com",
+      no: 109876543,
+    },
+  ],
+  totalCount: 20,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
 
-export const jobTemplateData = [
-  { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 10, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 12, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 14, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 16, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-];
+export const jobTemplateData = {
+  data: [
+    { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 10,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 12,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 14,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 16,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  ],
+  totalCount: 17,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
 
-export const jobWorkValueData = [
-  { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 10, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 12, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 14, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-  { no: 16, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-  { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-];
+export const jobWorkValueData = {
+  data: [
+    { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 10,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 12,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 14,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 16,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  ],
+  totalCount: 17,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
 
 export const workValueViewData = [
   { attribute: "Self- Direction", rank: 4 },
@@ -1200,212 +1260,219 @@ export const workValueEditData = [
   },
 ];
 
-export const assesmentResultData = [
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-  {
-    candidateName: "Johnny Mathew Adams",
-    assessments: [
-      {
-        name: "Leadership Skills Evaluation",
-        date: "Jan 25, 2024",
-        status: false,
-        timePased: "1 day",
-      },
-      {
-        name: "Communication Skills Assessments",
-        date: "Jan 25, 2024",
-        status: true,
-        timePased: "1 day",
-      },
-    ],
-  },
-];
+export const assesmentResultData = {
+  data: [
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+    {
+      candidateName: "Johnny Mathew Adams",
+      assessments: [
+        {
+          name: "Leadership Skills Evaluation",
+          date: "Jan 25, 2024",
+          status: false,
+          timePased: "1 day",
+        },
+        {
+          name: "Communication Skills Assessments",
+          date: "Jan 25, 2024",
+          status: true,
+          timePased: "1 day",
+        },
+      ],
+    },
+  ],
+  totalCount: 12,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
 
 export const teamTemplateData = {
   data: [
