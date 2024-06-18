@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
-import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { Footer } from "../../../widgets/footer";
 
-export const JobTemplateEdit = () => {
+export const TeamTemplateEdit = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [teamSize, setTeamSize] = useState();
+  const [teamLocation, setTeamLocation] = useState();
+  const [crossFunctionality, setCrossFunctionality] = useState();
+  const [specifyDomain, setSpecifyDomain] = useState();
 
-  const [title, setTitle] = useState();
-  const [locations, setLocation] = useState();
-  const [salary, setSalary] = useState("");
-  const [description, setDescription] = useState("");
+  const [teamWorkingDes, setTeamWorkingDes] = useState("");
+  const [describeContributions, setDescribeContributions] = useState("");
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -25,22 +26,21 @@ export const JobTemplateEdit = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
+  const yes_no = ["Yes", "No"];
+
   const handleSubmit = async () => {
     axios
-      .post("localhost:3000", { title, locations, salary, description })
+      .post("localhost:3000", {
+        teamSize,
+        teamLocation,
+        crossFunctionality,
+        specifyDomain,
+        teamWorkingDes,
+        describeContributions,
+      })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
-
-  useEffect(() => {
-    if (location.state) {
-      console.log(location.state);
-      setTitle(location.state?.title);
-      setLocation(location.state?.location);
-      setSalary(location.state?.salary);
-      setDescription(location.state?.desctiption);
-    }
-  }, [location.state]);
 
   return (
     <div>
@@ -55,20 +55,20 @@ export const JobTemplateEdit = () => {
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please review and edit the information as needed, or use the
-                same template
+                same template.
               </p>
             </div>
-            <div className="grid-cols-3 grid gap-8 mt-8">
+            <div className="grid-cols-2 grid gap-8 mt-8">
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Title
+                  What is the size of the team
                 </p>
                 <Autocomplete
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
-                  value={title || null}
-                  onChange={(e, newvalue) => setTitle(newvalue)}
+                  value={teamSize || null}
+                  onChange={(e, newvalue) => setTeamSize(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -76,14 +76,14 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Location
+                  What is the location of the team where it works from?
                 </p>
                 <Autocomplete
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
-                  value={locations || null}
-                  onChange={(e, newvalue) => setLocation(newvalue)}
+                  value={teamLocation || null}
+                  onChange={(e, newvalue) => setTeamLocation(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -91,23 +91,64 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Salary Compensation
+                  Does the role have to work cross functionally?
                 </p>
-                <TextField
+                <Autocomplete
                   size="small"
-                  value={salary}
-                  onChange={(e) => setSalary(e.target.value)}
-                  placeholder="type"
+                  disablePortal
+                  options={yes_no}
+                  value={crossFunctionality || null}
+                  onChange={(e, newvalue) => setCrossFunctionality(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  If yes, please specify the domain or teams the role will
+                  interact with?
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  disabled={crossFunctionality !== "Yes"}
+                  options={options.map((option) => option.label)}
+                  value={specifyDomain || null}
+                  onChange={(e, newvalue) => setSpecifyDomain(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
                 />
               </div>
             </div>
-            <div className="grid grid-flow-row gap-2 py-8">
+
+            <div className="grid grid-flow-row gap-2 mt-8">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Job Description
+                What problem/project is the team working on which the candidate
+                will be joining?
               </p>
               <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={teamWorkingDes}
+                onChange={(e) => setTeamWorkingDes(e.target.value)}
+                placeholder="type"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#D0D5DD",
+                  borderRadius: 8,
+                  padding: 5,
+                }}
+              />
+            </div>
+            <div className="grid grid-flow-row gap-2 py-5">
+              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                Could you describe the contributions of a particularly
+                successful team member in a similar role and how they've
+                impacted the team's success?
+              </p>
+              <textarea
+                value={describeContributions}
+                onChange={(e) => setDescribeContributions(e.target.value)}
                 placeholder="type"
                 style={{
                   borderWidth: 1,

@@ -1406,3 +1406,46 @@ export const assesmentResultData = [
     ],
   },
 ];
+
+export const teamTemplateData = {
+  data: [
+    { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
+    { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 10,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 12,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 14,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      no: 16,
+      name: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+  ],
+  totalCount: 17,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
