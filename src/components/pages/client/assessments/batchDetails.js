@@ -23,6 +23,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { clientAssessmentTableData } from "../../../dummy/Data";
+import { useEffect } from "react";
 
 export const AssesmentBatchDetails = () => {
   const navigation = useNavigate();
@@ -31,26 +32,39 @@ export const AssesmentBatchDetails = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
-  const [degree, setDegree] = useState();
+  const [job, setJob] = useState();
+  const [jobId, setJobId] = useState();
   const [activeScreen, setActiveScreen] = useState("batchDetails");
 
   //  assessments
   const [selected, setSelected] = React.useState([]);
-  const [data, setData] = useState(clientAssessmentTableData);
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = useState("");
   const [allocateAssessments, setAllocateAssessments] = useState(false);
 
   const options = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
+    { label: "The Shawshank Redemption", value: 1 },
+    { label: "The Godfather", value: 2 },
+    { label: "The Godfather: Part II", value: 3 },
+    { label: "The Dark Knight", value: 4 },
+    { label: "12 Angry Men", value: 5 },
+    { label: "Schindler's List", value: 6 },
+    { label: "Pulp Fiction", value: 7 },
   ];
+
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getAssessments?clientId="+user.userId+"&pageNo=1&pageSize=12")
+    .then(response => {
+        console.log(response.data.data);
+        setData(response.data.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+}, []);
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
@@ -102,16 +116,17 @@ export const AssesmentBatchDetails = () => {
   );
 
   const handleSubmit = async () => {
-    navigation("/assignCandidate");
+    //navigation("/assignCandidate");
+    const batchName = name;
+    const assessments = selected;
     axios
-      .post("localhost:3000", {
+      .post("http://localhost:8080/xen/saveClientAssessmentBatch", {
         name,
         startDate,
         endDate,
         description,
-        degree,
+        job,
         selected,
-        data,
         allocateAssessments,
       })
       .then((data) => console.log(data.data))
@@ -211,15 +226,15 @@ export const AssesmentBatchDetails = () => {
                 <div className="grid grid-flow-row gap-1 mt-5 w-1/2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Degree
+                    Job
                   </p>
                   <Autocomplete
                     disablePortal
                     size="small"
                     fullWidth
                     options={options.map((option) => option.label)}
-                    value={degree || null}
-                    onChange={(e, value) => setDegree(value)}
+                    value={job || null}
+                    onChange={(e, value) => setJob(value)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" required />
                     )}
