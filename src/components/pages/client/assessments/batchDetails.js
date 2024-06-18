@@ -23,7 +23,6 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { clientAssessmentTableData } from "../../../dummy/Data";
-import { useEffect } from "react";
 
 export const AssesmentBatchDetails = () => {
   const navigation = useNavigate();
