@@ -34,7 +34,7 @@ export const AssignCandidate = () => {
 
   const [selected, setSelected] = React.useState([]);
   const [data, setData] = useState(assignCandidateData);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
 
   const [allocateAssignment, setAllocateAssignment] = useState(false);
 
@@ -78,24 +78,42 @@ export const AssignCandidate = () => {
   // pagination
 
   const pageChangeHandle = (pageNO) => {
-    setPage(pageNO - 1);
+    axios
+      .get(
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+      )
+      .then((data) => {
+        console.log(data);
+        // setData(data.data);
+        // setPage(data?.pageNo || 0);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setPage(pageNO);
   };
 
   useEffect(() => {
-    setPage(data?.pageNo - 1 || 0);
+    setPage(data?.pageNo || 1);
   }, [data]);
 
   const PAGECOUNT =
-    data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
+    data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
-  const visibleRows = React.useMemo(
-    () =>
-      data?.data.slice(
-        page * data.pageSize,
-        page * data.pageSize + data.pageSize
-      ),
-    [page, data.pageSize]
-  );
+  useEffect(() => {
+    axios
+      .get(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+      )
+      .then((data) => {
+        console.log(data);
+        // setData(data.data);
+        // setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -228,11 +246,11 @@ export const AssignCandidate = () => {
                                   color="primary"
                                   indeterminate={
                                     selected.length > 0 &&
-                                    selected.length < data.data.length
+                                    selected.length < data?.data?.length
                                   }
                                   checked={
-                                    data.data.length > 0 &&
-                                    selected.length === data.data.length
+                                    data?.data?.length > 0 &&
+                                    selected.length === data?.data?.length
                                   }
                                   onChange={handleSelectAllClick}
                                   sx={{
@@ -258,7 +276,7 @@ export const AssignCandidate = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {visibleRows.map((row, index) => {
+                            {data?.data?.map((row, index) => {
                               const isItemSelected = isSelected(row.id);
                               return (
                                 <TableRow
@@ -302,11 +320,11 @@ export const AssignCandidate = () => {
                     </Paper>
                     <div className="flex justify-between items-center">
                       <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data.totalCount} results found
+                        Showing {data?.totalCount} results found
                       </p>
                       <Pagination
                         count={PAGECOUNT}
-                        page={page + 1}
+                        page={page}
                         variant="outlined"
                         shape="rounded"
                         onChange={(e, newvalue) => {

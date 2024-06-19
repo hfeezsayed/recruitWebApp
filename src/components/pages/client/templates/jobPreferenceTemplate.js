@@ -10,36 +10,50 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { jobTemplateData } from "../../../dummy/Data";
 
 export const JobPreferenceTemplate = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(jobTemplateData);
-  const [page, setPage] = React.useState(0);
+  const [data, setData] = useState();
+  const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
   const pageChangeHandle = (pageNO) => {
-    setPage(pageNO - 1);
+    axios
+      .get(
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+      )
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+        // setPage(data?.pageNo || 0);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setPage(pageNO);
   };
 
-  useEffect(() => {
-    setPage(data?.pageNo - 1 || 0);
-  }, [data]);
-
   const PAGECOUNT =
-    data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
+    data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
-  const visibleRows = React.useMemo(
-    () =>
-      data?.data.slice(
-        page * data.pageSize,
-        page * data.pageSize + data.pageSize
-      ),
-    [page, data.pageSize]
-  );
+  useEffect(() => {
+    axios
+      .get(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+      )
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+        setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <div>
@@ -77,7 +91,10 @@ export const JobPreferenceTemplate = () => {
                     color: "#008080",
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
-                  }}>
+                  }}
+                  onClick={() =>
+                    navigate("/templates/jobPreferenceTemplateCreate")
+                  }>
                   Create New Template
                 </Button>
               </div>
@@ -104,15 +121,15 @@ export const JobPreferenceTemplate = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {visibleRows.map((row, index) => {
+                        {data?.data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
-                              <TableCell align="center">{row.no}</TableCell>
+                              <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.name}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.createdBy}
+                                {row.date}
                               </TableCell>
                               <TableCell
                                 padding="none"
@@ -126,12 +143,9 @@ export const JobPreferenceTemplate = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() =>
-                                    navigate(
-                                      "/templates/jobPreferenceTemplateEdit",
-                                      {
-                                        state: row,
-                                      }
-                                    )
+                                    navigate("/templates/jobTemplateEdit", {
+                                      state: row,
+                                    })
                                   }>
                                   Edit
                                 </Button>
@@ -145,11 +159,11 @@ export const JobPreferenceTemplate = () => {
                 </Paper>
                 <div className="flex justify-between items-center">
                   <p style={{ color: "#475467", fontSize: 14 }}>
-                    Showing {data.totalCount} results found
+                    Showing {data?.totalCount || 0} results found
                   </p>
                   <Pagination
                     count={PAGECOUNT}
-                    page={page + 1}
+                    page={page}
                     variant="outlined"
                     shape="rounded"
                     onChange={(e, newvalue) => {
