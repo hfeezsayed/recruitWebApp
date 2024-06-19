@@ -31,6 +31,10 @@ import { TeamTemplate } from "./components/pages/client/templates/teamTemplate";
 import { TeamTemplateEdit } from "./components/pages/client/templates/teamTemplateEdit";
 import { JobPreferenceTemplate } from "./components/pages/client/templates/jobPreferenceTemplate";
 import { JobPreferenceTemplateEdit } from "./components/pages/client/templates/jobPreferenceTemplateEdit";
+import { JobTemplateCreate } from "./components/pages/client/templates/jobTemplateCreate";
+import { WorkValueTemplateCreate } from "./components/pages/client/templates/workValueTemplateCreate";
+import { TeamTemplateCreate } from "./components/pages/client/templates/teamTemplateCreate";
+import { JobPreferenceTemplateCreate } from "./components/pages/client/templates/jobPreferenceTemplateCreate";
 
 export const Routes = () => {
   return (
@@ -81,12 +85,20 @@ export const Routes = () => {
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
         <Route
+          path="templates/jobTemplateCreate"
+          element={<JobTemplateCreate />}
+        />
+        <Route
           path="templates/workValueTemplate"
           element={<WorkValueTemplate />}
         />
         <Route
           path="templates/workValueTemplateEdit"
           element={<WorkValueTemplateEdit />}
+        />
+        <Route
+          path="templates/workValueTemplateCreate"
+          element={<WorkValueTemplateCreate />}
         />
         <Route
           path="templates/workValueTemplateView"
@@ -98,12 +110,20 @@ export const Routes = () => {
           element={<TeamTemplateEdit />}
         />
         <Route
+          path="templates/teamTemplateCreate"
+          element={<TeamTemplateCreate />}
+        />
+        <Route
           path="templates/jobPreferenceTemplate"
           element={<JobPreferenceTemplate />}
         />
         <Route
           path="templates/jobPreferenceTemplateEdit"
           element={<JobPreferenceTemplateEdit />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplateCreate"
+          element={<JobPreferenceTemplateCreate />}
         />
         <Route
           path="assesmentBatchDetails"
