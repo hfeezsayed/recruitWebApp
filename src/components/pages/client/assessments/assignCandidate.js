@@ -26,6 +26,7 @@ import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { assignCandidateData } from "../../../dummy/Data";
+import { useLocation } from "react-router-dom";
 
 export const AssignCandidate = () => {
   const navigation = useNavigate();
@@ -44,6 +45,9 @@ export const AssignCandidate = () => {
   const [candidateNo, setCandidateNo] = useState("");
   const [candidateLinkedin, setCandidateLinkedin] = useState("");
   const [candidateResume, setCandidateResume] = useState();
+
+  const { batchId } = useLocation().state || {};
+
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
@@ -84,8 +88,8 @@ export const AssignCandidate = () => {
       )
       .then((data) => {
         console.log(data);
-        // setData(data.data);
-        // setPage(data?.pageNo || 0);
+        setData(data.data);
+        setPage(data?.pageNo || 0);
       })
       .catch((e) => {
         console.log(e);
@@ -103,12 +107,12 @@ export const AssignCandidate = () => {
   useEffect(() => {
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
-        // setData(data.data);
-        // setPage(data?.pageNo || 1);
+        setData(data.data);
+        setPage(data?.pageNo || 1);
       })
       .catch((e) => {
         console.log(e);
@@ -129,8 +133,9 @@ export const AssignCandidate = () => {
 
   const handleAddAsignment = async () => {
     navigation("/assesmentResult");
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("localhost:3000", {
+      .post("http://localhost:8080/xen/addCandidateToBatch?batchId="+batchId, {
         addCandidateDatabase,
         candidateName,
         candidateEmail,
@@ -143,11 +148,12 @@ export const AssignCandidate = () => {
   };
 
   const handleAsignCandidates = async () => {
-    navigation("/assesmentResult");
+  //  navigation("/assesmentResult");
+    const user = JSON.parse(localStorage.getItem("token"));
+    const candidates = selected;
     axios
-      .post("localhost:3000", {
-        selected,
-        data,
+      .post("http://localhost:8080/xen/assignCandidatesToBatch?batchId="+batchId+"&clientId="+user.userId, {
+        candidates
       })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
@@ -306,10 +312,10 @@ export const AssignCandidate = () => {
                                     {row.name}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.email}
+                                    {row.emailId}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.no}
+                                    {row.mobileNo}
                                   </TableCell>
                                 </TableRow>
                               );

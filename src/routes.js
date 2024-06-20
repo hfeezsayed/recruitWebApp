@@ -35,6 +35,7 @@ import { JobTemplateCreate } from "./components/pages/client/templates/jobTempla
 import { WorkValueTemplateCreate } from "./components/pages/client/templates/workValueTemplateCreate";
 import { TeamTemplateCreate } from "./components/pages/client/templates/teamTemplateCreate";
 import { JobPreferenceTemplateCreate } from "./components/pages/client/templates/jobPreferenceTemplateCreate";
+import { AssessmentListView } from "./components/pages/client/assessments/assessmentListView";
 
 export const Routes = () => {
   return (
@@ -125,11 +126,15 @@ export const Routes = () => {
           path="templates/jobPreferenceTemplateCreate"
           element={<JobPreferenceTemplateCreate />}
         />
+         <Route
+          path="assessmentsList"
+          element={<AssessmentListView />}
+        />
         <Route
-          path="assesmentBatchDetails"
+          path="assessmentBatchDetails"
           element={<AssesmentBatchDetails />}
         />
-        <Route path="assesmentResult" element={<AsssessmentResult />} />
+        <Route path="assessmentResult" element={<AsssessmentResult />} />
         <Route path="assignCandidate" element={<AssignCandidate />} />
         <Route path="*" element={<Error404 />} />
       </Route>

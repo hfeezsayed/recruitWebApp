@@ -52,22 +52,22 @@ export const AssesmentBatchDetails = () => {
     { label: "Pulp Fiction", value: 7 },
   ];
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get(
-        "http://localhost:8080/xen/getAssessments?clientId=" +
-          user.userId +
-          "&pageNo=1&pageSize=12"
-      )
-      .then((response) => {
-        console.log(response.data.data);
-        setData(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   axios
+  //     .get(
+  //       "http://localhost:8080/xen/getAssessments?clientId=" +
+  //         user.userId +
+  //         "&pageNo=1&pageSize=12"
+  //     )
+  //     .then((response) => {
+  //       console.log(response.data.data);
+  //       setData(response.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
@@ -108,8 +108,8 @@ export const AssesmentBatchDetails = () => {
       )
       .then((data) => {
         console.log(data);
-        // setData(data.data);
-        // setPage(data?.pageNo || 0);
+        setData(data.data);
+        setPage(data?.pageNo || 0);
       })
       .catch((e) => {
         console.log(e);
@@ -131,8 +131,8 @@ export const AssesmentBatchDetails = () => {
       )
       .then((data) => {
         console.log(data);
-        // setData(data.data);
-        // setPage(data?.pageNo || 1);
+        setData(data.data);
+        setPage(data?.pageNo || 1);
       })
       .catch((e) => {
         console.log(e);
@@ -141,20 +141,27 @@ export const AssesmentBatchDetails = () => {
 
   const handleSubmit = async () => {
     //navigation("/assignCandidate");
+    const user = JSON.parse(localStorage.getItem("token"));
     const batchName = name;
     const assessments = selected;
     axios
-      .post("http://localhost:8080/xen/saveClientAssessmentBatch", {
-        name,
+      .post("http://localhost:8080/xen/saveClientAssessmentBatch?clientId="+user.userId, {
+        batchName,
         startDate,
         endDate,
         description,
         job,
-        selected,
+        assessments,
         allocateAssessments,
       })
-      .then((data) => console.log(data.data))
-      .catch((e) => console.log(e));
+      .then(data => {
+        console.log(data.data)
+       // navigation("/assignCandidate", { state: { batchId:  data.data.batchId} });
+      })
+      .catch(e => {
+          console.log(e)
+          //navigation("/assignCandidate", { state: { batchId:  data.data.batchId} });
+   });
   };
 
   return (

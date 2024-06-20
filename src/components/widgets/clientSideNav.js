@@ -348,7 +348,7 @@ export const ClientSideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/assesmentBatchDetails");
+                navigate("/assessmentsList");
               }}>
               <ListItemIcon
                 sx={{
@@ -363,7 +363,7 @@ export const ClientSideNav = () => {
                 />
               </ListItemIcon>
               <ListItemText
-                primary={"Assesments"}
+                primary={"Assessments"}
                 primaryTypographyProps={{
                   color: currentState.includes("assesment")
                     ? "#ffffff"
