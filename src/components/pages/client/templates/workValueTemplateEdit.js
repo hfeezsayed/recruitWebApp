@@ -15,17 +15,28 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
+import { useLocation } from 'react-router-dom';
+import { useEffect} from 'react';
+
 
 export const WorkValueTemplateEdit = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(workValueEditData);
-  const [ratingList, setRatingList] = useState(workValueEditData);
+  const location = useLocation();
+  const [data, setData] = useState([workValueEditData]);
+  const [ratingList, setRatingList] = useState([workValueEditData]);
 
   const handleChangeRating = (value, i) => {
     let newFormValues = [...ratingList];
     newFormValues[i].rating = value;
     setRatingList(newFormValues);
   };
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state);
+      setData(location.state.valuesData);
+    }
+  }, [location.state]);
 
   return (
     <div>
@@ -80,20 +91,20 @@ export const WorkValueTemplateEdit = () => {
                               sx={{
                                 color: "#475467",
                               }}>
-                              {row.attribute}
+                              {row.value}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
                               }}>
-                              {row.Statements}
+                              {row.statement}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
                               }}>
                               <Rating
-                                value={data?.rating}
+                                value={row?.rating}
                                 onChange={(e, newvalue) =>
                                   handleChangeRating(newvalue, index)
                                 }

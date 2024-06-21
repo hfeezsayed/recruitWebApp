@@ -3,13 +3,15 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { useEffect } from 'react';
 
 export const JobPreferenceTemplateEdit = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   // industry
   const [experianceInIndustry, setExperianceInindustry] = useState();
   const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
@@ -49,6 +51,37 @@ export const JobPreferenceTemplateEdit = () => {
     setToolsOrSoftwaresetToolsOrSoftware,
   ] = useState([{ tools: null }]);
   const [successThreeyear, setSuccessThreeyear] = useState("");
+
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state);
+      const row = location.state;
+      setExperianceInindustry(row.experianceInIndustry);     
+      setSpecifyIndustryExp(row.specifyIndusrtyExp);
+      setJobDescription(row.jobDescription);
+      setScopOfRole(row.scopOfRole);
+      setDepthKnowledge(row.depthKnowledge);
+      setTypeOfROles(row.typeOfRoles);
+      setTimeofRole(row.timeOfRole);
+      setWorkSetting(row.workSetting);
+      setLocationRole(row.locationRole);
+      setRelocation(row.relocation);
+      setRelocationBudget(row.relocationBudget);
+      setTravelRole(row.travelRole);
+      setVisa(row.visa);
+      setCompensationOffered(row.compensationOffered);
+      setPrimarySkill(row.primarySkills);
+      setSecoundrySkill(row.secoundrySkills);
+      setMinimumLevelQualification(row.minimumLevelQualification);
+      setRequireAcademicQualification(row.requireAcademicQualification);
+      setDifferentAcademic(row.differentAcademic);
+      setCertificationsOrLicenses(row.certificationsOrLicenses);
+      setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+      setSuccessThreeyear(row.successThreeYear);
+      
+    }
+  }, [location.state]);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },

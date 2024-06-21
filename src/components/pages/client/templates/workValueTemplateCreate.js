@@ -15,6 +15,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
+import axios from 'axios';
 
 export const WorkValueTemplateCreate = () => {
   const navigate = useNavigate();
@@ -26,6 +27,19 @@ export const WorkValueTemplateCreate = () => {
     newFormValues[i].rating = value;
     setRatingList(newFormValues);
   };
+
+  const handleSubmit = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.post("http://localhost:8080/xen/saveValueTemplate?clientId="+user.userId, 
+      ratingList
+    )
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+  }
 
   return (
     <div>
@@ -80,13 +94,13 @@ export const WorkValueTemplateCreate = () => {
                               sx={{
                                 color: "#475467",
                               }}>
-                              {row.attribute}
+                              {row.value}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
                               }}>
-                              {row.Statements}
+                              {row.statement}
                             </TableCell>
                             <TableCell
                               sx={{
@@ -119,6 +133,7 @@ export const WorkValueTemplateCreate = () => {
                   Back
                 </Button>
                 <Button
+                  onClick={() => handleSubmit()}
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}>
                   CONFIRM

@@ -188,7 +188,7 @@ export const JobPreferenceTemplateCreate = () => {
 
   const handleSubmit = async () => {
     axios
-      .post("localhost:3000", {
+      .post("http://localhost:8080/xen/savePreferenceTemplate?clientId=1", {
         experianceInIndustry,
         specifyIndusrtyExp,
         jobDescription,
@@ -416,7 +416,7 @@ export const JobPreferenceTemplateCreate = () => {
                     <Autocomplete
                       size="small"
                       disablePortal
-                      options={options.map((option) => option.label)}
+                      options={yes_no}
                       value={relocation || null}
                       onChange={(e, newvalue) => setRelocation(newvalue)}
                       renderInput={(params) => (
@@ -435,6 +435,7 @@ export const JobPreferenceTemplateCreate = () => {
                     </p>
                     <TextField
                       size="small"
+                      type="number"
                       placeholder="type"
                       value={relocationBudget}
                       onChange={(e) => setRelocationBudget(e.target.value)}

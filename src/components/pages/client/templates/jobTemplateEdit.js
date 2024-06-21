@@ -38,7 +38,7 @@ export const JobTemplateEdit = () => {
       setTitle(location.state?.title);
       setLocation(location.state?.location);
       setSalary(location.state?.salary);
-      setDescription(location.state?.desctiption);
+      setDescription(location.state?.description);
     }
   }, [location.state]);
 
@@ -63,15 +63,12 @@ export const JobTemplateEdit = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Title
                 </p>
-                <Autocomplete
+                <TextField
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
                   value={title || null}
-                  onChange={(e, newvalue) => setTitle(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="type"
                 />
               </div>
               <div className="grid grid-flow-row gap-2">
@@ -95,6 +92,7 @@ export const JobTemplateEdit = () => {
                 </p>
                 <TextField
                   size="small"
+                  type="number"
                   value={salary}
                   onChange={(e) => setSalary(e.target.value)}
                   placeholder="type"

@@ -8,10 +8,10 @@ import { TopNav } from "../../../widgets/topNav";
 
 export const JobTemplateCreate = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const locations = useLocation();
 
   const [title, setTitle] = useState();
-  const [locations, setLocation] = useState();
+  const [location, setLocation] = useState();
   const [salary, setSalary] = useState("");
   const [description, setDescription] = useState("");
 
@@ -26,21 +26,22 @@ export const JobTemplateCreate = () => {
   ];
 
   const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("localhost:3000", { title, locations, salary, description })
+      .post("http://localhost:8080/xen/saveJobTemplate?clientId="+user.userId, { title, location, salary, description })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
 
   useEffect(() => {
-    if (location.state) {
-      console.log(location.state);
-      setTitle(location.state?.title);
-      setLocation(location.state?.location);
-      setSalary(location.state?.salary);
-      setDescription(location.state?.desctiption);
+    if (locations.state) {
+      console.log(locations.state);
+      setTitle(locations.state?.title);
+      setLocation(locations.state?.location);
+      setSalary(locations.state?.salary);
+      setDescription(locations.state?.desctiption);
     }
-  }, [location.state]);
+  }, [locations.state]);
 
   return (
     <div>
@@ -63,15 +64,12 @@ export const JobTemplateCreate = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Title
                 </p>
-                <Autocomplete
+                <TextField
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
                   value={title || null}
-                  onChange={(e, newvalue) => setTitle(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="type"
                 />
               </div>
               <div className="grid grid-flow-row gap-2">
@@ -82,7 +80,7 @@ export const JobTemplateCreate = () => {
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
-                  value={locations || null}
+                  value={location || null}
                   onChange={(e, newvalue) => setLocation(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
@@ -95,6 +93,7 @@ export const JobTemplateCreate = () => {
                 </p>
                 <TextField
                   size="small"
+                  type="number"
                   value={salary}
                   onChange={(e) => setSalary(e.target.value)}
                   placeholder="type"

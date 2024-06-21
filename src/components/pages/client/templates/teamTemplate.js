@@ -24,7 +24,7 @@ export const TeamTemplate = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllTeamTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -43,7 +43,7 @@ export const TeamTemplate = () => {
   useEffect(() => {
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getAllTeamTemplate?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -124,10 +124,10 @@ export const TeamTemplate = () => {
                           <TableRow key={index}>
                             <TableCell align="center">{row.id}</TableCell>
                             <TableCell sx={{ color: "#475467" }}>
-                              {row.name}
+                              {row.templateName}
                             </TableCell>
                             <TableCell sx={{ color: "#475467" }}>
-                              {row.date}
+                              {row.createdBy}
                             </TableCell>
                             <TableCell
                               padding="none"
@@ -141,7 +141,7 @@ export const TeamTemplate = () => {
                                   textTransform: "none",
                                 }}
                                 onClick={() =>
-                                  navigate("/templates/jobTemplateEdit", {
+                                  navigate("/templates/teamTemplateEdit", {
                                     state: row,
                                   })
                                 }>

@@ -24,7 +24,7 @@ export const JobTemplate = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -43,7 +43,7 @@ export const JobTemplate = () => {
   useEffect(() => {
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getAllTeamTemplates?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -126,7 +126,7 @@ export const JobTemplate = () => {
                                 {row.name}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
                               </TableCell>
                               <TableCell
                                 padding="none"

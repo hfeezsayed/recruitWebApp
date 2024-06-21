@@ -1,7 +1,7 @@
 export const ValueAssesmentData = [
   {
     questionNo: 1,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Flourish autonomously, take full ownership ",
       "Prioritize professional growth, seek recognition ",
@@ -10,7 +10,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 2,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Adaptable, embrace opportunities and variety ",
       "Seek authority, lead, ensure compliance",
@@ -19,7 +19,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 3,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Prioritize enjoyment, instill fun in work",
       "Thrive in stable environments, avoid risks ",
@@ -28,7 +28,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 4,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Flourish autonomously, take full ownership ",
       "Adaptable, embrace opportunities and variety ",
@@ -37,7 +37,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 5,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Prioritize professional growth, seek recognition ",
       "Seek authority, lead, ensure compliance",
@@ -46,7 +46,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 6,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Value harmony, prioritize group norms",
       "Uphold tradition, prioritize proven practices",
@@ -55,7 +55,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 7,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Flourish autonomously, take full ownership ",
       "Team's success, over own  ",
@@ -64,7 +64,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 8,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Prioritize professional growth, seek recognition ",
       "Uphold tradition, prioritize proven practices",
@@ -73,7 +73,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 9,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Value harmony, prioritize group norms",
       "Adaptable, embrace opportunities and variety ",
@@ -82,7 +82,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 10,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Flourish autonomously, take full ownership ",
       "Team's success, over own  ",
@@ -91,7 +91,7 @@ export const ValueAssesmentData = [
   },
   {
     questionNo: 11,
-    question: "In a Work Setting, which attribute best describes you ",
+    question: "In a Work Setting, which value best describes you ",
     options: [
       "Prioritize professional growth, seek recognition ",
       "Uphold tradition, prioritize proven practices",
@@ -178,7 +178,7 @@ export const QUESTIONS = [
   {
     questionNo: 4,
     question:
-      "Your company is seeking to enhance its customer service experience, and you need an ideal candidate to lead this transformation. What attributes would you prioritize in this candidate?  Rank the traits you would prioritize from most to least in an ideal candidate?",
+      "Your company is seeking to enhance its customer service experience, and you need an ideal candidate to lead this transformation. What values would you prioritize in this candidate?  Rank the traits you would prioritize from most to least in an ideal candidate?",
     options: [
       "A candidate with strong relationship-building skills, capable of cultivating long-lasting connections with customers.",
       "Someone who excels in problem-solving, quickly resolving customer issues and finding innovative solutions. ",
@@ -1202,60 +1202,60 @@ export const jobWorkValueData = {
 };
 
 export const workValueViewData = [
-  { attribute: "Self- Direction", rank: 4 },
-  { attribute: "Stimulation", rank: 3 },
-  { attribute: "Hedonism", rank: 3 },
-  { attribute: "Achievements", rank: 3 },
-  { attribute: "Power", rank: 2 },
-  { attribute: "Security", rank: 1 },
-  { attribute: "Conformity", rank: 2 },
-  { attribute: "Tradition", rank: 0 },
-  { attribute: "Benevolence", rank: 0 },
-  { attribute: "Universalism", rank: 2 },
+  { value: "Self- Direction", rank: 4 },
+  { value: "Stimulation", rank: 3 },
+  { value: "Hedonism", rank: 3 },
+  { value: "Achievements", rank: 3 },
+  { value: "Power", rank: 2 },
+  { value: "Security", rank: 1 },
+  { value: "Conformity", rank: 2 },
+  { value: "Tradition", rank: 0 },
+  { value: "Benevolence", rank: 0 },
+  { value: "Universalism", rank: 2 },
 ];
 
 export const workValueEditData = [
   {
-    attribute: "Self- Direction",
-    Statements:
+    value: "Self-Direction",
+    statement:
       "Structured work goals, clear instructions, frequent supervision",
   },
   {
-    attribute: "Stimulation",
-    Statements: "Comfort routine & stability. Prefer familiarity over newness",
+    value: "Stimulation",
+    statement: "Comfort routine & stability. Prefer familiarity over newness",
   },
   {
-    attribute: "Hedonism",
-    Statements: "Comfort routine & stability. Prefer familiarity over newness",
+    value: "Hedonism",
+    statement: "Comfort routine & stability. Prefer familiarity over newness",
   },
   {
-    attribute: "Achievements",
-    Statements:
+    value: "Achievement",
+    statement:
       "Work-life balance, helping others over hyperfocusing on self-growth",
   },
   {
-    attribute: "Power",
-    Statements:
+    value: "Power",
+    statement:
       "Avoid imposing authority, being in leadership roles, listen to others",
   },
   {
-    attribute: "Security",
-    Statements:
+    value: "Security",
+    statement:
       "Always prioritize innovation over stability and predictability",
   },
   {
-    attribute: "Conformity",
-    Statements: "Value individuality over being a part of the group",
+    value: "Conformity",
+    statement: "Value individuality over being a part of the group",
   },
 
   {
-    attribute: "Benevolence",
-    Statements:
+    value: "Benevolence",
+    statement:
       "Prioritize personal responsibilities over team goals & helping others",
   },
   {
-    attribute: "Universalism",
-    Statements:
+    value: "Universalism",
+    statement:
       "Leverage my privileges to lead assertively without much consultation ",
   },
 ];

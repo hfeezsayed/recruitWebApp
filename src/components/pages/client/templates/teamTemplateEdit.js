@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
 import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -16,6 +17,8 @@ export const TeamTemplateEdit = () => {
   const [teamWorkingDes, setTeamWorkingDes] = useState("");
   const [describeContributions, setDescribeContributions] = useState("");
 
+  const location = useLocation();
+
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
     { label: "The Godfather", year: 1972 },
@@ -29,18 +32,37 @@ export const TeamTemplateEdit = () => {
   const yes_no = ["Yes", "No"];
 
   const handleSubmit = async () => {
+    const domainRole = specifyDomain;
+    const project = teamWorkingDes;
+    const contributions = describeContributions;
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("localhost:3000", {
+      .post("http://localhost:8080/saveTeamTemplate", {
         teamSize,
         teamLocation,
         crossFunctionality,
-        specifyDomain,
-        teamWorkingDes,
-        describeContributions,
+        domainRole,
+        project,
+        contributions,
       })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
+
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state);
+      setTeamSize(location.state.teamSize);
+      setTeamLocation(location.state.teamLocation);
+      setCrossFunctionality(location.state.crossFunctionality);
+      setSpecifyDomain(location.state.domainRole);
+      setTeamWorkingDes(location.state.project);
+      setDescribeContributions(location.state.contributions);
+    }
+  }, [location.state]);
+
+
 
   return (
     <div>

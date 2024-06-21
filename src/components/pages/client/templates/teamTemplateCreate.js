@@ -29,14 +29,18 @@ export const TeamTemplateCreate = () => {
   const yes_no = ["Yes", "No"];
 
   const handleSubmit = async () => {
+    const domainRole = specifyDomain;
+    const project = teamWorkingDes;
+    const contributions = describeContributions;
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("localhost:3000", {
+      .post("http://localhost:8080/xen/saveTeamTemplate?clientId="+user.userId, {
         teamSize,
         teamLocation,
         crossFunctionality,
-        specifyDomain,
-        teamWorkingDes,
-        describeContributions,
+        domainRole,
+        project,
+        contributions,
       })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
