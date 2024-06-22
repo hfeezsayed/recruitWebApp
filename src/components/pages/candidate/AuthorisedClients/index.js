@@ -32,15 +32,20 @@ import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { AuthorisedClients } from "../../../dummy/Data";
+import { useEffect } from "react";
 
 export const AuthorisedClient = () => {
   const [search, setSearch] = useState();
-  const [authClientList, setAuthClientList] = useState(AuthorisedClients);
+  const [authClientList, setAuthClientList] = useState([]); //useState(AuthorisedClients);
   const [openPopup, setOpenPopup] = useState(false);
   const [managerName, setHiringManagerName] = useState();
   const [managerEmail, setHiringManagerEmail] = useState();
   const [companyName, setCompanyname] = useState();
   const [showInfo, setShowInfo] = useState(false);
+  // const [authorize, setAuthorize] = useState(false);
+  // const [decline, setDecline] = useState(false);
+  const [authorizeCount, setAutorizeCount] = useState(0);
+  const [declineCount, setDeclineCount] = useState(0);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -51,6 +56,84 @@ export const AuthorisedClient = () => {
     { label: "Schindler's List", year: 1993 },
     { label: "Pulp Fiction", year: 1994 },
   ];
+
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get("http://localhost:8080/xen/getCandidateDTPAccess?candidateId="+user.userId)
+    .then(response => {
+        console.log(response.data);
+        setAuthClientList(response.data);
+        //console.log(response.data.authorized);
+        //console.log(response.data?.emtionalFlexibility[1].competencies);
+    }) 
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
+
+
+  const handleAuthorize = (row, value) => {
+    if(value === true) {
+      setAuthClientList((prevItems) =>
+        prevItems.map((item) =>
+          item.clientId === row.clientId ? { ...item, declined: false } : item
+        )
+      );
+    } 
+    setAuthClientList((prevItems) =>
+      prevItems.map((item) =>
+        item.clientId === row.clientId ? { ...item, authorized: value } : item
+      )
+    );
+    const clientId = row.clientId;
+    const authorized = value;
+
+    axios
+      .post("http://localhost:8080/xen/authorizeClient?candidateId=1", {
+          clientId,
+          authorized
+      })
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    handleClose();
+  };
+
+
+  const handleDecline = (row, value) => {
+    setOpenPopup(true);
+    if(value === true) {
+      setAuthClientList((prevItems) =>
+        prevItems.map((item) =>
+          item.clientId === row.clientId ? { ...item, authorized: false } : item
+        )
+      );
+    } 
+    setAuthClientList((prevItems) =>
+      prevItems.map((item) =>
+        item.clientId === row.clientId ? { ...item, declined: value } : item
+      )
+    );
+    console.log(row, value);
+    const clientId = row.clientId;
+    const declined = value;
+    axios
+      .post("http://localhost:8080/xen/declineClient?candidateId=1", {
+          clientId,
+          declined
+      })
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    handleClose();
+  };
+
 
   const handleSubmit = async () => {
     console.log(managerName, managerEmail, companyName, showInfo);
@@ -202,7 +285,7 @@ export const AuthorisedClient = () => {
                             <FormControlLabel
                               value="aprrove"
                               control={
-                                <Radio size="small" sx={{ color: "#58A20F" }} />
+                                <Radio checked={row.authorized} size="small" onChange={(e) => handleAuthorize(row, e.target.checked)} sx={{ color: "#58A20F" }} />
                               }
                               sx={{
                                 backgroundColor: "#F4FAF1",
@@ -216,7 +299,7 @@ export const AuthorisedClient = () => {
                             <FormControlLabel
                               value="decline"
                               control={
-                                <Radio size="small" sx={{ color: "#E05880" }} />
+                                <Radio checked={row.declined} size="small" onChange={(e) => handleDecline(row, e.target.checked)} sx={{ color: "#E05880" }} />
                               }
                               sx={{
                                 backgroundColor: "#FCEEEE",
