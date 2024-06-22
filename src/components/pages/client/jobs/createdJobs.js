@@ -33,6 +33,7 @@ import Paper from "@mui/material/Paper";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { HiDotsVertical } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -40,6 +41,7 @@ import { Footer } from "../../../widgets/footer";
 import { AllJobsData } from "../../../dummy/Data";
 
 export const CreatedJobs = () => {
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
   const [data, setData] = useState(AllJobsData);
@@ -149,8 +151,13 @@ export const CreatedJobs = () => {
                     textTransform: "none",
                     fontWeight: 500,
                     borderRadius: 8,
+                  }}
+                  onClick={() => {
+                    navigate("/jobs/createJob", {
+                      state: anchorData?.id,
+                    });
                   }}>
-                  Add New Assessment
+                  Create New Job
                 </Button>
               </div>
             </div>
@@ -167,7 +174,7 @@ export const CreatedJobs = () => {
                         <Card sx={{ borderRadius: 3, px: 1 }}>
                           <CardContent>
                             <div className="flex justify-between gap-2">
-                              <div className="flex gap-2">
+                              <div className="flex gap-1 h-fit">
                                 <p
                                   style={{
                                     color: "#101828",
@@ -181,12 +188,11 @@ export const CreatedJobs = () => {
                                     style={{
                                       color: "#7D5AE2",
                                       backgroundColor: "#7D5AE210",
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: 500,
                                       borderRadius: 3,
-                                      paddingLeft: 8,
-                                      paddingRight: 8,
-                                      paddingBottom: 4,
+                                      paddingLeft: 5,
+                                      paddingRight: 5,
                                     }}>
                                     New post
                                   </p>
@@ -262,8 +268,35 @@ export const CreatedJobs = () => {
                           </CardContent>
                           <Divider />
                           <CardActions>
-                            {row?.jobProgress > 0 ? (
-                              <div className="w-full ">
+                            {row?.jobProgress === 100 ? (
+                              <div className="flex justify-end w-full">
+                                <Button
+                                  size="small"
+                                  style={{
+                                    color: "#008080",
+                                    textTransform: "none",
+                                    fontSize: 16,
+                                    fontWeight: 500,
+                                    textDecoration: "underline",
+                                    padding: 0,
+                                  }}
+                                  onClick={() => {
+                                    navigate("/jobs/jobsDetails", {
+                                      state: row?.id,
+                                    });
+                                  }}
+                                  endIcon={<MdOutlineArrowOutward />}>
+                                  More Details
+                                </Button>
+                              </div>
+                            ) : (
+                              <div
+                                className="w-full "
+                                onClick={() => {
+                                  navigate("/jobs/createJob", {
+                                    state: row?.id,
+                                  });
+                                }}>
                                 <div className="flex justify-between pb-1">
                                   <p
                                     style={{
@@ -288,22 +321,6 @@ export const CreatedJobs = () => {
                                     value={row?.jobProgress || 0}
                                   />
                                 </Box>
-                              </div>
-                            ) : (
-                              <div className="flex justify-end w-full">
-                                <Button
-                                  size="small"
-                                  style={{
-                                    color: "#008080",
-                                    textTransform: "none",
-                                    fontSize: 16,
-                                    fontWeight: 500,
-                                    textDecoration: "underline",
-                                    padding: 0,
-                                  }}
-                                  endIcon={<MdOutlineArrowOutward />}>
-                                  More Details
-                                </Button>
                               </div>
                             )}
                           </CardActions>
@@ -478,7 +495,12 @@ export const CreatedJobs = () => {
                   horizontal: "right",
                 }}
                 TransitionComponent={Fade}>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/jobs/createJob", {
+                      state: anchorData?.id,
+                    });
+                  }}>
                   <div className="flex gap-1 items-center">
                     <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
                     <p

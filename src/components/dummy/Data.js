@@ -1560,6 +1560,7 @@ export const teamTemplateData = {
 
 export const AllJobsData = [
   {
+    id: 1,
     new: true,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1570,6 +1571,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 2,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1580,6 +1582,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 3,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1590,6 +1593,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 4,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1600,6 +1604,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 5,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1610,6 +1615,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 6,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1620,6 +1626,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 7,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1630,6 +1637,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 8,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1640,6 +1648,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 9,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1650,6 +1659,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 10,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1660,6 +1670,7 @@ export const AllJobsData = [
     hiringManager: "Alex Johnson",
   },
   {
+    id: 11,
     new: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
