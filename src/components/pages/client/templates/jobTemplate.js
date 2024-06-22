@@ -43,7 +43,7 @@ export const JobTemplate = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/xen/getAllTeamTemplates?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -127,7 +127,7 @@ export const JobTemplate = () => {
                             <TableRow key={index}>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.name}
+                                {row.title}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}

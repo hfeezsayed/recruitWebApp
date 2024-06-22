@@ -28,7 +28,7 @@ export const JobTemplateCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveJobTemplate?clientId="+user.userId, { title, location, salary, description })
+      .post("http://localhost:8080/xen/saveJobTemplateForJob?clientId="+user.userId, { title, location, salary, description })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

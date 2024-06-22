@@ -13,12 +13,28 @@ import { TopNav } from "../../../widgets/topNav";
 import { QUESTIONS } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
+import { useEffect } from 'react';
 
 export const IcpTemplateEdit = () => {
-  const [questionList, setQuestionList] = useState(QUESTIONS);
+  const [questionList, setQuestionList] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentSection, setCurrentSection] = useState(1);
   const IcpTemplateQuestion = questionList[currentQuestion];
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:8080/xen/getClientQuestionnaire"
+      )
+      .then((data) => {
+        console.log(data);
+        setQuestionList(data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
 
   const handleRatingChange = (question, option) => {
     question.selectedOption = option;
@@ -48,7 +64,7 @@ export const IcpTemplateEdit = () => {
     console.log(questionList);
 
     axios
-      .post("localhpst:3000", { questionList })
+      .post("http://localhost:8080/xen/saveIcpTemplate?clientId=1", questionList )
       .then((response) => {
         console.log(response.data);
       })

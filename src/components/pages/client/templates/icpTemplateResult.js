@@ -40,10 +40,10 @@ export const IcpTemplateResult = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateSpectrumResults?candidateId=" +
+        "http://localhost:8080/xen/getIcpTemplateResult?clientId=" +
           user.userId +
-          "&versionNo=" +
-          version
+          "&templateNo=" +
+          1
       )
       .then((response) => {
         console.log(response.data);
