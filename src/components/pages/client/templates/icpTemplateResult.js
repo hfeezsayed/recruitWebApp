@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { BarChart, PieChart } from "@mui/x-charts";
+import { PieChart } from "@mui/x-charts";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,15 +7,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { talentAnalysisResultData } from "../../../dummy/Data";
+import { icpTemplateResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
 import { HumanBody } from "../../../../assets/icon/humanBody";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
 
-export const TalentAnalysisResult = () => {
-  const [userData, setUserData] = useState(talentAnalysisResultData);
+export const IcpTemplateResult = () => {
+  const [userData, setUserData] = useState(icpTemplateResultData);
   const [emotional, setEmotional] = useState(null);
   const [cognitive, setCongnitive] = useState(null);
   const [sociability, setSociability] = useState(null);
@@ -27,14 +27,14 @@ export const TalentAnalysisResult = () => {
   const [spectrum5, setSpectrum5] = useState("spectrum5");
 
   const convertedEmtional = convertCompetencies(
-    userData?.emtionalFlexibility[1]
+    userData?.emtionalFlexibility[0]
   );
 
   const convertSociability = convertCompetencies(
-    userData?.sociabilitySkills[1]
+    userData?.sociabilitySkills[0]
   );
 
-  const convertCognitive = convertCompetencies(userData?.cognitiveAgility[1]);
+  const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -63,21 +63,16 @@ export const TalentAnalysisResult = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div className="flex justify-between">
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                Talent Spectrum Analysis Results Summary
-              </p>
-              <p style={{ color: "#D0D5DD", fontSize: 16, fontWeight: 600 }}>
-                Date Taken : 22nd May 2024
-              </p>
-            </div>
+            <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+              Ideal Candidate Persona: Template 1
+            </p>
+
             <p style={{ color: "#475467", fontSize: 14 }}>
-              Along with the table, a bar and pie chart has been shown,
-              visualizing your scores across different spectrums
+              Below are the result of Template 1
             </p>
             <div className="flex gap-5 py-8">
               {/* spectrum analysis */}
@@ -91,7 +86,7 @@ export const TalentAnalysisResult = () => {
                   Spectrum Analysis
                 </p>
                 <div className="py-8 absolute">
-                  <HumanBody COLOR={"#B2D8D8"} />
+                  <HumanBody COLOR={"#404040"} />
                 </div>
                 <div className="grid justify-end relative pt-5 pl-[180px]">
                   <div className="grid grid-flow-row gap-4">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
+import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,21 +14,22 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData } from "../../../dummy/Data";
 
-export const AssessmentListView = () => {
+export const IcpTemplate = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
-        setData(data.data);
+        setData(data?.data);
         // setPage(data?.pageNo || 0);
       })
       .catch((e) => {
@@ -43,11 +44,11 @@ export const AssessmentListView = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/xen/getBatchList?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getAllValueTemplate?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
-        setData(data.data);
+        setData(data?.data);
         setPage(data?.pageNo || 1);
       })
       .catch((e) => {
@@ -64,10 +65,11 @@ export const AssessmentListView = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Templates from the existing options
+                Choose Ideal Candidate Persona Templates from the existing
+                options
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please choose a job template from the available options.
+                Please choose ICP template from the available options.
               </p>
               <div className="py-5 flex justify-between items-center">
                 <TextField
@@ -91,8 +93,8 @@ export const AssessmentListView = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/assessmentBatchDetails")}>
-                  Create New Batch
+                  onClick={() => {}}>
+                  Create New Template
                 </Button>
               </div>
               <Box sx={{ width: "100%" }}>
@@ -117,6 +119,11 @@ export const AssessmentListView = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Scores
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Actions
                           </TableCell>
                         </TableRow>
@@ -127,15 +134,26 @@ export const AssessmentListView = () => {
                             <TableRow key={index}>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.batchName}
+                                {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
                               </TableCell>
-                              <TableCell
-                                padding="none"
-                                align="center"
-                                sx={{ color: "#475467" }}>
+                              <TableCell padding="none" align="center">
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#28A745",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {
+                                    navigate("/templates/icpResult");
+                                  }}>
+                                  View
+                                </Button>
+                              </TableCell>
+                              <TableCell padding="none" align="center">
                                 <Button
                                   size="small"
                                   variant="text"
@@ -143,12 +161,10 @@ export const AssessmentListView = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() =>
-                                    navigate("/assessmentResult", {
-                                      state: row,
-                                    })
-                                  }>
-                                  details
+                                  onClick={() => {
+                                    navigate("/templates/icpEdit");
+                                  }}>
+                                  Edit
                                 </Button>
                               </TableCell>
                             </TableRow>

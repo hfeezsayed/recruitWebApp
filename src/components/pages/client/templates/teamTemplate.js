@@ -102,7 +102,11 @@ export const TeamTemplate = () => {
                   <Table stickyHeader>
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">Serial Number</TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          Serial Number
+                        </TableCell>
                         <TableCell
                           sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                           Template Name
