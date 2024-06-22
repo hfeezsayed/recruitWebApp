@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { GrLocation } from "react-icons/gr";
-import { IoTimeOutline } from "react-icons/io5";
+import { IoFilterSharp, IoTimeOutline } from "react-icons/io5";
 import { MdOutlinePeople } from "react-icons/md";
-import { Card, CardContent, Divider } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,14 +21,19 @@ import { TbEdit } from "react-icons/tb";
 import { HiDotsVertical } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { CiSearch } from "react-icons/ci";
 import logo from "../../../../assets/images/logo.png";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { AllJobsData, JobDetails } from "../../../dummy/Data";
 
 export const JobsDetails = () => {
+  const location = useLocation();
   const [alljobs, setAllJobs] = useState(AllJobsData);
   const [jobDetail, setJobDetail] = useState(JobDetails);
+  const [search, setSearch] = useState("");
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -32,6 +44,17 @@ export const JobsDetails = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCLickJob = (id) => {
+    axios
+      .get("localhost:3000")
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -55,11 +78,49 @@ export const JobsDetails = () => {
               template or create a new one job template.
             </p>
           </div>
+          <div className="flex gap-2 py-3">
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CiSearch />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ maxWidth: 350 }}
+            />
+            <Button
+              variant="outlined"
+              style={{
+                borderColor: "#D0D5DD",
+                color: "#252525",
+                textTransform: "none",
+                fontWeight: 500,
+                borderRadius: 8,
+              }}
+              startIcon={<IoFilterSharp />}>
+              Filter
+            </Button>
+          </div>
           <div className="flex gap-5">
             <div className="w-[450px] max-h-screen overflow-y-scroll ">
               {alljobs?.map((row, index) => {
                 return (
-                  <div key={index} className="border border-gray-300">
+                  <div
+                    key={index}
+                    className="border border-gray-300"
+                    style={{
+                      backgroundColor:
+                        row?.id === location.state ? "#F3F8F9" : "#ffffff",
+                    }}
+                    onClick={() => {
+                      handleCLickJob(row?.id);
+                    }}>
                     <div style={{ padding: 10 }}>
                       <div>
                         <div className="flex gap-2">
