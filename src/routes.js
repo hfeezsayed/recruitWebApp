@@ -36,6 +36,10 @@ import { WorkValueTemplateCreate } from "./components/pages/client/templates/wor
 import { TeamTemplateCreate } from "./components/pages/client/templates/teamTemplateCreate";
 import { JobPreferenceTemplateCreate } from "./components/pages/client/templates/jobPreferenceTemplateCreate";
 import { AssessmentListView } from "./components/pages/client/assessments/assessmentListView";
+import { AllJobs } from "./components/pages/client/jobs/allJobs";
+import { CreatedJobs } from "./components/pages/client/jobs/createdJobs";
+import { JobsDetails } from "./components/pages/client/jobs/jobsDetails";
+import { CreateJob } from "./components/pages/client/jobs/createJob";
 
 export const Routes = () => {
   return (
@@ -83,6 +87,10 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
+        <Route path="jobs/allJobs" element={<AllJobs />} />
+        <Route path="jobs/createdJobs" element={<CreatedJobs />} />
+        <Route path="jobs/jobsDetails" element={<JobsDetails />} />
+        <Route path="jobs/createJob" element={<CreateJob />} />
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
         <Route
@@ -126,10 +134,7 @@ export const Routes = () => {
           path="templates/jobPreferenceTemplateCreate"
           element={<JobPreferenceTemplateCreate />}
         />
-         <Route
-          path="assessmentsList"
-          element={<AssessmentListView />}
-        />
+        <Route path="assessmentsList" element={<AssessmentListView />} />
         <Route
           path="assessmentBatchDetails"
           element={<AssesmentBatchDetails />}
