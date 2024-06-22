@@ -40,6 +40,9 @@ import { AllJobs } from "./components/pages/client/jobs/allJobs";
 import { CreatedJobs } from "./components/pages/client/jobs/createdJobs";
 import { JobsDetails } from "./components/pages/client/jobs/jobsDetails";
 import { CreateJob } from "./components/pages/client/jobs/createJob";
+import { IcpTemplate } from "./components/pages/client/templates/icpTemplate";
+import { IcpTemplateResult } from "./components/pages/client/templates/icpTemplateResult";
+import { IcpTemplateEdit } from "./components/pages/client/templates/icpTemplateEdit";
 
 export const Routes = () => {
   return (
@@ -134,6 +137,9 @@ export const Routes = () => {
           path="templates/jobPreferenceTemplateCreate"
           element={<JobPreferenceTemplateCreate />}
         />
+        <Route path="templates/icp" element={<IcpTemplate />} />
+        <Route path="templates/icpResult" element={<IcpTemplateResult />} />
+        <Route path="templates/icpEdit" element={<IcpTemplateEdit />} />
         <Route path="assessmentsList" element={<AssessmentListView />} />
         <Route
           path="assessmentBatchDetails"

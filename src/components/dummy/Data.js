@@ -1117,41 +1117,83 @@ export const assignCandidateData = {
 
 export const jobTemplateData = {
   data: [
-    { no: 1, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-    { no: 2, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-    { no: 3, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-    { no: 4, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-    { no: 5, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-    { no: 6, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-    { no: 7, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
-    { no: 8, name: "Communication Skills Assessments", createdBy: "User ABCD" },
-    { no: 9, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
     {
-      no: 10,
-      name: "Communication Skills Assessments",
+      id: 1,
+      templateName: "Leadership Skills Evaluation",
       createdBy: "User ABCD",
     },
-    { no: 11, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
     {
-      no: 12,
-      name: "Communication Skills Assessments",
+      id: 2,
+      templateName: "Communication Skills Assessments",
       createdBy: "User ABCD",
     },
-    { no: 13, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
     {
-      no: 14,
-      name: "Communication Skills Assessments",
+      id: 3,
+      templateName: "Leadership Skills Evaluation",
       createdBy: "User ABCD",
     },
-    { no: 15, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
     {
-      no: 16,
-      name: "Communication Skills Assessments",
+      id: 4,
+      templateName: "Communication Skills Assessments",
       createdBy: "User ABCD",
     },
-    { no: 17, name: "Leadership Skills Evaluation", createdBy: "User ABCD" },
+    {
+      id: 5,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 6,
+      templateName: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 7,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 8,
+      templateName: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 9,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 10,
+      templateName: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 11,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 12,
+      templateName: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 13,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 14,
+      templateName: "Communication Skills Assessments",
+      createdBy: "User ABCD",
+    },
+    {
+      id: 15,
+      templateName: "Leadership Skills Evaluation",
+      createdBy: "User ABCD",
+    },
   ],
-  totalCount: 17,
+  totalCount: 15,
   result: "success",
   message: "found",
   pageNo: 1,
@@ -1676,4 +1718,90 @@ export const createJobData = {
   teamPreference: 100,
   jobPreference: 0,
   icpTemplate: 0,
+};
+
+export const icpTemplateResultData = {
+  cognitiveAgility: [
+    {
+      pillar2: "Cognitive Agility",
+      competencies: [
+        {
+          name: "Decision Making",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Time Management",
+          rating: 1.8,
+          percentage: 100,
+        },
+        {
+          name: "Problem Solving",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Adaptability",
+          rating: 3,
+          percentage: 90,
+        },
+      ],
+    },
+  ],
+
+  sociabilitySkills: [
+    {
+      pillar2: "Sociability Skill",
+      competencies: [
+        {
+          name: "Communication skills",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Collaboration",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Conflict management",
+          rating: 1.8,
+          percentage: 100,
+        },
+        {
+          name: "Relationship building",
+          rating: 1.8,
+          percentage: 40,
+        },
+      ],
+    },
+  ],
+
+  emtionalFlexibility: [
+    {
+      pillar2: "Emtional Flexibility",
+      competencies: [
+        {
+          name: "Empathy",
+          rating: 3,
+          percentage: 90,
+        },
+        {
+          name: "Resilience",
+          rating: 1.8,
+          percentage: 70,
+        },
+        {
+          name: "Stress management",
+          rating: 1.8,
+          percentage: 40,
+        },
+        {
+          name: "Self-awareness",
+          rating: 1.8,
+          percentage: 100,
+        },
+      ],
+    },
+  ],
 };

@@ -15,6 +15,7 @@ import { DashboardSvg } from "../../assets/icon/dashboardsvg";
 import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../assets/icon/jobsvg";
+import { TemplateSvg } from "../../assets/icon/templatesvg";
 
 const drawerWidth = 256;
 
@@ -215,7 +216,7 @@ export const ClientSideNav = () => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AssesmentSvg
+                <TemplateSvg
                   COLOR={
                     currentState.includes("templates") ? "#ffffff" : "#475467"
                   }
@@ -315,20 +316,15 @@ export const ClientSideNav = () => {
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() =>
-                // navigate("/digitalTalentProfile/analysisassessmentform")
-                {}
-              }>
+              onClick={() => navigate("/templates/icp")}>
               <p
                 style={{
-                  color: currentState.includes("analysisassessmentform")
-                    ? "#008080"
-                    : "#475467",
+                  color: currentState.includes("/icp") ? "#008080" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
                 }}>
-                Job Preference Template
+                Ideal Candidate Persona
               </p>
             </div>
           </Collapse>

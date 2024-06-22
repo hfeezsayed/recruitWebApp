@@ -25,8 +25,8 @@ import Location from "../../../../assets/images/Location.png";
 import Rocket from "../../../../assets/images/Rocket.png";
 import { HumanBody } from "../../../../assets/icon/humanBody";
 import { checkSkillLevel, convertCompetencies } from "../../../utils/function";
-import { useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from "react";
+import axios from "axios";
 
 export const TalentProfileResult = () => {
   const [userData, setUserData] = useState(TalentProfileResultData);
@@ -45,10 +45,14 @@ export const TalentProfileResult = () => {
     },
   });
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId="+user.userId)
-    .then(response => {
+    axios
+      .get(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
+          user.userId
+      )
+      .then((response) => {
         console.log(response.data);
         setUserData(response.data);
         setSpectrum1(response.data.pillars[0]);
@@ -57,10 +61,10 @@ export const TalentProfileResult = () => {
         setSpectrum4(response.data.pillars[3]);
         setSpectrum5(response.data.pillars[4]);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
-    }) 
-    .catch(error => {
-      console.log(error);
-    })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const convertedEmtional = convertCompetencies(
@@ -71,9 +75,7 @@ export const TalentProfileResult = () => {
     userData?.sociabilitySkills[1]
   );
 
-  const convertCognitive = convertCompetencies(
-    userData?.cognitiveAgility[1]
-  );
+  const convertCognitive = convertCompetencies(userData?.cognitiveAgility[1]);
 
   return (
     <div>
@@ -346,7 +348,7 @@ export const TalentProfileResult = () => {
               Spectrum Analysis
             </p>
             <div className="py-8 absolute mt-10">
-              <HumanBody />
+              <HumanBody COLOR={"#B2D8D8"} />
             </div>
             <div className="grid justify-end relative mt-14">
               <div className="grid grid-flow-row gap-4">

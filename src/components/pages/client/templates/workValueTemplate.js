@@ -103,7 +103,11 @@ export const WorkValueTemplate = () => {
                     <Table stickyHeader>
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center">Serial Number</TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Serial Number
+                          </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Template Name
@@ -111,6 +115,11 @@ export const WorkValueTemplate = () => {
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Created By
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Scores
                           </TableCell>
                           <TableCell
                             align="center"
@@ -130,6 +139,18 @@ export const WorkValueTemplate = () => {
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}
                               </TableCell>
+                              <TableCell padding="none" align="center">
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#28A745",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {}}>
+                                  View
+                                </Button>
+                              </TableCell>
                               <TableCell
                                 padding="none"
                                 align="center"
@@ -142,9 +163,12 @@ export const WorkValueTemplate = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() =>
-                                    navigate("/templates/workValueTemplateEdit", {
-                                      state: row,
-                                    })
+                                    navigate(
+                                      "/templates/workValueTemplateEdit",
+                                      {
+                                        state: row,
+                                      }
+                                    )
                                   }>
                                   Edit
                                 </Button>
