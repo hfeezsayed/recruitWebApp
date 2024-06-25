@@ -22,9 +22,15 @@ export const IcpTemplateEdit = () => {
   const IcpTemplateQuestion = questionList[currentQuestion];
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getClientQuestionnaire"
+        "http://localhost:8080/xen/getClientQuestionnaire",
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -34,6 +40,7 @@ export const IcpTemplateEdit = () => {
         console.log(e);
       });
   }, []);
+
 
 
   const handleRatingChange = (question, option) => {
@@ -62,9 +69,16 @@ export const IcpTemplateEdit = () => {
 
   const handleSubmitData = async () => {
     console.log(questionList);
-
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveIcpTemplate?clientId=1", questionList )
+      .post(`http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`, 
+      questionList,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+       )
       .then((response) => {
         console.log(response.data);
       })

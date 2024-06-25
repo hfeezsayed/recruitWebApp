@@ -6,14 +6,15 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 
-export const JobTemplateCreate = () => {
+export const JobDetailEdit = () => {
   const navigate = useNavigate();
-  const locations = useLocation();
+  const location = useLocation();
 
   const [title, setTitle] = useState();
-  const [location, setLocation] = useState();
+  const [locations, setLocation] = useState();
   const [salary, setSalary] = useState("");
   const [description, setDescription] = useState("");
+  const [id, setId] = useState(0);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -26,41 +27,50 @@ export const JobTemplateCreate = () => {
   ];
 
   const handleSubmit = async () => {
-    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
     const jobId = localStorage.getItem("jobId");
-    if(locations.state) {
-      axios
-      .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
-      { title, location, salary, description },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-      )
-      .then((data) => { 
-        console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
-        navigate("/templates/workValueTemplate", { state : { "job" : true }})
-      })
-      .catch((e) => console.log(e));
-    }
-    else{
-      const user = JSON.parse(localStorage.getItem("token"));
-      axios
-        .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
-        { title, location, salary, description },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios
+        .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+          { id, title, locations, salary, description },
+          {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
         )
-        .then((data) => console.log(data.data))
+        .then((data) =>{
+          console.log(data.data);
+         // navigate("/templates/workValueTemplate")
+        })
         .catch((e) => console.log(e));
-    }
   };
 
+  useEffect(() => {
+    console.log(location.state);
+    const user = JSON.parse(localStorage.getItem("token"));
+        axios
+            .get(
+              `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+            )
+            .then((data) => {
+              console.log(data);
+              setId(data.data.id);
+              setTitle(data.data?.title);
+              setLocation(data.data?.location);
+              setSalary(data.data?.salary);
+              setDescription(data.data?.description);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+
+  }, [location.state]);
 
   return (
     <div>
@@ -74,7 +84,7 @@ export const JobTemplateCreate = () => {
                 Pre- Fill Job Details: Template 1
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and Create the information as needed, or use the
+                Please review and edit the information as needed, or use the
                 same template
               </p>
             </div>
@@ -99,7 +109,7 @@ export const JobTemplateCreate = () => {
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
-                  value={location || null}
+                  value={locations || null}
                   onChange={(e, newvalue) => setLocation(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />

@@ -3,13 +3,15 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { useEffect } from 'react';
 
-export const JobPreferenceTemplateCreate = () => {
+export const PreferenceEdit = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   // industry
   const [experianceInIndustry, setExperianceInindustry] = useState();
   const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
@@ -49,6 +51,121 @@ export const JobPreferenceTemplateCreate = () => {
     setToolsOrSoftwaresetToolsOrSoftware,
   ] = useState([{ tools: null }]);
   const [successThreeyear, setSuccessThreeyear] = useState("");
+
+  const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios
+      .post(`http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`, {
+        experianceInIndustry,
+        specifyIndusrtyExp,
+        jobDescription,
+        scopOfRole,
+        depthKnowledge,
+        typeOfRoles,
+        timeOfRole,
+        workSetting,
+        locationRole,
+        relocation,
+        relocationBudget,
+        travelRole,
+        visa,
+        compensationOffered,
+        compensationOfferedRate,
+        primarySkills,
+        secoundrySkills,
+        minimumLevelQualification,
+        requireAcademicQualification,
+        differentAcademic,
+        certificationsOrLicenses,
+        toolsOrSoftwaresetToolsOrSoftware,
+        successThreeyear,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
+      .then((data) => console.log(data.data))
+      .catch((e) => console.log(e));
+  };
+
+
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state);
+      const user = JSON.parse(localStorage.getItem("token"));
+      if(location.state.jobData){
+        axios
+            .get(
+              `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+            )
+            .then((data) => {
+              console.log(data);
+              const row = data.data;
+              setExperianceInindustry(row.experianceInIndustry);     
+              setSpecifyIndustryExp(row.specifyIndusrtyExp);
+              setJobDescription(row.jobDescription);
+              setScopOfRole(row.scopOfRole);
+              setDepthKnowledge(row.depthKnowledge);
+              setTypeOfROles(row.typeOfRoles);
+              setTimeofRole(row.timeOfRole);
+              setWorkSetting(row.workSetting);
+              setLocationRole(row.locationRole);
+              setRelocation(row.relocation);
+              setRelocationBudget(row.relocationBudget);
+              setTravelRole(row.travelRole);
+              setVisa(row.visa);
+              setCompensationOffered(row.compensationOffered);
+              setPrimarySkill(row.primarySkills);
+              setSecoundrySkill(row.secoundrySkills);
+              setMinimumLevelQualification(row.minimumLevelQualification);
+              setRequireAcademicQualification(row.requireAcademicQualification);
+              setDifferentAcademic(row.differentAcademic);
+              setCertificationsOrLicenses(row.certificationsOrLicenses);
+              setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+              setSuccessThreeyear(row.successThreeYear);
+            },
+            {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+            )
+            .catch((e) => {
+              console.log(e);
+            });
+
+      }
+      else{
+        const row = location.state;
+        setExperianceInindustry(row.experianceInIndustry);     
+        setSpecifyIndustryExp(row.specifyIndusrtyExp);
+        setJobDescription(row.jobDescription);
+        setScopOfRole(row.scopOfRole);
+        setDepthKnowledge(row.depthKnowledge);
+        setTypeOfROles(row.typeOfRoles);
+        setTimeofRole(row.timeOfRole);
+        setWorkSetting(row.workSetting);
+        setLocationRole(row.locationRole);
+        setRelocation(row.relocation);
+        setRelocationBudget(row.relocationBudget);
+        setTravelRole(row.travelRole);
+        setVisa(row.visa);
+        setCompensationOffered(row.compensationOffered);
+        setPrimarySkill(row.primarySkills);
+        setSecoundrySkill(row.secoundrySkills);
+        setMinimumLevelQualification(row.minimumLevelQualification);
+        setRequireAcademicQualification(row.requireAcademicQualification);
+        setDifferentAcademic(row.differentAcademic);
+        setCertificationsOrLicenses(row.certificationsOrLicenses);
+        setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+        setSuccessThreeyear(row.successThreeYear);
+      }
+    }
+  }, [location.state]);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -186,44 +303,7 @@ export const JobPreferenceTemplateCreate = () => {
     setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
   };
 
-  const handleSubmit = async () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post(`http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}`, {
-        experianceInIndustry,
-        specifyIndusrtyExp,
-        jobDescription,
-        scopOfRole,
-        depthKnowledge,
-        typeOfRoles,
-        timeOfRole,
-        workSetting,
-        locationRole,
-        relocation,
-        relocationBudget,
-        travelRole,
-        visa,
-        compensationOffered,
-        compensationOfferedRate,
-        primarySkills,
-        secoundrySkills,
-        minimumLevelQualification,
-        requireAcademicQualification,
-        differentAcademic,
-        certificationsOrLicenses,
-        toolsOrSoftwaresetToolsOrSoftware,
-        successThreeyear,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-      )
-      .then((data) => console.log(data.data))
-      .catch((e) => console.log(e));
-  };
-
+  
   return (
     <div>
       <div className="flex">
@@ -236,7 +316,7 @@ export const JobPreferenceTemplateCreate = () => {
                 Pre- Fill Job Preference Details: Template 1
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and create the information as needed, or use the
+                Please review and edit the information as needed, or use the
                 same template.
               </p>
             </div>
@@ -423,7 +503,7 @@ export const JobPreferenceTemplateCreate = () => {
                     <Autocomplete
                       size="small"
                       disablePortal
-                      options={yes_no}
+                      options={options.map((option) => option.label)}
                       value={relocation || null}
                       onChange={(e, newvalue) => setRelocation(newvalue)}
                       renderInput={(params) => (
@@ -442,7 +522,6 @@ export const JobPreferenceTemplateCreate = () => {
                     </p>
                     <TextField
                       size="small"
-                      type="number"
                       placeholder="type"
                       value={relocationBudget}
                       onChange={(e) => setRelocationBudget(e.target.value)}

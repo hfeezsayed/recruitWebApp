@@ -22,7 +22,7 @@ export const NewPassword = () => {
     if (password.length > 7) {
       setChanged(true);
       axios
-        .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/updatePassword", { password, email})
+        .post("http://localhost:8080/xen/updatePassword", { password, email})
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }

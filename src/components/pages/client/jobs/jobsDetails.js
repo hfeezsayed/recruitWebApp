@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrLocation } from "react-icons/gr";
 import { IoFilterSharp, IoTimeOutline } from "react-icons/io5";
 import { MdOutlinePeople } from "react-icons/md";
@@ -29,9 +29,11 @@ import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { AllJobsData, JobDetails } from "../../../dummy/Data";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
+import { useNavigate } from "react-router-dom";
 
 export const JobsDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [alljobs, setAllJobs] = useState(AllJobsData);
   const [jobDetail, setJobDetail] = useState(JobDetails);
   const [search, setSearch] = useState("");
@@ -46,6 +48,15 @@ export const JobsDetails = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    console.log(location.state.jobs);
+    console.log(location.state.row);
+    if(location.state){
+      setAllJobs(location.state?.jobs);
+      setJobDetail(location.state?.row);
+    }
+  }, [location.state])
 
   const handleCLickJob = (id) => {
     axios
@@ -237,6 +248,16 @@ export const JobsDetails = () => {
                             </div>
                           </div>
                           <div>
+                            <Button
+                              variant="text"
+                              style={{
+                                color: "#008080",
+                                backgroundColor: "#EAF4F5",
+                                textTransform: "none",
+                              }}
+                              onClick={() => navigate("/job/jobCandidates", { state : jobDetail?.id})}>
+                              Show Candidates
+                            </Button>
                             <IconButton onClick={handleClick}>
                               <HiDotsVertical style={{ color: "#D9D9D9" }} />
                             </IconButton>
@@ -281,7 +302,7 @@ export const JobsDetails = () => {
                             <div className="flex gap-1 items-center">
                               <IoTimeOutline style={{ color: "#47546780" }} />
                               <p style={{ color: "#47546770", fontSize: 14 }}>
-                                {jobDetail?.time} ago
+                                {jobDetail?.postedTime} ago
                               </p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -289,7 +310,7 @@ export const JobsDetails = () => {
                                 style={{ color: "#47546780", fontSize: 22 }}
                               />
                               <p style={{ color: "#47546770", fontSize: 14 }}>
-                                {jobDetail?.appliacnts} applications
+                                {jobDetail?.applicants} applications
                               </p>
                             </div>
                           </div>
@@ -302,7 +323,7 @@ export const JobsDetails = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                 }}>
-                                {jobDetail?.rupies} /month
+                                {jobDetail?.compensation} /month
                               </p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -313,7 +334,7 @@ export const JobsDetails = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                 }}>
-                                {jobDetail?.work} Year
+                                {jobDetail?.experience} Year
                               </p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -324,7 +345,7 @@ export const JobsDetails = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                 }}>
-                                {jobDetail?.timeDate}
+                                {jobDetail?.noticePeriod}
                               </p>
                             </div>
                           </div>

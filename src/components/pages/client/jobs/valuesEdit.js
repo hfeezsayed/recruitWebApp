@@ -20,7 +20,7 @@ import { useEffect} from 'react';
 import axios from 'axios';
 
 
-export const WorkValueTemplateEdit = () => {
+export const ValuesEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState([workValueEditData]);
@@ -32,18 +32,32 @@ export const WorkValueTemplateEdit = () => {
     setRatingList(newFormValues);
   };
 
-  useEffect(() => {
-    if (location.state) {
-      console.log(location.state);
-      if(location.state?.valuesData){
-        setData(location.state.valuesData);
+  const handleSubmit = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios.post(`https://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+      ratingList,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
       }
-      else{
-        const user = JSON.parse(localStorage.getItem("token"));
+    )
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
           console.log(location.state);
+
           axios
             .get(
-              `http://localhost:8080/xen/getValueTemplate?clientId=&${user.userId}templateId=${location.state.jobData.workValuesId}`,
+              `http://localhost:8080/xen/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
               {
                 headers: {
                   Authorization: `Bearer ${user.accessToken}`,
@@ -57,8 +71,7 @@ export const WorkValueTemplateEdit = () => {
             .catch((e) => {
               console.log(e);
             });
-      }
-    }
+
   }, [location.state]);
 
   return (

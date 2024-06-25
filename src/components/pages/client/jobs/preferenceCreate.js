@@ -8,7 +8,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 
-export const JobPreferenceTemplateCreate = () => {
+export const PreferenceCreate = () => {
   const navigate = useNavigate();
   // industry
   const [experianceInIndustry, setExperianceInindustry] = useState();
@@ -188,8 +188,9 @@ export const JobPreferenceTemplateCreate = () => {
 
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}`, {
+      .post(`http://localhost:8080/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
         experianceInIndustry,
         specifyIndusrtyExp,
         jobDescription,
@@ -219,7 +220,7 @@ export const JobPreferenceTemplateCreate = () => {
           Authorization: `Bearer ${user.accessToken}`,
         },
       }
-      )
+    )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

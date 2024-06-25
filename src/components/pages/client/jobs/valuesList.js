@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
+import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,16 +15,22 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 
-export const AssessmentListView = () => {
+export const ValuesList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState();
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((data) => {
         console.log(data);
@@ -41,9 +47,15 @@ export const AssessmentListView = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchList?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((data) => {
         console.log(data);
@@ -64,10 +76,10 @@ export const AssessmentListView = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Templates from the existing options
+                Choose Work Value Templates from the existing options
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please choose a job template from the available options.
+                Please choose a work value template from the available options.
               </p>
               <div className="py-5 flex justify-between items-center">
                 <TextField
@@ -91,8 +103,10 @@ export const AssessmentListView = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/assessmentBatchDetails")}>
-                  Create New Batch
+                  onClick={() =>
+                    navigate("/job/valuesCreate")
+                  }>
+                  Create New Template
                 </Button>
               </div>
               <Box sx={{ width: "100%" }}>
@@ -117,6 +131,11 @@ export const AssessmentListView = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Scores
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Actions
                           </TableCell>
                         </TableRow>
@@ -127,10 +146,22 @@ export const AssessmentListView = () => {
                             <TableRow key={index}>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.batchName}
+                                {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
+                              </TableCell>
+                              <TableCell padding="none" align="center">
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#28A745",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {}}>
+                                  View
+                                </Button>
                               </TableCell>
                               <TableCell
                                 padding="none"
@@ -144,11 +175,14 @@ export const AssessmentListView = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() =>
-                                    navigate("/assessmentResult", {
-                                      state: row,
-                                    })
+                                    navigate(
+                                      "/job/valuesEdit",
+                                      {
+                                        state: row,
+                                      }
+                                    )
                                   }>
-                                  details
+                                  Edit
                                 </Button>
                               </TableCell>
                             </TableRow>

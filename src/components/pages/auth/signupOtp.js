@@ -20,7 +20,7 @@ export const SignupOtp = () => {
     if (otp.length === 4) {
       setVerified(true);
       axios
-        .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/verifyOTP", { otp, email })
+        .post("http://localhost:8080/xen/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }

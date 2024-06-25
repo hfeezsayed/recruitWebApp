@@ -54,32 +54,75 @@ export const JobPreferenceTemplateEdit = () => {
 
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     if (location.state) {
       console.log(location.state);
-      const row = location.state;
-      setExperianceInindustry(row.experianceInIndustry);     
-      setSpecifyIndustryExp(row.specifyIndusrtyExp);
-      setJobDescription(row.jobDescription);
-      setScopOfRole(row.scopOfRole);
-      setDepthKnowledge(row.depthKnowledge);
-      setTypeOfROles(row.typeOfRoles);
-      setTimeofRole(row.timeOfRole);
-      setWorkSetting(row.workSetting);
-      setLocationRole(row.locationRole);
-      setRelocation(row.relocation);
-      setRelocationBudget(row.relocationBudget);
-      setTravelRole(row.travelRole);
-      setVisa(row.visa);
-      setCompensationOffered(row.compensationOffered);
-      setPrimarySkill(row.primarySkills);
-      setSecoundrySkill(row.secoundrySkills);
-      setMinimumLevelQualification(row.minimumLevelQualification);
-      setRequireAcademicQualification(row.requireAcademicQualification);
-      setDifferentAcademic(row.differentAcademic);
-      setCertificationsOrLicenses(row.certificationsOrLicenses);
-      setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
-      setSuccessThreeyear(row.successThreeYear);
-      
+      if(location.state.jobData){
+        axios
+            .get(
+              `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+            )
+            .then((data) => {
+              console.log(data);
+              const row = data.data;
+              setExperianceInindustry(row.experianceInIndustry);     
+              setSpecifyIndustryExp(row.specifyIndusrtyExp);
+              setJobDescription(row.jobDescription);
+              setScopOfRole(row.scopOfRole);
+              setDepthKnowledge(row.depthKnowledge);
+              setTypeOfROles(row.typeOfRoles);
+              setTimeofRole(row.timeOfRole);
+              setWorkSetting(row.workSetting);
+              setLocationRole(row.locationRole);
+              setRelocation(row.relocation);
+              setRelocationBudget(row.relocationBudget);
+              setTravelRole(row.travelRole);
+              setVisa(row.visa);
+              setCompensationOffered(row.compensationOffered);
+              setPrimarySkill(row.primarySkills);
+              setSecoundrySkill(row.secoundrySkills);
+              setMinimumLevelQualification(row.minimumLevelQualification);
+              setRequireAcademicQualification(row.requireAcademicQualification);
+              setDifferentAcademic(row.differentAcademic);
+              setCertificationsOrLicenses(row.certificationsOrLicenses);
+              setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+              setSuccessThreeyear(row.successThreeYear);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+
+      }
+      else{
+        const row = location.state;
+        setExperianceInindustry(row.experianceInIndustry);     
+        setSpecifyIndustryExp(row.specifyIndusrtyExp);
+        setJobDescription(row.jobDescription);
+        setScopOfRole(row.scopOfRole);
+        setDepthKnowledge(row.depthKnowledge);
+        setTypeOfROles(row.typeOfRoles);
+        setTimeofRole(row.timeOfRole);
+        setWorkSetting(row.workSetting);
+        setLocationRole(row.locationRole);
+        setRelocation(row.relocation);
+        setRelocationBudget(row.relocationBudget);
+        setTravelRole(row.travelRole);
+        setVisa(row.visa);
+        setCompensationOffered(row.compensationOffered);
+        setPrimarySkill(row.primarySkills);
+        setSecoundrySkill(row.secoundrySkills);
+        setMinimumLevelQualification(row.minimumLevelQualification);
+        setRequireAcademicQualification(row.requireAcademicQualification);
+        setDifferentAcademic(row.differentAcademic);
+        setCertificationsOrLicenses(row.certificationsOrLicenses);
+        setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+        setSuccessThreeyear(row.successThreeYear);
+      }
     }
   }, [location.state]);
 
@@ -220,6 +263,7 @@ export const JobPreferenceTemplateEdit = () => {
   };
 
   const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .post("localhost:3000", {
         experianceInIndustry,
@@ -245,7 +289,13 @@ export const JobPreferenceTemplateEdit = () => {
         certificationsOrLicenses,
         toolsOrSoftwaresetToolsOrSoftware,
         successThreeyear,
-      })
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

@@ -13,7 +13,7 @@ import {
   IconButton,
   styled,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { FaArrowRight } from "react-icons/fa6";
@@ -22,10 +22,15 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { createJobData } from "../../../dummy/Data";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
+import { useEffect } from "react";
+import axios  from 'axios';
+
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
-
+  const [jobId, setJobId] = useState(0);
+  const location = useLocation();
+  const { state } = location;
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
@@ -56,6 +61,89 @@ export const CreateJob = () => {
       setUserData(createJobData);
     }
   };
+
+  // useEffect(() => {
+  //   if (location.state) {
+  //     console.log(location.state);
+  //     setJobId(location.state);
+  //   }
+  // }, [location.state]);
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(state);
+    if(location.state?.new){
+
+    }
+    else{
+      axios
+        .get(
+          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=1`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+        )
+        .then((data) => {
+          console.log(data);
+          setUserData(data?.data);
+          localStorage.setItem("jobId", data.data.id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, []);
+
+  
+  const handleJobDetails = (jobData) => {
+    if(jobData?.jobDetail === true){
+      navigate("/job/jobDetailEdit", { state : { "jobData" : jobData}})
+    }
+    else{
+      navigate("/job/jobDetailList")
+    }
+  }
+
+  const handleWorkValues = (jobData) => {
+    if(jobData?.workValues === true){
+      navigate("/job/valuesEdit", { state : { "jobData" : jobData}})
+    }
+    else{
+      navigate("/job/valuesList")
+    }
+  }
+
+  const handleJobPreferences = (jobData) => {
+    if(jobData?.preference === true){
+      navigate("/job/preferenceEdit", { state : { "jobData" : jobData}})
+    }
+    else{
+      navigate("/job/preferenceList")
+    }
+  }
+
+  const handleTeam = (jobData) => {
+    if(jobData?.team === true){
+      navigate("/job/teamEdit", { state : { "jobData" : jobData}})
+    }
+    else{
+      navigate("/job/teamList")
+    }
+  }
+
+  const handleIcp = (jobData) => {
+    if(jobData?.icp === true){
+      navigate("/templates/icpEdit", { state : { "jobData" : jobData}})
+    }
+    else{
+      navigate("/templates/icpList")
+    }
+  }
+
+
 
   return (
     <div>
@@ -141,7 +229,7 @@ export const CreateJob = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.jobDetails ? 100 : 0}
+                          value={userData?.jobDetail ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -203,15 +291,15 @@ export const CreateJob = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.jobDetails ? "#1E90FF" : "#E05880",
+                        color: userData?.jobDetail ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                        changeUserData();
+                         handleJobDetails(userData);
                       }}>
-                      {userData?.jobDetails ? "Edit" : "Not taken"}
+                      {userData?.jobDetail ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -221,7 +309,7 @@ export const CreateJob = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.workValue ? 100 : 0}
+                          value={userData?.workValues ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -240,7 +328,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.workValue ? "#58A20F" : "#101828",
+                            color: userData?.workValues ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -283,15 +371,15 @@ export const CreateJob = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.workValue ? "#1E90FF" : "#E05880",
+                        color: userData?.workValues ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                        changeUserData();
+                        handleWorkValues(userData);
                       }}>
-                      {userData?.workValue ? "Edit" : "Not taken"}
+                      {userData?.workValues ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -301,7 +389,7 @@ export const CreateJob = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.teamPreference ? 100 : 0}
+                          value={userData?.team ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -320,7 +408,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.teamPreference
+                            color: userData?.team
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -365,15 +453,15 @@ export const CreateJob = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.teamPreference ? "#1E90FF" : "#E05880",
+                        color: userData?.team ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                        changeUserData();
+                        handleTeam(userData);
                       }}>
-                      {userData?.teamPreference ? "Edit" : "Not taken"}
+                      {userData?.team ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -383,7 +471,7 @@ export const CreateJob = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.jobPreference ? 100 : 0}
+                          value={userData?.preference ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -402,7 +490,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.jobPreference
+                            color: userData?.preference
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -447,15 +535,15 @@ export const CreateJob = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.jobPreference ? "#1E90FF" : "#E05880",
+                        color: userData?.preference ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                        changeUserData();
+                        handleJobPreferences(userData);
                       }}>
-                      {userData?.jobPreference ? "Edit" : "Not taken"}
+                      {userData?.preference ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -465,7 +553,7 @@ export const CreateJob = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.icpTemplate ? 100 : 0}
+                          value={userData?.icp ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -484,7 +572,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.icpTemplate
+                            color: userData?.icp
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -529,15 +617,15 @@ export const CreateJob = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.icpTemplate ? "#1E90FF" : "#E05880",
+                        color: userData?.icp ? "#1E90FF" : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                        changeUserData();
+                        handleIcp(userData);
                       }}>
-                      {userData?.icpTemplate ? "Edit" : "Not taken"}
+                      {userData?.icp ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

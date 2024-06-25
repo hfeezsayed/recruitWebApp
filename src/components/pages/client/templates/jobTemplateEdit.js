@@ -14,6 +14,7 @@ export const JobTemplateEdit = () => {
   const [locations, setLocation] = useState();
   const [salary, setSalary] = useState("");
   const [description, setDescription] = useState("");
+  const [id, setId] = useState(0);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -26,19 +27,74 @@ export const JobTemplateEdit = () => {
   ];
 
   const handleSubmit = async () => {
-    axios
-      .post("localhost:3000", { title, locations, salary, description })
-      .then((data) => console.log(data.data))
-      .catch((e) => console.log(e));
+    console.log(location.state);
+    const user = JSON.parse(localStorage.getItem("token"));
+    if(location.state){
+      const jobId = localStorage.getItem("jobId");
+      axios
+        .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+        { id, title, locations, salary, description },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+        )
+        .then((data) =>{
+          console.log(data.data);
+          navigate("/templates/workValueTemplate", { state : { "job" : true , "jobId" : location.state.jobId }})
+        })
+        .catch((e) => console.log(e));
+    }
+    else{
+      axios
+        .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
+        {id, title, locations, salary, description },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+        )
+        .then((data) => console.log(data.data))
+        .catch((e) => console.log(e));
+    }
   };
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
     if (location.state) {
-      console.log(location.state);
-      setTitle(location.state?.title);
-      setLocation(location.state?.location);
-      setSalary(location.state?.salary);
-      setDescription(location.state?.description);
+      if(location.state?.job){
+        axios
+            .get(
+              `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+            )
+            .then((data) => {
+              console.log(data);
+              setId(data.data.id);
+              setTitle(data.data?.title);
+              setLocation(data.data?.location);
+              setSalary(data.data?.salary);
+              setDescription(data.data?.description);
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+            )
+            .catch((e) => {
+              console.log(e);
+            });
+      }
+      else{
+        setId(location.state.details.id);
+        setTitle(location.state?.details.title);
+        setLocation(location.state?.details.location);
+        setSalary(location.state?.details.salary);
+        setDescription(location.state?.details.description);
+      }
     }
   }, [location.state]);
 

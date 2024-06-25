@@ -83,7 +83,12 @@ export const PersonalInformation = () => {
     console.log(user);
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidatePersonalInfo?candidateId="+user.userId
+        "http://localhost:8080/xen/getCandidatePersonalInfo?candidateId="+user.userId,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((response) => {
         console.log(response.data.education.length);
@@ -115,7 +120,7 @@ export const PersonalInformation = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/postCandidatePersonalInfo?candidateId="+user.userId,
+        "http://localhost:8080/xen/postCandidatePersonalInfo?candidateId="+user.userId,
         {
           file,
           fullName,

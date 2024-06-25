@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
@@ -15,16 +15,23 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 
-export const AssessmentListView = () => {
+export const JobDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState();
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const location = useLocation();
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllJobTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -40,10 +47,20 @@ export const AssessmentListView = () => {
   const PAGECOUNT =
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
+  const handleEdit = (row) => {
+      navigate("/templates/jobDetailEdit", { state: { "details" : row }})
+  }
+
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchList?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getAllJobTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -91,8 +108,8 @@ export const AssessmentListView = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/assessmentBatchDetails")}>
-                  Create New Batch
+                  onClick={() => navigate("/job/jobDetailCreate")}>
+                  Create New Template
                 </Button>
               </div>
               <Box sx={{ width: "100%" }}>
@@ -127,10 +144,10 @@ export const AssessmentListView = () => {
                             <TableRow key={index}>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.batchName}
+                                {row.title}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
                               </TableCell>
                               <TableCell
                                 padding="none"
@@ -143,12 +160,8 @@ export const AssessmentListView = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() =>
-                                    navigate("/assessmentResult", {
-                                      state: row,
-                                    })
-                                  }>
-                                  details
+                                  onClick={() => handleEdit(row) }>
+                                  Edit
                                 </Button>
                               </TableCell>
                             </TableRow>

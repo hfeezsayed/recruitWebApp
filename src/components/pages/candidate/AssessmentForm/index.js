@@ -38,7 +38,7 @@ export const AssesmentForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getSelfAssessments?candidateId="+user.userId)
+    axios.get("http://localhost:8080/xen/getSelfAssessments?candidateId="+user.userId)
     .then(response => {
         console.log(response.data);
         setSelfAssessmentList(response.data);

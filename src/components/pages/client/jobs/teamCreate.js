@@ -6,7 +6,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 
-export const TeamTemplateCreate = () => {
+export const TeamCreate = () => {
   const navigate = useNavigate();
   const [teamSize, setTeamSize] = useState();
   const [teamLocation, setTeamLocation] = useState();
@@ -33,8 +33,9 @@ export const TeamTemplateCreate = () => {
     const project = teamWorkingDes;
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveTeamTemplate?clientId=${user.userId}`, {
+      .post(`http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
         teamSize,
         teamLocation,
         crossFunctionality,
@@ -47,7 +48,8 @@ export const TeamTemplateCreate = () => {
           Authorization: `Bearer ${user.accessToken}`,
         },
       }
-      )
+    
+        )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

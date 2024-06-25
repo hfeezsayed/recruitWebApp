@@ -6,7 +6,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 
-export const JobTemplateCreate = () => {
+export const JobDetailCreate = () => {
   const navigate = useNavigate();
   const locations = useLocation();
 
@@ -28,37 +28,21 @@ export const JobTemplateCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    if(locations.state) {
-      axios
-      .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
-      { title, location, salary, description },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-      )
-      .then((data) => { 
-        console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
-        navigate("/templates/workValueTemplate", { state : { "job" : true }})
-      })
-      .catch((e) => console.log(e));
-    }
-    else{
-      const user = JSON.parse(localStorage.getItem("token"));
-      axios
-        .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
+    axios
+      .post("http://localhost:8080/xen/saveJobTemplateForJob?clientId="+user.userId +"&jobId="+jobId, 
         { title, location, salary, description },
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },
         }
-        )
-        .then((data) => console.log(data.data))
-        .catch((e) => console.log(e));
-    }
+      )
+      .then((data) => { 
+        console.log(data.data);
+        localStorage.setItem("jobId", data.data.jobId);
+        //navigate("/templates/workValueTemplate", { state : { "job" : true }})
+      })
+      .catch((e) => console.log(e));
   };
 
 

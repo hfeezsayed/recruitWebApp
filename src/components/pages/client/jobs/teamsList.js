@@ -15,7 +15,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 
-export const TeamTemplate = () => {
+export const TeamsList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState();
   const [page, setPage] = React.useState(1);
@@ -27,10 +27,10 @@ export const TeamTemplate = () => {
       .get(
         `http://localhost:8080/xen/getAllTeamTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((data) => {
         console.log(data);
@@ -52,10 +52,10 @@ export const TeamTemplate = () => {
       .get(
         `http://localhost:8080/xen/getAllTeamTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((data) => {
         console.log(data);
@@ -104,7 +104,7 @@ export const TeamTemplate = () => {
                   backgroundColor: "#EAF4F5",
                   textTransform: "none",
                 }}
-                onClick={() => navigate("/templates/teamTemplateCreate")}>
+                onClick={() => navigate("/job/teamCreate")}>
                 Create New Template
               </Button>
             </div>
@@ -157,7 +157,7 @@ export const TeamTemplate = () => {
                                   textTransform: "none",
                                 }}
                                 onClick={() =>
-                                  navigate("/templates/teamTemplateEdit", {
+                                  navigate("/job/teamEdit", {
                                     state: row,
                                   })
                                 }>

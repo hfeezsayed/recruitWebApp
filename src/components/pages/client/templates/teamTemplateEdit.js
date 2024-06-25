@@ -37,28 +37,62 @@ export const TeamTemplateEdit = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/saveTeamTemplate", {
+      .post(`http://localhost:8080/saveTeamTemplate?clientId=${user.userId}`, {
         teamSize,
         teamLocation,
         crossFunctionality,
         domainRole,
         project,
         contributions,
-      })
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+      
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
 
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     if (location.state) {
       console.log(location.state);
-      setTeamSize(location.state.teamSize);
-      setTeamLocation(location.state.teamLocation);
-      setCrossFunctionality(location.state.crossFunctionality);
-      setSpecifyDomain(location.state.domainRole);
-      setTeamWorkingDes(location.state.project);
-      setDescribeContributions(location.state.contributions);
+      if(location.state?.jobData) {
+        axios
+        .get(
+          `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+        )
+        .then((data) => {
+          console.log(data);
+          setTeamSize(data.data.teamSize);
+          setTeamLocation(data.data.teamLocation);
+          setCrossFunctionality(data.data.crossFunctionality);
+          setSpecifyDomain(data.data.domainRole);
+          setTeamWorkingDes(data.data.project);
+          setDescribeContributions(data.data.contributions);
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+        )
+        .catch((e) => {
+          console.log(e);
+        });
+      }
+      else{
+        setTeamSize(location.state.teamSize);
+        setTeamLocation(location.state.teamLocation);
+        setCrossFunctionality(location.state.crossFunctionality);
+        setSpecifyDomain(location.state.domainRole);
+        setTeamWorkingDes(location.state.project);
+        setDescribeContributions(location.state.contributions);
+      }
     }
   }, [location.state]);
 

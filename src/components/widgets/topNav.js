@@ -152,7 +152,7 @@ export const TopNav = () => {
           <MenuItem
             onClick={() => {
               localStorage.clear();
-              navigate("/login");
+              navigate("/logout");
             }}>
             <ListItemIcon>
               <FiLogOut

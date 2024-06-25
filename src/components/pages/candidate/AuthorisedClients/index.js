@@ -59,7 +59,13 @@ export const AuthorisedClient = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDTPAccess?candidateId="+user.userId)
+    axios.get("http://localhost:8080/xen/getCandidateDTPAccess?candidateId="+user.userId,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
     .then(response => {
         console.log(response.data);
         setAuthClientList(response.data);
@@ -87,12 +93,18 @@ export const AuthorisedClient = () => {
     );
     const clientId = row.clientId;
     const authorized = value;
-
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/authorizeClient?candidateId=1", {
+      .post("http://localhost:8080/xen/authorizeClient?candidateId="+user.userId, {
           clientId,
           authorized
-      })
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+      )
       .then((data) => {
         console.log(data.data);
       })
@@ -120,8 +132,9 @@ export const AuthorisedClient = () => {
     console.log(row, value);
     const clientId = row.clientId;
     const declined = value;
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/declineClient?candidateId=1", {
+      .post("http://localhost:8080/xen/declineClient?candidateId="+user.userId, {
           clientId,
           declined
       })

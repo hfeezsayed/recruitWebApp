@@ -20,11 +20,16 @@ export const WorkValueTemplate = () => {
   const [data, setData] = useState();
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
-
+  const user = JSON.parse(localStorage.getItem("token"));
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `http://localhost:8080/xen/getAllValueTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -41,9 +46,15 @@ export const WorkValueTemplate = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getAllValueTemplate?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);

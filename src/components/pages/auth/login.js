@@ -22,54 +22,47 @@ export const Login = () => {
         navigate("/candidate");
       }
       if (isAuthenticated.role === "ROLE_CLIENT") {
-        navigate("/assesmentBatchDetails");
+        navigate("/jobs/allJobs");
       }
     }
   }, []);
 
   const onSubmit = async (e) => {
-    const dummy = {
-      userId: 3,
-      username: "Ram",
-      email: "ram@xenspire.co",
-      accessToken:
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
-      role: "ROLE_CLIENT",
-    };
+    // const dummy = {
+    //   userId: 3,
+    //   username: "Ram",
+    //   email: "ram@xenspire.co",
+    //   accessToken:
+    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
+    //   role: "ROLE_CLIENT",
+    // };
     const username = email;
     e.preventDefault();
-    localStorage.setItem("token", JSON.stringify(dummy));
-    try {
-      const response = await axios.post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/login",
+    await axios.post(
+        "http://localhost:8080/xen/login",
         {
           username,
           password,
         }
-      );
-      console.log(response);
-      if (response.status === 200) {
-        console.log(response?.data);
-        // localStorage.setItem("token", JSON.stringify(response?.data));
+      ).then((response) => {
+        console.log(response);
+        localStorage.setItem("token", JSON.stringify(response?.data));
 
-        // role = response.data.role;
-      } else {
-        console.log("login Error");
-      }
-      const role = JSON.parse(localStorage.getItem("token")).role;
-      console.log("role = ", role);
-      if (role === "ROLE_ADMIN") {
-        navigate("/admin");
-      }
-      if (role === "ROLE_CANDIDATE") {
-        navigate("/candidate");
-      }
-      if (role === "ROLE_CLIENT") {
-        navigate("/assesmentBatchDetails");
-      }
-    } catch (error) {
+          // role = response.data.role;
+        const role = JSON.parse(localStorage.getItem("token")).role;
+        console.log("role = ", role);
+        if (role === "ROLE_ADMIN") {
+          navigate("/admin");
+        }
+        if (role === "ROLE_CANDIDATE") {
+          navigate("/candidate");
+        }
+        if (role === "ROLE_CLIENT") {
+          navigate("/jobs/allJobs");
+        }
+  }). catch(error => {
       console.error(error.message);
-    }
+  })
     // navigate("/candidate");
     // navigate("/assesmentBatchDetails");
   };

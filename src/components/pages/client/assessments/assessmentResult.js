@@ -26,7 +26,7 @@ export const AsssessmentResult = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -49,7 +49,7 @@ export const AsssessmentResult = () => {
   useEffect(() => {
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "http://localhost:8080/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);

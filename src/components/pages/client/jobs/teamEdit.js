@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
 import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 
-export const TeamTemplateCreate = () => {
+export const TeamEdit = () => {
   const navigate = useNavigate();
   const [teamSize, setTeamSize] = useState();
   const [teamLocation, setTeamLocation] = useState();
   const [crossFunctionality, setCrossFunctionality] = useState();
   const [specifyDomain, setSpecifyDomain] = useState();
+  const [id, setId] = useState();
 
   const [teamWorkingDes, setTeamWorkingDes] = useState("");
   const [describeContributions, setDescribeContributions] = useState("");
+
+  const location = useLocation();
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -33,8 +37,10 @@ export const TeamTemplateCreate = () => {
     const project = teamWorkingDes;
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveTeamTemplate?clientId=${user.userId}`, {
+      .post(`http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
+        id,
         teamSize,
         teamLocation,
         crossFunctionality,
@@ -47,10 +53,53 @@ export const TeamTemplateCreate = () => {
           Authorization: `Bearer ${user.accessToken}`,
         },
       }
-      )
+    )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    if (location.state) {
+      console.log(location.state);
+      if(location.state?.jobData) {
+        axios
+        .get(
+          `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+        )
+        .then((data) => {
+          console.log(data);
+          setId(data.data.id);
+          setTeamSize(data.data.teamSize);
+          setTeamLocation(data.data.teamLocation);
+          setCrossFunctionality(data.data.crossFunctionality);
+          setSpecifyDomain(data.data.domainRole);
+          setTeamWorkingDes(data.data.project);
+          setDescribeContributions(data.data.contributions);
+        },
+        {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+        )
+        .catch((e) => {
+          console.log(e);
+        });
+      }
+      else{
+        setTeamSize(location.state.teamSize);
+        setTeamLocation(location.state.teamLocation);
+        setCrossFunctionality(location.state.crossFunctionality);
+        setSpecifyDomain(location.state.domainRole);
+        setTeamWorkingDes(location.state.project);
+        setDescribeContributions(location.state.contributions);
+      }
+    }
+  }, [location.state]);
+
+
 
   return (
     <div>
@@ -64,7 +113,7 @@ export const TeamTemplateCreate = () => {
                 Pre- Fill Job Details: Template 1
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and create the information as needed, or use the
+                Please review and edit the information as needed, or use the
                 same template.
               </p>
             </div>

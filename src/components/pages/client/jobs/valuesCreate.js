@@ -15,16 +15,12 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
-import { useLocation } from 'react-router-dom';
-import { useEffect} from 'react';
 import axios from 'axios';
 
-
-export const WorkValueTemplateEdit = () => {
+export const ValuesCreate = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [data, setData] = useState([workValueEditData]);
-  const [ratingList, setRatingList] = useState([workValueEditData]);
+  const [data, setData] = useState(workValueEditData);
+  const [ratingList, setRatingList] = useState(workValueEditData);
 
   const handleChangeRating = (value, i) => {
     let newFormValues = [...ratingList];
@@ -32,34 +28,24 @@ export const WorkValueTemplateEdit = () => {
     setRatingList(newFormValues);
   };
 
-  useEffect(() => {
-    if (location.state) {
-      console.log(location.state);
-      if(location.state?.valuesData){
-        setData(location.state.valuesData);
+  const handleSubmit = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios.post(`http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+      ratingList,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
       }
-      else{
-        const user = JSON.parse(localStorage.getItem("token"));
-          console.log(location.state);
-          axios
-            .get(
-              `http://localhost:8080/xen/getValueTemplate?clientId=&${user.userId}templateId=${location.state.jobData.workValuesId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
-            )
-            .then((data) => {
-              console.log(data);
-              setData(data?.data);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-      }
-    }
-  }, [location.state]);
+    )
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+  }
 
   return (
     <div>
@@ -73,7 +59,7 @@ export const WorkValueTemplateEdit = () => {
                 Create Template 1
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and edit the information as needed, or use the
+                Please review and Create the information as needed, or use the
                 same template
               </p>
             </div>
@@ -127,7 +113,7 @@ export const WorkValueTemplateEdit = () => {
                                 color: "#475467",
                               }}>
                               <Rating
-                                value={row?.rating}
+                                value={data?.rating}
                                 onChange={(e, newvalue) =>
                                   handleChangeRating(newvalue, index)
                                 }
@@ -153,6 +139,7 @@ export const WorkValueTemplateEdit = () => {
                   Back
                 </Button>
                 <Button
+                  onClick={() => handleSubmit()}
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}>
                   CONFIRM

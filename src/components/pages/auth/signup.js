@@ -19,7 +19,7 @@ export const SignUp = () => {
     navigation("/signupotp/"+email);
     const username = name;
     axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/signup", { username, email, password })
+      .post("http://localhost:8080/xen/signup", { username, email, password })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

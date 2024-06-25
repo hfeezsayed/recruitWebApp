@@ -41,12 +41,14 @@ import { HiDotsVertical } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AllJobsData } from "../../../dummy/Data";
+import { useEffect } from "react";
+import axios from 'axios';
 
 export const AllJobs = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(AllJobsData);
+  const [data, setData] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -61,6 +63,28 @@ export const AllJobs = () => {
     setAnchorData(null);
   };
 
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios
+      .get(
+        `http://localhost:8080/xen/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setData(response?.data.data);
+        //setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 5.5,
     borderRadius: 5,
@@ -72,6 +96,8 @@ export const AllJobs = () => {
       background: `#46BD84`,
     },
   }));
+
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div>
@@ -187,6 +213,7 @@ export const AllJobs = () => {
                     Filter
                   </Button>
                   <Button
+                    onClick={() => navigate("/jobs/createJob", { state : { "new" : true}})}
                     style={{
                       color: "#008080",
                       background: "#EAF4F5",
@@ -194,7 +221,7 @@ export const AllJobs = () => {
                       fontWeight: 500,
                       borderRadius: 8,
                     }}>
-                    Add New Assessment
+                    Add Job
                   </Button>
                 </div>
               </div>
@@ -208,7 +235,8 @@ export const AllJobs = () => {
                     {data?.map((row, index) => {
                       return (
                         <div key={index}>
-                          <Card sx={{ borderRadius: 3, px: 1 }}>
+                          <Card 
+                              sx={{ borderRadius: 3, px: 1 }}>
                             <CardContent>
                               <div className="flex justify-between gap-2">
                                 <div className="flex gap-2">
@@ -335,7 +363,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/createJob")}
+                                      onClick={() => navigate("/jobs/createJob", { state : row })}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",
@@ -378,7 +406,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/jobsDetails")}
+                                      onClick={() => navigate("/jobs/jobsDetails", { state : { jobs : data, row : row}})}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",

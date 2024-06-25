@@ -9,19 +9,39 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa6";
-import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
-import { Footer } from "../../../widgets/footer";
 import { QUESTIONS } from "../../../dummy/Data";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Footer } from "../../../widgets/footer";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
+import { useEffect } from 'react';
 
-export const AnalysisAssessment = () => {
-  const [questionList, setQuestionList] = useState(QUESTIONS);
+export const IcpCreate = () => {
+  const [questionList, setQuestionList] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentSection, setCurrentSection] = useState(1);
-  const AnalysisAssessmentQuestion = questionList[currentQuestion];
-  const navigate = useNavigate();
+  const IcpTemplateQuestion = questionList[currentQuestion];
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios
+      .get(
+        "http://localhost:8080/xen/getClientQuestionnaire",
+        {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+      )
+      .then((data) => {
+        console.log(data);
+        setQuestionList(data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+
 
   const handleRatingChange = (question, option) => {
     question.selectedOption = option;
@@ -47,41 +67,20 @@ export const AnalysisAssessment = () => {
     }
   };
 
-  const handleBack = () => {
-    setCurrentQuestion(currentQuestion - 1);
-  };
-
-  useEffect( () => {
-      const user = JSON.parse(localStorage.getItem("token"));
-      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1",
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
-      )
-      .then(response => {
-          setQuestionList(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }, []);
-
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveCandidateAssessment?candidateId="+user.userId, questionList,
+      .post(`http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`, 
+        questionList,
         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
-      )
-      .then(response => {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+     )
+      .then((response) => {
         console.log(response.data);
-        navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: response.data.versionNo } });
       })
       .catch((error) => console.log(error));
   };
@@ -109,7 +108,7 @@ export const AnalysisAssessment = () => {
           error: false,
           message: `Error: Duplicate number found `,
         });
-        handleRankingChnage(AnalysisAssessmentQuestion, ans);
+        handleRankingChnage(IcpTemplateQuestion, ans);
         setAns([]);
       }
     };
@@ -133,12 +132,12 @@ export const AnalysisAssessment = () => {
       <form onSubmit={onSubmit} className="py-5">
         <div className="border p-3">
           <p style={{ color: "#101828", fontWeight: 500, fontSize: 14 }}>
-            {AnalysisAssessmentQuestion.question}
+            {IcpTemplateQuestion.question}
           </p>
         </div>
         {/* question options */}
         <div className="mb-5">
-          {AnalysisAssessmentQuestion.options.map((value, index) => {
+          {IcpTemplateQuestion.options.map((value, index) => {
             return (
               <div
                 className="border p-2 flex justify-between items-center"
@@ -159,7 +158,7 @@ export const AnalysisAssessment = () => {
                   sx={{ minWidth: 80, maxWidth: 100 }}
                   InputProps={{
                     inputProps: {
-                      max: AnalysisAssessmentQuestion.options.length,
+                      max: IcpTemplateQuestion.options.length,
                       min: 1,
                     },
                   }}
@@ -175,15 +174,6 @@ export const AnalysisAssessment = () => {
         )}
         {/* button */}
         <div className="flex justify-end mt-5 gap-4">
-          {/* {!(currentQuestion === 0) && (
-            <Button
-              variant="contained"
-              onClick={handleBack}
-              disabled={currentQuestion === 0}
-              sx={{ bgcolor: "#008080" }}>
-              Back
-            </Button>
-          )} */}
           <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
             {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
           </Button>
@@ -197,19 +187,19 @@ export const AnalysisAssessment = () => {
       <form onSubmit={handleNext} className="py-5">
         <div className="border p-3">
           <p style={{ color: "#101828", fontWeight: 500, fontSize: 14 }}>
-            {AnalysisAssessmentQuestion.question}
+            {IcpTemplateQuestion.question}
           </p>
         </div>
         {/* question options */}
         <div className="border">
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            value={AnalysisAssessmentQuestion?.selectedOption}
+            value={IcpTemplateQuestion?.selectedOption}
             onChange={(e) => {
-              handleRatingChange(AnalysisAssessmentQuestion, e.target.value);
+              handleRatingChange(IcpTemplateQuestion, e.target.value);
             }}
             name="radio-buttons-group">
-            {AnalysisAssessmentQuestion.options.map((data, index) => {
+            {IcpTemplateQuestion.options.map((data, index) => {
               return (
                 <div className="border px-2 py-1" key={index}>
                   <FormControlLabel
@@ -249,15 +239,6 @@ export const AnalysisAssessment = () => {
         </div>
         {/* button */}
         <div className="flex justify-end mt-4 gap-4">
-          {/* {!(currentQuestion === 0) && (
-            <Button
-              variant="contained"
-              onClick={handleBack}
-              disabled={currentQuestion === 0}
-              sx={{ bgcolor: "#008080" }}>
-              Back
-            </Button>
-          )} */}
           <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
             {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
           </Button>
@@ -269,13 +250,13 @@ export const AnalysisAssessment = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
             <div className="flex gap-2 items-center py-5">
               <p style={{ color: "#008080", fontWeight: 500, fontSize: 14 }}>
-                Talent Spectrum Assessment
+                Ideal Candidate Persona
               </p>
               <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
               <p
@@ -299,13 +280,12 @@ export const AnalysisAssessment = () => {
             </div>
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                Talent Spectrum Analysis Assessment
+                Choose Ideal Candidate Persona Templates from the existing
+                options
               </p>
               <p style={{ color: "#475467", fontSize: 14 }}>
-                Please carefully review the following statements and select the
-                one that best represents your response. There are no right or
-                wrong answers; this test is designed to help understand your
-                individual preferences and priorities in the workplace.
+                Please review and edit the information as needed, or use the
+                same template. Also choose which option is suitable for you.
               </p>
             </div>
             <div className="mt-4">
@@ -323,10 +303,10 @@ export const AnalysisAssessment = () => {
               </p>
             </div>
             {/* questions */}
-            {AnalysisAssessmentQuestion?.questionType === "RANKING" && (
+            {IcpTemplateQuestion?.questionType === "RANKING" && (
               <RankingQuestion />
             )}
-            {AnalysisAssessmentQuestion?.questionType === "RATING" && (
+            {IcpTemplateQuestion?.questionType === "RATING" && (
               <RatingQuestion />
             )}
           </div>

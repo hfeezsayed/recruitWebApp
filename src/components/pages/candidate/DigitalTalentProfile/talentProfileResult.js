@@ -27,8 +27,10 @@ import { HumanBody } from "../../../../assets/icon/humanBody";
 import { checkSkillLevel, convertCompetencies } from "../../../utils/function";
 import { useEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export const TalentProfileResult = () => {
+  const location = useLocation();
   const [userData, setUserData] = useState(TalentProfileResultData);
   const [spectrum1, setSpectrum1] = useState("spectrum1");
   const [spectrum2, setSpectrum2] = useState("spectrum2");
@@ -47,24 +49,57 @@ export const TalentProfileResult = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
-          user.userId
-      )
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data);
-        setSpectrum1(response.data.pillars[0]);
-        setSpectrum2(response.data.pillars[1]);
-        setSpectrum3(response.data.pillars[2]);
-        setSpectrum4(response.data.pillars[3]);
-        setSpectrum5(response.data.pillars[4]);
-        //console.log(response.data?.emtionalFlexibility[1].competencies);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(location.state);
+    if(user.role == "ROLE_CLIENT"){
+      axios
+        .get(
+          "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
+            location.state,
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+        )
+        .then((response) => {
+          console.log(response.data);
+          setUserData(response.data);
+          setSpectrum1(response.data.pillars[0]);
+          setSpectrum2(response.data.pillars[1]);
+          setSpectrum3(response.data.pillars[2]);
+          setSpectrum4(response.data.pillars[3]);
+          setSpectrum5(response.data.pillars[4]);
+          //console.log(response.data?.emtionalFlexibility[1].competencies);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      else{
+        axios
+        .get(
+          "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
+            user.userId,
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+        )
+        .then((response) => {
+          console.log(response.data);
+          setUserData(response.data);
+          setSpectrum1(response.data.pillars[0]);
+          setSpectrum2(response.data.pillars[1]);
+          setSpectrum3(response.data.pillars[2]);
+          setSpectrum4(response.data.pillars[3]);
+          setSpectrum5(response.data.pillars[4]);
+          //console.log(response.data?.emtionalFlexibility[1].competencies);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
   }, []);
 
   const convertedEmtional = convertCompetencies(

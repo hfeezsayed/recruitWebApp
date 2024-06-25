@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
-  Rating,
   Table,
   TableBody,
   TableCell,
@@ -14,37 +13,11 @@ import {
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { workValueEditData } from "../../../dummy/Data";
-import axios from 'axios';
+import { workValueViewData } from "../../../dummy/Data";
 
-export const WorkValueTemplateCreate = () => {
+export const ValuesResult = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(workValueEditData);
-  const [ratingList, setRatingList] = useState(workValueEditData);
-
-  const handleChangeRating = (value, i) => {
-    let newFormValues = [...ratingList];
-    newFormValues[i].rating = value;
-    setRatingList(newFormValues);
-  };
-
-  const handleSubmit = () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axios.post(`http://localhost:8080/xen/saveValueTemplate?clientId=${user.userId}`, 
-      ratingList,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-    )
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.log(error);
-    })
-  }
+  const [data, setData] = useState(workValueViewData);
 
   return (
     <div>
@@ -55,39 +28,36 @@ export const WorkValueTemplateCreate = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Create Template 1
+                Pre- Fill Work Value Details: Template 1
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and Create the information as needed, or use the
-                same template
+                Below are the result of Template 1
               </p>
             </div>
             <div>
               <Box sx={{ width: "100%", marginTop: 4 }}>
-                <TableContainer>
+                <TableContainer sx={{ maxWidth: 686 }}>
                   <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell
+                          align="center"
                           sx={{
                             bgcolor: "#F8F9FA",
                             color: "#101828",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
                           }}>
-                          Value
+                          Ranking out of 4
                         </TableCell>
                         <TableCell
                           sx={{
                             bgcolor: "#F8F9FA",
                             color: "#101828",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
                           }}>
-                          Statements
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                          }}>
-                          Ratings
+                          Work Attribute
                         </TableCell>
                       </TableRow>
                     </TableHead>
@@ -96,29 +66,21 @@ export const WorkValueTemplateCreate = () => {
                         return (
                           <TableRow key={index}>
                             <TableCell
+                              align="center"
                               sx={{
-                                color: "#475467",
+                                color: "#008080",
+                                border: 1,
+                                borderColor: "#D0D5DD50",
                               }}>
-                              {row.value}
+                              {row.rank}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
+                                border: 1,
+                                borderColor: "#D0D5DD50",
                               }}>
-                              {row.statement}
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#475467",
-                              }}>
-                              <Rating
-                                value={data?.rating}
-                                onChange={(e, newvalue) =>
-                                  handleChangeRating(newvalue, index)
-                                }
-                                max={6}
-                                sx={{ color: "#66B2B2" }}
-                              />
+                              {row.attribute}
                             </TableCell>
                           </TableRow>
                         );
@@ -127,18 +89,8 @@ export const WorkValueTemplateCreate = () => {
                   </Table>
                 </TableContainer>
               </Box>
-              <div className="flex justify-end py-8 gap-8">
+              <div className="flex justify-end py-8">
                 <Button
-                  variant="outlined"
-                  style={{
-                    color: "#475467",
-                    borderColor: "#D0D5DD",
-                  }}
-                  onClick={() => navigate(-1)}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => handleSubmit()}
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}>
                   CONFIRM

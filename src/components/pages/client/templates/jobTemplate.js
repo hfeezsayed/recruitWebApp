@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
@@ -20,11 +20,18 @@ export const JobTemplate = () => {
   const [data, setData] = useState();
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const location = useLocation();
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllJobTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -40,10 +47,20 @@ export const JobTemplate = () => {
   const PAGECOUNT =
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
+  const handleEdit = (row) => {
+      navigate("/templates/jobTemplateEdit", { state: { "details" : row }})
+  }
+
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getAllJobTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -143,11 +160,7 @@ export const JobTemplate = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() =>
-                                    navigate("/templates/jobTemplateEdit", {
-                                      state: row,
-                                    })
-                                  }>
+                                  onClick={() => handleEdit(row) }>
                                   Edit
                                 </Button>
                               </TableCell>

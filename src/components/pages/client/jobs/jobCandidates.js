@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
+import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,27 +14,60 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData } from "../../../dummy/Data";
 
-export const JobPreferenceTemplate = () => {
+export const JobCandidates = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const location = useLocation();
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+
+
+  const handleDtpAccess = (row) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    if(row.dtpStatus === "Request Sent"){
+        console.log("request already sent");
+    }
+    else{
+
+        axios
+        .get(
+            `http://localhost:8080/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+        )
+        .then((response) => {
+            console.log(response);
+            setData((prevItems) =>
+                prevItems.map((item) =>
+                item.id === row.id ? { ...item, dtpStatus: "Request Sent" } : item
+                )
+            );
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    }
+  }
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((data) => {
         console.log(data);
-        setData(data.data);
+        setData(data?.data);
         // setPage(data?.pageNo || 0);
       })
       .catch((e) => {
@@ -48,18 +81,19 @@ export const JobPreferenceTemplate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
     axios
       .get(
-        `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        `http://localhost:8080/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${location.state}&pageNo=1&pageSize=5`,
         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
-      .then((data) => {
-        console.log(data);
-        setData(data.data);
+      .then((response) => {
+        console.log(response);
+        setData(response.data?.data);
         setPage(data?.pageNo || 1);
       })
       .catch((e) => {
@@ -76,11 +110,11 @@ export const JobPreferenceTemplate = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Preference Templates from the existing options
+                Choose Ideal Candidate Persona Templates from the existing
+                options
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please choose a job preference template from the available
-                options.
+                Please choose ICP template from the available options.
               </p>
               <div className="py-5 flex justify-between items-center">
                 <TextField
@@ -104,9 +138,7 @@ export const JobPreferenceTemplate = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() =>
-                    navigate("/templates/jobPreferenceTemplateCreate")
-                  }>
+                  onClick={() => navigate("/templates/icpEdit")}>
                   Create New Template
                 </Button>
               </div>
@@ -119,55 +151,79 @@ export const JobPreferenceTemplate = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Serial Number
+                            Candidate Name
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Template Name
+                            Email Address   
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Created By
+                            Phone Number
                           </TableCell>
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Actions
+                            LinkedIn Id
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Matching Scores
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            DTP Access
                           </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {data?.data?.map((row, index) => {
+                        {data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
-                              <TableCell align="center">{row.id}</TableCell>
+                              <TableCell align="center">{row.username}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.templateName}
+                                {row.email}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.createdBy}
+                                {row.phoneNumber}
                               </TableCell>
-                              <TableCell
-                                padding="none"
-                                align="center"
-                                sx={{ color: "#475467" }}>
-                                <Button
-                                  size="small"
-                                  variant="text"
-                                  style={{
-                                    color: "#5E8EBD",
-                                    textTransform: "none",
-                                  }}
-                                  onClick={() =>
-                                    navigate(
-                                      "/templates/jobPreferenceTemplateEdit",
-                                      {
-                                        state: row,
-                                      }
-                                    )
-                                  }>
-                                  Edit
-                                </Button>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.linkedIn}
+                              </TableCell>
+                              <TableCell padding="none" align="center">
+                                {row.matchingScore}
+                              </TableCell>
+                              <TableCell padding="none" align="center">
+                                {row.dtpAccess ? 
+                                (
+                                    <Button
+                                        size="small"
+                                        variant="text"
+                                        style={{
+                                            color: "#5E8EBD",
+                                            textTransform: "none",
+                                        }}
+                                        onClick={() => {
+                                            navigate("/digitalTalentProfileResult", {state : row.candidateId});
+                                        }}>
+                                        {row.dtpStatus}
+                                    </Button>
+                                )
+                                :
+                                (
+                                    <Button
+                                        size="small"
+                                        variant="text"
+                                        style={{
+                                        color: "#5E8EBD",
+                                        textTransform: "none",
+                                        }}
+                                        onClick={() => handleDtpAccess(row)}>
+                                        {row.dtpStatus}
+                                    </Button> 
+                                )}
                               </TableCell>
                             </TableRow>
                           );

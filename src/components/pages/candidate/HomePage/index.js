@@ -74,8 +74,13 @@ export const HomePage = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId=" +
-          user.userId
+        "http://localhost:8080/xen/getCandidateDTPInfo?candidateId=" +
+          user.userId,
+          {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
       )
       .then((response) => {
         console.log(response.data);

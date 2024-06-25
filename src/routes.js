@@ -43,6 +43,23 @@ import { CreateJob } from "./components/pages/client/jobs/createJob";
 import { IcpTemplate } from "./components/pages/client/templates/icpTemplate";
 import { IcpTemplateResult } from "./components/pages/client/templates/icpTemplateResult";
 import { IcpTemplateEdit } from "./components/pages/client/templates/icpTemplateEdit";
+import { JobDetail } from "./components/pages/client/jobs/JobDetail";
+import { JobDetailCreate } from "./components/pages/client/jobs/jobDetailCreate";
+import { JobDetailEdit } from "./components/pages/client/jobs/JobDetailEdit";
+import { ValuesList } from "./components/pages/client/jobs/valuesList";
+import { ValuesCreate } from "./components/pages/client/jobs/valuesCreate";
+import { ValuesEdit } from "./components/pages/client/jobs/valuesEdit";
+import { TeamsList } from "./components/pages/client/jobs/teamsList";
+import { TeamCreate } from "./components/pages/client/jobs/teamCreate";
+import { TeamEdit } from "./components/pages/client/jobs/teamEdit";
+import { PreferenceList } from "./components/pages/client/jobs/preferenceList";
+import { PreferenceCreate } from "./components/pages/client/jobs/preferenceCreate";
+import { PreferenceEdit } from "./components/pages/client/jobs/preferenceEdit";
+import { IcpList } from "./components/pages/client/jobs/icpList";
+import { IcpCreate } from "./components/pages/client/jobs/icpCreate";
+import { IcpResult } from "./components/pages/client/jobs/icpResult";
+import { JobCandidates } from "./components/pages/client/jobs/jobCandidates";
+import { Logout } from "./components/pages/auth/logout";
 
 export const Routes = () => {
   return (
@@ -54,13 +71,11 @@ export const Routes = () => {
       <Route path="forgotpassword" element={<ForgotPass />} />
       <Route path="forgotpasswordotp" element={<ForgotOtp />} />
       <Route path="newpassword" element={<NewPassword />} />
+      <Route path="logout" element={<Logout/>}/>
+      <Route path="digitalTalentProfileResult" element={<TalentProfileResult />}/>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
         <Route path="candidate" element={<HomePage />} />
         <Route path="digitalTalentProfile" element={<DigitalTalentProfile />} />
-        <Route
-          path="digitalTalentProfileResult"
-          element={<TalentProfileResult />}
-        />
         <Route
           path="digitalTalentProfile/personalinfromation"
           element={<PersonalInformation />}
@@ -94,6 +109,22 @@ export const Routes = () => {
         <Route path="jobs/createdJobs" element={<CreatedJobs />} />
         <Route path="jobs/jobsDetails" element={<JobsDetails />} />
         <Route path="jobs/createJob" element={<CreateJob />} />
+        <Route path="job/jobDetailList" element={<JobDetail/>}/>
+        <Route path="job/jobCandidates" element={<JobCandidates/>}/>
+        <Route path="job/jobDetailCreate" element={<JobDetailCreate/>}/>
+        <Route path="job/jobDetailEdit" element={<JobDetailEdit/>}/>        
+        <Route path="job/valuesList" element={<ValuesList/>}/>
+        <Route path="job/valuesCreate" element={<ValuesCreate/>}/>
+        <Route path="job/valuesEdit" element={<ValuesEdit/>}/>        
+        <Route path="job/teamList" element={<TeamsList/>}/>
+        <Route path="job/teamCreate" element={<TeamCreate/>}/>
+        <Route path="job/teamEdit" element={<TeamEdit/>}/>        
+        <Route path="job/preferenceList" element={<PreferenceList/>}/>
+        <Route path="job/preferenceCreate" element={<PreferenceCreate/>}/>
+        <Route path="job/preferenceEdit" element={<PreferenceEdit/>}/>      
+        <Route path="job/icpList" element={<IcpList/>}/>
+        <Route path="job/icpCreate" element={<IcpCreate/>}/>
+        <Route path="job/icpResult" element={<IcpResult/>}/>          
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
         <Route

@@ -26,6 +26,8 @@ export const IcpTemplateResult = () => {
   const [spectrum4, setSpectrum4] = useState("spectrum4");
   const [spectrum5, setSpectrum5] = useState("spectrum5");
 
+  const location = useLocation();
+
   const convertedEmtional = convertCompetencies(
     userData?.emtionalFlexibility[0]
   );
@@ -36,29 +38,19 @@ export const IcpTemplateResult = () => {
 
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
+  
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get(
-        "http://localhost:8080/xen/getIcpTemplateResult?clientId=" +
-          user.userId +
-          "&templateNo=" +
-          1
-      )
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data);
-        setSpectrum1(response.data.pillars[0]);
-        setSpectrum2(response.data.pillars[1]);
-        setSpectrum3(response.data.pillars[2]);
-        setSpectrum4(response.data.pillars[3]);
-        setSpectrum5(response.data.pillars[4]);
-        //console.log(response.data?.emtionalFlexibility[1].competencies);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    console.log(location.state);
+    setUserData(location.state)
+    setSpectrum1(location.state.pillars[0])
+    setSpectrum2(location.state.pillars[1])
+    setSpectrum3(location.state.pillars[2])
+    setSpectrum4(location.state.pillars[3])
+    setSpectrum5(location.state.pillars[4])
+  }, [location.state]);
+
+
 
   return (
     <div>

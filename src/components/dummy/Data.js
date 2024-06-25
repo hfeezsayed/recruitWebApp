@@ -1723,12 +1723,20 @@ export const createJobData = {
   name: "Adobe",
   image:
     "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
-  jobCompletd: 78,
-  jobDetails: 100,
-  workValue: 100,
-  teamPreference: 100,
-  jobPreference: 0,
-  icpTemplate: 0,
+  "id": 0,
+  "clientId": 0,
+  "jobDetail": false,
+  "jobDetailId": 0,
+  "workValues": false,
+  "workValuesId": 0,
+  "team": false,
+  "teamId": 0,
+  "preference": false,
+  "preferenceId": 0,
+  "icp": false,
+  "icpId": 0,
+  "createdAt": null,
+  "updatedAt": null
 };
 
 export const icpTemplateResultData = {
