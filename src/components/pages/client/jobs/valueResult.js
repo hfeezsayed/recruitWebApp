@@ -80,7 +80,7 @@ export const ValuesResult = () => {
                                 border: 1,
                                 borderColor: "#D0D5DD50",
                               }}>
-                              {row.attribute}
+                              {row.value}
                             </TableCell>
                           </TableRow>
                         );
@@ -91,6 +91,9 @@ export const ValuesResult = () => {
               </Box>
               <div className="flex justify-end py-8">
                 <Button
+                  onClick={() => {
+                    navigate("/job/createJob");
+                  }}
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}>
                   CONFIRM

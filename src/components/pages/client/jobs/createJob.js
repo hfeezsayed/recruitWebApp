@@ -23,8 +23,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { createJobData } from "../../../dummy/Data";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { useEffect } from "react";
-import axios  from 'axios';
-
+import axios from "axios";
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
@@ -69,7 +68,6 @@ export const CreateJob = () => {
   //   }
   // }, [location.state]);
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
@@ -97,53 +95,45 @@ export const CreateJob = () => {
     }
   }, []);
 
-  
   const handleJobDetails = (jobData) => {
-    if(jobData?.jobDetail === true){
-      navigate("/job/jobDetailEdit", { state : { "jobData" : jobData}})
+    if (jobData?.jobDetail === true) {
+      navigate("/job/jobDetailEdit", { state: { jobData: jobData } });
+    } else {
+      navigate("/job/jobDetailCreate");
     }
-    else{
-      navigate("/job/jobDetailList")
-    }
-  }
+  };
 
   const handleWorkValues = (jobData) => {
-    if(jobData?.workValues === true){
-      navigate("/job/valuesEdit", { state : { "jobData" : jobData}})
+    if (jobData?.workValues === true) {
+      navigate("/job/valuesEdit", { state: { jobData: jobData } });
+    } else {
+      navigate("/job/valuesList");
     }
-    else{
-      navigate("/job/valuesList")
-    }
-  }
+  };
 
   const handleJobPreferences = (jobData) => {
-    if(jobData?.preference === true){
-      navigate("/job/preferenceEdit", { state : { "jobData" : jobData}})
+    if (jobData?.preference === true) {
+      navigate("/job/preferenceEdit", { state: { jobData: jobData } });
+    } else {
+      navigate("/job/preferenceList");
     }
-    else{
-      navigate("/job/preferenceList")
-    }
-  }
+  };
 
   const handleTeam = (jobData) => {
-    if(jobData?.team === true){
-      navigate("/job/teamEdit", { state : { "jobData" : jobData}})
+    if (jobData?.team === true) {
+      navigate("/job/teamEdit", { state: { jobData: jobData } });
+    } else {
+      navigate("/job/teamList");
     }
-    else{
-      navigate("/job/teamList")
-    }
-  }
+  };
 
   const handleIcp = (jobData) => {
-    if(jobData?.icp === true){
-      navigate("/job/icpResult", { state : { "jobData" : jobData}})
+    if (jobData?.icp === true) {
+      navigate("/job/icpEdit", { state: { jobData: jobData } });
+    } else {
+      navigate("/job/icpList");
     }
-    else{
-      navigate("/job/icpList")
-    }
-  }
-
-
+  };
 
   return (
     <div>
@@ -309,7 +299,7 @@ export const CreateJob = () => {
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => {
-                         handleJobDetails(userData);
+                        handleJobDetails(userData);
                       }}>
                       {userData?.jobDetail ? "Edit" : "Not taken"}
                     </Button>
@@ -420,9 +410,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.team
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.team ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -502,9 +490,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.preference
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.preference ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -584,9 +570,7 @@ export const CreateJob = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.icp
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.icp ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed

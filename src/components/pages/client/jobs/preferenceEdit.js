@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export const PreferenceEdit = () => {
   const navigate = useNavigate();
@@ -56,56 +56,58 @@ export const PreferenceEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`, {
-        experianceInIndustry,
-        specifyIndusrtyExp,
-        jobDescription,
-        scopOfRole,
-        depthKnowledge,
-        typeOfRoles,
-        timeOfRole,
-        workSetting,
-        locationRole,
-        relocation,
-        relocationBudget,
-        travelRole,
-        visa,
-        compensationOffered,
-        compensationOfferedRate,
-        primarySkills,
-        secoundrySkills,
-        minimumLevelQualification,
-        requireAcademicQualification,
-        differentAcademic,
-        certificationsOrLicenses,
-        toolsOrSoftwaresetToolsOrSoftware,
-        successThreeyear,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+      .post(
+        `http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`,
+        {
+          experianceInIndustry,
+          specifyIndusrtyExp,
+          jobDescription,
+          scopOfRole,
+          depthKnowledge,
+          typeOfRoles,
+          timeOfRole,
+          workSetting,
+          locationRole,
+          relocation,
+          relocationBudget,
+          travelRole,
+          visa,
+          compensationOffered,
+          compensationOfferedRate,
+          primarySkills,
+          secoundrySkills,
+          minimumLevelQualification,
+          requireAcademicQualification,
+          differentAcademic,
+          certificationsOrLicenses,
+          toolsOrSoftwaresetToolsOrSoftware,
+          successThreeyear,
         },
-      }
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
+    navigate("/job/createJob");
   };
-
-
 
   useEffect(() => {
     if (location.state) {
       console.log(location.state);
       const user = JSON.parse(localStorage.getItem("token"));
-      if(location.state.jobData){
+      if (location.state?.jobData) {
         axios
-            .get(
-              `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
-            )
-            .then((data) => {
+          .get(
+            `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          )
+          .then(
+            (data) => {
               console.log(data);
               const row = data.data;
-              setExperianceInindustry(row.experianceInIndustry);     
+              setExperianceInindustry(row.experianceInIndustry);
               setSpecifyIndustryExp(row.specifyIndusrtyExp);
               setJobDescription(row.jobDescription);
               setScopOfRole(row.scopOfRole);
@@ -125,23 +127,23 @@ export const PreferenceEdit = () => {
               setRequireAcademicQualification(row.requireAcademicQualification);
               setDifferentAcademic(row.differentAcademic);
               setCertificationsOrLicenses(row.certificationsOrLicenses);
-              setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+              setToolsOrSoftwaresetToolsOrSoftware(
+                row.toolsOrSoftwaresetToolsOrSoftware
+              );
               setSuccessThreeyear(row.successThreeYear);
             },
             {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
-            )
-            .catch((e) => {
-              console.log(e);
-            });
-
-      }
-      else{
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
         const row = location.state;
-        setExperianceInindustry(row.experianceInIndustry);     
+        setExperianceInindustry(row.experianceInIndustry);
         setSpecifyIndustryExp(row.specifyIndusrtyExp);
         setJobDescription(row.jobDescription);
         setScopOfRole(row.scopOfRole);
@@ -161,7 +163,9 @@ export const PreferenceEdit = () => {
         setRequireAcademicQualification(row.requireAcademicQualification);
         setDifferentAcademic(row.differentAcademic);
         setCertificationsOrLicenses(row.certificationsOrLicenses);
-        setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+        setToolsOrSoftwaresetToolsOrSoftware(
+          row.toolsOrSoftwaresetToolsOrSoftware
+        );
         setSuccessThreeyear(row.successThreeYear);
       }
     }
@@ -303,7 +307,6 @@ export const PreferenceEdit = () => {
     setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
   };
 
-  
   return (
     <div>
       <div className="flex">
@@ -626,7 +629,7 @@ export const PreferenceEdit = () => {
                   }}>
                   Primary Skills
                 </p>
-                {primarySkills.map((value, index) => {
+                {primarySkills?.map((value, index) => {
                   return (
                     <>
                       <div className="grid grid-cols-2 gap-8 mt-5">
@@ -737,7 +740,7 @@ export const PreferenceEdit = () => {
                   }}>
                   Secoundry Skills
                 </p>
-                {secoundrySkills.map((value, index) => {
+                {secoundrySkills?.map((value, index) => {
                   return (
                     <div key={index}>
                       <div className="grid grid-cols-2 gap-8 mt-5">
@@ -907,7 +910,7 @@ export const PreferenceEdit = () => {
                 Are there any specific certifications or licenses that
                 candidates must hold?
               </p>
-              {certificationsOrLicenses.map((value, index) => {
+              {certificationsOrLicenses?.map((value, index) => {
                 return (
                   <>
                     <div>
@@ -973,7 +976,7 @@ export const PreferenceEdit = () => {
                 Are there any particular tools or software applications
                 candidates should be adept with?
               </p>
-              {toolsOrSoftwaresetToolsOrSoftware.map((value, index) => {
+              {toolsOrSoftwaresetToolsOrSoftware?.map((value, index) => {
                 return (
                   <>
                     <div>
