@@ -14,11 +14,8 @@ import { QUESTIONS } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-export const IcpCreate = () => {
-  const navigate = useNavigate();
-
+export const IcpEdit = () => {
   const [questionList, setQuestionList] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentSection, setCurrentSection] = useState(1);
@@ -68,7 +65,6 @@ export const IcpCreate = () => {
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
-    navigate("/job/createJob");
     axios
       .post(
         `http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`,

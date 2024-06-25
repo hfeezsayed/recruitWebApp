@@ -38,19 +38,15 @@ export const IcpResult = () => {
 
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
-  
-
   useEffect(() => {
     console.log(location.state);
-    setUserData(location.state)
-    setSpectrum1(location.state.pillars[0])
-    setSpectrum2(location.state.pillars[1])
-    setSpectrum3(location.state.pillars[2])
-    setSpectrum4(location.state.pillars[3])
-    setSpectrum5(location.state.pillars[4])
+    // setUserData(location.state)
+    // setSpectrum1(location.state.pillars[0])
+    // setSpectrum2(location.state.pillars[1])
+    // setSpectrum3(location.state.pillars[2])
+    // setSpectrum4(location.state.pillars[3])
+    // setSpectrum5(location.state.pillars[4])
   }, [location.state]);
-
-
 
   return (
     <div>

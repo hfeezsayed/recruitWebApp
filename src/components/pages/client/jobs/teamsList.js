@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  InputAdornment,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -14,12 +20,23 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData } from "../../../dummy/Data";
+import { JobDetailPopup } from "./jobDetailPopup";
+import { TeamPopup } from "./teamPopup";
 
 export const TeamsList = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState();
+  const [viewData, setViewData] = useState();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    setViewData(null);
+  };
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -27,10 +44,10 @@ export const TeamsList = () => {
       .get(
         `http://localhost:8080/xen/getAllTeamTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -52,10 +69,10 @@ export const TeamsList = () => {
       .get(
         `http://localhost:8080/xen/getAllTeamTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -115,6 +132,10 @@ export const TeamsList = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell
+                          padding="checkbox"
+                          sx={{ bgcolor: "#F8F9FA" }}
+                        />
+                        <TableCell
                           align="center"
                           sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                           Serial Number
@@ -138,6 +159,21 @@ export const TeamsList = () => {
                       {data?.data?.map((row, index) => {
                         return (
                           <TableRow key={index}>
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                color="primary"
+                                checked={selected?.id === row?.id}
+                                sx={{
+                                  color: "#D0D5DD",
+                                  "&.Mui-checked": {
+                                    color: "#66B2B2",
+                                  },
+                                }}
+                                onClick={(event) => {
+                                  setSelected(row);
+                                }}
+                              />
+                            </TableCell>
                             <TableCell align="center">{row.id}</TableCell>
                             <TableCell sx={{ color: "#475467" }}>
                               {row.templateName}
@@ -149,7 +185,7 @@ export const TeamsList = () => {
                               padding="none"
                               align="center"
                               sx={{ color: "#475467" }}>
-                              <Button
+                              {/* <Button
                                 size="small"
                                 variant="text"
                                 style={{
@@ -162,6 +198,19 @@ export const TeamsList = () => {
                                   })
                                 }>
                                 Edit
+                              </Button> */}
+                              <Button
+                                size="small"
+                                variant="text"
+                                style={{
+                                  color: "#5E8EBD",
+                                  textTransform: "none",
+                                }}
+                                onClick={() => {
+                                  setShowPopup(true);
+                                  setViewData(row);
+                                }}>
+                                View
                               </Button>
                             </TableCell>
                           </TableRow>
@@ -186,7 +235,20 @@ export const TeamsList = () => {
                 />
               </div>
             </Box>
+            {selected && (
+              <div className="py-8 gap-8 flex justify-end">
+                <Button
+                  onClick={() => {
+                    navigate("/job/teamEdit", { state: selected });
+                  }}
+                  variant="contained"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  CONFIRM
+                </Button>
+              </div>
+            )}
           </div>
+          <TeamPopup open={showPopup} data={viewData} setClose={handleClose} />
         </div>
       </div>
       <Footer />

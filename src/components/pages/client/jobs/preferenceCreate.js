@@ -189,38 +189,41 @@ export const PreferenceCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
+    navigate("/job/createJob");
     axios
-      .post(`http://localhost:8080/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
-        experianceInIndustry,
-        specifyIndusrtyExp,
-        jobDescription,
-        scopOfRole,
-        depthKnowledge,
-        typeOfRoles,
-        timeOfRole,
-        workSetting,
-        locationRole,
-        relocation,
-        relocationBudget,
-        travelRole,
-        visa,
-        compensationOffered,
-        compensationOfferedRate,
-        primarySkills,
-        secoundrySkills,
-        minimumLevelQualification,
-        requireAcademicQualification,
-        differentAcademic,
-        certificationsOrLicenses,
-        toolsOrSoftwaresetToolsOrSoftware,
-        successThreeyear,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+      .post(
+        `http://localhost:8080/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        {
+          experianceInIndustry,
+          specifyIndusrtyExp,
+          jobDescription,
+          scopOfRole,
+          depthKnowledge,
+          typeOfRoles,
+          timeOfRole,
+          workSetting,
+          locationRole,
+          relocation,
+          relocationBudget,
+          travelRole,
+          visa,
+          compensationOffered,
+          compensationOfferedRate,
+          primarySkills,
+          secoundrySkills,
+          minimumLevelQualification,
+          requireAcademicQualification,
+          differentAcademic,
+          certificationsOrLicenses,
+          toolsOrSoftwaresetToolsOrSoftware,
+          successThreeyear,
         },
-      }
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

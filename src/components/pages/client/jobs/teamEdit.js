@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -39,67 +39,67 @@ export const TeamEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
-        id,
-        teamSize,
-        teamLocation,
-        crossFunctionality,
-        domainRole,
-        project,
-        contributions,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+      .post(
+        `http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        {
+          id,
+          teamSize,
+          teamLocation,
+          crossFunctionality,
+          domainRole,
+          project,
+          contributions,
         },
-      }
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
+    navigate("/job/createJob");
   };
-
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     if (location.state) {
       console.log(location.state);
-      if(location.state?.jobData) {
+      if (location.state?.jobData) {
         axios
-        .get(
-          `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
-        )
-        .then((data) => {
-          console.log(data);
-          setId(data.data.id);
-          setTeamSize(data.data.teamSize);
-          setTeamLocation(data.data.teamLocation);
-          setCrossFunctionality(data.data.crossFunctionality);
-          setSpecifyDomain(data.data.domainRole);
-          setTeamWorkingDes(data.data.project);
-          setDescribeContributions(data.data.contributions);
-        },
-        {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
+          .get(
+            `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          )
+          .then(
+            (data) => {
+              console.log(data);
+              setId(data.data.id);
+              setTeamSize(data.data.teamSize);
+              setTeamLocation(data.data.teamLocation);
+              setCrossFunctionality(data.data.crossFunctionality);
+              setSpecifyDomain(data.data.domainRole);
+              setTeamWorkingDes(data.data.project);
+              setDescribeContributions(data.data.contributions);
             },
-          }
-        )
-        .catch((e) => {
-          console.log(e);
-        });
-      }
-      else{
-        setTeamSize(location.state.teamSize);
-        setTeamLocation(location.state.teamLocation);
-        setCrossFunctionality(location.state.crossFunctionality);
-        setSpecifyDomain(location.state.domainRole);
-        setTeamWorkingDes(location.state.project);
-        setDescribeContributions(location.state.contributions);
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        setTeamSize(location.state?.teamSize);
+        setTeamLocation(location.state?.teamLocation);
+        setCrossFunctionality(location.state?.crossFunctionality);
+        setSpecifyDomain(location.state?.domainRole);
+        setTeamWorkingDes(location.state?.project);
+        setDescribeContributions(location.state?.contributions);
       }
     }
   }, [location.state]);
-
-
 
   return (
     <div>

@@ -22,7 +22,7 @@ export const Login = () => {
         navigate("/candidate");
       }
       if (isAuthenticated.role === "ROLE_CLIENT") {
-        navigate("/jobs/allJobs");
+        navigate("/job/allJobs");
       }
     }
   }, []);
@@ -38,17 +38,16 @@ export const Login = () => {
     // };
     const username = email;
     e.preventDefault();
-    await axios.post(
-        "http://localhost:8080/xen/login",
-        {
-          username,
-          password,
-        }
-      ).then((response) => {
+    await axios
+      .post("http://localhost:8080/xen/login", {
+        username,
+        password,
+      })
+      .then((response) => {
         console.log(response);
         localStorage.setItem("token", JSON.stringify(response?.data));
 
-          // role = response.data.role;
+        // role = response.data.role;
         const role = JSON.parse(localStorage.getItem("token")).role;
         console.log("role = ", role);
         if (role === "ROLE_ADMIN") {
@@ -58,11 +57,12 @@ export const Login = () => {
           navigate("/candidate");
         }
         if (role === "ROLE_CLIENT") {
-          navigate("/jobs/allJobs");
+          navigate("/job/allJobs");
         }
-  }). catch(error => {
-      console.error(error.message);
-  })
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
     // navigate("/candidate");
     // navigate("/assesmentBatchDetails");
   };

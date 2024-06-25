@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  InputAdornment,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -14,13 +20,23 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData } from "../../../dummy/Data";
+import { JobDetailPopup } from "./jobDetailPopup";
 
 export const JobDetail = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const location = useLocation();
+  const [selected, setSelected] = useState();
+  const [viewData, setViewData] = useState();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    setViewData(null);
+  };
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -48,8 +64,8 @@ export const JobDetail = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   const handleEdit = (row) => {
-      navigate("/templates/jobDetailEdit", { state: { "details" : row }})
-  }
+    navigate("/job/jobDetailEdit", { state: { details: row } });
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -119,6 +135,10 @@ export const JobDetail = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell
+                            padding="checkbox"
+                            sx={{ bgcolor: "#F8F9FA" }}
+                          />
+                          <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Serial Number
@@ -142,9 +162,24 @@ export const JobDetail = () => {
                         {data?.data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  color="primary"
+                                  checked={selected?.id === row?.id}
+                                  sx={{
+                                    color: "#D0D5DD",
+                                    "&.Mui-checked": {
+                                      color: "#66B2B2",
+                                    },
+                                  }}
+                                  onClick={(event) => {
+                                    setSelected(row);
+                                  }}
+                                />
+                              </TableCell>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.title}
+                                {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}
@@ -153,6 +188,16 @@ export const JobDetail = () => {
                                 padding="none"
                                 align="center"
                                 sx={{ color: "#475467" }}>
+                                {/* <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#5E8EBD",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => handleEdit(row)}>
+                                  Edit
+                                </Button> */}
                                 <Button
                                   size="small"
                                   variant="text"
@@ -160,8 +205,11 @@ export const JobDetail = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() => handleEdit(row) }>
-                                  Edit
+                                  onClick={() => {
+                                    setShowPopup(true);
+                                    setViewData(row);
+                                  }}>
+                                  View
                                 </Button>
                               </TableCell>
                             </TableRow>
@@ -186,7 +234,25 @@ export const JobDetail = () => {
                   />
                 </div>
               </Box>
+              {selected && (
+                <div className="py-8 gap-8 flex justify-end">
+                  <Button
+                    onClick={() => {
+                      navigate("/job/jobDetailEdit", { state: selected });
+                    }}
+                    variant="contained"
+                    style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                    CONFIRM
+                  </Button>
+                </div>
+              )}
             </div>
+
+            <JobDetailPopup
+              open={showPopup}
+              data={viewData}
+              setClose={handleClose}
+            />
           </div>
         </div>
       </div>

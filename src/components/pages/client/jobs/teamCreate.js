@@ -34,22 +34,24 @@ export const TeamCreate = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
+    navigate("/job/createJob");
     axios
-      .post(`http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
-        teamSize,
-        teamLocation,
-        crossFunctionality,
-        domainRole,
-        project,
-        contributions,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+      .post(
+        `http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        {
+          teamSize,
+          teamLocation,
+          crossFunctionality,
+          domainRole,
+          project,
+          contributions,
         },
-      }
-    
-        )
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

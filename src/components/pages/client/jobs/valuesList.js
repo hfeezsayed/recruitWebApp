@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  InputAdornment,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,12 +20,22 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData, workValueViewData } from "../../../dummy/Data";
+import { ValuesPopup } from "./valuesPopup";
 
 export const ValuesList = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState();
+  const [viewData, setViewData] = useState(workValueViewData);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    // setViewData(null);
+  };
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -27,10 +43,10 @@ export const ValuesList = () => {
       .get(
         `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -52,10 +68,10 @@ export const ValuesList = () => {
       .get(
         `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -103,9 +119,7 @@ export const ValuesList = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() =>
-                    navigate("/job/valuesCreate")
-                  }>
+                  onClick={() => navigate("/job/valuesCreate")}>
                   Create New Template
                 </Button>
               </div>
@@ -115,6 +129,10 @@ export const ValuesList = () => {
                     <Table stickyHeader>
                       <TableHead>
                         <TableRow>
+                          <TableCell
+                            padding="checkbox"
+                            sx={{ bgcolor: "#F8F9FA" }}
+                          />
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
@@ -133,17 +151,32 @@ export const ValuesList = () => {
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Scores
                           </TableCell>
-                          <TableCell
+                          {/* <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Actions
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {data?.data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  color="primary"
+                                  checked={selected?.id === row?.id}
+                                  sx={{
+                                    color: "#D0D5DD",
+                                    "&.Mui-checked": {
+                                      color: "#66B2B2",
+                                    },
+                                  }}
+                                  onClick={(event) => {
+                                    setSelected(row);
+                                  }}
+                                />
+                              </TableCell>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.templateName}
@@ -156,14 +189,20 @@ export const ValuesList = () => {
                                   size="small"
                                   variant="text"
                                   style={{
-                                    color: "#28A745",
+                                    color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() => {}}>
+                                  onClick={() => {
+                                    // navigate("/job/valuesResult", {
+                                    //   state: row,
+                                    // });
+                                    setShowPopup(true);
+                                    // setViewData(row);
+                                  }}>
                                   View
                                 </Button>
                               </TableCell>
-                              <TableCell
+                              {/* <TableCell
                                 padding="none"
                                 align="center"
                                 sx={{ color: "#475467" }}>
@@ -175,16 +214,13 @@ export const ValuesList = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() =>
-                                    navigate(
-                                      "/job/valuesEdit",
-                                      {
-                                        state: row,
-                                      }
-                                    )
+                                    navigate("/job/valuesEdit", {
+                                      state: row,
+                                    })
                                   }>
                                   Edit
                                 </Button>
-                              </TableCell>
+                              </TableCell> */}
                             </TableRow>
                           );
                         })}
@@ -207,7 +243,24 @@ export const ValuesList = () => {
                   />
                 </div>
               </Box>
+              {selected && (
+                <div className="py-8 gap-8 flex justify-end">
+                  <Button
+                    onClick={() => {
+                      navigate("/job/valuesEdit", { state: selected });
+                    }}
+                    variant="contained"
+                    style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                    CONFIRM
+                  </Button>
+                </div>
+              )}
             </div>
+            <ValuesPopup
+              open={showPopup}
+              data={viewData}
+              setClose={handleClose}
+            />
           </div>
         </div>
       </div>
