@@ -74,12 +74,12 @@ export const CreateJob = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
     if(location.state?.new){
-
+      localStorage.setItem("jobId", 0);
     }
     else{
       axios
         .get(
-          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=1`,
+          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=${location.state}`,
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
@@ -136,10 +136,10 @@ export const CreateJob = () => {
 
   const handleIcp = (jobData) => {
     if(jobData?.icp === true){
-      navigate("/templates/icpEdit", { state : { "jobData" : jobData}})
+      navigate("/job/icpResult", { state : { "jobData" : jobData}})
     }
     else{
-      navigate("/templates/icpList")
+      navigate("/job/icpList")
     }
   }
 
@@ -210,6 +210,18 @@ export const CreateJob = () => {
                       )}%`}</Typography>
                     </Box>
                   </Box>
+                </div>
+                <div>
+                <Button
+                    variant="text"
+                    style={{
+                      color: "#008080",
+                      backgroundColor: "#EAF4F5",
+                      textTransform: "none",
+                    }}
+                    onClick={() => navigate("/job/jobCandidates", { state : location.state})}>
+                    Show Candidates
+                  </Button>
                 </div>
               </div>
             </div>

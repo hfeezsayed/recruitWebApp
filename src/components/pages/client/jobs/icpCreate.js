@@ -70,8 +70,9 @@ export const IcpCreate = () => {
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`, 
+      .post(`http://localhost:8080/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
         questionList,
         {
             headers: {

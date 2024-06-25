@@ -105,7 +105,7 @@ export const IcpList = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/templates/icpEdit")}>
+                  onClick={() => navigate("/job/icpCreate")}>
                   Create New Template
                 </Button>
               </div>

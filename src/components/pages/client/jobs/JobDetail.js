@@ -48,7 +48,7 @@ export const JobDetail = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   const handleEdit = (row) => {
-      navigate("/templates/jobDetailEdit", { state: { "details" : row }})
+      navigate("/job/jobDetailEdit", { state: { "details" : row }})
   }
 
   useEffect(() => {

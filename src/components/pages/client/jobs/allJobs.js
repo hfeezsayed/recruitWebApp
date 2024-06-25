@@ -136,7 +136,7 @@ export const AllJobs = () => {
                     textTransform: "none",
                   }}
                   onClick={() => {
-                    navigate("/jobs/createdJobs");
+                    navigate("/jobs/createJob", { state : { new : true}});
                   }}>
                   Add the first job to initiate the list
                 </Button>
@@ -287,8 +287,8 @@ export const AllJobs = () => {
                                 </div>
                                 <div className="flex gap-1 items-center">
                                   <IoTimeOutline style={{ color: "#47546780" }} />
-                                  {row?.typeOfHire.map((data, index) => {
-                                    return (
+                                  {/* {row?.typeOfHire.map((data, index) => {
+                                    return ( */}
                                       <p
                                         key={index}
                                         style={{
@@ -300,10 +300,10 @@ export const AllJobs = () => {
                                               ? 0
                                               : 2,
                                         }}>
-                                        {data}
+                                        {row.compensation}
                                       </p>
-                                    );
-                                  })}
+                                    {/* );
+                                  })} */}
                                 </div>
                               </div>
                               <div className="pt-3 flex gap-3 rounded-lg">
@@ -363,7 +363,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/createJob", { state : row })}
+                                      onClick={() => navigate("/jobs/createJob", { state : row.id })}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",
@@ -406,7 +406,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/jobsDetails", { state : { jobs : data, row : row}})}
+                                      onClick={() => navigate("/jobs/createJob", { state : row.id})}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",
