@@ -156,14 +156,14 @@ export const ClientSideNav = () => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState.includes("jobs/") ? "#008080" : "#ffffff",
-                color: currentState.includes("jobs/") ? "#ffffff" : "#475467",
+                bgcolor: currentState.includes("job/") ? "#008080" : "#ffffff",
+                color: currentState.includes("job/") ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
-                navigate("/jobs/allJobs");
+                navigate("/job/allJobs");
               }}>
               <ListItemIcon
                 sx={{
@@ -172,13 +172,13 @@ export const ClientSideNav = () => {
                   justifyContent: "center",
                 }}>
                 <JobSvg
-                  COLOR={currentState.includes("jobs/") ? "#ffffff" : "#475467"}
+                  COLOR={currentState.includes("job/") ? "#ffffff" : "#475467"}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Jobs"}
                 primaryTypographyProps={{
-                  color: currentState.includes("jobs/") ? "#ffffff" : "#475467",
+                  color: currentState.includes("job/") ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -349,7 +349,7 @@ export const ClientSideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/assessmentsList");
+                navigate("/allAssessmentBatches");
               }}>
               <ListItemIcon
                 sx={{

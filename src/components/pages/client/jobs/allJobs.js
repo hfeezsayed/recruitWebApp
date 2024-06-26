@@ -42,7 +42,7 @@ import { LuFiles } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AllJobsData } from "../../../dummy/Data";
 import { useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -62,7 +62,6 @@ export const AllJobs = () => {
     setAnchorEl(null);
     setAnchorData(null);
   };
-
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -107,26 +106,9 @@ export const AllJobs = () => {
           <TopNav />
           {data.length === 0 ? (
             <div className="p-8 h-full">
-            <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                All Jobs
-              </p>
-              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Start the process by selecting an option: use an existing job
-                template or create a new one job template.
-              </p>
-            </div>
-            <div className="flex justify-center items-center text-center h-full">
-              <div className="-mt-20">
-                <img src={NoDataFound} alt="No Data Found" />
-                <p
-                  style={{
-                    color: "#101828",
-                    fontSize: 20,
-                    fontWeight: 500,
-                    marginTop: 25,
-                  }}>
-                  No Jobs Created
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                  All Jobs
                 </p>
                 <Button
                   size="small"
@@ -140,11 +122,39 @@ export const AllJobs = () => {
                   }}>
                   Add the first job to initiate the list
                 </Button>
+                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                  Start the process by selecting an option: use an existing job
+                  template or create a new one job template.
+                </p>
+              </div>
+              <div className="flex justify-center items-center text-center h-full">
+                <div className="-mt-20">
+                  <img src={NoDataFound} alt="No Data Found" />
+                  <p
+                    style={{
+                      color: "#101828",
+                      fontSize: 20,
+                      fontWeight: 500,
+                      marginTop: 25,
+                    }}>
+                    No Jobs Created
+                  </p>
+                  <Button
+                    size="small"
+                    style={{
+                      color: "#008080",
+                      fontSize: 18,
+                      textTransform: "none",
+                    }}
+                    onClick={() => {
+                      navigate("/job/createdJobs");
+                    }}>
+                    Add the first job to initiate the list
+                  </Button>
+                </div>
               </div>
             </div>
-            </div>
-          ) :
-          (
+          ) : (
             <div className="p-8 h-full">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
@@ -213,7 +223,9 @@ export const AllJobs = () => {
                     Filter
                   </Button>
                   <Button
-                    onClick={() => navigate("/jobs/createJob", { state : { "new" : true}})}
+                    onClick={() =>
+                      navigate("/job/createJob", { state: { new: true } })
+                    }
                     style={{
                       color: "#008080",
                       background: "#EAF4F5",
@@ -235,8 +247,7 @@ export const AllJobs = () => {
                     {data?.map((row, index) => {
                       return (
                         <div key={index}>
-                          <Card 
-                              sx={{ borderRadius: 3, px: 1 }}>
+                          <Card sx={{ borderRadius: 3, px: 1 }}>
                             <CardContent>
                               <div className="flex justify-between gap-2">
                                 <div className="flex gap-2">
@@ -281,7 +292,11 @@ export const AllJobs = () => {
                               <div className="flex gap-3 items-center">
                                 <div className="flex gap-1 items-center">
                                   <GrLocation style={{ color: "#47546780" }} />
-                                  <p style={{ color: "#47546770", fontSize: 14 }}>
+                                  <p
+                                    style={{
+                                      color: "#47546770",
+                                      fontSize: 14,
+                                    }}>
                                     {row?.location}
                                   </p>
                                 </div>
@@ -296,7 +311,8 @@ export const AllJobs = () => {
                                           fontSize: 14,
                                           paddingRight: 5,
                                           borderRightWidth:
-                                            index + 1 === row?.typeOfHire?.length
+                                            index + 1 ===
+                                            row?.typeOfHire?.length
                                               ? 0
                                               : 2,
                                         }}>

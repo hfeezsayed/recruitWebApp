@@ -14,10 +14,11 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { assignmentBatchesData } from "../../../dummy/Data";
 
 export const AssessmentListView = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(assignmentBatchesData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
@@ -55,6 +56,23 @@ export const AssessmentListView = () => {
       });
   }, []);
 
+  const checkStatus = (status) => {
+    let color = "#475467";
+
+    if (status === "Send Request") {
+      color = "#FFA500";
+    } else if (status === "Created") {
+      color = "#5FAEDA";
+    } else if (status === "All Completed") {
+      color = "#58A20F";
+    } else if (status === "Some Candidate Completed") {
+      color = "#E05880";
+    } else {
+      color = "#475467";
+    }
+    return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
+  };
+
   return (
     <div>
       <div className="flex">
@@ -64,10 +82,11 @@ export const AssessmentListView = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Templates from the existing options
+                Assignment Batches
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please choose a job template from the available options.
+                Select the assessments that you want to allocate to the
+                candidate.
               </p>
               <div className="py-5 flex justify-between items-center">
                 <TextField
@@ -91,7 +110,7 @@ export const AssessmentListView = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/assessmentBatchDetails")}>
+                  onClick={() => navigate("/selectAssesment")}>
                   Create New Batch
                 </Button>
               </div>
@@ -117,7 +136,16 @@ export const AssessmentListView = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Actions
+                            Candidate Details
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Edit
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Status
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -130,12 +158,21 @@ export const AssessmentListView = () => {
                                 {row.batchName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
                               </TableCell>
-                              <TableCell
-                                padding="none"
-                                align="center"
-                                sx={{ color: "#475467" }}>
+                              <TableCell padding="none" align="center">
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#28A745",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {}}>
+                                  View
+                                </Button>
+                              </TableCell>
+                              <TableCell padding="none" align="center">
                                 <Button
                                   size="small"
                                   variant="text"
@@ -143,14 +180,11 @@ export const AssessmentListView = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() =>
-                                    navigate("/assessmentResult", {
-                                      state: row,
-                                    })
-                                  }>
-                                  details
+                                  onClick={() => {}}>
+                                  Edit
                                 </Button>
                               </TableCell>
+                              <TableCell>{checkStatus(row?.status)}</TableCell>
                             </TableRow>
                           );
                         })}

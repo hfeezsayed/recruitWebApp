@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  InputAdornment,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -14,12 +20,22 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { jobTemplateData } from "../../../dummy/Data";
+import { PreferencePopup } from "./preferencePopup";
 
 export const PreferenceList = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(jobTemplateData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState();
+  const [viewData, setViewData] = useState();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    setViewData(null);
+  };
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -27,10 +43,10 @@ export const PreferenceList = () => {
       .get(
         `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -52,10 +68,10 @@ export const PreferenceList = () => {
       .get(
         `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -104,9 +120,7 @@ export const PreferenceList = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() =>
-                    navigate("/job/preferenceCreate")
-                  }>
+                  onClick={() => navigate("/job/preferenceCreate")}>
                   Create New Template
                 </Button>
               </div>
@@ -116,6 +130,10 @@ export const PreferenceList = () => {
                     <Table stickyHeader>
                       <TableHead>
                         <TableRow>
+                          <TableCell
+                            padding="checkbox"
+                            sx={{ bgcolor: "#F8F9FA" }}
+                          />
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
@@ -140,6 +158,21 @@ export const PreferenceList = () => {
                         {data?.data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  color="primary"
+                                  checked={selected?.id === row?.id}
+                                  sx={{
+                                    color: "#D0D5DD",
+                                    "&.Mui-checked": {
+                                      color: "#66B2B2",
+                                    },
+                                  }}
+                                  onClick={(event) => {
+                                    setSelected(row);
+                                  }}
+                                />
+                              </TableCell>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.templateName}
@@ -151,7 +184,7 @@ export const PreferenceList = () => {
                                 padding="none"
                                 align="center"
                                 sx={{ color: "#475467" }}>
-                                <Button
+                                {/* <Button
                                   size="small"
                                   variant="text"
                                   style={{
@@ -159,14 +192,24 @@ export const PreferenceList = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() =>
-                                    navigate(
-                                      "/job/preferenceEdit",
-                                      {
-                                        state: row,
-                                      }
-                                    )
+                                    navigate("/job/preferenceEdit", {
+                                      state: row,
+                                    })
                                   }>
                                   Edit
+                                </Button> */}
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#5E8EBD",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {
+                                    setShowPopup(true);
+                                    setViewData(row);
+                                  }}>
+                                  View
                                 </Button>
                               </TableCell>
                             </TableRow>
@@ -191,7 +234,24 @@ export const PreferenceList = () => {
                   />
                 </div>
               </Box>
+              {selected && (
+                <div className="py-8 gap-8 flex justify-end">
+                  <Button
+                    onClick={() => {
+                      navigate("/job/preferenceEdit", { state: selected });
+                    }}
+                    variant="contained"
+                    style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                    CONFIRM
+                  </Button>
+                </div>
+              )}
             </div>
+            <PreferencePopup
+              open={showPopup}
+              data={viewData}
+              setClose={handleClose}
+            />
           </div>
         </div>
       </div>

@@ -153,7 +153,7 @@ export const CreatedJobs = () => {
                     borderRadius: 8,
                   }}
                   onClick={() => {
-                    navigate("/jobs/createJob", {
+                    navigate("/job/createJob", {
                       state: anchorData?.id,
                     });
                   }}>
@@ -281,7 +281,7 @@ export const CreatedJobs = () => {
                                     padding: 0,
                                   }}
                                   onClick={() => {
-                                    navigate("/jobs/jobsDetails", {
+                                    navigate("/job/createJob", {
                                       state: row?.id,
                                     });
                                   }}
@@ -293,7 +293,7 @@ export const CreatedJobs = () => {
                               <div
                                 className="w-full "
                                 onClick={() => {
-                                  navigate("/jobs/createJob", {
+                                  navigate("/job/createJob", {
                                     state: row?.id,
                                   });
                                 }}>
@@ -497,7 +497,7 @@ export const CreatedJobs = () => {
                 TransitionComponent={Fade}>
                 <MenuItem
                   onClick={() => {
-                    navigate("/jobs/createJob", {
+                    navigate("/job/createJob", {
                       state: anchorData?.id,
                     });
                   }}>
