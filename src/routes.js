@@ -62,6 +62,8 @@ import { JobCandidates } from "./components/pages/client/jobs/jobCandidates";
 import { Logout } from "./components/pages/auth/logout";
 import { ValuesResult } from "./components/pages/client/jobs/valueResult";
 import { IcpEdit } from "./components/pages/client/jobs/icpEdit";
+import { AllAssessmentBatches } from "./components/pages/client/assessments/allAssessmentBatches";
+import { SelectAssessment } from "./components/pages/client/assessments/selectAssessment";
 
 export const Routes = () => {
   return (
@@ -178,7 +180,9 @@ export const Routes = () => {
         <Route path="templates/icp" element={<IcpTemplate />} />
         <Route path="templates/icpResult" element={<IcpTemplateResult />} />
         <Route path="templates/icpEdit" element={<IcpTemplateEdit />} />
+        <Route path="allAssessmentBatches" element={<AllAssessmentBatches />} />
         <Route path="assessmentsList" element={<AssessmentListView />} />
+        <Route path="selectAssesment" element={<SelectAssessment />} />
         <Route
           path="assessmentBatchDetails"
           element={<AssesmentBatchDetails />}

@@ -349,7 +349,7 @@ export const ClientSideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/assessmentsList");
+                navigate("/allAssessmentBatches");
               }}>
               <ListItemIcon
                 sx={{

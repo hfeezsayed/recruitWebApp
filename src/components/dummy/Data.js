@@ -1844,3 +1844,143 @@ export const icpTemplateResultData = {
     },
   ],
 };
+
+export const assignmentBatchesData = {
+  data: [
+    {
+      id: 1,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 2,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Created",
+    },
+    {
+      id: 3,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "All Completed",
+    },
+    {
+      id: 4,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Some Candidate Completed",
+    },
+    {
+      id: 5,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Created",
+    },
+    {
+      id: 6,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 7,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "All Completed",
+    },
+    {
+      id: 8,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Some Candidate Completed",
+    },
+    {
+      id: 9,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 10,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Created",
+    },
+    {
+      id: 11,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "All Completed",
+    },
+    {
+      id: 12,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 13,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "All Completed",
+    },
+    {
+      id: 14,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 15,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Some Candidate Completed",
+    },
+    {
+      id: 16,
+      batchName: "Stress Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+    {
+      id: 17,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Some Candidate Completed",
+    },
+    {
+      id: 18,
+      batchName: "Time Management Skills",
+      createdBy: "Selena Mathew Adams",
+      status: "Send Request",
+    },
+  ],
+  totalCount: 18,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
+
+export const selectAssesmentData = {
+  data: [
+    { id: 1, assessmnetName: "Analyze Time Management Tools" },
+    { id: 2, assessmnetName: "Analyze Time Management Tools" },
+    { id: 3, assessmnetName: "Stress Management Techniques" },
+    { id: 4, assessmnetName: "Analyze Time Management Tools" },
+    { id: 5, assessmnetName: "Analyze Time Management Tools" },
+    { id: 6, assessmnetName: "Stress Management Techniques" },
+    { id: 7, assessmnetName: "Analyze Time Management Tools" },
+    { id: 8, assessmnetName: "Analyze Time Management Tools" },
+    { id: 9, assessmnetName: "Stress Management Techniques" },
+    { id: 10, assessmnetName: "Analyze Time Management Tools" },
+    { id: 11, assessmnetName: "Analyze Time Management Tools" },
+    { id: 12, assessmnetName: "Stress Management Techniques" },
+  ],
+  totalCount: 12,
+  result: "success",
+  message: "found",
+  pageNo: 1,
+  pageSize: 5,
+};
