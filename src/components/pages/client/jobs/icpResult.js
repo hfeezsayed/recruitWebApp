@@ -41,13 +41,41 @@ export const IcpResult = () => {
   
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
-    setUserData(location.state)
-    setSpectrum1(location.state.pillars[0])
-    setSpectrum2(location.state.pillars[1])
-    setSpectrum3(location.state.pillars[2])
-    setSpectrum4(location.state.pillars[3])
-    setSpectrum5(location.state.pillars[4])
+    if(location.state.jobData){
+      axios
+          .get(
+            `http://localhost:8080/xen/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(location.data);
+            setUserData(response.data)
+            setSpectrum1(response.data.pillars[0])
+            setSpectrum2(response.data.pillars[1])
+            setSpectrum3(response.data.pillars[2])
+            setSpectrum4(response.data.pillars[3])
+            setSpectrum5(response.data.pillars[4])
+            //localStorage.setItem("jobId", data.data.id);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+        }
+        else{
+          setUserData(location.state)
+          setSpectrum1(location.state.pillars[0])
+          setSpectrum2(location.state.pillars[1])
+          setSpectrum3(location.state.pillars[2])
+          setSpectrum4(location.state.pillars[3])
+          setSpectrum5(location.state.pillars[4])
+        }
+
   }, [location.state]);
 
 
