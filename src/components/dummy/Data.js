@@ -1263,18 +1263,23 @@ export const jobWorkValueData = {
   pageSize: 5,
 };
 
-export const workValueViewData = [
-  { value: "Self- Direction", rank: 4 },
-  { value: "Stimulation", rank: 3 },
-  { value: "Hedonism", rank: 3 },
-  { value: "Achievements", rank: 3 },
-  { value: "Power", rank: 2 },
-  { value: "Security", rank: 1 },
-  { value: "Conformity", rank: 2 },
-  { value: "Tradition", rank: 0 },
-  { value: "Benevolence", rank: 0 },
-  { value: "Universalism", rank: 2 },
-];
+export const workValueViewData = {
+  templateName: "Leadership Skills Evaluation",
+  tag: "ABCD",
+  templateDescription: "ABCD",
+  data: [
+    { value: "Self- Direction", rank: 4 },
+    { value: "Stimulation", rank: 3 },
+    { value: "Hedonism", rank: 3 },
+    { value: "Achievements", rank: 3 },
+    { value: "Power", rank: 2 },
+    { value: "Security", rank: 1 },
+    { value: "Conformity", rank: 2 },
+    { value: "Tradition", rank: 0 },
+    { value: "Benevolence", rank: 0 },
+    { value: "Universalism", rank: 2 },
+  ],
+};
 
 export const workValueEditData = [
   {
@@ -1745,13 +1750,13 @@ export const createJobData = {
     "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
   id: 0,
   clientId: 0,
-  jobDetail: true,
+  jobDetail: false,
   jobDetailId: 0,
-  workValues: true,
+  workValues: false,
   workValuesId: 0,
-  team: true,
+  team: false,
   teamId: 0,
-  preference: true,
+  preference: false,
   preferenceId: 0,
   icp: true,
   icpId: 0,

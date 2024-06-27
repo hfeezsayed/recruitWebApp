@@ -118,7 +118,7 @@ export const CreateJob = () => {
     if (jobData?.workValues === true) {
       navigate("/job/valuesEdit", { state: { jobData: jobData } });
     } else {
-      navigate("/job/valuesList");
+      navigate("/job/workValueTemplate");
     }
   };
 
