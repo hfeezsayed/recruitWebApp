@@ -31,7 +31,7 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
 
     axios
       .post(
-        `http://localhost:8080/xen/assignCandidatesToBatch?&clientId=user?.userId`,
+        `http://localhost:8080/xen/saveClientAssessmentBatch?&clientId=${user?.userId}`,
          data,
          {
           headers: {
@@ -39,7 +39,9 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
           },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((response) => {
+        navigate("/assessmentList");
+      })
       .catch((e) => console.log(e));
   };
 

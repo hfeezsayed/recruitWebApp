@@ -58,7 +58,7 @@ export const DigitalTalentProfile = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDTPInfo?candidateId="+user.userId,
+    axios.get(`http://localhost:8080/xen/getCandidateDTPInfo?candidateId=${user.userId}`,
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -82,6 +82,7 @@ export const DigitalTalentProfile = () => {
       console.log(error);
     })
   }, []);
+
 
 
   const showAssessmentResult = () => {
@@ -347,7 +348,7 @@ export const DigitalTalentProfile = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.preferenes ? 100 : 0}
+                          value={userData?.preferences ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -366,7 +367,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.preferenes
+                            color: userData?.preferences
                               ? "#58A20F"
                               : "#101828",
                             fontWeight: 600,
@@ -417,7 +418,7 @@ export const DigitalTalentProfile = () => {
                       }}
                       endIcon={<FaArrowRight />}
                       onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
-                      {userData?.preferenes ? "Edit" : "Not taken"}
+                      {userData?.preferences ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>

@@ -38,10 +38,18 @@ export const AssesmentForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getSelfAssessments?candidateId="+user.userId)
+    axios.get(`http://localhost:8080/xen/getCandidateAssessments?candidateId=${user.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }  
+    )
     .then(response => {
         console.log(response.data);
-        setSelfAssessmentList(response.data);
+        setSelfAssessmentList(response.data.candidateList);
+        setClientAssessmentList(response.data.clientList);
+        setAllAssessmentList([...selfAssessmentList, ...clientAssessmentList]);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
     }) 
     .catch(error => {
@@ -358,7 +366,7 @@ export const AssesmentForm = () => {
                     {row.companyName}
                   </TableCell>
                   <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row.assesmentName}
+                    {row.assessmentName}
                   </TableCell>
                   <TableCell sx={{ color: "#475467", fontSize: 14 }}>
                     {row.date}

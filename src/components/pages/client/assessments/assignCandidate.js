@@ -153,13 +153,12 @@ export const AssignCandidate = () => {
   });
 
   const handleAddAsignment = async () => {
-    navigate("/assesmentResult");
     const user = JSON.parse(localStorage.getItem("token"));
     const batchName = location?.state?.batchName;
     const selectedAssignments =  location?.state?.selected;
     await axios
       .post(
-        `http://localhost:8080/xen/addCandidateToBatch?clientId=${user.userId}`,
+        `http://localhost:8080/xen/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
         {
           batchName,
           selectedAssignments,

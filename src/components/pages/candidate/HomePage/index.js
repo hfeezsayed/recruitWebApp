@@ -32,6 +32,9 @@ import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
   const [userData, setUserData] = useState(DashBoardData);
+  const [authorizedCount, setAuthorizedCount] = useState(0);
+  const [clientCount, setClientCount] = useState(0);
+  const [selfCount, setselfCount] = useState(0);
 
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -89,6 +92,26 @@ export const HomePage = () => {
       .catch((error) => {
         console.log(error);
       });
+  }, []);
+
+
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios.get(`http://localhost:8080/xen/getCandidateAssessmentCount?candidateId=${user.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
+    .then(response => {
+       setAuthorizedCount(response.data.authorizedCount);
+       setClientCount(response.data.clientCount);
+       setselfCount(response.data.selfCount);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }, []);
 
   return (
@@ -332,7 +355,7 @@ export const HomePage = () => {
                       <div className="w-1/3">
                         <Gauge
                           height={100}
-                          value={userData?.preferenes ? 100 : 0}
+                          value={userData?.preferences ? 100 : 0}
                           startAngle={-110}
                           endAngle={110}
                           sx={{
@@ -351,7 +374,7 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.preferenes ? "#58A20F" : "#101828",
+                            color: userData?.preferences ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -402,7 +425,7 @@ export const HomePage = () => {
                       onClick={() =>
                         navigate("/digitalTalentProfile/preferenceform")
                       }>
-                      {userData?.preferenes ? "Edit" : "Not taken"}
+                      {userData?.preferences ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
                 </Card>
@@ -608,7 +631,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        {userData?.authorisedClient || "00"}
+                        { authorizedCount }
                       </p>
                       <div className="flex items-center justify-between ">
                         <p
@@ -645,7 +668,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        {userData?.clientAssessment || "00"}
+                        { clientCount }
                       </p>
                       <div className="flex items-center justify-between ">
                         <p
@@ -682,7 +705,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        {userData?.selfAssessment || "00"}
+                        { selfCount }
                       </p>
                       <div className="flex items-center justify-between ">
                         <p
