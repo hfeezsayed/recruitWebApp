@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
-  Checkbox,
+  Radio,
   InputAdornment,
   Pagination,
   TextField,
@@ -20,7 +20,7 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { jobTemplateData } from "../../../dummy/Data";
+import { JobTemplateListViewData, jobTemplateData } from "../../../dummy/Data";
 import { PreferencePopup } from "./preferencePopup";
 
 export const PreferenceList = () => {
@@ -29,7 +29,7 @@ export const PreferenceList = () => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState();
-  const [viewData, setViewData] = useState();
+  const [viewData, setViewData] = useState(JobTemplateListViewData);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleClose = () => {
@@ -83,6 +83,33 @@ export const PreferenceList = () => {
       });
   }, []);
 
+  const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios
+      .post(
+        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
+          user.userId +
+          "&jobId=" +
+          jobId,
+        {
+          selected,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((data) => {
+        console.log(data.data);
+        localStorage.setItem("jobId", data.data.jobId);
+        //navigate("/templates/workValueTemplate", { state : { "job" : true }})
+      })
+      .catch((e) => console.log(e));
+    navigate("/job/createJob");
+  };
+
   return (
     <div>
       <div className="flex">
@@ -92,13 +119,13 @@ export const PreferenceList = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Preference Templates from the existing options
+                Choose Job Preference Templates
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please choose a job preference template from the available
                 options.
               </p>
-              <div className="py-5 flex justify-between items-center">
+              <div className="py-5">
                 <TextField
                   size="small"
                   value={search}
@@ -113,16 +140,6 @@ export const PreferenceList = () => {
                     ),
                   }}
                 />
-                <Button
-                  variant="text"
-                  style={{
-                    color: "#008080",
-                    backgroundColor: "#EAF4F5",
-                    textTransform: "none",
-                  }}
-                  onClick={() => navigate("/job/preferenceCreate")}>
-                  Create New Template
-                </Button>
               </div>
               <Box sx={{ width: "100%" }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
@@ -150,7 +167,7 @@ export const PreferenceList = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Actions
+                            Result
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -159,17 +176,15 @@ export const PreferenceList = () => {
                           return (
                             <TableRow key={index}>
                               <TableCell padding="checkbox">
-                                <Checkbox
-                                  color="primary"
+                                <Radio
                                   checked={selected?.id === row?.id}
+                                  value={selected?.id === row?.id}
+                                  onClick={() => setSelected(row)}
                                   sx={{
                                     color: "#D0D5DD",
-                                    "&.Mui-checked": {
+                                    " &.Mui-checked": {
                                       color: "#66B2B2",
                                     },
-                                  }}
-                                  onClick={(event) => {
-                                    setSelected(row);
                                   }}
                                 />
                               </TableCell>
@@ -184,30 +199,16 @@ export const PreferenceList = () => {
                                 padding="none"
                                 align="center"
                                 sx={{ color: "#475467" }}>
-                                {/* <Button
-                                  size="small"
-                                  variant="text"
-                                  style={{
-                                    color: "#5E8EBD",
-                                    textTransform: "none",
-                                  }}
-                                  onClick={() =>
-                                    navigate("/job/preferenceEdit", {
-                                      state: row,
-                                    })
-                                  }>
-                                  Edit
-                                </Button> */}
                                 <Button
                                   size="small"
                                   variant="text"
                                   style={{
-                                    color: "#5E8EBD",
+                                    color: "#28A745",
                                     textTransform: "none",
                                   }}
                                   onClick={() => {
                                     setShowPopup(true);
-                                    setViewData(row);
+                                    // setViewData(row);
                                   }}>
                                   View
                                 </Button>
@@ -234,18 +235,14 @@ export const PreferenceList = () => {
                   />
                 </div>
               </Box>
-              {selected && (
-                <div className="py-8 gap-8 flex justify-end">
-                  <Button
-                    onClick={() => {
-                      navigate("/job/preferenceEdit", { state: selected });
-                    }}
-                    variant="contained"
-                    style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                    CONFIRM
-                  </Button>
-                </div>
-              )}
+              <div className="py-8 gap-8 flex justify-end">
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  Choose Template
+                </Button>
+              </div>
             </div>
             <PreferencePopup
               open={showPopup}

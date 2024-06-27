@@ -126,7 +126,7 @@ export const CreateJob = () => {
     if (jobData?.preference === true) {
       navigate("/job/preferenceEdit", { state: { jobData: jobData } });
     } else {
-      navigate("/job/preferenceList");
+      navigate("/job/preferenceCreate");
     }
   };
 
@@ -134,7 +134,7 @@ export const CreateJob = () => {
     if (jobData?.team === true) {
       navigate("/job/teamEdit", { state: { jobData: jobData } });
     } else {
-      navigate("/job/teamList");
+      navigate("/job/teamCreate");
     }
   };
 
@@ -142,7 +142,7 @@ export const CreateJob = () => {
     if (jobData?.icp === true) {
       navigate("/job/icpEdit", { state: { jobData: jobData } });
     } else {
-      navigate("/job/icpList");
+      navigate("/job/icpTemplate");
     }
   };
 

@@ -67,6 +67,7 @@ import { SelectAssessment } from "./components/pages/client/assessments/selectAs
 import { JobTemplateList } from "./components/pages/client/jobs/jobTemplateList";
 import { AssignCandidates } from "./components/pages/client/jobs/assignCandidates";
 import { JobWorkValueTemplate } from "./components/pages/client/jobs/workValueTemplate";
+import { JobIcpTemplate } from "./components/pages/client/jobs/icpTemplate";
 
 export const Routes = () => {
   return (
@@ -140,6 +141,7 @@ export const Routes = () => {
         <Route path="job/preferenceCreate" element={<PreferenceCreate />} />
         <Route path="job/preferenceEdit" element={<PreferenceEdit />} />
         <Route path="job/icpList" element={<IcpList />} />
+        <Route path="job/icpTemplate" element={<JobIcpTemplate />} />
         <Route path="job/icpCreate" element={<IcpCreate />} />
         <Route path="job/icpEdit" element={<IcpEdit />} />
         <Route path="job/icpResult" element={<IcpResult />} />
