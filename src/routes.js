@@ -64,6 +64,8 @@ import { ValuesResult } from "./components/pages/client/jobs/valueResult";
 import { IcpEdit } from "./components/pages/client/jobs/icpEdit";
 import { AllAssessmentBatches } from "./components/pages/client/assessments/allAssessmentBatches";
 import { SelectAssessment } from "./components/pages/client/assessments/selectAssessment";
+import { JobTemplateList } from "./components/pages/client/jobs/jobTemplateList";
+import { AssignCandidates } from "./components/pages/client/jobs/assignCandidates";
 
 export const Routes = () => {
   return (
@@ -113,10 +115,12 @@ export const Routes = () => {
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
         <Route path="job/allJobs" element={<AllJobs />} />
+        <Route path="job/assignCandidates" element={<AssignCandidates />} />
         <Route path="job/createdJobs" element={<CreatedJobs />} />
         <Route path="job/jobsDetails" element={<JobsDetails />} />
         <Route path="job/createJob" element={<CreateJob />} />
         <Route path="job/jobDetailList" element={<JobDetail />} />
+        <Route path="job/jobTemplateList" element={<JobTemplateList />} />
         <Route path="job/jobCandidates" element={<JobCandidates />} />
         <Route path="job/jobDetailCreate" element={<JobDetailCreate />} />
         <Route path="job/jobDetailEdit" element={<JobDetailEdit />} />
