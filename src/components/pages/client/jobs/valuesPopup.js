@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { workValueEditData } from "../../../dummy/Data";
 
 export const ValuesPopup = ({ data, setClose, open }) => {
   return (
@@ -21,7 +22,7 @@ export const ValuesPopup = ({ data, setClose, open }) => {
       open={open}
       onClose={setClose}
       PaperProps={{ sx: { minWidth: "55%" } }}>
-      <DialogTitle>Value Details</DialogTitle>
+      <DialogTitle>{data?.templateName}</DialogTitle>
       <IconButton
         onClick={setClose}
         style={{ position: "absolute", top: 10, right: 10 }}>
@@ -29,6 +30,20 @@ export const ValuesPopup = ({ data, setClose, open }) => {
       </IconButton>
       <Divider />
       <DialogContent>
+        <div className="grid grid-flow-row py-1">
+          <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+            Work Value Template Tags
+          </p>
+          <p style={{ color: "#475467", fontSize: 16 }}>{data?.tag}</p>
+        </div>
+        <div className="grid grid-flow-row  py-1">
+          <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+            Work Value Template Description
+          </p>
+          <p style={{ color: "#475467", fontSize: 16 }}>
+            {data?.templateDescription}
+          </p>
+        </div>
         <Box sx={{ width: "100%" }}>
           <TableContainer sx={{ minWidth: 500 }}>
             <Table>
@@ -56,7 +71,7 @@ export const ValuesPopup = ({ data, setClose, open }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((row, index) => {
+                {data?.data?.map((row, index) => {
                   return (
                     <TableRow key={index}>
                       <TableCell

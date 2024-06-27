@@ -7,7 +7,6 @@ import {
   IconButton,
 } from "@mui/material";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { JobTemplateListViewData } from "../../../dummy/Data";
 
 export const JobTemplateViewPopup = ({ data, setClose, open }) => {
   return (

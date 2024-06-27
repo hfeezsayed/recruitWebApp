@@ -66,6 +66,8 @@ import { AllAssessmentBatches } from "./components/pages/client/assessments/allA
 import { SelectAssessment } from "./components/pages/client/assessments/selectAssessment";
 import { JobTemplateList } from "./components/pages/client/jobs/jobTemplateList";
 import { AssignCandidates } from "./components/pages/client/jobs/assignCandidates";
+import { JobWorkValueTemplate } from "./components/pages/client/jobs/workValueTemplate";
+import { JobIcpTemplate } from "./components/pages/client/jobs/icpTemplate";
 
 export const Routes = () => {
   return (
@@ -125,6 +127,10 @@ export const Routes = () => {
         <Route path="job/jobDetailCreate" element={<JobDetailCreate />} />
         <Route path="job/jobDetailEdit" element={<JobDetailEdit />} />
         <Route path="job/valuesList" element={<ValuesList />} />
+        <Route
+          path="job/workValueTemplate"
+          element={<JobWorkValueTemplate />}
+        />
         <Route path="job/valuesCreate" element={<ValuesCreate />} />
         <Route path="job/valuesEdit" element={<ValuesEdit />} />
         <Route path="job/valuesResult" element={<ValuesResult />} />
@@ -135,6 +141,7 @@ export const Routes = () => {
         <Route path="job/preferenceCreate" element={<PreferenceCreate />} />
         <Route path="job/preferenceEdit" element={<PreferenceEdit />} />
         <Route path="job/icpList" element={<IcpList />} />
+        <Route path="job/icpTemplate" element={<JobIcpTemplate />} />
         <Route path="job/icpCreate" element={<IcpCreate />} />
         <Route path="job/icpEdit" element={<IcpEdit />} />
         <Route path="job/icpResult" element={<IcpResult />} />

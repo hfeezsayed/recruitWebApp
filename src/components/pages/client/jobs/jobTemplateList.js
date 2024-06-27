@@ -137,7 +137,10 @@ export const JobTemplateList = () => {
                     <Table stickyHeader>
                       <TableHead>
                         <TableRow>
-                          <TableCell />
+                          <TableCell
+                            padding="none"
+                            sx={{ bgcolor: "#F8F9FA" }}
+                          />
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>

@@ -227,8 +227,8 @@ export const JobDetailCreate = () => {
                     <TextField
                       size="small"
                       disablePortal
-                      value={templateName}
-                      onChange={(e) => setTemplateName(e.target.value)}
+                      value={templateTag}
+                      onChange={(e) => setTemplateTag(e.target.value)}
                       placeholder="type"
                     />
                   </div>
