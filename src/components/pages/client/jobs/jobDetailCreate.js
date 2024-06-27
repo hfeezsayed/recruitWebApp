@@ -29,7 +29,11 @@ export const JobDetailCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axios
-      .post("http://localhost:8080/xen/saveJobTemplateForJob?clientId="+user.userId +"&jobId="+jobId, 
+      .post(
+        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
+          user.userId +
+          "&jobId=" +
+          jobId,
         { title, location, salary, description },
         {
           headers: {
@@ -37,14 +41,14 @@ export const JobDetailCreate = () => {
           },
         }
       )
-      .then((data) => { 
+      .then((data) => {
         console.log(data.data);
         localStorage.setItem("jobId", data.data.jobId);
         //navigate("/templates/workValueTemplate", { state : { "job" : true }})
       })
       .catch((e) => console.log(e));
+    navigate("/job/createJob");
   };
-
 
   return (
     <div>

@@ -15,7 +15,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
-import axios from 'axios';
+import axios from "axios";
 
 export const ValuesCreate = () => {
   const navigate = useNavigate();
@@ -31,21 +31,24 @@ export const ValuesCreate = () => {
   const handleSubmit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios.post(`http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
-      ratingList,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-    )
-    .then(response => {
+    navigate("/job/createJob");
+    axios
+      .post(
+        `http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        ratingList,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
         console.log(response.data);
-    })
-    .catch(error => {
+      })
+      .catch((error) => {
         console.log(error);
-    })
-  }
+      });
+  };
 
   return (
     <div>

@@ -38,8 +38,6 @@ export const IcpResult = () => {
 
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
-  
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
@@ -75,10 +73,7 @@ export const IcpResult = () => {
           setSpectrum4(location.state.pillars[3])
           setSpectrum5(location.state.pillars[4])
         }
-
   }, [location.state]);
-
-
 
   return (
     <div>

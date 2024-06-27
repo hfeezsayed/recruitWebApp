@@ -31,45 +31,47 @@ export const JobDetailEdit = () => {
     const jobId = localStorage.getItem("jobId");
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-        .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
-          { id, title, locations, salary, description },
+      .post(
+        `http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        { id, title, locations, salary, description },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((e) => console.log(e));
+    navigate("/job/createJob");
+  };
+
+  useEffect(() => {
+    console.log(location.state);
+    const user = JSON.parse(localStorage.getItem("token"));
+    if (location.state?.jobData) {
+      axios
+        .get(
+          `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
             },
           }
         )
-        .then((data) =>{
-          console.log(data.data);
-         // navigate("/templates/workValueTemplate")
+        .then((data) => {
+          console.log(data);
+          setId(data.data.id);
+          setTitle(data.data?.title);
+          setLocation(data.data?.location);
+          setSalary(data.data?.salary);
+          setDescription(data.data?.description);
         })
-        .catch((e) => console.log(e));
-  };
-
-  useEffect(() => {
-    console.log(location.state);
-    const user = JSON.parse(localStorage.getItem("token"));
-        axios
-            .get(
-              `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
-            )
-            .then((data) => {
-              console.log(data);
-              setId(data.data.id);
-              setTitle(data.data?.title);
-              setLocation(data.data?.location);
-              setSalary(data.data?.salary);
-              setDescription(data.data?.description);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, [location.state]);
 
   return (

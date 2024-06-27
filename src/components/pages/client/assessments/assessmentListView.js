@@ -14,17 +14,26 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { assignmentBatchesData } from "../../../dummy/Data";
+import NoDataFound from "../../../../assets/images/noData Found.png";
+
 
 export const AssessmentListView = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -41,9 +50,15 @@ export const AssessmentListView = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchList?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getBatchList?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -55,19 +70,78 @@ export const AssessmentListView = () => {
       });
   }, []);
 
+  const checkStatus = (status) => {
+    let color = "#475467";
+
+    if (status === "Send Request") {
+      color = "#FFA500";
+    } else if (status === "Created") {
+      color = "#5FAEDA";
+    } else if (status === "All Completed") {
+      color = "#58A20F";
+    } else if (status === "Some Candidate Completed") {
+      color = "#E05880";
+    } else {
+      color = "#475467";
+    }
+    return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
+  };
+
   return (
     <div>
       <div className="flex">
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
+          {data.length === 0 ?
+          (
+            <div className="p-8 h-full">
+            <div>
+              <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                Choose Team Templates from the existing options
+              </p>
+
+              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                Please choose a team template from the available options.
+              </p>
+            </div>
+            <div className="flex justify-center items-center text-center h-full">
+              <div className="-mt-20">
+                <img src={NoDataFound} alt="No Data Found" />
+                <p
+                  style={{
+                    color: "#101828",
+                    fontSize: 20,
+                    fontWeight: 500,
+                    marginTop: 25,
+                  }}>
+                  No Assessment Batch Created
+                </p>
+                <Button
+                  size="small"
+                  style={{
+                    color: "#008080",
+                    fontSize: 18,
+                    textTransform: "none",
+                  }}
+                  onClick={() => {
+                    navigate("/assessmentsList");
+                  }}>
+                  Add the first assessment batch to initiate the list
+                </Button>
+              </div>
+            </div>
+          </div>
+          ):
+          (
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Templates from the existing options
+                Assignment Batches
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please choose a job template from the available options.
+                Select the assessments that you want to allocate to the
+                candidate.
               </p>
               <div className="py-5 flex justify-between items-center">
                 <TextField
@@ -91,7 +165,7 @@ export const AssessmentListView = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/assessmentBatchDetails")}>
+                  onClick={() => navigate("/selectAssesment")}>
                   Create New Batch
                 </Button>
               </div>
@@ -117,7 +191,16 @@ export const AssessmentListView = () => {
                           <TableCell
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Actions
+                            Candidate Details
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Edit
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Status
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -130,12 +213,21 @@ export const AssessmentListView = () => {
                                 {row.batchName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.date}
+                                {row.createdBy}
                               </TableCell>
-                              <TableCell
-                                padding="none"
-                                align="center"
-                                sx={{ color: "#475467" }}>
+                              <TableCell padding="none" align="center">
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#28A745",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() => {}}>
+                                  View
+                                </Button>
+                              </TableCell>
+                              <TableCell padding="none" align="center">
                                 <Button
                                   size="small"
                                   variant="text"
@@ -143,14 +235,11 @@ export const AssessmentListView = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() =>
-                                    navigate("/assessmentResult", {
-                                      state: row,
-                                    })
-                                  }>
-                                  details
+                                  onClick={() => {}}>
+                                  Edit
                                 </Button>
                               </TableCell>
+                              <TableCell>{checkStatus(row?.status)}</TableCell>
                             </TableRow>
                           );
                         })}
@@ -175,6 +264,7 @@ export const AssessmentListView = () => {
               </Box>
             </div>
           </div>
+          )}
         </div>
       </div>
       <Footer />

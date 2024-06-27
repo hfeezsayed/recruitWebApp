@@ -21,15 +21,17 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { assignCandidateData } from "../../../dummy/Data";
-import { useLocation } from "react-router-dom";
+import { AssignCandidatePopUp } from "./assignCandidatePopUp";
 
 export const AssignCandidate = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [actions, setActions] = useState("");
   const options = ["Assign Candidate", "Add Candidate"];
 
@@ -48,13 +50,20 @@ export const AssignCandidate = () => {
 
   const { batchId } = useLocation().state || {};
 
+  const [viewData, setViewData] = useState();
+  const [showPopup, setShowPopup] = useState(false);
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
+  const handleClose = () => {
+    setShowPopup(false);
+    setViewData(null);
+  };
+
+  const handleClick = (event, row) => {
+    const selectedIndex = selected.indexOf(row);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, row);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -68,11 +77,11 @@ export const AssignCandidate = () => {
     setSelected(newSelected);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const isSelected = (row) => selected.indexOf(row) !== -1;
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = data.data.map((n) => n.id);
+      const newSelected = data?.data || [];
       setSelected(newSelected);
       return;
     }
@@ -82,9 +91,15 @@ export const AssignCandidate = () => {
   // pagination
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -105,9 +120,15 @@ export const AssignCandidate = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data);
@@ -132,30 +153,45 @@ export const AssignCandidate = () => {
   });
 
   const handleAddAsignment = async () => {
-    navigation("/assesmentResult");
+    navigate("/assesmentResult");
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post("http://localhost:8080/xen/addCandidateToBatch?batchId="+batchId, {
-        addCandidateDatabase,
-        candidateName,
-        candidateEmail,
-        candidateNo,
-        candidateLinkedin,
-        candidateResume,
+    const batchName = location?.state?.batchName;
+    const selectedAssignments =  location?.state?.selected;
+    await axios
+      .post(
+        `http://localhost:8080/xen/addCandidateToBatch?clientId=${user.userId}`,
+        {
+          batchName,
+          selectedAssignments,
+          addCandidateDatabase,
+          candidateName,
+          candidateEmail,
+          candidateNo,
+          candidateLinkedin,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        const formData = new FormData();
+        formData.append("file", candidateResume)
+        axios
+          .post(
+            `http://localhost:8080/xen/uploadCandidateResume?candidateId=${response.data.userId}`,
+             formData,
+             {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          .then((response) => {
+            navigate("/assessmentsList")  
+          })
       })
-      .then((data) => console.log(data.data))
-      .catch((e) => console.log(e));
-  };
-
-  const handleAsignCandidates = async () => {
-  //  navigation("/assesmentResult");
-    const user = JSON.parse(localStorage.getItem("token"));
-    const candidates = selected;
-    axios
-      .post("http://localhost:8080/xen/assignCandidatesToBatch?batchId="+batchId+"&clientId="+user.userId, {
-        candidates
-      })
-      .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
 
@@ -167,13 +203,61 @@ export const AssignCandidate = () => {
           <TopNav />
           <div className="p-8">
             <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-              Choose Add or Assign Candidate
+              Create New Assignment Batch
             </p>
             <p style={{ color: "#475467", fontSize: 14 }}>
-              Start the process by selecting a option: Add or assign candidates
+              Select the assessments that you want to allocate to the candidate.
             </p>
+            <div>
+              <div className="py-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Batch Name
+                </p>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Type..."
+                  value={location.state?.batchName}
+                />
+              </div>
+              <Box sx={{ width: "100%" }}>
+                <Paper sx={{ width: "100%", mb: 2 }}>
+                  <TableContainer sx={{ maxHeight: 500 }}>
+                    <Table stickyHeader>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Assessment Name
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {location?.state?.selected?.map((row, index) => {
+                          return (
+                            <TableRow
+                              hover
+                              key={index}
+                              sx={{ cursor: "pointer" }}>
+                              <TableCell
+                                sx={{ color: "#475467", fontSize: 14 }}>
+                                {row?.name}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </Box>
+            </div>
+
             {/* select */}
             <div className="py-5">
+              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+                Add or Assign Candidates to the assignments
+              </p>
               <Select
                 size="small"
                 displayEmpty
@@ -196,7 +280,7 @@ export const AssignCandidate = () => {
 
                   return selected;
                 }}
-                sx={{ minWidth: 250, color: "#101828" }}>
+                sx={{ minWidth: 250, color: "#101828", mt: 1 }}>
                 <MenuItem disabled value="">
                   <span
                     style={{
@@ -211,7 +295,9 @@ export const AssignCandidate = () => {
                   <MenuItem
                     key={name}
                     value={name}
-                    style={{ color: name === actions ? "#66B2B2" : "#54595E" }}>
+                    style={{
+                      color: name === actions ? "#66B2B2" : "#54595E",
+                    }}>
                     <Radio
                       checked={name === actions}
                       sx={{
@@ -229,16 +315,6 @@ export const AssignCandidate = () => {
             <div>
               {actions === "Assign Candidate" && (
                 <div>
-                  <div className="pt-5 pb-3">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 20,
-                        fontWeight: 500,
-                      }}>
-                      Assign Candidates to the assignments
-                    </p>
-                  </div>
                   <Box sx={{ width: "100%" }}>
                     <Paper sx={{ width: "100%", mb: 2 }}>
                       <TableContainer sx={{ maxHeight: 500 }}>
@@ -283,13 +359,11 @@ export const AssignCandidate = () => {
                           </TableHead>
                           <TableBody>
                             {data?.data?.map((row, index) => {
-                              const isItemSelected = isSelected(row.id);
+                              const isItemSelected = isSelected(row);
                               return (
                                 <TableRow
                                   hover
-                                  onClick={(event) =>
-                                    handleClick(event, row.id)
-                                  }
+                                  onClick={(event) => handleClick(event, row)}
                                   role="checkbox"
                                   aria-checked={isItemSelected}
                                   tabIndex={-1}
@@ -362,10 +436,27 @@ export const AssignCandidate = () => {
                   </div>
                   <div className="flex justify-end py-5 gap-5">
                     <Button
-                      onClick={handleAsignCandidates}
+                      onClick={() => {
+                        navigate(-1);
+                      }}
+                      variant="outlined"
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        {
+                          setShowPopup(true);
+                          setViewData({
+                            batchName: location?.state?.batchName,
+                            selectedAssignment: location?.state?.selected,
+                            assignCandidate: selected,
+                          });
+                        }
+                      }}
                       variant="contained"
                       style={{ backgroundColor: "#008080", color: "#ffffff" }}>
-                      Submit
+                      Confirm
                     </Button>
                   </div>
                 </div>
@@ -549,15 +640,30 @@ export const AssignCandidate = () => {
                   </div>
                   <div className="flex justify-end py-5 gap-5">
                     <Button
+                      onClick={() => {
+                        navigate(-1);
+                      }}
+                      variant="outlined"
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      Cancle
+                    </Button>
+                    <Button
                       onClick={handleAddAsignment}
                       variant="contained"
                       style={{ backgroundColor: "#008080", color: "#ffffff" }}>
-                      Submit
+                      Confirm
                     </Button>
                   </div>
                 </div>
               )}
             </div>
+
+            <AssignCandidatePopUp
+              open={showPopup}
+              data={viewData}
+              modelType="save"
+              setClose={handleClose}
+            />
           </div>
         </div>
       </div>

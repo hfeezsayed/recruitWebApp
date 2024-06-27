@@ -145,7 +145,7 @@ export const AssesmentBatchDetails = () => {
     const batchName = name;
     const assessments = selected;
     axios
-      .post("http://localhost:8080/xen/saveClientAssessmentBatch?clientId="+user.userId, {
+      .post(`http://localhost:8080/xen/saveClientAssessmentBatch?clientId=${user.userId}`, {
         batchName,
         startDate,
         endDate,
@@ -153,7 +153,13 @@ export const AssesmentBatchDetails = () => {
         job,
         assessments,
         allocateAssessments,
-      })
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
       .then(data => {
         console.log(data.data)
        // navigation("/assignCandidate", { state: { batchId:  data.data.batchId} });
