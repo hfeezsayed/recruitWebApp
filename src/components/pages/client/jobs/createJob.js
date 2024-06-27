@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import {
   Button,
   Card,
@@ -13,6 +13,15 @@ import {
   IconButton,
   styled,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { IoPeopleOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
@@ -20,10 +29,9 @@ import { FaArrowRight } from "react-icons/fa6";
 import { BsFillCameraFill } from "react-icons/bs";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { createJobData } from "../../../dummy/Data";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
-import { useEffect } from "react";
-import axios from "axios";
+import { candidateDetailsData, createJobData } from "../../../dummy/Data";
+import NoDataFound from "../../../../assets/images/noData Found.png";
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
@@ -33,6 +41,10 @@ export const CreateJob = () => {
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
+  const [showRecomandation, setShowRecomandation] = useState(false);
+  const [candidateDetails, setCandidateDetails] = useState(
+    location.state?.selected || candidateDetailsData
+  );
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -71,10 +83,9 @@ export const CreateJob = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
-    if(location.state?.new){
+    if (location.state?.new) {
       localStorage.setItem("jobId", 0);
-    }
-    else{
+    } else {
       axios
         .get(
           `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=${location.state}`,
@@ -134,6 +145,25 @@ export const CreateJob = () => {
       navigate("/job/icpList");
     }
   };
+
+  const checkStatus = (status) => {
+    let color = "";
+
+    if (status === "Approved") {
+      color = "#58A20F";
+    } else if (status === "In Progress") {
+      color = "#5FAEDA";
+    } else if (status === "Initiated") {
+      color = "#FFA500";
+    }
+
+    return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
+  };
+
+  const topCandidates = candidateDetails
+    .filter((candidate) => candidate?.score)
+    .sort((a, b) => b?.score - a?.score)
+    .slice(0, 3);
 
   return (
     <div>
@@ -202,14 +232,16 @@ export const CreateJob = () => {
                   </Box>
                 </div>
                 <div>
-                <Button
+                  <Button
                     variant="text"
                     style={{
                       color: "#008080",
                       backgroundColor: "#EAF4F5",
                       textTransform: "none",
                     }}
-                    onClick={() => navigate("/job/jobCandidates", { state : location.state})}>
+                    onClick={() =>
+                      navigate("/job/jobCandidates", { state: location.state })
+                    }>
                     Show Candidates
                   </Button>
                 </div>
@@ -627,6 +659,305 @@ export const CreateJob = () => {
                 </Card>
               </div>
             </div>
+            {userData?.jobDetail &&
+              userData?.workValues &&
+              userData?.team &&
+              userData?.preference &&
+              userData?.icp && (
+                <div>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 22,
+                          fontWeight: 700,
+                        }}>
+                        Candidate Details
+                      </p>
+
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 400,
+                        }}>
+                        Below are the details for the candidates
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      style={{
+                        color: "#008080",
+                        fontSize: 14,
+                        textTransform: "none",
+                      }}
+                      onClick={() => {
+                        navigate("/job/assignCandidates");
+                      }}>
+                      Add or Assign Candidates
+                    </Button>
+                  </div>
+                  {candidateDetails?.length < 1 ? (
+                    <div className="flex justify-center items-center text-center h-full">
+                      <div>
+                        <img src={NoDataFound} alt="No Data Found" />
+                        <p
+                          style={{
+                            color: "#101828",
+                            fontSize: 20,
+                            fontWeight: 500,
+                            marginTop: 25,
+                          }}>
+                          No Candidate Details
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="py-5">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          style={{
+                            color: "#008080",
+                            fontSize: 14,
+                            textTransform: "none",
+                            backgroundColor: "#F8F9FA",
+                            borderColor: "#D0D5DD50",
+                          }}
+                          startIcon={<IoPeopleOutline />}
+                          onClick={() => {
+                            setShowRecomandation(true);
+                          }}>
+                          Run Recommendation
+                        </Button>
+                      </div>
+                      <Box sx={{ width: "100%" }}>
+                        <Paper sx={{ width: "100%", mb: 2 }}>
+                          <TableContainer sx={{ maxHeight: 500 }}>
+                            <Table stickyHeader>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    Candidate Name
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    Request a date
+                                  </TableCell>
+                                  <TableCell
+                                    align="center"
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    DTP Status
+                                  </TableCell>
+                                  <TableCell
+                                    align="center"
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    Notify
+                                  </TableCell>
+                                  <TableCell
+                                    align="center"
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    Alignment Score
+                                  </TableCell>
+                                  <TableCell
+                                    align="center"
+                                    sx={{
+                                      bgcolor: "#F8F9FA",
+                                      color: "#101828",
+                                      border: 1,
+                                      borderColor: "#D0D5DD50",
+                                    }}>
+                                    Latest Alignment Date
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {candidateDetails?.map((row, index) => {
+                                  return (
+                                    <TableRow key={index}>
+                                      <TableCell
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        {row.name}
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        {row.requestDate}
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        {checkStatus(row.status)}
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        padding="none"
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        <Button
+                                          size="small"
+                                          disabled={row?.status === "Approved"}
+                                          style={{
+                                            color:
+                                              row?.status === "Approved"
+                                                ? "#848382"
+                                                : "#66B2B2",
+                                            fontSize: 14,
+                                          }}>
+                                          Notify
+                                        </Button>
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        {row.score && row.score + "%"}
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          color: "#475467",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        {row.alignmentDate}
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </Paper>
+                      </Box>
+                      {showRecomandation && (
+                        <div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontSize: 22,
+                                fontWeight: 700,
+                              }}>
+                              Recommended Candidates
+                            </p>
+
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 14,
+                                fontWeight: 400,
+                              }}>
+                              Top 3 candidates
+                            </p>
+                          </div>
+                          <Box sx={{ width: "60%" }}>
+                            <Paper sx={{ width: "100%", my: 2 }}>
+                              <TableContainer>
+                                <Table stickyHeader size="small">
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Candidate Name
+                                      </TableCell>
+
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Alignment Score
+                                      </TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {topCandidates?.map((row, index) => {
+                                      return (
+                                        <TableRow key={index}>
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.name}
+                                          </TableCell>
+
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.score}%
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Paper>
+                          </Box>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
           </div>
         </div>
       </div>
