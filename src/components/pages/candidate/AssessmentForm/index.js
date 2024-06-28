@@ -26,6 +26,7 @@ export const AssesmentForm = () => {
   const [AllAssessmentList, setAllAssessmentList] = useState(AllAssessmentData);
   const [selfAssessmentList, setSelfAssessmentList] = useState(ClientAssessmentData);
   const [clientAssessmentList, setClientAssessmentList] = useState(ClientAssessmentData);
+  const [viewResults , setViewResult] = useState(-1);
 
   const navigate = useNavigate();
 
@@ -58,14 +59,9 @@ export const AssesmentForm = () => {
   }, []);
 
 
-  const handleShowResult = (name, versionNo) => {
-    if(name === "Values"){
-      navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: versionNo } })
-    }
-    else{
-      navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: versionNo } }) 
-    }
-
+  const handleShowResult = (index) => {
+      if(viewResults === -1) setViewResult(index);
+      if(viewResults != -1) setViewResult(-1);
   }
 
   const handleChange = (event, newValue) => {
@@ -287,14 +283,14 @@ export const AssesmentForm = () => {
                       </p>
                     ) : (
                       <p
-                        onClick={() => handleShowResult(row.assessmentName, row.versionNo)}
+                        onClick={() => handleShowResult(index)}
                         style={{
                           color: "#5FAEDA",
                           fontSize: 14,
                           fontWeight: 500,
                           cursor: 'pointer' 
                         }}>
-                        View Results
+                        {viewResults !== index ? "View Result" : "Hide Result"}
                       </p>
                     )}
                   </TableCell>
@@ -308,7 +304,7 @@ export const AssesmentForm = () => {
                           fontSize: 14,
                           fontWeight: 500,
                         }}>
-                        Show in Digital Talent Profile
+                        { viewResults === index ? (row.result) : ("")}
                       </p>
                     )}
                   </TableCell>
@@ -395,37 +391,30 @@ export const AssesmentForm = () => {
                   <TableCell>
                     {row.status === "Not Taken" ? (
                       <p
+                        onClick={() => navigate("/comprehensiveAssessment", {state : {batchName : row.assessmentName, batchId : row.id}})}
                         style={{
                           color: "#F4BC06",
                           fontSize: 14,
                           fontWeight: 500,
+                          cursor: 'pointer'
                         }}>
                         Take Assessment
                       </p>
                     ) : (
                       <p
+                        onClick={() => handleShowResult(index)}
                         style={{
                           color: "#5FAEDA",
                           fontSize: 14,
                           fontWeight: 500,
+                          cursor: 'pointer'
                         }}>
-                        View Score
+                        {viewResults !== index ? "View Score" : "Hide Score"}
                       </p>
                     )}
                   </TableCell>
                   <TableCell>
-                    {row.status === "Not Taken" ? (
-                      <p>{""}</p>
-                    ) : (
-                      <p
-                        style={{
-                          color: "#66B2B2",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}>
-                        Show in Digital Talent Profile
-                      </p>
-                    )}
+                    { viewResults == index ? row.result : ""}
                   </TableCell>
                 </TableRow>
               ))}
@@ -474,6 +463,7 @@ export const AssesmentForm = () => {
                   Filter
                 </Button>
                 <Button
+                  onClick={() => navigate("/createAssessment")}
                   style={{
                     color: "#008080",
                     background: "#EAF4F5",

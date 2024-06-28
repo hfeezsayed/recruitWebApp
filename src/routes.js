@@ -68,6 +68,8 @@ import { JobTemplateList } from "./components/pages/client/jobs/jobTemplateList"
 import { AssignCandidates } from "./components/pages/client/jobs/assignCandidates";
 import { JobWorkValueTemplate } from "./components/pages/client/jobs/workValueTemplate";
 import { JobIcpTemplate } from "./components/pages/client/jobs/icpTemplate";
+import { CreateAssessment } from "./components/pages/candidate/AssessmentForm/createAssessment";
+import { CandidateAssessmentQuestionnaire } from "./components/pages/candidate/AssessmentForm/CandidateAssessmentQuestionnaire";
 
 export const Routes = () => {
   return (
@@ -111,6 +113,8 @@ export const Routes = () => {
           path="digitalTalentProfile/talentanalysisresult"
           element={<TalentAnalysisResult />}
         />
+        <Route path="comprehensiveAssessment" element={<CandidateAssessmentQuestionnaire/>}/>
+        <Route path="createAssessment" element={<CreateAssessment/>}/>
         <Route path="assesmentform" element={<AssesmentForm />} />
         <Route path="authorisedclients" element={<AuthorisedClient />} />
         <Route path="*" element={<Error404 />} />
