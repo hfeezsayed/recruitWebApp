@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ import { Footer } from "../../../widgets/footer";
 
 export const PreferenceCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   // industry
   const [experianceInIndustry, setExperianceInindustry] = useState();
   const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
@@ -252,6 +253,10 @@ export const PreferenceCreate = () => {
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
+
+  useEffect(() => {
+    console.log(location.state?.selected);
+  }, [location.state]);
 
   return (
     <div>

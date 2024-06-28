@@ -74,33 +74,6 @@ export const JobTemplateList = () => {
       });
   }, []);
 
-  const handleSubmit = async () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    const jobId = localStorage.getItem("jobId");
-    axios
-      .post(
-        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
-          user.userId +
-          "&jobId=" +
-          jobId,
-        {
-          selected,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
-      )
-      .then((data) => {
-        console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
-        //navigate("/templates/workValueTemplate", { state : { "job" : true }})
-      })
-      .catch((e) => console.log(e));
-    navigate("/job/createJob");
-  };
-
   return (
     <div>
       <div className="flex">
@@ -239,7 +212,11 @@ export const JobTemplateList = () => {
                 back
               </Button>
               <Button
-                onClick={handleSubmit}
+                onClick={() => {
+                  navigate("/job/jobDetailCreate", {
+                    state: { selected: selected },
+                  });
+                }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
                 Choose Template

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Dialog,
@@ -17,6 +17,7 @@ import { Footer } from "../../../widgets/footer";
 
 export const TeamCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [teamSize, setTeamSize] = useState();
   const [teamLocation, setTeamLocation] = useState();
   const [crossFunctionality, setCrossFunctionality] = useState();
@@ -79,6 +80,10 @@ export const TeamCreate = () => {
     setTemplateTag("");
     setTemplateDescription("");
   };
+
+  useEffect(() => {
+    console.log(location.state?.selected);
+  }, [location.state]);
 
   return (
     <div>
