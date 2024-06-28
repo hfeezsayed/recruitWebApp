@@ -237,7 +237,11 @@ export const PreferenceList = () => {
               </Box>
               <div className="py-8 gap-8 flex justify-end">
                 <Button
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    navigate("/job/preferenceCreate", {
+                      state: { selected: selected },
+                    });
+                  }}
                   variant="contained"
                   style={{ color: "#ffffff", backgroundColor: "#008080" }}>
                   Choose Template

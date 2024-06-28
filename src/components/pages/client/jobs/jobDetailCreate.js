@@ -80,6 +80,10 @@ export const JobDetailCreate = () => {
     setTemplateDescription("");
   };
 
+  useEffect(() => {
+    console.log(locations.state?.selected);
+  }, [locations.state]);
+
   return (
     <div>
       <div className="flex">
