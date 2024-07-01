@@ -82,13 +82,89 @@ export const CreateJob = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
+    if(location.state?.new) {
+
+    }
+    else{
+      let jobId = 0;
+      if(location.state){
+        localStorage.setItem("jobId", location.state);
+        jobId = location.state;
+      }
+      else{
+        jobId = localStorage.getItem("jobId");
+      }
+      axios
+        .get(
+          `http://localhost:8080/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
+          {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+        )
+        .then((response) => {
+          console.log(response);
+          setCandidateDetails(response.data);
+         // setPage(data?.pageNo || 1);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, []);
+
+
+  const handleDtpAccess = (row) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    if(row.dtpStatus === "Request Sent"){
+        console.log("request already sent");
+    }
+    else{
+
+        axios
+        .get(
+            `http://localhost:8080/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+        )
+        .then((response) => {
+            console.log(response);
+            setCandidateDetails((prevItems) =>
+                prevItems.map((item) =>
+                item.id === row.id ? { ...item, notify: "Request Sent" } : item
+                )
+            );
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    }
+  }
+
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
     if (location.state?.new) {
       localStorage.setItem("jobId", 0);
     } else {
+      let jobId = 0;
+      if(location.state){
+        localStorage.setItem("jobId", location.state);
+        jobId = location.state;
+      }
+      else{
+        jobId = localStorage.getItem("jobId");
+      }
       axios
         .get(
-          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=${location.state}`,
+          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
@@ -140,7 +216,7 @@ export const CreateJob = () => {
 
   const handleIcp = (jobData) => {
     if (jobData?.icp === true) {
-      navigate("/job/icpEdit", { state: { jobData: jobData } });
+      navigate("/job/icpResult", { state: { jobData: jobData } });
     } else {
       navigate("/job/icpTemplate");
     }
@@ -160,10 +236,10 @@ export const CreateJob = () => {
     return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
   };
 
-  const topCandidates = candidateDetails
-    .filter((candidate) => candidate?.score)
-    .sort((a, b) => b?.score - a?.score)
-    .slice(0, 3);
+   const topCandidates = candidateDetails;
+  //   .filter((candidate) => candidate?.matchingScore)
+  //   .sort((a, b) => b?.matchingScore - a?.matchingScore)
+  //   .slice(0, 3);
 
   return (
     <div>
@@ -809,7 +885,7 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        {row.name}
+                                        {row.username}
                                       </TableCell>
                                       <TableCell
                                         sx={{
@@ -817,7 +893,7 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        {row.requestDate}
+                                        {row.requestedData}
                                       </TableCell>
                                       <TableCell
                                         align="center"
@@ -826,7 +902,7 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        {checkStatus(row.status)}
+                                        {checkStatus(row.dtpStatus)}
                                       </TableCell>
                                       <TableCell
                                         align="center"
@@ -836,18 +912,34 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        <Button
-                                          size="small"
-                                          disabled={row?.status === "Approved"}
-                                          style={{
-                                            color:
-                                              row?.status === "Approved"
-                                                ? "#848382"
-                                                : "#66B2B2",
-                                            fontSize: 14,
-                                          }}>
-                                          Notify
-                                        </Button>
+                                        {row.dtpAccess ? 
+                                            (
+                                                <Button
+                                                    size="small"
+                                                    variant="text"
+                                                    style={{
+                                                        color: "#5E8EBD",
+                                                        textTransform: "none",
+                                                    }}
+                                                    onClick={() => {
+                                                        navigate("/digitalTalentProfileResult", {state : { candidateId : row.candidateId, dtpReportId : row.dtpReportId}});
+                                                    }}>
+                                                    {row.notify}
+                                                </Button>
+                                            )
+                                            :
+                                            (
+                                                <Button
+                                                    size="small"
+                                                    variant="text"
+                                                    style={{
+                                                    color: "#5E8EBD",
+                                                    textTransform: "none",
+                                                    }}
+                                                    onClick={() => handleDtpAccess(row)}>
+                                                    {row.notify}
+                                                </Button> 
+                                            )}
                                       </TableCell>
                                       <TableCell
                                         align="center"
@@ -856,7 +948,7 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        {row.score && row.score + "%"}
+                                        {row.matchingScore}
                                       </TableCell>
                                       <TableCell
                                         align="center"

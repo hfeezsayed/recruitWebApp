@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  DialogActions,
+} from "@mui/material";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 
 export const TeamTemplateCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [teamSize, setTeamSize] = useState();
   const [teamLocation, setTeamLocation] = useState();
   const [crossFunctionality, setCrossFunctionality] = useState();
@@ -15,6 +25,11 @@ export const TeamTemplateCreate = () => {
 
   const [teamWorkingDes, setTeamWorkingDes] = useState("");
   const [describeContributions, setDescribeContributions] = useState("");
+  const [templateName, setTemplateName] = useState("");
+  const [templateTag, setTemplateTag] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -33,23 +48,39 @@ export const TeamTemplateCreate = () => {
     const project = teamWorkingDes;
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveTeamTemplate?clientId=${user.userId}`, {
-        teamSize,
-        teamLocation,
-        crossFunctionality,
-        domainRole,
-        project,
-        contributions,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+      .post(
+        `http://localhost:8080/xen/saveTeamTemplate?clientId=${user.userId}`,
+        {
+          teamSize,
+          teamLocation,
+          crossFunctionality,
+          domainRole,
+          project,
+          contributions,
+          templateName,
+          templateTag,
+          templateDescription,
         },
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+         console.log(data.data)
+         navigate("/templates/teamTemplate");  
+      })
       .catch((e) => console.log(e));
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setTemplateName("");
+    setTemplateTag("");
+    setTemplateDescription("");
   };
 
   return (
@@ -59,14 +90,16 @@ export const TeamTemplateCreate = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Pre- Fill Job Details: Template 1
-              </p>
-              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and create the information as needed, or use the
-                same template.
-              </p>
+            <div className="flex justify-between">
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                  Team Template Details
+                </p>
+                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                  Please fill in the information as needed, or use the existing
+                  template.
+                </p>
+              </div>
             </div>
             <div className="grid-cols-2 grid gap-8 mt-8">
               <div className="grid grid-flow-row gap-2">
@@ -178,12 +211,93 @@ export const TeamTemplateCreate = () => {
                 back
               </Button>
               <Button
-                onClick={handleSubmit}
+                onClick={() => {
+                  setShowPopup(true);
+                }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                CONFIRM
+                SAVE AS TEMPLATE
               </Button>
             </div>
+            {/* popup */}
+            <Dialog open={showPopup} onClose={closePopup}>
+              <DialogTitle>Template Details</DialogTitle>
+              <IconButton
+                onClick={closePopup}
+                style={{ position: "absolute", top: 10, right: 10 }}>
+                <IoIosCloseCircleOutline />
+              </IconButton>
+              <Divider />
+              <DialogContent>
+                <div className="grid-cols-2 grid gap-8">
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Team Template Name
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateName}
+                      onChange={(e) => setTemplateName(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Team Template Tags
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateTag}
+                      onChange={(e) => setTemplateTag(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-flow-row gap-2 py-8">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Team Template Description
+                  </p>
+                  <textarea
+                    value={templateDescription}
+                    placeholder="type"
+                    onChange={(e) => setTemplateDescription(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={closePopup}
+                  variant="outlined"
+                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                  cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  SAVE
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </div>

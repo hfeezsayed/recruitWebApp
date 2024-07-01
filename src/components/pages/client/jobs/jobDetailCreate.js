@@ -44,7 +44,7 @@ export const JobDetailCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
+        "http://localhost:8080/xen/saveJobTemplate?clientId=" +
           user.userId +
           "&jobId=" +
           jobId,
@@ -65,12 +65,11 @@ export const JobDetailCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
-        //navigate("/templates/workValueTemplate", { state : { "job" : true }})
+        //localStorage.setItem("jobId", data.data.jobId);
+        navigate("/job/CreateJob", { state : data.data.jobId})
       })
       .catch((e) => console.log(e));
-    navigate("/job/createJob");
-    closePopup();
+      closePopup();
   };
 
   const closePopup = () => {
@@ -82,6 +81,14 @@ export const JobDetailCreate = () => {
 
   useEffect(() => {
     console.log(locations.state?.selected);
+    if(locations.state?.selected){
+      const data = locations.state.selected;
+      console.log(data.title);
+      setTitle(data.title);
+      setLocation(data.location);
+      setSalary(data.salary);
+      setDescription(data.description);
+    }
   }, [locations.state]);
 
   return (

@@ -81,6 +81,24 @@ export const JobIcpTemplate = () => {
   };
   // pagination
 
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios
+      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        setQuestionList(data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
@@ -321,12 +339,11 @@ export const JobIcpTemplate = () => {
 
   const handleSubmitData = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    navigate("/job/createJob");
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
         `http://localhost:8080/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
-        { questionList, templateName, templateDescription },
+        { questionList, templateName, templateTag, templateDescription },
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -335,6 +352,7 @@ export const JobIcpTemplate = () => {
       )
       .then((response) => {
         console.log(response.data);
+        navigate("/job/createJob", { state : jobId});
       })
       .catch((error) => console.log(error));
   };

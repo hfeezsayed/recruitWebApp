@@ -130,7 +130,7 @@ export const PreferenceEdit = () => {
               setToolsOrSoftwaresetToolsOrSoftware(
                 row.toolsOrSoftwaresetToolsOrSoftware
               );
-              setSuccessThreeyear(row.successThreeYear);
+              setSuccessThreeyear(row.successThreeyear);
             },
             {
               headers: {
@@ -166,7 +166,7 @@ export const PreferenceEdit = () => {
         setToolsOrSoftwaresetToolsOrSoftware(
           row.toolsOrSoftwaresetToolsOrSoftware
         );
-        setSuccessThreeyear(row.successThreeYear);
+        setSuccessThreeyear(row.successThreeyear);
       }
     }
   }, [location.state]);

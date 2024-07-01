@@ -5,6 +5,15 @@ import axios from "axios";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  DialogActions,
+} from "@mui/material";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 export const JobTemplateCreate = () => {
   const navigate = useNavigate();
@@ -14,6 +23,9 @@ export const JobTemplateCreate = () => {
   const [location, setLocation] = useState();
   const [salary, setSalary] = useState("");
   const [description, setDescription] = useState("");
+  const [templateName, setTemplateName] = useState("");
+  const [templateTag, setTemplateTag] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -25,31 +37,14 @@ export const JobTemplateCreate = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
+  const [showPopup, setShowPopup] = useState(false);
+
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    if(locations.state) {
-      axios
-      .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
-      { title, location, salary, description },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-      )
-      .then((data) => { 
-        console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
-        navigate("/templates/workValueTemplate", { state : { "job" : true }})
-      })
-      .catch((e) => console.log(e));
-    }
-    else{
-      const user = JSON.parse(localStorage.getItem("token"));
-      axios
+    axios
         .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
-        { title, location, salary, description },
+        { title, location, salary, description, templateName, templateDescription, templateTag },
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -58,8 +53,16 @@ export const JobTemplateCreate = () => {
         )
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
+        closePopup();
     }
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setTemplateName("");
+    setTemplateTag("");
+    setTemplateDescription("");
   };
+
 
 
   return (
@@ -145,12 +148,93 @@ export const JobTemplateCreate = () => {
                 back
               </Button>
               <Button
-                onClick={handleSubmit}
+              onClick={() => {
+                setShowPopup(true);
+              }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
                 CONFIRM
               </Button>
             </div>
+            {/* popup */}
+            <Dialog open={showPopup} onClose={closePopup}>
+              <DialogTitle>Template Details</DialogTitle>
+              <IconButton
+                onClick={closePopup}
+                style={{ position: "absolute", top: 10, right: 10 }}>
+                <IoIosCloseCircleOutline />
+              </IconButton>
+              <Divider />
+              <DialogContent>
+                <div className="grid-cols-2 grid gap-8">
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Template Name
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateName}
+                      onChange={(e) => setTemplateName(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Template Tags
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateTag}
+                      onChange={(e) => setTemplateTag(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-flow-row gap-2 py-8">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Job Template Description
+                  </p>
+                  <textarea
+                    value={templateDescription}
+                    placeholder="type"
+                    onChange={(e) => setTemplateDescription(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={closePopup}
+                  variant="outlined"
+                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                  cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  SAVE
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </div>

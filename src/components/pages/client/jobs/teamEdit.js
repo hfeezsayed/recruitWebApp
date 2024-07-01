@@ -56,9 +56,11 @@ export const TeamEdit = () => {
           },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data);
+        navigate("/job/createJob", { state : jobId});
+    })
       .catch((e) => console.log(e));
-    navigate("/job/createJob");
   };
 
   useEffect(() => {
@@ -68,7 +70,7 @@ export const TeamEdit = () => {
       if (location.state?.jobData) {
         axios
           .get(
-            `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+            `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
           )
           .then(
             (data) => {

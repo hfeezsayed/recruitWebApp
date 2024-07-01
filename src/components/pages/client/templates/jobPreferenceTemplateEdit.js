@@ -121,7 +121,7 @@ export const JobPreferenceTemplateEdit = () => {
         setDifferentAcademic(row.differentAcademic);
         setCertificationsOrLicenses(row.certificationsOrLicenses);
         setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
-        setSuccessThreeyear(row.successThreeYear);
+        setSuccessThreeyear(row.successThreeyear);
       }
     }
   }, [location.state]);

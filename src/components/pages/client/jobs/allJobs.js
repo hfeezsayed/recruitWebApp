@@ -118,7 +118,7 @@ export const AllJobs = () => {
                     textTransform: "none",
                   }}
                   onClick={() => {
-                    navigate("/jobs/createJob", { state : { new : true}});
+                    navigate("/job/createJob", { state : { new : true}});
                   }}>
                   Add the first job to initiate the list
                 </Button>
@@ -147,7 +147,7 @@ export const AllJobs = () => {
                       textTransform: "none",
                     }}
                     onClick={() => {
-                      navigate("/job/createdJobs");
+                      navigate("/job/createJob", { state : { new : true}});
                     }}>
                     Add the first job to initiate the list
                   </Button>
@@ -379,7 +379,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/createJob", { state : row.id })}
+                                      onClick={() => navigate("/job/createJob", { state : row.id })}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",
@@ -422,7 +422,7 @@ export const AllJobs = () => {
                                   <div className="flex justify-end w-full">
                                     <Button
                                       size="small"
-                                      onClick={() => navigate("/jobs/createJob", { state : row.id})}
+                                      onClick={() => navigate("/job/createJob", { state : row.id})}
                                       style={{
                                         color: "#008080",
                                         textTransform: "none",

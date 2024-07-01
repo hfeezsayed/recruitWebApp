@@ -16,7 +16,7 @@ import {
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { workValueEditData } from "../../../dummy/Data";
 
-export const ValuesPopup = ({ data, setClose, open }) => {
+export const WorkValuepopup = ({ data, setClose, open }) => {
   return (
     <Dialog
       open={open}

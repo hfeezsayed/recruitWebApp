@@ -116,7 +116,7 @@ export const ValuesCreate = () => {
                                 color: "#475467",
                               }}>
                               <Rating
-                                value={data?.rating}
+                                value={row?.rating}
                                 onChange={(e, newvalue) =>
                                   handleChangeRating(newvalue, index)
                                 }

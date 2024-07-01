@@ -212,7 +212,6 @@ export const PreferenceCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    navigate("/job/createJob");
     axios
       .post(
         `http://localhost:8080/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
@@ -250,12 +249,43 @@ export const PreferenceCreate = () => {
           },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data)
+        navigate("/job/createJob", { state : jobId});
+      })
       .catch((e) => console.log(e));
   };
 
   useEffect(() => {
     console.log(location.state?.selected);
+    if(location.state?.selected){
+      const row = location.state.selected;
+      console.log(row.successThreeyear);
+      setExperianceInindustry(row.experianceInIndustry);
+      setSpecifyIndustryExp(row.specifyIndusrtyExp);
+      setJobDescription(row.jobDescription);
+      setScopOfRole(row.scopOfRole);
+      setDepthKnowledge(row.depthKnowledge);
+      setTypeOfROles(row.typeOfRoles);
+      setTimeofRole(row.timeOfRole);
+      setWorkSetting(row.workSetting);
+      setLocationRole(row.locationRole);
+      setRelocation(row.relocation);
+      setRelocationBudget(row.relocationBudget);
+      setTravelRole(row.travelRole);
+      setVisa(row.visa);
+      setCompensationOffered(row.compensationOffered);
+      setPrimarySkill(row.primarySkills);
+      setSecoundrySkill(row.secoundrySkills);
+      setMinimumLevelQualification(row.minimumLevelQualification);
+      setRequireAcademicQualification(row.requireAcademicQualification);
+      setDifferentAcademic(row.differentAcademic);
+      setCertificationsOrLicenses(row.certificationsOrLicenses);
+      setToolsOrSoftwaresetToolsOrSoftware(
+        row.toolsOrSoftwaresetToolsOrSoftware
+      );
+      setSuccessThreeyear(row.successThreeyear);
+    }
   }, [location.state]);
 
   return (
@@ -1050,7 +1080,7 @@ export const PreferenceCreate = () => {
                         fontSize: 14,
                         fontWeight: 500,
                       }}>
-                      Team Template Name
+                      Preference Template Name
                     </p>
                     <TextField
                       size="small"
@@ -1067,7 +1097,7 @@ export const PreferenceCreate = () => {
                         fontSize: 14,
                         fontWeight: 500,
                       }}>
-                      Team Template Tags
+                      Preference Template Tags
                     </p>
                     <TextField
                       size="small"
@@ -1081,7 +1111,7 @@ export const PreferenceCreate = () => {
                 <div className="grid grid-flow-row gap-2 py-8">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Team Template Description
+                    Preference Template Description
                   </p>
                   <textarea
                     value={templateDescription}

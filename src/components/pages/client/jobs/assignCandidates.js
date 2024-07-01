@@ -81,9 +81,10 @@ export const AssignCandidates = () => {
   // pagination
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -104,9 +105,10 @@ export const AssignCandidates = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -131,23 +133,65 @@ export const AssignCandidates = () => {
   });
 
   const handleAddAsignment = async () => {
-    navigate("/job/createJob");
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        "http://localhost:8080/xen/addCandidateToBatch?batchId=" + batchId,
+        `http://localhost:8080/xen/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           addCandidateDatabase,
           candidateName,
           candidateEmail,
           candidateNo,
           candidateLinkedin,
-          candidateResume,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data);
+        const formData = new FormData();
+        formData.append("file", candidateResume)
+        axios
+          .post(
+            `http://localhost:8080/xen/uploadCandidateResume?candidateId=${data.data.userId}`,
+             formData,
+             {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          .then((response) => {
+            navigate("/job/createJob");
+          })
+          
+      })
       .catch((e) => console.log(e));
   };
+
+
+  const handleAssignCandidate = (selected) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios
+      .post(
+        `http://localhost:8080/xen/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
+         selected,
+         {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((data) => {
+        console.log(data.data)
+      })
+      .catch((e) => console.log(e));
+  }
 
   return (
     <div>
@@ -337,13 +381,13 @@ export const AssignCandidates = () => {
                                     {row.name}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.email}
+                                    {row.emailId}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.no}
+                                    {row.mobileNo}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.linkedin}
+                                    {row.linkedIn}
                                   </TableCell>
                                   <TableCell
                                     padding="none"
@@ -393,9 +437,7 @@ export const AssignCandidates = () => {
                     <Button
                       onClick={() => {
                         {
-                          navigate("/job/createjob", {
-                            state: { selected: selected },
-                          });
+                         handleAssignCandidate(selected);
                         }
                       }}
                       variant="contained"

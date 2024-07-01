@@ -23,7 +23,7 @@ import axios from 'axios';
 export const WorkValueTemplateEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [data, setData] = useState([workValueEditData]);
+  const [data, setData] = useState([]);
   const [ratingList, setRatingList] = useState([workValueEditData]);
 
   const handleChangeRating = (value, i) => {
@@ -35,29 +35,7 @@ export const WorkValueTemplateEdit = () => {
   useEffect(() => {
     if (location.state) {
       console.log(location.state);
-      if(location.state?.valuesData){
-        setData(location.state.valuesData);
-      }
-      else{
-        const user = JSON.parse(localStorage.getItem("token"));
-          console.log(location.state);
-          axios
-            .get(
-              `http://localhost:8080/xen/getValueTemplate?clientId=&${user.userId}templateId=${location.state.jobData.workValuesId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
-            )
-            .then((data) => {
-              console.log(data);
-              setData(data?.data);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-      }
+      setData(location.state.valuesData);
     }
   }, [location.state]);
 
@@ -131,7 +109,7 @@ export const WorkValueTemplateEdit = () => {
                                 onChange={(e, newvalue) =>
                                   handleChangeRating(newvalue, index)
                                 }
-                                max={6}
+                                max={4}
                                 sx={{ color: "#66B2B2" }}
                               />
                             </TableCell>

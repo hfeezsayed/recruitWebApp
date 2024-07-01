@@ -134,7 +134,7 @@ export const PersonalInformation = () => {
       .then((data) =>
          console.log(data),
          navigate("/digitalTalentProfile")
-    )
+      )
       .catch((e) => console.log(e));
   };
 

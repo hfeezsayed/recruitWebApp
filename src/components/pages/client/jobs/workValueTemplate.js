@@ -84,9 +84,10 @@ export const JobWorkValueTemplate = () => {
   // pagination
 
   const pageChangeHandle = (pageNO) => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -107,9 +108,10 @@ export const JobWorkValueTemplate = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
+        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -122,28 +124,30 @@ export const JobWorkValueTemplate = () => {
   }, []);
 
   const handleSubmitTemplate = async () => {
-    navigate("/job/createJob");
     const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
     axios
-      .post(
-        "http://localhost:8080/xen/addCandidateToBatch?batchId=" + batchId,
+      .get(
+        `http://localhost:8080/xen/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
         {
-          selected,
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data);
+        navigate("/job/createJob", { state : jobId});
+      })
       .catch((e) => console.log(e));
   };
 
   const handleSubmitRating = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    await axios
       .post(
-        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
-          user.userId +
-          "&jobId=" +
-          jobId,
+        `http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           ratingList,
           templateName,
@@ -158,13 +162,20 @@ export const JobWorkValueTemplate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        localStorage.setItem("jobId", data.data.jobId);
+        //localStorage.setItem("jobId", data.data.jobId);
+        navigate("/job/createJob", { state : jobId});
         //navigate("/templates/workValueTemplate", { state : { "job" : true }})
       })
       .catch((e) => console.log(e));
-    navigate("/job/createJob");
     closePopup();
   };
+
+  const handlepopup = (row) => {
+    const data = {data : row.valuesData};
+    console.log(row.valuesData);
+    setViewData(data);
+    setShowPopup(true);
+  }
 
   return (
     <div>
@@ -339,8 +350,9 @@ export const JobWorkValueTemplate = () => {
                                           fontSize: 14,
                                         }}
                                         onClick={() => {
-                                          setShowPopup(true);
-                                          // setViewData(row);
+                                          handlepopup(row);
+                                          // setViewData(row.valuesData);
+                                          // setShowPopup(true);
                                         }}>
                                         View
                                       </Button>

@@ -54,7 +54,7 @@ export const TalentProfileResult = () => {
       axios
         .get(
           "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
-            location.state,
+            location.state.candidateId+"&dtpReportId="+location.state.dtpReportId,
             {
               headers: {
                 Authorization: `Bearer ${user.accessToken}`,
@@ -79,7 +79,7 @@ export const TalentProfileResult = () => {
         axios
         .get(
           "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
-            user.userId,
+            user.userId+"dtpReportId=0",
             {
               headers: {
                 Authorization: `Bearer ${user.accessToken}`,

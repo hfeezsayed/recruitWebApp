@@ -150,6 +150,7 @@ export const QUESTIONS = [
       "Understanding team perspectives enhances collaboration and communication.",
     ],
     questionType: "RANKING",
+    "selectedOrder" : []
   },
   {
     questionNo: 2,
@@ -162,6 +163,7 @@ export const QUESTIONS = [
       "Being transparent about your capabilities and limitations.",
     ],
     questionType: "RANKING",
+    "selectedOrder" : []
   },
   {
     questionNo: 6,
@@ -173,6 +175,7 @@ export const QUESTIONS = [
       "Proactive task management ensures consistent progress and success.",
     ],
     questionType: "RATING",
+    "selectedOrder" : []
   },
   {
     questionNo: 7,
@@ -184,6 +187,7 @@ export const QUESTIONS = [
       "Solutions-oriented approach navigates challenges with positivity and collaboration.",
     ],
     questionType: "RATING",
+    "selectedOrder" : []
   },
 ];
 
@@ -1022,45 +1026,51 @@ export const workValueViewData = {
 export const workValueEditData = [
   {
     value: "Self-Direction",
-    statement:
-      "Structured work goals, clear instructions, frequent supervision",
+    statement: "Structured work goals, clear instructions, frequent supervision",
+    rating : 0
   },
   {
     value: "Stimulation",
     statement: "Comfort routine & stability. Prefer familiarity over newness",
+    rating : 0
   },
   {
     value: "Hedonism",
     statement: "Comfort routine & stability. Prefer familiarity over newness",
+    rating : 0
   },
   {
     value: "Achievement",
-    statement:
-      "Work-life balance, helping others over hyperfocusing on self-growth",
+    statement: "Work-life balance, helping others over hyperfocusing on self-growth",
+    rating : 0
   },
   {
     value: "Power",
-    statement:
-      "Avoid imposing authority, being in leadership roles, listen to others",
+    statement: "Avoid imposing authority, being in leadership roles, listen to others",
+    rating : 0
   },
   {
     value: "Security",
     statement: "Always prioritize innovation over stability and predictability",
+    rating : 0
   },
   {
     value: "Conformity",
     statement: "Value individuality over being a part of the group",
+    rating : 0
   },
 
   {
     value: "Benevolence",
     statement:
       "Prioritize personal responsibilities over team goals & helping others",
+      rating : 0
   },
   {
     value: "Universalism",
     statement:
       "Leverage my privileges to lead assertively without much consultation ",
+      rating : 0
   },
 ];
 

@@ -1,37 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Alert,
   Button,
   FormControlLabel,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Pagination,
   Radio,
   RadioGroup,
+  Select,
   TextField,
+  Alert,
 } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  DialogActions,
+} from "@mui/material";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useNavigate } from "react-router-dom";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
 import axios from "axios";
-import { FaArrowRight } from "react-icons/fa6";
-import { TopNav } from "../../../widgets/topNav";
-import { QUESTIONS } from "../../../dummy/Data";
+import { useLocation } from "react-router-dom";
+import { IoSearchOutline } from "react-icons/io5";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
-import { useEffect } from 'react';
+import { TopNav } from "../../../widgets/topNav";
+import {
+  QUESTIONS,
+  jobTemplateData,
+  workValueViewData,
+} from "../../../dummy/Data";
+import { WorkValuepopup } from "./workValuepopup";
 
 export const IcpTemplateEdit = () => {
-  const [questionList, setQuestionList] = useState([]);
+  const navigate = useNavigate();
+  const [actions, setActions] = useState("ICP Analysis");
+  const options = ["ICP template", "ICP Analysis"];
+  const [search, setSearch] = useState("");
+  const [selected, setSelected] = React.useState();
+  const [data, setData] = useState(jobTemplateData);
+  const [page, setPage] = React.useState(1);
+  const [viewData, setViewData] = useState(workValueViewData);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [questionList, setQuestionList] = useState(QUESTIONS);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentSection, setCurrentSection] = useState(1);
   const IcpTemplateQuestion = questionList[currentQuestion];
 
+  const [templateName, setTemplateName] = useState("");
+  const [templateTag, setTemplateTag] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
+
+  const [showQuestionPopup, setShowQuestionPopup] = useState(false);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    // setViewData(null);
+  };
+
+  const { batchId } = useLocation().state || {};
+
+  const closePopup = () => {
+    setShowQuestionPopup(false);
+    setTemplateName("");
+    setTemplateTag("");
+    setTemplateDescription("");
+  };
+  // pagination
+
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .get(
-        "http://localhost:8080/xen/getClientQuestionnaire",
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
-      )
+      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -41,7 +99,19 @@ export const IcpTemplateEdit = () => {
       });
   }, []);
 
-
+  const handleSubmitTemplate = async () => {
+    navigate("/job/createJob");
+    const user = JSON.parse(localStorage.getItem("token"));
+    axios
+      .post(
+        "http://localhost:8080/xen/addCandidateToBatch?batchId=" + batchId,
+        {
+          selected,
+        }
+      )
+      .then((data) => console.log(data.data))
+      .catch((e) => console.log(e));
+  };
 
   const handleRatingChange = (question, option) => {
     question.selectedOption = option;
@@ -61,28 +131,10 @@ export const IcpTemplateEdit = () => {
   const handleNext = (e) => {
     e?.preventDefault();
     if (currentQuestion === questionList.length - 1) {
-      handleSubmitData();
+      setShowQuestionPopup(true);
     } else {
       setCurrentQuestion(currentQuestion + 1);
     }
-  };
-
-  const handleSubmitData = async () => {
-    console.log(questionList);
-    const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post(`http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`, 
-      questionList,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-       )
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
   };
 
   const RankingQuestion = () => {
@@ -247,6 +299,28 @@ export const IcpTemplateEdit = () => {
     );
   };
 
+  const handleSubmitData = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axios
+      .post(
+        `http://localhost:8080/xen/saveIcpTemplat?clientId=${user.userId}`,
+        { questionList, templateName, templateTag, templateDescription },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        navigate("/templates/icp");
+      })
+      .catch((error) => console.log(error));
+  };
+
+
+
   return (
     <div>
       <div className="flex">
@@ -254,61 +328,172 @@ export const IcpTemplateEdit = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div className="flex gap-2 items-center py-5">
-              <p style={{ color: "#008080", fontWeight: 500, fontSize: 14 }}>
-                Ideal Candidate Persona
-              </p>
-              <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
-              <p
-                style={{
-                  color: currentSection > 0 ? "#008080" : "#475467",
-                  fontWeight: 500,
-                  fontSize: 14,
-                }}>
-                Questions
-              </p>
-
-              <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
-              <p
-                style={{
-                  color: currentSection > 1 ? "#008080" : "#475467",
-                  fontWeight: 500,
-                  fontSize: 14,
-                }}>
-                Submit Assessment Confirmation
-              </p>
-            </div>
             <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                Choose Ideal Candidate Persona Templates from the existing
-                options
-              </p>
-              <p style={{ color: "#475467", fontSize: 14 }}>
-                Please review and edit the information as needed, or use the
-                same template. Also choose which option is suitable for you.
-              </p>
+              {actions === "ICP Analysis" && (
+                <div>
+                  <div className="flex gap-2 items-center py-5">
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Ideal Candidate Persona
+                    </p>
+                    <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
+                    <p
+                      style={{
+                        color: currentSection > 0 ? "#008080" : "#475467",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Questions
+                    </p>
+
+                    <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
+                    <p
+                      style={{
+                        color: currentSection > 1 ? "#008080" : "#475467",
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}>
+                      Submit Assessment Confirmation
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 22,
+                        fontWeight: 600,
+                      }}>
+                      Choose Ideal Candidate Persona Templates from the existing
+                      options
+                    </p>
+                    <p style={{ color: "#475467", fontSize: 14 }}>
+                      Please review and edit the information as needed, or use
+                      the same template. Also choose which option is suitable
+                      for you.
+                    </p>
+                  </div>
+                  <div className="mt-4">
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 14,
+                        textAlign: "right",
+                      }}>
+                      Statement {currentQuestion + 1}/{questionList.length}
+                    </p>
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 14,
+                        fontWeight: 500,
+                        marginTop: 10,
+                      }}>
+                      Statement {currentQuestion + 1}
+                    </p>
+                  </div>
+                  {/* questions */}
+                  {IcpTemplateQuestion?.questionType === "RANKING" && (
+                    <RankingQuestion />
+                  )}
+                  {IcpTemplateQuestion?.questionType === "RATING" && (
+                    <RatingQuestion />
+                  )}
+
+                  {/* popup */}
+                  <Dialog open={showQuestionPopup} onClose={closePopup}>
+                    <DialogTitle>Template Details</DialogTitle>
+                    <IconButton
+                      onClick={closePopup}
+                      style={{ position: "absolute", top: 10, right: 10 }}>
+                      <IoIosCloseCircleOutline />
+                    </IconButton>
+                    <Divider />
+                    <DialogContent>
+                      <div className="grid-cols-2 grid gap-8">
+                        <div className="grid grid-flow-row gap-2">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Job Template Name
+                          </p>
+                          <TextField
+                            size="small"
+                            disablePortal
+                            value={templateName}
+                            onChange={(e) => setTemplateName(e.target.value)}
+                            placeholder="type"
+                          />
+                        </div>
+                        <div className="grid grid-flow-row gap-2">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}>
+                            Job Template Tags
+                          </p>
+                          <TextField
+                            size="small"
+                            disablePortal
+                            value={templateTag}
+                            onChange={(e) => setTemplateTag(e.target.value)}
+                            placeholder="type"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-flow-row gap-2 py-8">
+                        <p
+                          style={{
+                            color: "#344054",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}>
+                          Job Template Description
+                        </p>
+                        <textarea
+                          value={templateDescription}
+                          placeholder="type"
+                          onChange={(e) =>
+                            setTemplateDescription(e.target.value)
+                          }
+                          style={{
+                            borderWidth: 1,
+                            borderColor: "#D0D5DD",
+                            borderRadius: 8,
+                            padding: 5,
+                          }}
+                        />
+                      </div>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        onClick={closePopup}
+                        variant="outlined"
+                        style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                        cancel
+                      </Button>
+                      <Button
+                        onClick={handleSubmitData}
+                        variant="contained"
+                        style={{
+                          color: "#ffffff",
+                          backgroundColor: "#008080",
+                        }}>
+                        SAVE
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
+              )}
             </div>
-            <div className="mt-4">
-              <p style={{ color: "#101828", fontSize: 14, textAlign: "right" }}>
-                Statement {currentQuestion + 1}/{questionList.length}
-              </p>
-              <p
-                style={{
-                  color: "#475467",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  marginTop: 10,
-                }}>
-                Statement {currentQuestion + 1}
-              </p>
-            </div>
-            {/* questions */}
-            {IcpTemplateQuestion?.questionType === "RANKING" && (
-              <RankingQuestion />
-            )}
-            {IcpTemplateQuestion?.questionType === "RATING" && (
-              <RatingQuestion />
-            )}
           </div>
         </div>
       </div>

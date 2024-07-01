@@ -49,7 +49,6 @@ export const TeamCreate = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    navigate("/job/createJob");
     axios
       .post(
         `http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
@@ -70,7 +69,10 @@ export const TeamCreate = () => {
           },
         }
       )
-      .then((data) => console.log(data.data))
+      .then((data) => {
+         console.log(data.data)
+         navigate("/job/createJob", { state : jobId});  
+      })
       .catch((e) => console.log(e));
   };
 
@@ -83,7 +85,15 @@ export const TeamCreate = () => {
 
   useEffect(() => {
     console.log(location.state?.selected);
-  }, [location.state]);
+    if(location.state?.selected){
+      setTeamSize(location.state.selected.teamSize);
+      setTeamLocation(location.state.selected.teamLocation);
+      setCrossFunctionality(location.state.selected.crossFunctionality);
+      setSpecifyDomain(location.state.selected.domainRole);
+      setTeamWorkingDes(location.state.selected.project);
+      setDescribeContributions(location.state.selected.contributions);
+    }
+  }, []);
 
   return (
     <div>
