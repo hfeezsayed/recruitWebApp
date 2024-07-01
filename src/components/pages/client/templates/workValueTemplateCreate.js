@@ -79,14 +79,37 @@ export const WorkValueTemplateCreate = () => {
     setTemplateDescription("");
   };
 
+  useEffect(() => {
+    console.log(location.state);
 
+    const user = JSON.parse(localStorage.getItem("token"));
+          console.log(location.state);
+
+          axios
+            .get(
+              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.accessToken}`,
+                },
+              }
+            )
+            .then((data) => {
+              console.log(data);
+              setData(data?.data);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+  }, [location.state]);
+  
   
   const handleSubmitRating = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     await axios
       .post(
-        `http://localhost:8080/xen/saveValueTemplate?clientId=${user.userId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveValueTemplate?clientId=${user.userId}`,
         {
           ratingList,
           templateName,

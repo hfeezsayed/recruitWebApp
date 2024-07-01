@@ -43,7 +43,7 @@ export const JobTemplateCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axios
-        .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
+        .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplate?clientId=${user.userId}`, 
         { title, location, salary, description, templateName, templateDescription, templateTag },
         {
           headers: {

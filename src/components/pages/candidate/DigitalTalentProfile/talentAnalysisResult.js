@@ -40,7 +40,7 @@ export const TalentAnalysisResult = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        "http://localhost:8080/xen/getCandidateSpectrumResults?candidateId=" +
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateSpectrumResults?candidateId=" +
           user.userId +
           "&versionNo=" +
           version,

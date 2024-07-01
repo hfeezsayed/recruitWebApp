@@ -53,7 +53,7 @@ export const AnalysisAssessment = () => {
 
   useEffect( () => {
       const user = JSON.parse(localStorage.getItem("token"));
-      axios.get("http://localhost:8080/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1",
+      axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1",
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -72,7 +72,7 @@ export const AnalysisAssessment = () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/saveCandidateDTPAnalysis?candidateId="+user.userId, questionList,
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateDTPAnalysis?candidateId="+user.userId, questionList,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,

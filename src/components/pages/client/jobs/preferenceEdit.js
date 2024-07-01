@@ -57,7 +57,7 @@ export const PreferenceEdit = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`,
         {
           experianceInIndustry,
           specifyIndusrtyExp,
@@ -101,7 +101,7 @@ export const PreferenceEdit = () => {
       if (location.state?.jobData) {
         axios
           .get(
-            `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
           )
           .then(
             (data) => {

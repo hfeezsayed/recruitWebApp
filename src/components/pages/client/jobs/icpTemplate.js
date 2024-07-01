@@ -85,7 +85,7 @@ export const JobIcpTemplate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -102,7 +102,7 @@ export const JobIcpTemplate = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -125,7 +125,7 @@ export const JobIcpTemplate = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -142,7 +142,7 @@ export const JobIcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .post(
-        "http://localhost:8080/xen/addCandidateToBatch?batchId=" + batchId,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToBatch?batchId=" + batchId,
         {
           selected,
         }
@@ -342,7 +342,7 @@ export const JobIcpTemplate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         { questionList, templateName, templateTag, templateDescription },
         {
           headers: {

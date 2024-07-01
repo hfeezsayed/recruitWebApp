@@ -28,7 +28,7 @@ export const ValueAssessmentResult = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version, 
+    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version, 
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,

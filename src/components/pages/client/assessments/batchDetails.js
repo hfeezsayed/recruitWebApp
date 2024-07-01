@@ -56,7 +56,7 @@ export const AssesmentBatchDetails = () => {
   //   const user = JSON.parse(localStorage.getItem("token"));
   //   axios
   //     .get(
-  //       "http://localhost:8080/xen/getAssessments?clientId=" +
+  //       "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=" +
   //         user.userId +
   //         "&pageNo=1&pageSize=12"
   //     )
@@ -104,7 +104,7 @@ export const AssesmentBatchDetails = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -127,7 +127,7 @@ export const AssesmentBatchDetails = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -145,7 +145,7 @@ export const AssesmentBatchDetails = () => {
     const batchName = name;
     const assessments = selected;
     axios
-      .post(`http://localhost:8080/xen/saveClientAssessmentBatch?clientId=${user.userId}`, {
+      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatch?clientId=${user.userId}`, {
         batchName,
         startDate,
         endDate,

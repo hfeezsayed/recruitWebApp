@@ -27,7 +27,7 @@ export const IcpCreate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -70,7 +70,7 @@ export const IcpCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axios
-      .post(`http://localhost:8080/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
         questionList,
         {
           headers: {

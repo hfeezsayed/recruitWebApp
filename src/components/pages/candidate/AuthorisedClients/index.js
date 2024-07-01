@@ -59,7 +59,7 @@ export const AuthorisedClient = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("http://localhost:8080/xen/getCandidateDTPAccess?candidateId="+user.userId,
+    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPAccess?candidateId="+user.userId,
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -95,7 +95,7 @@ export const AuthorisedClient = () => {
     const authorized = value;
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/authorizeClient?candidateId="+user.userId, {
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/authorizeClient?candidateId="+user.userId, {
           clientId,
           authorized
       },
@@ -134,7 +134,7 @@ export const AuthorisedClient = () => {
     const declined = value;
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post("http://localhost:8080/xen/declineClient?candidateId="+user.userId, {
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/declineClient?candidateId="+user.userId, {
           clientId,
           declined
       })

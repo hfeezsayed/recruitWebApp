@@ -87,7 +87,7 @@ export const JobWorkValueTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -111,7 +111,7 @@ export const JobWorkValueTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -128,7 +128,7 @@ export const JobWorkValueTemplate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .get(
-        `http://localhost:8080/xen/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -147,7 +147,7 @@ export const JobWorkValueTemplate = () => {
     const jobId = localStorage.getItem("jobId");
     await axios
       .post(
-        `http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           ratingList,
           templateName,

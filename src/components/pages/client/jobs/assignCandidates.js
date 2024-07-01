@@ -84,7 +84,7 @@ export const AssignCandidates = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -108,7 +108,7 @@ export const AssignCandidates = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -137,7 +137,7 @@ export const AssignCandidates = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           addCandidateDatabase,
           candidateName,
@@ -157,7 +157,7 @@ export const AssignCandidates = () => {
         formData.append("file", candidateResume)
         axios
           .post(
-            `http://localhost:8080/xen/uploadCandidateResume?candidateId=${data.data.userId}`,
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/uploadCandidateResume?candidateId=${data.data.userId}`,
              formData,
              {
               headers: {
@@ -179,7 +179,7 @@ export const AssignCandidates = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
          selected,
          {
           headers: {

@@ -37,7 +37,7 @@ export const TeamTemplateEdit = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .post(`http://localhost:8080/saveTeamTemplate?clientId=${user.userId}`, {
+      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/saveTeamTemplate?clientId=${user.userId}`, {
         teamSize,
         teamLocation,
         crossFunctionality,
@@ -64,7 +64,7 @@ export const TeamTemplateEdit = () => {
       if(location.state?.jobData) {
         axios
         .get(
-          `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
         )
         .then((data) => {
           console.log(data);

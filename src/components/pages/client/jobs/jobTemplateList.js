@@ -43,7 +43,7 @@ export const JobTemplateList = () => {
   const pageChangeHandle = (pageNO) => {
     axios
       .get(
-        `http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -62,7 +62,7 @@ export const JobTemplateList = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/xen/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);

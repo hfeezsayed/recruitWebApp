@@ -24,7 +24,7 @@ export const IcpEdit = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -67,7 +67,7 @@ export const IcpEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .post(
-        `http://localhost:8080/xen/saveIcpTemplate?clientId=${user.userId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplate?clientId=${user.userId}`,
         questionList,
         {
           headers: {

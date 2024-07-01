@@ -34,7 +34,7 @@ export const ValuesCreate = () => {
     navigate("/job/createJob");
     axios
       .post(
-        `http://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         ratingList,
         {
           headers: {

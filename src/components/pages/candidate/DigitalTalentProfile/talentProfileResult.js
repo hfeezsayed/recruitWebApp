@@ -53,7 +53,7 @@ export const TalentProfileResult = () => {
     if(user.role == "ROLE_CLIENT"){
       axios
         .get(
-          "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
+          "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
             location.state.candidateId+"&dtpReportId="+location.state.dtpReportId,
             {
               headers: {
@@ -78,7 +78,7 @@ export const TalentProfileResult = () => {
       else{
         axios
         .get(
-          "http://localhost:8080/xen/getCandidateDtpReport?candidateId=" +
+          "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
             user.userId+"dtpReportId=0",
             {
               headers: {

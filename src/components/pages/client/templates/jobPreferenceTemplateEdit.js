@@ -60,7 +60,7 @@ export const JobPreferenceTemplateEdit = () => {
       if(location.state.jobData){
         axios
             .get(
-              `http://localhost:8080/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
+              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
               {
                 headers: {
                   Authorization: `Bearer ${user.accessToken}`,

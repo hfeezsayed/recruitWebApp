@@ -51,7 +51,7 @@ export const TeamCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           teamSize,
           teamLocation,

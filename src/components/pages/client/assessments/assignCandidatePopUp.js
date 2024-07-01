@@ -31,7 +31,7 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
 
     axios
       .post(
-        `http://localhost:8080/xen/saveClientAssessmentBatch?&clientId=${user?.userId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatch?&clientId=${user?.userId}`,
          data,
          {
           headers: {

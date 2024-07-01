@@ -44,7 +44,7 @@ export const IcpResult = () => {
     if(location.state.jobData){
       axios
           .get(
-            `http://localhost:8080/xen/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
             {
               headers: {
                 Authorization: `Bearer ${user.accessToken}`,

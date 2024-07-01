@@ -67,7 +67,7 @@ export const AllJobs = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,

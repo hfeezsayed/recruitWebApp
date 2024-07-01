@@ -32,7 +32,7 @@ export const JobTemplateEdit = () => {
     if(location.state){
       const jobId = localStorage.getItem("jobId");
       axios
-        .post(`http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+        .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
         { id, title, locations, salary, description },
         {
           headers: {
@@ -48,7 +48,7 @@ export const JobTemplateEdit = () => {
     }
     else{
       axios
-        .post(`http://localhost:8080/xen/saveJobTemplate?clientId=${user.userId}`, 
+        .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplate?clientId=${user.userId}`, 
         {id, title, locations, salary, description },
         {
           headers: {
@@ -68,7 +68,7 @@ export const JobTemplateEdit = () => {
       if(location.state?.job){
         axios
             .get(
-              `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
             )
             .then((data) => {
               console.log(data);

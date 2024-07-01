@@ -39,7 +39,7 @@ export const Login = () => {
     const username = email;
     e.preventDefault();
     await axios
-      .post("http://localhost:8080/xen/login", {
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/login", {
         username,
         password,
       })

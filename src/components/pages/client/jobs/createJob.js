@@ -97,7 +97,7 @@ export const CreateJob = () => {
       }
       axios
         .get(
-          `http://localhost:8080/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
+          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
           {
               headers: {
                 Authorization: `Bearer ${user.accessToken}`,
@@ -125,7 +125,7 @@ export const CreateJob = () => {
 
         axios
         .get(
-            `http://localhost:8080/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
             {
                 headers: {
                   Authorization: `Bearer ${user.accessToken}`,
@@ -164,7 +164,7 @@ export const CreateJob = () => {
       }
       axios
         .get(
-          `http://localhost:8080/xen/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
+          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,

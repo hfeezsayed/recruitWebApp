@@ -41,7 +41,7 @@ export const PreferenceList = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -66,7 +66,7 @@ export const PreferenceList = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -88,7 +88,7 @@ export const PreferenceList = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        "http://localhost:8080/xen/saveJobTemplateForJob?clientId=" +
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplateForJob?clientId=" +
           user.userId +
           "&jobId=" +
           jobId,

@@ -214,7 +214,7 @@ export const PreferenceCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           experianceInIndustry,
           specifyIndusrtyExp,

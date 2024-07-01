@@ -94,7 +94,7 @@ export const AssignCandidate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -123,7 +123,7 @@ export const AssignCandidate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -158,7 +158,7 @@ export const AssignCandidate = () => {
     const selectedAssignments =  location?.state?.selected;
     await axios
       .post(
-        `http://localhost:8080/xen/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
         {
           batchName,
           selectedAssignments,
@@ -179,7 +179,7 @@ export const AssignCandidate = () => {
         formData.append("file", candidateResume)
         axios
           .post(
-            `http://localhost:8080/xen/uploadCandidateResume?candidateId=${response.data.userId}`,
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/uploadCandidateResume?candidateId=${response.data.userId}`,
              formData,
              {
               headers: {

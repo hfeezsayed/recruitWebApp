@@ -30,10 +30,10 @@ export const CandidateAssessmentQuestionnaire = () => {
     console.log(location.state);
     let url = ``;
     if(location.state.batchId) {
-        url = `http://localhost:8080/xen/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
+        url = `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
     }
     else{
-        url = `http://localhost:8080/xen/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`
+        url = `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`
     }
     axios
       .get(url, {
@@ -88,7 +88,7 @@ export const CandidateAssessmentQuestionnaire = () => {
         assessmentName = location.state.selected[0].name;
     }
     axios
-      .post(`http://localhost:8080/xen/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
+      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
         { 
             questionList,
             batchName,

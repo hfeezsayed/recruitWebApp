@@ -58,7 +58,7 @@ export const DigitalTalentProfile = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get(`http://localhost:8080/xen/getCandidateDTPInfo?candidateId=${user.userId}`,
+    axios.get(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId=${user.userId}`,
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,

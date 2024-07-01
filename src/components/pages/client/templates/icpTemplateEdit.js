@@ -85,7 +85,7 @@ export const IcpTemplateEdit = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:8080/xen/getClientQuestionnaire", {
+      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -104,7 +104,7 @@ export const IcpTemplateEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .post(
-        "http://localhost:8080/xen/addCandidateToBatch?batchId=" + batchId,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToBatch?batchId=" + batchId,
         {
           selected,
         }
@@ -304,7 +304,7 @@ export const IcpTemplateEdit = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/saveIcpTemplat?clientId=${user.userId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplat?clientId=${user.userId}`,
         { questionList, templateName, templateTag, templateDescription },
         {
           headers: {

@@ -39,7 +39,7 @@ export const AssesmentForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get(`http://localhost:8080/xen/getCandidateAssessments?candidateId=${user.userId}`,
+    axios.get(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateAssessments?candidateId=${user.userId}`,
       {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,

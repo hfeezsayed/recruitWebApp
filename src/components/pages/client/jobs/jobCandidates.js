@@ -33,7 +33,7 @@ export const JobCandidates = () => {
 
         axios
         .get(
-            `http://localhost:8080/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
             {
                 headers: {
                   Authorization: `Bearer ${user.accessToken}`,
@@ -58,7 +58,7 @@ export const JobCandidates = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
@@ -84,7 +84,7 @@ export const JobCandidates = () => {
     console.log(location.state);
     axios
       .get(
-        `http://localhost:8080/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${location.state}&pageNo=1&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${location.state}&pageNo=1&pageSize=5`,
         {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,

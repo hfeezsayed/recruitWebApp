@@ -62,7 +62,7 @@ export const ValuesEdit = () => {
 
           axios
             .get(
-              `http://localhost:8080/xen/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
+              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
               {
                 headers: {
                   Authorization: `Bearer ${user.accessToken}`,

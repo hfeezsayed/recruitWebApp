@@ -44,7 +44,7 @@ export const JobDetailCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        "http://localhost:8080/xen/saveJobTemplate?clientId=" +
+        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplate?clientId=" +
           user.userId +
           "&jobId=" +
           jobId,

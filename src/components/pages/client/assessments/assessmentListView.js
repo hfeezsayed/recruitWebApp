@@ -28,7 +28,7 @@ export const AssessmentListView = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -53,7 +53,7 @@ export const AssessmentListView = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .get(
-        `http://localhost:8080/xen/getBatchList?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchList?clientId=${user.userId}&pageNo=1&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,

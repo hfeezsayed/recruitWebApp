@@ -32,7 +32,7 @@ export const JobDetailEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axios
       .post(
-        `http://localhost:8080/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         { id, title, locations, salary, description },
         {
           headers: {
@@ -53,7 +53,7 @@ export const JobDetailEdit = () => {
     if (location.state?.jobData) {
       axios
         .get(
-          `http://localhost:8080/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
+          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,

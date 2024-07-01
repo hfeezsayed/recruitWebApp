@@ -40,7 +40,7 @@ export const TeamEdit = () => {
     const jobId = localStorage.getItem("jobId");
     axios
       .post(
-        `http://localhost:8080/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           id,
           teamSize,
@@ -70,7 +70,7 @@ export const TeamEdit = () => {
       if (location.state?.jobData) {
         axios
           .get(
-            `http://localhost:8080/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
+            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
           )
           .then(
             (data) => {
