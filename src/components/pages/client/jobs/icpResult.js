@@ -28,11 +28,31 @@ export const IcpResult = () => {
   const [spectrum5, setSpectrum5] = useState("spectrum5");
 
   const spectrums = [
-    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    {
+      spectrum: "spectrum 1",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 2",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 3",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 4",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 5",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
   ];
 
   const location = useLocation();
@@ -119,10 +139,10 @@ export const IcpResult = () => {
                                 fontSize: 20,
                                 fontWeight: 500,
                               }}>
-                              Core Value
+                              {row?.spectrum}
                             </p>
                             <p style={{ color: "#475467", fontSize: 14 }}>
-                              {row}
+                              {row?.description}
                             </p>
                           </div>
                           <div className="flex text-center p-2">
@@ -167,10 +187,10 @@ export const IcpResult = () => {
                                 fontSize: 20,
                                 fontWeight: 500,
                               }}>
-                              Core Value
+                              {row?.spectrum}
                             </p>
                             <p style={{ color: "#475467", fontSize: 14 }}>
-                              {row}
+                              {row?.description}
                             </p>
                           </div>
                         </div>

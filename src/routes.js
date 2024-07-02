@@ -71,6 +71,7 @@ import { JobIcpTemplate } from "./components/pages/client/jobs/icpTemplate";
 import { CreateAssessment } from "./components/pages/candidate/AssessmentForm/createAssessment";
 import { CandidateAssessmentQuestionnaire } from "./components/pages/candidate/AssessmentForm/CandidateAssessmentQuestionnaire";
 import { ConformationScreen } from "./components/pages/client/jobs/conformationScreen";
+import { OutputofJobDescription } from "./components/pages/client/jobs/outputOfJobDescription";
 
 export const Routes = () => {
   return (
@@ -154,6 +155,10 @@ export const Routes = () => {
         <Route path="job/icpEdit" element={<IcpEdit />} />
         <Route path="job/icpResult" element={<IcpResult />} />
         <Route path="job/conformationScreen" element={<ConformationScreen />} />
+        <Route
+          path="job/outputofJobDescription"
+          element={<OutputofJobDescription />}
+        />
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
         <Route

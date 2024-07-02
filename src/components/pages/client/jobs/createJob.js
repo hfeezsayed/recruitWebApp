@@ -281,18 +281,19 @@ export const CreateJob = () => {
                     </Box>
                   </Box>
                 </div>
-                <div>
+                <div className="w-64">
                   <Button
                     variant="text"
                     style={{
-                      color: "#008080",
-                      backgroundColor: "#EAF4F5",
+                      color: "#5E8EBD",
                       textTransform: "none",
                     }}
                     onClick={() =>
-                      navigate("/job/jobCandidates", { state: location.state })
+                      navigate("/job/outputofJobDescription", {
+                        state: location.state,
+                      })
                     }>
-                    Show Candidates
+                    Access Job Description
                   </Button>
                 </div>
               </div>
