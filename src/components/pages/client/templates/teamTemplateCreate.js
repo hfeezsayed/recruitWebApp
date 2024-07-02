@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import {
   Dialog,
   DialogContent,
@@ -49,9 +49,9 @@ export const TeamTemplateCreate = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveTeamTemplate?clientId=${user.userId}`,
+        `/saveTeamTemplate?clientId=${user.userId}`,
         {
           teamSize,
           teamLocation,
@@ -63,11 +63,7 @@ export const TeamTemplateCreate = () => {
           templateTag,
           templateDescription,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
          console.log(data.data)

@@ -31,7 +31,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import { Footer } from "../../../widgets/footer";
@@ -84,12 +84,8 @@ export const JobIcpTemplate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get("/getClientQuestionnaire",)
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -100,9 +96,9 @@ export const JobIcpTemplate = () => {
   }, []);
 
   const pageChangeHandle = (pageNO) => {
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -123,9 +119,9 @@ export const JobIcpTemplate = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
+        "/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -140,9 +136,9 @@ export const JobIcpTemplate = () => {
   const handleSubmitTemplate = async () => {
     navigate("/job/createJob");
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToBatch?batchId=" + batchId,
+        "/addCandidateToBatch?batchId=" + batchId,
         {
           selected,
         }
@@ -340,15 +336,11 @@ export const JobIcpTemplate = () => {
   const handleSubmitData = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         { questionList, templateName, templateTag, templateDescription },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

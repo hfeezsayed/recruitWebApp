@@ -27,7 +27,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
@@ -85,9 +85,9 @@ export const JobWorkValueTemplate = () => {
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -109,9 +109,9 @@ export const JobWorkValueTemplate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -126,14 +126,10 @@ export const JobWorkValueTemplate = () => {
   const handleSubmitTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
+        
       )
       .then((data) => {
         console.log(data.data);
@@ -145,20 +141,16 @@ export const JobWorkValueTemplate = () => {
   const handleSubmitRating = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    await axios
+    await axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           ratingList,
           templateName,
           templateTag,
           templateDescription,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data);

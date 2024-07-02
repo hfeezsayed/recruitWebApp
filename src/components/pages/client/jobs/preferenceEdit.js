@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -55,9 +55,9 @@ export const PreferenceEdit = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`,
+        `/savePreferenceTemplate?clientId=${user.userId}&jobId=${jobId}`,
         {
           experianceInIndustry,
           specifyIndusrtyExp,
@@ -83,11 +83,7 @@ export const PreferenceEdit = () => {
           toolsOrSoftwaresetToolsOrSoftware,
           successThreeyear,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
@@ -99,9 +95,9 @@ export const PreferenceEdit = () => {
       console.log(location.state);
       const user = JSON.parse(localStorage.getItem("token"));
       if (location.state?.jobData) {
-        axios
+        axiosInstance
           .get(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+            `/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
           )
           .then(
             (data) => {
@@ -132,11 +128,7 @@ export const PreferenceEdit = () => {
               );
               setSuccessThreeyear(row.successThreeyear);
             },
-            {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+            
           )
           .catch((e) => {
             console.log(e);

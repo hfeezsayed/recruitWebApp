@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -30,15 +30,11 @@ export const JobDetailEdit = () => {
     console.log(location.state);
     const jobId = localStorage.getItem("jobId");
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         { id, title, locations, salary, description },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data);
@@ -51,14 +47,9 @@ export const JobDetailEdit = () => {
     console.log(location.state);
     const user = JSON.parse(localStorage.getItem("token"));
     if (location.state?.jobData) {
-      axios
+      axiosInstance
         .get(
-          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          `/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`,
         )
         .then((data) => {
           console.log(data);

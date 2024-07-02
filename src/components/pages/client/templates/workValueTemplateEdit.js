@@ -17,7 +17,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
 import { useLocation } from 'react-router-dom';
 import { useEffect} from 'react';
-import axios from 'axios';
+import axiosInstance from "../../../utils/axiosInstance";
 
 
 export const WorkValueTemplateEdit = () => {

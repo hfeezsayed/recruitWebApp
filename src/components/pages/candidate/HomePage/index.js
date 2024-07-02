@@ -27,7 +27,7 @@ import { DashBoardData } from "../../../dummy/Data";
 import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
@@ -75,15 +75,10 @@ export const HomePage = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId=" +
+        "/getCandidateDTPInfo?candidateId=" +
           user.userId,
-          {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
       )
       .then((response) => {
         console.log(response.data);
@@ -97,12 +92,7 @@ export const HomePage = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateAssessmentCount?candidateId=${user.userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get(`/getCandidateAssessmentCount?candidateId=${user.userId}`,
     )
     .then(response => {
        setAuthorizedCount(response.data.authorizedCount);

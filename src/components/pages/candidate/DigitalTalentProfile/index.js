@@ -25,7 +25,7 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { DigitalTalentProfileData } from "../../../dummy/Data";
 import { useEffect } from "react";
-import axios from 'axios';
+import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 export const DigitalTalentProfile = () => {
@@ -58,12 +58,7 @@ export const DigitalTalentProfile = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPInfo?candidateId=${user.userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get(`/getCandidateDTPInfo?candidateId=${user.userId}`,
     )
     .then(response => {
         console.log(response.data);

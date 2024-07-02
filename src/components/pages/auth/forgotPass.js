@@ -14,7 +14,7 @@ export const ForgotPass = () => {
     console.log(email);
     navigation("/forgotpasswordotp", { state: { email: email } });
     axios
-      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/forgotPassword?emailId="+email)
+      .get("/forgotPassword?emailId="+email)
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

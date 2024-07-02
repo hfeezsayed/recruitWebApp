@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
@@ -86,12 +86,8 @@ export const PreferenceForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidatePreferences?candidateId="+user.userId,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get("/getCandidatePreferences?candidateId="+user.userId,
+
     )
     .then(response => {
       const data = response.data;
@@ -244,9 +240,9 @@ export const PreferenceForm = () => {
 
     // navigate("/valueassessmentform");
     const user = JSON.parse(localStorage.getItem("token"));
-    await axios
+    await axiosInstance
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateForm?candidateId="+user.userId,
+        "/saveCandidateForm?candidateId="+user.userId,
         {
           workSetting,
           workShift,
@@ -279,11 +275,7 @@ export const PreferenceForm = () => {
           secoundrySkills,
           softwareApplication
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => 
         console.log(data),

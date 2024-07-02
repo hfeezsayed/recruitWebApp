@@ -18,7 +18,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { valueAssesmentResult } from "../../../dummy/Data";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import axios from 'axios';
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const ValueAssessmentResult = () => {
   const [assesmentData, setAssessmentData] = useState(valueAssesmentResult);
@@ -28,12 +28,7 @@ export const ValueAssessmentResult = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version, 
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version, 
     )
     .then(response => {
         setAssessmentData(response.data);

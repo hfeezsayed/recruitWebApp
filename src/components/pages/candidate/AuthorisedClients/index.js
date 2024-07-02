@@ -26,7 +26,7 @@ import {
   Divider,
   IconButton,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { IoMdClose } from "react-icons/io";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
@@ -59,12 +59,7 @@ export const AuthorisedClient = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDTPAccess?candidateId="+user.userId,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get("/getCandidateDTPAccess?candidateId="+user.userId,
     )
     .then(response => {
         console.log(response.data);
@@ -94,16 +89,11 @@ export const AuthorisedClient = () => {
     const clientId = row.clientId;
     const authorized = value;
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/authorizeClient?candidateId="+user.userId, {
+    axiosInstance
+      .post("/authorizeClient?candidateId="+user.userId, {
           clientId,
           authorized
       },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
       )
       .then((data) => {
         console.log(data.data);
@@ -133,8 +123,8 @@ export const AuthorisedClient = () => {
     const clientId = row.clientId;
     const declined = value;
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/declineClient?candidateId="+user.userId, {
+    axiosInstance
+      .post("/declineClient?candidateId="+user.userId, {
           clientId,
           declined
       })
@@ -150,7 +140,7 @@ export const AuthorisedClient = () => {
 
   const handleSubmit = async () => {
     console.log(managerName, managerEmail, companyName, showInfo);
-    axios
+    axiosInstance
       .post("localhost:3000/save", {
         managerName,
         managerEmail,

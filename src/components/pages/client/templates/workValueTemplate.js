@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -22,14 +22,10 @@ export const WorkValueTemplate = () => {
   const [search, setSearch] = useState("");
   const user = JSON.parse(localStorage.getItem("token"));
   const pageChangeHandle = (pageNO) => {
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);
@@ -47,14 +43,10 @@ export const WorkValueTemplate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);

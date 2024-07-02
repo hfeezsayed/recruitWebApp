@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -58,14 +58,9 @@ export const JobPreferenceTemplateEdit = () => {
     if (location.state) {
       console.log(location.state);
       if(location.state.jobData){
-        axios
+        axiosInstance
             .get(
-              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
+              `/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
             )
             .then((data) => {
               console.log(data);
@@ -264,7 +259,7 @@ export const JobPreferenceTemplateEdit = () => {
 
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .post("localhost:3000", {
         experianceInIndustry,
         specifyIndusrtyExp,
@@ -290,11 +285,6 @@ export const JobPreferenceTemplateEdit = () => {
         toolsOrSoftwaresetToolsOrSoftware,
         successThreeyear,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
       )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));

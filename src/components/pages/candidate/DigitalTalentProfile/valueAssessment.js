@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Radio, Rating } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { SideNav } from "../../../widgets/sidenav";
@@ -78,12 +78,7 @@ export const ValueAssessment = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateValuesQuestionnaire?candidateId="+user.userId,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
+    axiosInstance.get("/getCandidateValuesQuestionnaire?candidateId="+user.userId,
     )
     .then(response => {
         setQuestionList(response.data);
@@ -98,14 +93,10 @@ export const ValueAssessment = () => {
     console.log("questionsData ", questionList, ratingList);
     const user = JSON.parse(localStorage.getItem("token"));
     // navigate("/analysisassessmentform");
-    await axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateValueAssessment?candidateId="+user.userId, 
+    await axiosInstance
+      .post("/saveCandidateValueAssessment?candidateId="+user.userId, 
         questionList, 
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       ) //ratingList)
       .then(response => {
         console.log(response.data)

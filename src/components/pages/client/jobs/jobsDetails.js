@@ -22,7 +22,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { CiSearch } from "react-icons/ci";
 import logo from "../../../../assets/images/logo.png";
 import { TopNav } from "../../../widgets/topNav";
@@ -59,7 +59,7 @@ export const JobsDetails = () => {
   }, [location.state])
 
   const handleCLickJob = (id) => {
-    axios
+    axiosInstance
       .get("localhost:3000")
       .then((data) => {
         console.log(data.data);

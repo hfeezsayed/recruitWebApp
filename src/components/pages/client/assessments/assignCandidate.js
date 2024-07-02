@@ -20,7 +20,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
 import { Footer } from "../../../widgets/footer";
@@ -92,14 +92,10 @@ export const AssignCandidate = () => {
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);
@@ -121,14 +117,10 @@ export const AssignCandidate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);
@@ -156,9 +148,9 @@ export const AssignCandidate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const batchName = location?.state?.batchName;
     const selectedAssignments =  location?.state?.selected;
-    await axios
+    await axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
+        `/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
         {
           batchName,
           selectedAssignments,
@@ -168,24 +160,16 @@ export const AssignCandidate = () => {
           candidateNo,
           candidateLinkedin,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         const formData = new FormData();
         formData.append("file", candidateResume)
-        axios
+        axiosInstance
           .post(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/uploadCandidateResume?candidateId=${response.data.userId}`,
+            `/uploadCandidateResume?candidateId=${response.data.userId}`,
              formData,
-             {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+             
           )
           .then((response) => {
             navigate("/assessmentsList")  

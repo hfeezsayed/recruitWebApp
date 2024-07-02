@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -95,14 +95,9 @@ export const CreateJob = () => {
       else{
         jobId = localStorage.getItem("jobId");
       }
-      axios
+      axiosInstance
         .get(
-          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
-          {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+          `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
         )
         .then((response) => {
           console.log(response);
@@ -123,14 +118,9 @@ export const CreateJob = () => {
     }
     else{
 
-        axios
+        axiosInstance
         .get(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
-            {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
+            `/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
         )
         .then((response) => {
             console.log(response);
@@ -162,14 +152,9 @@ export const CreateJob = () => {
       else{
         jobId = localStorage.getItem("jobId");
       }
-      axios
+      axiosInstance
         .get(
-          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+          `/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
         )
         .then((data) => {
           console.log(data);

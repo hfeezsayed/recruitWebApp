@@ -43,6 +43,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { AllJobsData } from "../../../dummy/Data";
 import { useEffect } from "react";
 import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -65,14 +66,9 @@ export const AllJobs = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
       )
       .then((response) => {
         console.log(response.data);

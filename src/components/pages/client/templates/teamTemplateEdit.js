@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
@@ -36,8 +36,8 @@ export const TeamTemplateEdit = () => {
     const project = teamWorkingDes;
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/saveTeamTemplate?clientId=${user.userId}`, {
+    axiosInstance
+      .post(`/saveTeamTemplate?clientId=${user.userId}`, {
         teamSize,
         teamLocation,
         crossFunctionality,
@@ -45,12 +45,6 @@ export const TeamTemplateEdit = () => {
         project,
         contributions,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }
-      
       )
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
@@ -62,9 +56,9 @@ export const TeamTemplateEdit = () => {
     if (location.state) {
       console.log(location.state);
       if(location.state?.jobData) {
-        axios
+        axiosInstance
         .get(
-          `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          `/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
         )
         .then((data) => {
           console.log(data);
@@ -75,11 +69,7 @@ export const TeamTemplateEdit = () => {
           setTeamWorkingDes(data.data.project);
           setDescribeContributions(data.data.contributions);
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
         )
         .catch((e) => {
           console.log(e);

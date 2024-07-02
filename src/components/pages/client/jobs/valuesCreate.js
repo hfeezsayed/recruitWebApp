@@ -15,7 +15,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const ValuesCreate = () => {
   const navigate = useNavigate();
@@ -32,15 +32,11 @@ export const ValuesCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     navigate("/job/createJob");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         ratingList,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

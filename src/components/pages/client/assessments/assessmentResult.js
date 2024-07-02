@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -25,14 +25,10 @@ export const AsssessmentResult = () => {
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);
@@ -54,14 +50,10 @@ export const AsssessmentResult = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        `/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`,
+        
       )
       .then((data) => {
         console.log(data);

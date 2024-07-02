@@ -21,7 +21,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
 import { Footer } from "../../../widgets/footer";
@@ -82,9 +82,9 @@ export const AssignCandidates = () => {
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -106,9 +106,9 @@ export const AssignCandidates = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
+        `/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -135,9 +135,9 @@ export const AssignCandidates = () => {
   const handleAddAsignment = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           addCandidateDatabase,
           candidateName,
@@ -145,25 +145,17 @@ export const AssignCandidates = () => {
           candidateNo,
           candidateLinkedin,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data);
         const formData = new FormData();
         formData.append("file", candidateResume)
-        axios
+        axiosInstance
           .post(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/uploadCandidateResume?candidateId=${data.data.userId}`,
+            `/uploadCandidateResume?candidateId=${data.data.userId}`,
              formData,
-             {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+             
           )
           .then((response) => {
             navigate("/job/createJob");
@@ -177,15 +169,11 @@ export const AssignCandidates = () => {
   const handleAssignCandidate = (selected) => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
          selected,
-         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+         
       )
       .then((data) => {
         console.log(data.data)

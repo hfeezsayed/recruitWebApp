@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -31,14 +31,9 @@ export const JobCandidates = () => {
     }
     else{
 
-        axios
+        axiosInstance
         .get(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
-            {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
+            `/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
         )
         .then((response) => {
             console.log(response);
@@ -56,14 +51,9 @@ export const JobCandidates = () => {
 
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
       )
       .then((data) => {
         console.log(data);
@@ -82,14 +72,9 @@ export const JobCandidates = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobCandidates?clientId=${user.userId}&jobId=${location.state}&pageNo=1&pageSize=5`,
-        {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
+        `/getAllJobCandidates?clientId=${user.userId}&jobId=${location.state}&pageNo=1&pageSize=5`,
       )
       .then((response) => {
         console.log(response);

@@ -7,7 +7,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { FaArrowRight } from "react-icons/fa6";
 import { TopNav } from "../../../widgets/topNav";
 import { QUESTIONS } from "../../../dummy/Data";
@@ -30,17 +30,13 @@ export const CandidateAssessmentQuestionnaire = () => {
     console.log(location.state);
     let url = ``;
     if(location.state.batchId) {
-        url = `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
+        url = `/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
     }
     else{
-        url = `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`
+        url = `/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`
     }
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get(url)
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -87,18 +83,14 @@ export const CandidateAssessmentQuestionnaire = () => {
         batchName = location.state.batchName;
         assessmentName = location.state.selected[0].name;
     }
-    axios
-      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
+    axiosInstance
+      .post(`/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
         { 
             questionList,
             batchName,
             assessmentName
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

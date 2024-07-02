@@ -15,7 +15,7 @@ import {
   Autocomplete,
   Pagination,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { IoSearchOutline } from "react-icons/io5";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
@@ -54,9 +54,9 @@ export const AssesmentBatchDetails = () => {
 
   // useEffect(() => {
   //   const user = JSON.parse(localStorage.getItem("token"));
-  //   axios
+  //   axiosInstance
   //     .get(
-  //       "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=" +
+  //       "/getAssessments?clientId=" +
   //         user.userId +
   //         "&pageNo=1&pageSize=12"
   //     )
@@ -102,9 +102,9 @@ export const AssesmentBatchDetails = () => {
   // pagination
 
   const pageChangeHandle = (pageNO) => {
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -125,9 +125,9 @@ export const AssesmentBatchDetails = () => {
     data.totalCount > 0 ? Math.ceil(data.totalCount / data.pageSize) : 1;
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAssessments?clientId=1&pageNo=1&pageSize=5"
+        "/getAssessments?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);
@@ -144,8 +144,8 @@ export const AssesmentBatchDetails = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const batchName = name;
     const assessments = selected;
-    axios
-      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatch?clientId=${user.userId}`, {
+    axiosInstance
+      .post(`/saveClientAssessmentBatch?clientId=${user.userId}`, {
         batchName,
         startDate,
         endDate,
@@ -153,11 +153,6 @@ export const AssesmentBatchDetails = () => {
         job,
         assessments,
         allocateAssessments,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
       }
     )
       .then(data => {

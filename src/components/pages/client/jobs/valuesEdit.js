@@ -17,7 +17,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const ValuesEdit = () => {
   const navigate = useNavigate();
@@ -35,15 +35,11 @@ export const ValuesEdit = () => {
   const handleSubmit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://localhost:8080/xen/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `https://localhost:8080/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         ratingList,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);
@@ -60,14 +56,9 @@ export const ValuesEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
           console.log(location.state);
 
-          axios
+          axiosInstance
             .get(
-              `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
-                },
-              }
+              `/getValueTemplate?clientId=${user.userId}&templateId=${location.state.jobData.workValuesId}`,
             )
             .then((data) => {
               console.log(data);

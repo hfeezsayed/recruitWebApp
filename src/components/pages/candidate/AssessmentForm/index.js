@@ -16,7 +16,7 @@ import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { AllAssessmentData, ClientAssessmentData } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
-import axios  from 'axios';
+import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 export const AssesmentForm = () => {
@@ -39,12 +39,7 @@ export const AssesmentForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios.get(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateAssessments?candidateId=${user.userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }  
+    axiosInstance.get(`/getCandidateAssessments?candidateId=${user.userId}`,
     )
     .then(response => {
         console.log(response.data);

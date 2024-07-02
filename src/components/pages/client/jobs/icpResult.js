@@ -6,7 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { icpTemplateResultData } from "../../../dummy/Data";
@@ -42,14 +42,10 @@ export const IcpResult = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
     if(location.state.jobData){
-      axios
+      axiosInstance
           .get(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+            `/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
+            
           )
           .then((response) => {
             console.log(location.data);

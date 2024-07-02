@@ -7,7 +7,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { FaArrowRight } from "react-icons/fa6";
 import { TopNav } from "../../../widgets/topNav";
 import { QUESTIONS } from "../../../dummy/Data";
@@ -23,12 +23,9 @@ export const IcpEdit = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get("/getClientQuestionnaire", 
+      )
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -65,15 +62,11 @@ export const IcpEdit = () => {
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplate?clientId=${user.userId}`,
+        `/saveIcpTemplate?clientId=${user.userId}`,
         questionList,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

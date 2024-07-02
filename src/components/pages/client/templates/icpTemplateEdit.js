@@ -31,7 +31,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import { Footer } from "../../../widgets/footer";
@@ -84,12 +84,9 @@ export const IcpTemplateEdit = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get("/getClientQuestionnaire", 
+      )
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -102,9 +99,9 @@ export const IcpTemplateEdit = () => {
   const handleSubmitTemplate = async () => {
     navigate("/job/createJob");
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
+    axiosInstance
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/addCandidateToBatch?batchId=" + batchId,
+        "/addCandidateToBatch?batchId=" + batchId,
         {
           selected,
         }
@@ -302,15 +299,11 @@ export const IcpTemplateEdit = () => {
   const handleSubmitData = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplat?clientId=${user.userId}`,
+        `/saveIcpTemplat?clientId=${user.userId}`,
         { questionList, templateName, templateTag, templateDescription },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

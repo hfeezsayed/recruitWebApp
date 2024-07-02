@@ -3,7 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { Autocomplete, Button, TextField, styled } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import pdflogo from "../../../../assets/images/fileUpload.png";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
@@ -81,14 +81,10 @@ export const PersonalInformation = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(user);
-    axios
+    axiosInstance
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidatePersonalInfo?candidateId="+user.userId,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        "/getCandidatePersonalInfo?candidateId="+user.userId,
+        
       )
       .then((response) => {
         console.log(response.data.education.length);
@@ -118,9 +114,9 @@ export const PersonalInformation = () => {
     );
     // navigate("/preferenceform");
     const user = JSON.parse(localStorage.getItem("token"));
-    await axios
+    await axiosInstance
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/postCandidatePersonalInfo?candidateId="+user.userId,
+        "/postCandidatePersonalInfo?candidateId="+user.userId,
         {
           file,
           fullName,

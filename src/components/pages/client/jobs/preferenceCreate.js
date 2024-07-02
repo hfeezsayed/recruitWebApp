@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Dialog,
@@ -212,9 +212,9 @@ export const PreferenceCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/savePreferenceTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           experianceInIndustry,
           specifyIndusrtyExp,
@@ -243,11 +243,7 @@ export const PreferenceCreate = () => {
           templateTag,
           templateDescription,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data)

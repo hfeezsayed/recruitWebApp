@@ -16,7 +16,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
@@ -29,15 +29,11 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
     //  navigate("/assesmentResult");
     const user = JSON.parse(localStorage.getItem("token"));
 
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveClientAssessmentBatch?&clientId=${user?.userId}`,
+        `/saveClientAssessmentBatch?&clientId=${user?.userId}`,
          data,
-         {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+         
       )
       .then((response) => {
         navigate("/assessmentList");

@@ -19,7 +19,7 @@ export const ForgotOtp = () => {
     if (otp.length === 4) {
       navigation("/newpassword", { state : {email : email}});
       axios
-        .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/verifyOTP", { otp, email })
+        .post("/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
     }
@@ -28,7 +28,7 @@ export const ForgotOtp = () => {
   const reSendOtp = () => {
     console.log("resenf otp");
     axios
-      .post("localhost:8080/xen/resendOTP", { email })
+      .post("localhost:8080/resendOTP", { email })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };

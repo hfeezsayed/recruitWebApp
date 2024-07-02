@@ -26,7 +26,7 @@ import Rocket from "../../../../assets/images/Rocket.png";
 import { HumanBody } from "../../../../assets/icon/humanBody";
 import { checkSkillLevel, convertCompetencies } from "../../../utils/function";
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useLocation } from "react-router-dom";
 
 export const TalentProfileResult = () => {
@@ -51,15 +51,11 @@ export const TalentProfileResult = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
     if(user.role == "ROLE_CLIENT"){
-      axios
+      axiosInstance
         .get(
-          "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
+          "/getCandidateDtpReport?candidateId=" +
             location.state.candidateId+"&dtpReportId="+location.state.dtpReportId,
-            {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+            
         )
         .then((response) => {
           console.log(response.data);
@@ -76,15 +72,11 @@ export const TalentProfileResult = () => {
         });
       }
       else{
-        axios
+        axiosInstance
         .get(
-          "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateDtpReport?candidateId=" +
+          "/getCandidateDtpReport?candidateId=" +
             user.userId+"dtpReportId=0",
-            {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+            
         )
         .then((response) => {
           console.log(response.data);

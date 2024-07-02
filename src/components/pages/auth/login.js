@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import photo from "../../../assets/images/Image.png";
 import logo from "../../../assets/images/logo.png";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ export const Login = () => {
     // };
     const username = email;
     e.preventDefault();
-    await axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/login", {
+    await axiosInstance
+      .post("/login", {
         username,
         password,
       })

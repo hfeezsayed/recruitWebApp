@@ -7,7 +7,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { FaArrowRight } from "react-icons/fa6";
 import { TopNav } from "../../../widgets/topNav";
 import { QUESTIONS } from "../../../dummy/Data";
@@ -26,12 +26,8 @@ export const IcpCreate = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getClientQuestionnaire", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get("/getClientQuestionnaire", )
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -69,14 +65,10 @@ export const IcpCreate = () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
-      .post(`https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
+    axiosInstance
+      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, 
         questionList,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((response) => {
         console.log(response.data);

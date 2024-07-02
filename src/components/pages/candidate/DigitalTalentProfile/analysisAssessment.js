@@ -7,7 +7,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { FaArrowRight } from "react-icons/fa6";
 import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
@@ -53,12 +53,8 @@ export const AnalysisAssessment = () => {
 
   useEffect( () => {
       const user = JSON.parse(localStorage.getItem("token"));
-      axios.get("https://xenflexer.northcentralus.cloudapp.azure.com/xen/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1",
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+      axiosInstance.get("/getCandidateQuestionnaire?candidateId="+user.userId+"&versionNo=-1",
+        
       )
       .then(response => {
           setQuestionList(response.data);
@@ -71,13 +67,9 @@ export const AnalysisAssessment = () => {
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
-    axios
-      .post("https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveCandidateDTPAnalysis?candidateId="+user.userId, questionList,
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+    axiosInstance
+      .post("/saveCandidateDTPAnalysis?candidateId="+user.userId, questionList,
+        
       )
       .then(response => {
         console.log(response.data);

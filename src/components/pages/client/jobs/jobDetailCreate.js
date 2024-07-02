@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import {
   Dialog,
   DialogContent,
@@ -42,9 +42,9 @@ export const JobDetailCreate = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveJobTemplate?clientId=" +
+        "/saveJobTemplate?clientId=" +
           user.userId +
           "&jobId=" +
           jobId,
@@ -57,11 +57,7 @@ export const JobDetailCreate = () => {
           templateTag,
           templateDescription,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data);

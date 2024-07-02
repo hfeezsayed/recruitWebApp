@@ -16,7 +16,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -41,9 +41,9 @@ export const JobTemplateList = () => {
   };
 
   const pageChangeHandle = (pageNO) => {
-    axios
+    axiosInstance
       .get(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
+        `/getAllJobTemplate?clientId=1&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -60,9 +60,9 @@ export const JobTemplateList = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/xen/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
+        "/getAllJobTemplate?clientId=1&pageNo=1&pageSize=5"
       )
       .then((data) => {
         console.log(data);

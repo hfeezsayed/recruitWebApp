@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
@@ -38,9 +38,9 @@ export const TeamEdit = () => {
     const contributions = describeContributions;
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axios
+    axiosInstance
       .post(
-        `https://xenflexer.northcentralus.cloudapp.azure.com/xen/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
         {
           id,
           teamSize,
@@ -50,11 +50,7 @@ export const TeamEdit = () => {
           project,
           contributions,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        
       )
       .then((data) => {
         console.log(data.data);
@@ -68,9 +64,9 @@ export const TeamEdit = () => {
     if (location.state) {
       console.log(location.state);
       if (location.state?.jobData) {
-        axios
+        axiosInstance
           .get(
-            `https://xenflexer.northcentralus.cloudapp.azure.com/xen/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
+            `/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
           )
           .then(
             (data) => {
@@ -83,11 +79,7 @@ export const TeamEdit = () => {
               setTeamWorkingDes(data.data.project);
               setDescribeContributions(data.data.contributions);
             },
-            {
-              headers: {
-                Authorization: `Bearer ${user.accessToken}`,
-              },
-            }
+            
           )
           .catch((e) => {
             console.log(e);
