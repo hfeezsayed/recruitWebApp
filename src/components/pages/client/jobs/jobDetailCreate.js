@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -10,7 +10,11 @@ import {
   IconButton,
   DialogActions,
 } from "@mui/material";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import {
+  IoIosCloseCircleOutline,
+  IoMdRemoveCircleOutline,
+} from "react-icons/io";
+import { FiPlus } from "react-icons/fi";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -19,14 +23,49 @@ export const JobDetailCreate = () => {
   const navigate = useNavigate();
   const locations = useLocation();
 
-  const [title, setTitle] = useState();
-  const [location, setLocation] = useState();
+  const [jobTitle, setJobTitle] = useState();
+  const [jobCode, setJobCode] = useState("");
+  const [jobFamily, setJobFamily] = useState();
+  const [jobDepartment, setJobDepartment] = useState();
+  const [jobLocation, setJobLocation] = useState();
   const [salary, setSalary] = useState("");
-  const [description, setDescription] = useState("");
+
+  // job description
+  const [aboutUs, setAbountUs] = useState("");
+  const [positionSummry, setPostionSummry] = useState("");
+  const [dutiesAndResponsibilities, setDutiesAndResponsibilities] =
+    useState("");
+  const [benefitsAndCompensation, setBenefitsAndCompensation] = useState("");
+  const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
+
+  // Role Requirements
+  const [experienceIndustry, setExperienceIndustry] = useState();
+  const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
+  const [industryKnowledge, setIndustryknowledge] = useState();
+  const [workSetting, setWorkSetting] = useState();
+  const [typeOfRoles, setTypeOfROles] = useState();
+  const [timeOfRole, setTimeofRole] = useState();
+  const [travelRole, setTravelRole] = useState();
+  const [visa, setVisa] = useState();
+
+  // Qualification and Requirements
+  const [minimumLevelQualification, setMinimumLevelQualification] = useState();
+  const [requireAcademicQualification, setRequireAcademicQualification] =
+    useState();
+  const [differentAcademic, setDifferentAcademic] = useState();
+  const [certificationsOrLicenses, setCertificationsOrLicenses] = useState([
+    { certificate: null },
+  ]);
+  const [
+    toolsOrSoftwaresetToolsOrSoftware,
+    setToolsOrSoftwaresetToolsOrSoftware,
+  ] = useState([{ tools: null }]);
+  const [successThreeyear, setSuccessThreeyear] = useState("");
+
+  // popup
   const [templateName, setTemplateName] = useState("");
   const [templateTag, setTemplateTag] = useState("");
   const [templateDescription, setTemplateDescription] = useState("");
-
   const [showPopup, setShowPopup] = useState(false);
 
   const options = [
@@ -39,33 +78,57 @@ export const JobDetailCreate = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
+  const yes_no = ["Yes", "No"];
+
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        "/saveJobTemplate?clientId=" +
-          user.userId +
-          "&jobId=" +
-          jobId,
+        "/saveJobTemplate?clientId=" + user.userId + "&jobId=" + jobId,
         {
-          title,
-          location,
+          jobTitle,
+          jobCode,
+          jobFamily,
+          jobDepartment,
+          jobLocation,
           salary,
-          description,
+          aboutUs,
+          positionSummry,
+          dutiesAndResponsibilities,
+          benefitsAndCompensation,
+          equalEmployeeOpportunity,
+          experienceIndustry,
+          specifyIndusrtyExp,
+          industryKnowledge,
+          workSetting,
+          typeOfRoles,
+          timeOfRole,
+          travelRole,
+          visa,
+          minimumLevelQualification,
+          requireAcademicQualification,
+          differentAcademic,
+          certificationsOrLicenses,
+          toolsOrSoftwaresetToolsOrSoftware,
+          successThreeyear,
           templateName,
           templateTag,
           templateDescription,
         },
-        
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       )
       .then((data) => {
         console.log(data.data);
         //localStorage.setItem("jobId", data.data.jobId);
-        navigate("/job/CreateJob", { state : data.data.jobId})
+        navigate("/job/CreateJob", { state: data.data.jobId });
       })
       .catch((e) => console.log(e));
-      closePopup();
+    closePopup();
   };
 
   const closePopup = () => {
@@ -75,17 +138,45 @@ export const JobDetailCreate = () => {
     setTemplateDescription("");
   };
 
-  useEffect(() => {
-    console.log(locations.state?.selected);
-    if(locations.state?.selected){
-      const data = locations.state.selected;
-      console.log(data.title);
-      setTitle(data.title);
-      setLocation(data.location);
-      setSalary(data.salary);
-      setDescription(data.description);
-    }
-  }, [locations.state]);
+  // certificate
+  const addCertificate = () => {
+    setCertificationsOrLicenses([
+      ...certificationsOrLicenses,
+      { certificate: null },
+    ]);
+  };
+
+  const handleChangeCertificate = (e, value, i) => {
+    let newFormValues = [...certificationsOrLicenses];
+    newFormValues[i][e] = value;
+    setCertificationsOrLicenses(newFormValues);
+  };
+
+  const removeCertificate = (i) => {
+    let newFormValues = [...certificationsOrLicenses];
+    newFormValues.splice(i, 1);
+    setCertificationsOrLicenses(newFormValues);
+  };
+
+  // tools
+  const addToolsAndSoftware = () => {
+    setToolsOrSoftwaresetToolsOrSoftware([
+      ...toolsOrSoftwaresetToolsOrSoftware,
+      { tools: null },
+    ]);
+  };
+
+  const handleChangeToolsAndSoftware = (e, value, i) => {
+    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    newFormValues[i][e] = value;
+    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+  };
+
+  const removeToolsAndSoftware = (i) => {
+    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    newFormValues.splice(i, 1);
+    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+  };
 
   return (
     <div>
@@ -97,11 +188,11 @@ export const JobDetailCreate = () => {
             <div className="flex justify-between">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                  Job Template Details
+                  Job Details
                 </p>
                 <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                  Please review and Create the information as needed, or use the
-                  same template
+                  Please fill in the information as needed, or use the existing
+                  template.
                 </p>
               </div>
               <div>
@@ -119,29 +210,74 @@ export const JobDetailCreate = () => {
                 </Button>
               </div>
             </div>
-            <div className="grid-cols-3 grid gap-8 mt-8">
+            <div className="grid grid-cols-2 gap-8 py-5">
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Title
-                </p>
-                <TextField
-                  size="small"
-                  disablePortal
-                  value={title || null}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="type"
-                />
-              </div>
-              <div className="grid grid-flow-row gap-2">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Location
+                  Job Title
                 </p>
                 <Autocomplete
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
-                  value={location || null}
-                  onChange={(e, newvalue) => setLocation(newvalue)}
+                  value={jobTitle || null}
+                  onChange={(e, newvalue) => setJobTitle(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Job Code
+                </p>
+                <TextField
+                  size="small"
+                  disablePortal
+                  value={jobCode || null}
+                  onChange={(e) => setJobCode(e.target.value)}
+                  placeholder="type"
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Job Family
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={options.map((option) => option.label)}
+                  value={jobFamily || null}
+                  onChange={(e, newvalue) => setJobFamily(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Job Department
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={options.map((option) => option.label)}
+                  value={jobDepartment || null}
+                  onChange={(e, newvalue) => setJobDepartment(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Job Location
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={options.map((option) => option.label)}
+                  value={jobLocation || null}
+                  onChange={(e, newvalue) => setJobLocation(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -153,29 +289,445 @@ export const JobDetailCreate = () => {
                 </p>
                 <TextField
                   size="small"
-                  type="number"
-                  value={salary}
+                  disablePortal
+                  value={salary || null}
                   onChange={(e) => setSalary(e.target.value)}
                   placeholder="type"
                 />
               </div>
             </div>
-            <div className="grid grid-flow-row gap-2 py-8">
-              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+            {/* Job Description */}
+            <div className="py-5">
+              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
                 Job Description
               </p>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="type"
-                style={{
-                  borderWidth: 1,
-                  borderColor: "#D0D5DD",
-                  borderRadius: 8,
-                  padding: 5,
-                }}
-              />
+              <div className="grid grid-flow-row gap-2 mt-8">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  About us - info about the company
+                </p>
+                <textarea
+                  value={aboutUs}
+                  onChange={(e) => setAbountUs(e.target.value)}
+                  placeholder="type"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                  rows={1.5}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2 mt-6">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Position Summary
+                </p>
+                <textarea
+                  value={positionSummry}
+                  onChange={(e) => setPostionSummry(e.target.value)}
+                  placeholder="type"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                  rows={1.5}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2 mt-6">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Duties and Responsibilities
+                </p>
+                <textarea
+                  value={dutiesAndResponsibilities}
+                  onChange={(e) => setDutiesAndResponsibilities(e.target.value)}
+                  placeholder="type"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                  rows={1.5}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2 mt-6">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Benefits and Compensation
+                </p>
+                <textarea
+                  value={benefitsAndCompensation}
+                  onChange={(e) => setBenefitsAndCompensation(e.target.value)}
+                  placeholder="type"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                  rows={1.5}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2 mt-6">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Equal Employee Opportunity
+                </p>
+                <textarea
+                  value={equalEmployeeOpportunity}
+                  onChange={(e) => setEqualEmployeeOpportunity(e.target.value)}
+                  placeholder="type"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                  rows={1.5}
+                />
+              </div>
             </div>
+            {/* Role Requirements and Preferences */}{" "}
+            <div className="py-5">
+              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+                Role Requirements and Preferences
+              </p>
+              <div className="grid grid-flow-row gap-2 mt-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Is it essential for the candidate to have experience in a
+                  specific industry?
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={options.map((option) => option.label)}
+                  value={experienceIndustry || null}
+                  onChange={(e, newvalue) => setExperienceIndustry(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row gap-2 py-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  If so, could you specify which industry and why that
+                  experience is critical?
+                </p>
+                <TextField
+                  size="small"
+                  disablePortal
+                  value={specifyIndusrtyExp}
+                  onChange={(e) => setSpecifyIndustryExp(e.target.value)}
+                  placeholder="type"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-8 mt-3">
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Would industry knowledge be valued even without direct
+                    experience?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={yes_no.map((option) => option)}
+                    value={industryKnowledge || null}
+                    onChange={(e, newvalue) => setIndustryknowledge(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What is the work setting for the role?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={workSetting || null}
+                    onChange={(e, newvalue) => setWorkSetting(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Type of role
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={typeOfRoles || null}
+                    onChange={(e, newvalue) => setTypeOfROles(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What are the timings for the role?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={timeOfRole || null}
+                    onChange={(e, newvalue) => setTimeofRole(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    How frequent does the role require to travel?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={travelRole || null}
+                    onChange={(e, newvalue) => setTravelRole(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2 ">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What kind of visa are you looking for ?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={visa || null}
+                    onChange={(e, newvalue) => setVisa(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Qualifications and Requirements */}
+            <div className="py-5">
+              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+                Qualifications and Requirements
+              </p>
+              <div className="grid-cols-2 grid gap-8 mt-8">
+                <div className="grid grid-flow-row gap-2 mt-3">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Minimum level of academic qualification do you seek in
+                    potential candidates?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={options.map((option) => option.label)}
+                    value={minimumLevelQualification || null}
+                    onChange={(e, newvalue) =>
+                      setMinimumLevelQualification(newvalue)
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2 mt-3">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Are there regulatory/ compliance requirements for academic
+                    qualifications?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={yes_no}
+                    value={requireAcademicQualification || null}
+                    onChange={(e, newvalue) =>
+                      setRequireAcademicQualification(newvalue)
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row gap-2 py-5">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Would you be open to candidate with different academic
+                  background but match the professional skills?
+                </p>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={yes_no}
+                  value={differentAcademic || null}
+                  onChange={(e, newvalue) => setDifferentAcademic(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+              </div>
+              {/* cerificate */}
+              <div className="grid grid-flow-row gap-2 mt-3">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Are there any specific certifications or licenses that
+                  candidates must hold?
+                </p>
+                {certificationsOrLicenses.map((value, index) => {
+                  return (
+                    <>
+                      <div>
+                        <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={options.map((option) => option.label)}
+                          value={value.certificate || null}
+                          onChange={(e, value) =>
+                            handleChangeCertificate("certificate", value, index)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
+                          )}
+                        />
+                      </div>
+                      {certificationsOrLicenses.length > 1 && (
+                        <div className=" flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removeCertificate(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }>
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+                <div className="py-3 flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "#404040",
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
+                    }}
+                    onClick={addCertificate}
+                    startIcon={<FiPlus />}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+              {/* tools */}
+              <div className="grid grid-flow-row gap-2 ">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Are there any particular tools or software applications
+                  candidates should be adept with?
+                </p>
+                {toolsOrSoftwaresetToolsOrSoftware.map((value, index) => {
+                  return (
+                    <>
+                      <div>
+                        <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={options.map((option) => option.label)}
+                          value={value.tools || null}
+                          onChange={(e, value) =>
+                            handleChangeToolsAndSoftware("tools", value, index)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
+                          )}
+                        />
+                      </div>
+                      {toolsOrSoftwaresetToolsOrSoftware.length > 1 && (
+                        <div className=" flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removeToolsAndSoftware(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }>
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })}
+                <div className="pt-3 flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "#404040",
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
+                    }}
+                    onClick={addToolsAndSoftware}
+                    startIcon={<FiPlus />}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+              <div className="grid grid-flow-row gap-2">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Can you outline what you envision a successful candidate
+                  achieving in this role over the next three years?
+                </p>
+                <TextField
+                  size="small"
+                  placeholder="type"
+                  value={successThreeyear}
+                  onChange={(e) => setSuccessThreeyear(e.target.value)}
+                />
+              </div>
+            </div>
+            {/* button */}
             <div className="py-8 gap-8 flex justify-end">
               <Button
                 onClick={() => {

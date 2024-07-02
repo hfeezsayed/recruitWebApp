@@ -11,7 +11,8 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { icpTemplateResultData } from "../../../dummy/Data";
 import { convertCompetencies } from "../../../utils/function";
-import { HumanBody } from "../../../../assets/icon/humanBody";
+// import HumanBody from "../../../../assets/images/ColorBodyHuman.png";
+import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 
 export const IcpResult = () => {
@@ -25,6 +26,14 @@ export const IcpResult = () => {
   const [spectrum3, setSpectrum3] = useState("spectrum3");
   const [spectrum4, setSpectrum4] = useState("spectrum4");
   const [spectrum5, setSpectrum5] = useState("spectrum5");
+
+  const spectrums = [
+    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+  ];
 
   const location = useLocation();
 
@@ -41,34 +50,32 @@ export const IcpResult = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
-    if(location.state.jobData){
+    if (location.state.jobData) {
       axiosInstance
-          .get(
-            `/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`,
-            
-          )
-          .then((response) => {
-            console.log(location.data);
-            setUserData(response.data)
-            setSpectrum1(response.data.pillars[0])
-            setSpectrum2(response.data.pillars[1])
-            setSpectrum3(response.data.pillars[2])
-            setSpectrum4(response.data.pillars[3])
-            setSpectrum5(response.data.pillars[4])
-            //localStorage.setItem("jobId", data.data.id);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-        }
-        else{
-          setUserData(location.state)
-          setSpectrum1(location.state.pillars[0])
-          setSpectrum2(location.state.pillars[1])
-          setSpectrum3(location.state.pillars[2])
-          setSpectrum4(location.state.pillars[3])
-          setSpectrum5(location.state.pillars[4])
-        }
+        .get(
+          `/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`
+        )
+        .then((response) => {
+          console.log(location.data);
+          // setUserData(response.data)
+          // setSpectrum1(response.data.pillars[0]);
+          // setSpectrum2(response.data.pillars[1]);
+          // setSpectrum3(response.data.pillars[2]);
+          // setSpectrum4(response.data.pillars[3]);
+          // setSpectrum5(response.data.pillars[4]);
+          //localStorage.setItem("jobId", data.data.id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      // setUserData(location.state)
+      // setSpectrum1(location.state.pillars[0]);
+      // setSpectrum2(location.state.pillars[1]);
+      // setSpectrum3(location.state.pillars[2]);
+      // setSpectrum4(location.state.pillars[3]);
+      // setSpectrum5(location.state.pillars[4]);
+    }
   }, [location.state]);
 
   return (
@@ -88,7 +95,7 @@ export const IcpResult = () => {
             <div className="flex gap-5 py-8">
               {/* spectrum analysis */}
               <div
-                className="border rounded-lg p-4"
+                className="border rounded-lg p-4 w-full "
                 style={{
                   backgroundColor: "#ffffff",
                   borderColor: "#D0D5DD",
@@ -96,201 +103,84 @@ export const IcpResult = () => {
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
                   Spectrum Analysis
                 </p>
-                <div className="py-8 absolute">
-                  <HumanBody COLOR={"#404040"} />
-                </div>
-                <div className="grid justify-end relative pt-5 pl-[180px]">
-                  <div className="grid grid-flow-row gap-4">
-                    <div className="grid grid-flow-col">
-                      <div className="flex items-center justify-end p-2">
-                        <p
-                          style={{
-                            color: "#7FAD89",
-                            fontSize: 33,
-                          }}>
-                          <span style={{ fontSize: 30 }}>&#x2022;</span>
-                          &#x2015;
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          borderLeftWidth: 2,
-                          borderRightWidth: 2,
-                          borderLeftColor: "#7FAD89",
-                          borderRightColor: "#7FAD89",
-                          padding: 5,
-                          borderRadius: 8,
-                        }}>
-                        <p
-                          style={{
-                            color: "#7FAD89",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          {spectrum1}
-                        </p>
-                        <p style={{ color: "#7FAD89", fontSize: 12 }}>
-                          They serve as guiding <br /> principles that influence
-                          <br />
-                          decision-making, behavior, and <br />
-                          interactions in both personal
-                          <br /> and professional settings.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="grid grid-flow-col">
-                      <div className="flex items-center justify-end p-2">
-                        <p
-                          style={{
-                            color: "#E1756B",
-                            fontSize: 33,
-                          }}>
-                          <span style={{ fontSize: 30 }}>&#x2022;</span>
-                          &#x2015;
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          borderLeftWidth: 2,
-                          borderRightWidth: 2,
-                          borderLeftColor: "#E1756B",
-                          borderRightColor: "#E1756B",
-                          padding: 5,
-                          borderRadius: 8,
-                        }}>
-                        <p
-                          style={{
-                            color: "#E1756B",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          {spectrum2}
-                        </p>
-                        <p style={{ color: "#E1756B", fontSize: 12 }}>
-                          They serve as guiding <br /> principles that influence
-                          <br />
-                          decision-making, behavior, and <br />
-                          interactions in both personal
-                          <br /> and professional settings.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="grid grid-flow-col">
-                      <div className="flex items-center justify-end p-2">
-                        <p
-                          style={{
-                            color: "#0F71CD",
-                            fontSize: 33,
-                          }}>
-                          <span style={{ fontSize: 30 }}>&#x2022;</span>
-                          &#x2015;
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          borderLeftWidth: 2,
-                          borderRightWidth: 2,
-                          borderLeftColor: "#0F71CD",
-                          borderRightColor: "#0F71CD",
-                          padding: 5,
-                          borderRadius: 8,
-                        }}>
-                        <p
-                          style={{
-                            color: "#0F71CD",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          {spectrum3}
-                        </p>
-                        <p style={{ color: "#0F71CD", fontSize: 12 }}>
-                          They serve as guiding <br /> principles that influence
-                          <br />
-                          decision-making, behavior, and <br />
-                          interactions in both personal
-                          <br /> and professional settings.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="grid grid-flow-col">
-                      <div className="flex items-center justify-end p-2">
-                        <p
-                          style={{
-                            color: "#FFB44F",
-                            fontSize: 33,
-                          }}>
-                          <span style={{ fontSize: 30 }}>&#x2022;</span>
-                          &#x2015;
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          borderLeftWidth: 2,
-                          borderRightWidth: 2,
-                          borderLeftColor: "#FFB44F",
-                          borderRightColor: "#FFB44F",
-                          padding: 5,
-                          borderRadius: 8,
-                        }}>
-                        <p
-                          style={{
-                            color: "#FFB44F",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          {spectrum4}
-                        </p>
-                        <p style={{ color: "#FFB44F", fontSize: 12 }}>
-                          They serve as guiding <br /> principles that influence
-                          <br />
-                          decision-making, behavior, and <br />
-                          interactions in both personal
-                          <br /> and professional settings.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="grid grid-flow-col">
-                      <div className="flex items-center justify-end p-2">
-                        <p
-                          style={{
-                            color: "#A8A3CF",
-                            fontSize: 33,
-                          }}>
-                          <span style={{ fontSize: 30 }}>&#x2022;</span>
-                          &#x2015;
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          borderLeftWidth: 2,
-                          borderRightWidth: 2,
-                          borderLeftColor: "#A8A3CF",
-                          borderRightColor: "#A8A3CF",
-                          padding: 5,
-                          borderRadius: 8,
-                        }}>
-                        <p
-                          style={{
-                            color: "#A8A3CF",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          {spectrum5}
-                        </p>
-                        <p style={{ color: "#A8A3CF", fontSize: 12 }}>
-                          They serve as guiding <br /> principles that influence
-                          <br />
-                          decision-making, behavior, and <br />
-                          interactions in both personal
-                          <br /> and professional settings.
-                        </p>
-                      </div>
-                    </div>
+                <div className="flex justify-center">
+                  <div className="grid relative pt-5">
+                    {spectrums.map((row, index) => {
+                      return (
+                        <div
+                          className={`flex text-end mt-32 ${
+                            (index + 1) % 2 !== 0 && "hidden"
+                          }`}
+                          key={index}>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontSize: 20,
+                                fontWeight: 500,
+                              }}>
+                              Core Value
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 14 }}>
+                              {row}
+                            </p>
+                          </div>
+                          <div className="flex text-center p-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 33,
+                              }}>
+                              <span style={{ fontSize: 30 }}>&#x2022;</span>
+                              &#x2015;
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <ColorBodySvg />
+                  </div>
+                  <div className="grid relative pt-5">
+                    {spectrums.map((row, index) => {
+                      return (
+                        <div
+                          className={`flex mt-16  ${
+                            index % 2 !== 0 && "hidden"
+                          }`}
+                          key={index}>
+                          <div className="flex text-center p-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 33,
+                              }}>
+                              &#x2015;
+                              <span style={{ fontSize: 30 }}>&#x2022;</span>
+                            </p>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontSize: 20,
+                                fontWeight: 500,
+                              }}>
+                              Core Value
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 14 }}>
+                              {row}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
               {/* table */}
-              <div>
+              {/* <div>
                 <Table
                   sx={{
                     width: 625,
@@ -458,7 +348,7 @@ export const IcpResult = () => {
                     </Fragment>
                   </TableBody>
                 </Table>
-              </div>
+              </div> */}
             </div>
             {/* charts */}
             <div className="grid grid-cols-3 gap-5 py-3">

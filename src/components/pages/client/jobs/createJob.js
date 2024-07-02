@@ -83,26 +83,23 @@ export const CreateJob = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
-    if(location.state?.new) {
-
-    }
-    else{
+    if (location.state?.new) {
+    } else {
       let jobId = 0;
-      if(location.state){
+      if (location.state) {
         localStorage.setItem("jobId", location.state);
         jobId = location.state;
-      }
-      else{
+      } else {
         jobId = localStorage.getItem("jobId");
       }
       axiosInstance
         .get(
-          `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`,
+          `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`
         )
         .then((response) => {
           console.log(response);
           setCandidateDetails(response.data);
-         // setPage(data?.pageNo || 1);
+          // setPage(data?.pageNo || 1);
         })
         .catch((e) => {
           console.log(e);
@@ -110,33 +107,28 @@ export const CreateJob = () => {
     }
   }, []);
 
-
   const handleDtpAccess = (row) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    if(row.dtpStatus === "Request Sent"){
-        console.log("request already sent");
-    }
-    else{
-
-        axiosInstance
+    if (row.dtpStatus === "Request Sent") {
+      console.log("request already sent");
+    } else {
+      axiosInstance
         .get(
-            `/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`,
+          `/requestDtpAccess?clientId=${row.clientId}&candidateId=${row.candidateId}`
         )
         .then((response) => {
-            console.log(response);
-            setCandidateDetails((prevItems) =>
-                prevItems.map((item) =>
-                item.id === row.id ? { ...item, notify: "Request Sent" } : item
-                )
-            );
+          console.log(response);
+          setCandidateDetails((prevItems) =>
+            prevItems.map((item) =>
+              item.id === row.id ? { ...item, notify: "Request Sent" } : item
+            )
+          );
         })
         .catch((e) => {
-            console.log(e);
+          console.log(e);
         });
     }
-  }
-
-
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -145,17 +137,14 @@ export const CreateJob = () => {
       localStorage.setItem("jobId", 0);
     } else {
       let jobId = 0;
-      if(location.state){
+      if (location.state) {
         localStorage.setItem("jobId", location.state);
         jobId = location.state;
-      }
-      else{
+      } else {
         jobId = localStorage.getItem("jobId");
       }
       axiosInstance
-        .get(
-          `/getJobDetails?clientId=${user.userId}&jobId=${jobId}`,
-        )
+        .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
         .then((data) => {
           console.log(data);
           setUserData(data?.data);
@@ -221,7 +210,7 @@ export const CreateJob = () => {
     return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
   };
 
-   const topCandidates = candidateDetails;
+  const topCandidates = candidateDetails;
   //   .filter((candidate) => candidate?.matchingScore)
   //   .sort((a, b) => b?.matchingScore - a?.matchingScore)
   //   .slice(0, 3);
@@ -558,7 +547,7 @@ export const CreateJob = () => {
                     </Button>
                   </CardActions>
                 </Card>
-                <Card sx={{ borderRadius: 5 }}>
+                {/* <Card sx={{ borderRadius: 5 }}>
                   <CardContent>
                     <div className="flex gap-2">
                       <div className="w-1/3">
@@ -637,7 +626,7 @@ export const CreateJob = () => {
                       {userData?.preference ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
-                </Card>
+                </Card> */}
                 <Card sx={{ borderRadius: 5 }}>
                   <CardContent>
                     <div className="flex gap-2">
@@ -723,7 +712,7 @@ export const CreateJob = () => {
             {userData?.jobDetail &&
               userData?.workValues &&
               userData?.team &&
-              userData?.preference &&
+              // userData?.preference &&
               userData?.icp && (
                 <div>
                   <div className="flex justify-between items-center">
@@ -897,34 +886,43 @@ export const CreateJob = () => {
                                           border: 1,
                                           borderColor: "#D0D5DD50",
                                         }}>
-                                        {row.dtpAccess ? 
-                                            (
-                                                <Button
-                                                    size="small"
-                                                    variant="text"
-                                                    style={{
-                                                        color: "#5E8EBD",
-                                                        textTransform: "none",
-                                                    }}
-                                                    onClick={() => {
-                                                        navigate("/digitalTalentProfileResult", {state : { candidateId : row.candidateId, dtpReportId : row.dtpReportId}});
-                                                    }}>
-                                                    {row.notify}
-                                                </Button>
-                                            )
-                                            :
-                                            (
-                                                <Button
-                                                    size="small"
-                                                    variant="text"
-                                                    style={{
-                                                    color: "#5E8EBD",
-                                                    textTransform: "none",
-                                                    }}
-                                                    onClick={() => handleDtpAccess(row)}>
-                                                    {row.notify}
-                                                </Button> 
-                                            )}
+                                        {row.dtpAccess ? (
+                                          <Button
+                                            size="small"
+                                            variant="text"
+                                            style={{
+                                              color: "#5E8EBD",
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() => {
+                                              navigate(
+                                                "/digitalTalentProfileResult",
+                                                {
+                                                  state: {
+                                                    candidateId:
+                                                      row.candidateId,
+                                                    dtpReportId:
+                                                      row.dtpReportId,
+                                                  },
+                                                }
+                                              );
+                                            }}>
+                                            {row.notify}
+                                          </Button>
+                                        ) : (
+                                          <Button
+                                            size="small"
+                                            variant="text"
+                                            style={{
+                                              color: "#5E8EBD",
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() =>
+                                              handleDtpAccess(row)
+                                            }>
+                                            {row.notify}
+                                          </Button>
+                                        )}
                                       </TableCell>
                                       <TableCell
                                         align="center"
