@@ -299,7 +299,7 @@ export const ClientSideNav = () => {
                 Team Templates
               </p>
             </div>
-            <div
+            {/* <div
               className="pl-16 py-2"
               onClick={() => navigate("/templates/jobPreferenceTemplate")}>
               <p
@@ -313,7 +313,7 @@ export const ClientSideNav = () => {
                 }}>
                 Job Preference Template
               </p>
-            </div>
+            </div> */}
             <div
               className="pl-16 py-2"
               onClick={() => navigate("/templates/icp")}>

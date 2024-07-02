@@ -150,7 +150,7 @@ export const QUESTIONS = [
       "Understanding team perspectives enhances collaboration and communication.",
     ],
     questionType: "RANKING",
-    "selectedOrder" : []
+    selectedOrder: [],
   },
   {
     questionNo: 2,
@@ -163,7 +163,7 @@ export const QUESTIONS = [
       "Being transparent about your capabilities and limitations.",
     ],
     questionType: "RANKING",
-    "selectedOrder" : []
+    selectedOrder: [],
   },
   {
     questionNo: 6,
@@ -175,7 +175,7 @@ export const QUESTIONS = [
       "Proactive task management ensures consistent progress and success.",
     ],
     questionType: "RATING",
-    "selectedOrder" : []
+    selectedOrder: [],
   },
   {
     questionNo: 7,
@@ -187,7 +187,7 @@ export const QUESTIONS = [
       "Solutions-oriented approach navigates challenges with positivity and collaboration.",
     ],
     questionType: "RATING",
-    "selectedOrder" : []
+    selectedOrder: [],
   },
 ];
 
@@ -1026,51 +1026,54 @@ export const workValueViewData = {
 export const workValueEditData = [
   {
     value: "Self-Direction",
-    statement: "Structured work goals, clear instructions, frequent supervision",
-    rating : 0
+    statement:
+      "Structured work goals, clear instructions, frequent supervision",
+    rating: 0,
   },
   {
     value: "Stimulation",
     statement: "Comfort routine & stability. Prefer familiarity over newness",
-    rating : 0
+    rating: 0,
   },
   {
     value: "Hedonism",
     statement: "Comfort routine & stability. Prefer familiarity over newness",
-    rating : 0
+    rating: 0,
   },
   {
     value: "Achievement",
-    statement: "Work-life balance, helping others over hyperfocusing on self-growth",
-    rating : 0
+    statement:
+      "Work-life balance, helping others over hyperfocusing on self-growth",
+    rating: 0,
   },
   {
     value: "Power",
-    statement: "Avoid imposing authority, being in leadership roles, listen to others",
-    rating : 0
+    statement:
+      "Avoid imposing authority, being in leadership roles, listen to others",
+    rating: 0,
   },
   {
     value: "Security",
     statement: "Always prioritize innovation over stability and predictability",
-    rating : 0
+    rating: 0,
   },
   {
     value: "Conformity",
     statement: "Value individuality over being a part of the group",
-    rating : 0
+    rating: 0,
   },
 
   {
     value: "Benevolence",
     statement:
       "Prioritize personal responsibilities over team goals & helping others",
-      rating : 0
+    rating: 0,
   },
   {
     value: "Universalism",
     statement:
       "Leverage my privileges to lead assertively without much consultation ",
-      rating : 0
+    rating: 0,
   },
 ];
 
@@ -1513,6 +1516,9 @@ export const createJobData = {
 };
 
 export const icpTemplateResultData = {
+  templateName: "Abcd",
+  tag: "abcd",
+  description: "abcd",
   cognitiveAgility: [
     {
       pillar2: "Cognitive Agility",
@@ -1804,6 +1810,9 @@ export const JobTemplateListViewData = {
   tag: "ABCD",
   templateDescription: "ABCD",
   title: "Software Engineer",
+  code: "SE123",
+  family: "Engineering",
+  department: "TEchnology",
   location: "Hyderabad",
   salary: "$80000 - $90000",
   teamSize: 50,
@@ -1812,7 +1821,18 @@ export const JobTemplateListViewData = {
   experianceIndustry: true,
   whichIndustry: true,
   depthKnowledge: true,
+  directExperience: true,
+  settingRole: "Onsite",
+  roleType: "Occasional",
+  roleTiming: "Day Shift",
+  requireTtravel: "Occassional",
+  visa: "Select and answer",
+  experienceCritical:
+    "We are a leading tech company focused on innovation and quality.",
   teamWorkingProject: "Finanace",
+  aboutUs: "We are a leading tech company focused on innovation and quality.",
+  summary:
+    "As a Software Engineer, you will develop and maintain web applications.",
   teamWorkingProjectProblem:
     "Yes The team is working on improving the machine learning algorithms for our recommendation engine, which powers personalized content deliveryacross our platform. This involves handling large datasets, experimenting with different machine learning models, and deploying these models into production. The candidate will be joining us to help with data preprocessing, model training, and performance evaluation to enhance the accuracy and efficiency of our recommendations.",
   contributionsTeam:
@@ -1821,12 +1841,14 @@ export const JobTemplateListViewData = {
     "We are looking for programmers with a keen eye for design for the position of front end developer. Front end developers are responsible for ensuring the alignment of web design and user experience requirements, optimizing web pages for maximum efficiency.",
   scopeOfRole:
     "A particularly successful team member, Alex, significantly enhanced our platform's performance by introducing efficient state management, improved cross-functional collaboration, mentored new members, led user feedback initiatives, and brought technical expertise that streamlined our development process.",
+  Opportunity: "We are an equal opportunity employer and value diversity.",
   responsibility: [
     "Determining the structure and design of web pages.",
     "Ensuring user experience determines design choices.",
     "Developing features to enhance the user experience.",
     "Striking a balance between functional and aesthetic design.",
   ],
+  Compensation: ["Competitive salary.", "Health and dental insurance."],
   requirments: [
     "Degree in computer science or related field.",
     "Understanding of key design principles.",
@@ -1983,4 +2005,58 @@ export const candidateListData = {
   message: "found",
   pageNo: 1,
   pageSize: 5,
+};
+
+export const BatchPopUpData = {
+  batchName: "Abcd",
+  selectedAssignment: [
+    "Analyze Time Management Tools",
+    "Analyze Time Management Tools",
+    "Analyze Time Management Tools",
+    "Analyze Time Management Tools",
+  ],
+  data: [
+    {
+      id: 1,
+      name: "Leadership Skills Evaluation",
+      email: "arpitamathewsharma.09@gmail.com",
+      no: 9849656871,
+      status: "Completed",
+    },
+    {
+      id: 2,
+      name: "Project Management Workshop",
+      email: "john.doe@example.com",
+      no: 1234567890,
+      status: "Rejected",
+    },
+    {
+      id: 3,
+      name: "Data Analysis Training",
+      email: "jane.smith@example.com",
+      no: 9876543210,
+      status: "In progress",
+    },
+    {
+      id: 4,
+      name: "Team Building Seminar",
+      email: "alex.wilson@example.com",
+      no: 8765432109,
+      status: "Completed",
+    },
+    {
+      id: 5,
+      name: "Effective Communication Workshop",
+      email: "sara.johnson@example.com",
+      no: 7654321098,
+      status: "In progress  ",
+    },
+    {
+      id: 6,
+      name: "Time Management Training",
+      email: "michael.brown@example.com",
+      no: 6543210987,
+      status: "Rejected",
+    },
+  ],
 };

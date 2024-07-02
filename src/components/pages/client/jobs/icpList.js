@@ -41,8 +41,7 @@ export const IcpList = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -61,10 +60,7 @@ export const IcpList = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllIcpTemplates?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAllIcpTemplates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data?.data);

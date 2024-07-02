@@ -81,11 +81,10 @@ export const JobIcpTemplate = () => {
   };
   // pagination
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get("/getClientQuestionnaire",)
+      .get("/getClientQuestionnaire")
       .then((data) => {
         console.log(data);
         setQuestionList(data.data);
@@ -97,9 +96,7 @@ export const JobIcpTemplate = () => {
 
   const pageChangeHandle = (pageNO) => {
     axiosInstance
-      .get(
-        `/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`
-      )
+      .get(`/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -120,9 +117,7 @@ export const JobIcpTemplate = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(
-        "/getBatchCandidates?clientId=1&pageNo=1&pageSize=5"
-      )
+      .get("/getBatchCandidates?clientId=1&pageNo=1&pageSize=5")
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -137,12 +132,9 @@ export const JobIcpTemplate = () => {
     navigate("/job/createJob");
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .post(
-        "/addCandidateToBatch?batchId=" + batchId,
-        {
-          selected,
-        }
-      )
+      .post("/addCandidateToBatch?batchId=" + batchId, {
+        selected,
+      })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
@@ -337,14 +329,16 @@ export const JobIcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        `/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
-        { questionList, templateName, templateTag, templateDescription },
-        
-      )
+      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
+        questionList,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((response) => {
         console.log(response.data);
-        navigate("/job/createJob", { state : jobId});
+        // navigate("/job/createJob", { state : jobId});
+        navigate("/job/conformationScreen", { state: jobId });
       })
       .catch((error) => console.log(error));
   };
