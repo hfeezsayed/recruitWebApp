@@ -44,6 +44,7 @@ import { AllJobsData } from "../../../dummy/Data";
 import { useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
+import Spinner from "../../../utils/spinner";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ export const AllJobs = () => {
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
   const [anchorData, setAnchorData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,6 +68,7 @@ export const AllJobs = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true)
     axiosInstance
       .get(
         `/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`,
@@ -73,9 +76,11 @@ export const AllJobs = () => {
       .then((response) => {
         console.log(response.data);
         setData(response?.data.data);
+        setLoading(false);
         //setPage(data?.pageNo || 1);
       })
       .catch((e) => {
+        setLoading(false);
         console.log(e);
       });
   }, []);
@@ -100,7 +105,14 @@ export const AllJobs = () => {
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          {data.length === 0 ? (
+          { loading === true ? 
+          (
+            <Spinner/>
+          )
+          :
+          (
+            <div>
+            { data.length === 0 ? (
             <div className="p-8 h-full">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
@@ -649,6 +661,8 @@ export const AllJobs = () => {
                 </Menu>
               </div>
             </div>
+          )}
+          </div>
           )}
         </div>
       </div>
