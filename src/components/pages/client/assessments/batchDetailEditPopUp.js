@@ -62,7 +62,7 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                   <p
                     key={index}
                     style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}>
-                    {row}
+                    {row.name}
                   </p>
                 );
               })}
@@ -113,7 +113,7 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data?.data?.map((row, index) => {
+                      {data?.assignCandidate?.map((row, index) => {
                         return (
                           <TableRow
                             key={index}
@@ -133,7 +133,7 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                                 border: 1,
                                 borderColor: "#D0D5DD50",
                               }}>
-                              {row.email}
+                              {row.emailId}
                             </TableCell>
                             <TableCell
                               sx={{
@@ -141,7 +141,7 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                                 border: 1,
                                 borderColor: "#D0D5DD50",
                               }}>
-                              {row.no}
+                              {row.mobileNo}
                             </TableCell>
                           </TableRow>
                         );

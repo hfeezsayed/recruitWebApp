@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -32,6 +32,10 @@ export const BatchDetailViewPopUp = ({ data, setClose, open }) => {
     }
     return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
   };
+
+  useEffect( () => {
+    console.log(data);
+  });
 
   return (
     <Dialog
@@ -71,7 +75,7 @@ export const BatchDetailViewPopUp = ({ data, setClose, open }) => {
                   <p
                     key={index}
                     style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}>
-                    {row}
+                    {row.name}
                   </p>
                 );
               })}
@@ -128,7 +132,7 @@ export const BatchDetailViewPopUp = ({ data, setClose, open }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data?.data?.map((row, index) => {
+                      {data?.assignCandidate?.map((row, index) => {
                         return (
                           <TableRow
                             key={index}
@@ -148,7 +152,7 @@ export const BatchDetailViewPopUp = ({ data, setClose, open }) => {
                                 border: 1,
                                 borderColor: "#D0D5DD50",
                               }}>
-                              {row.email}
+                              {row.emailId}
                             </TableCell>
                             <TableCell
                               sx={{
@@ -156,7 +160,7 @@ export const BatchDetailViewPopUp = ({ data, setClose, open }) => {
                                 border: 1,
                                 borderColor: "#D0D5DD50",
                               }}>
-                              {row.no}
+                              {row.mobileNo}
                             </TableCell>
                             <TableCell
                               sx={{
