@@ -76,10 +76,7 @@ export const HomePage = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        "/getCandidateDTPInfo?candidateId=" +
-          user.userId,
-      )
+      .get("/getCandidateDTPInfo?candidateId=" + user.userId)
       .then((response) => {
         console.log(response.data);
         setUserData(response.data);
@@ -89,19 +86,18 @@ export const HomePage = () => {
       });
   }, []);
 
-
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance.get(`/getCandidateAssessmentCount?candidateId=${user.userId}`,
-    )
-    .then(response => {
-       setAuthorizedCount(response.data.authorizedCount);
-       setClientCount(response.data.clientCount);
-       setselfCount(response.data.selfCount);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    axiosInstance
+      .get(`/getCandidateAssessmentCount?candidateId=${user.userId}`)
+      .then((response) => {
+        setAuthorizedCount(response.data.authorizedCount);
+        setClientCount(response.data.clientCount);
+        setselfCount(response.data.selfCount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -218,31 +214,18 @@ export const HomePage = () => {
                     </Box>
                   </Box>
                 </div>
-                <div className="w-32">
+                <div className="w-64">
                   <Button
                     size="small"
                     variant="text"
-                    disabled={
-                      !assessment ||
-                      !valueAssessment ||
-                      !prefereness ||
-                      !personalInfos
-                    }
                     style={{
-                      color:
-                        !assessment ||
-                        !valueAssessment ||
-                        !prefereness ||
-                        !personalInfos
-                          ? "#9b84cf"
-                          : "#6633df",
+                      color: "#5E8EBD",
                       textTransform: "none",
-                      backgroundColor: "#F9F5FF",
-                      borderRadius: 16,
-                      paddingLeft: 10,
-                      paddingRight: 10,
+                    }}
+                    onClick={() => {
+                      navigate("/OutputofDigitalTalentProfile");
                     }}>
-                    show DTP
+                    Access DTP Description
                   </Button>
                 </div>
               </div>
@@ -364,7 +347,9 @@ export const HomePage = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.preferences ? "#58A20F" : "#101828",
+                            color: userData?.preferences
+                              ? "#58A20F"
+                              : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -621,7 +606,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        { authorizedCount }
+                        {authorizedCount}
                       </p>
                       <div className="flex items-center justify-between ">
                         <p
@@ -658,7 +643,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        { clientCount }
+                        {clientCount}
                       </p>
                       <div className="flex items-center justify-between ">
                         <p
@@ -695,7 +680,7 @@ export const HomePage = () => {
                           fontWeight: 600,
                           fontSize: 30,
                         }}>
-                        { selfCount }
+                        {selfCount}
                       </p>
                       <div className="flex items-center justify-between ">
                         <p

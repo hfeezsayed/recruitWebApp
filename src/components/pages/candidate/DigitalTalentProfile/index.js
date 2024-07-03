@@ -56,15 +56,20 @@ export const DigitalTalentProfile = () => {
   const [prefereness, setPreferences] = useState(false);
   const [personalInfo, setPersonalInfo] = useState(false);
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance.get(`/getCandidateDTPInfo?candidateId=${user.userId}`,
-    )
-    .then(response => {
+    axiosInstance
+      .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
+      .then((response) => {
         console.log(response.data);
         setUserData(response.data);
         console.log(response.data.assessment === true);
-        if(response.data.assessment && response.data.valueAssessment && response.data.preferenes && response.data.personalInfo ){
+        if (
+          response.data.assessment &&
+          response.data.valueAssessment &&
+          response.data.preferenes &&
+          response.data.personalInfo
+        ) {
           console.log("dtp = ", disableDTP);
           setDisableDTP(false);
         }
@@ -72,32 +77,31 @@ export const DigitalTalentProfile = () => {
         // setValueAssessment(response.data.valueAssessment);
         // setPreferences(response.data.preferenes);
         // setPersonalInfo(response.data.personalInfo);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-
-
   const showAssessmentResult = () => {
-    if(userData.assessment === true) {
-      navigate("/digitalTalentProfile/talentanalysisresult", { state: { version: userData?.assessmentVersionId } })
-    } 
-    else{
-      navigate("/digitalTalentProfile/analysisassessmentform")
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/talentanalysisresult", {
+        state: { version: userData?.assessmentVersionId },
+      });
+    } else {
+      navigate("/digitalTalentProfile/analysisassessmentform");
     }
-  }
-
+  };
 
   const showValueAssessmentResult = () => {
-    if(userData.assessment === true) {
-      navigate("/digitalTalentProfile/valueassessmentresult", { state: { version: userData?.valuesVersionId } })
-    } 
-    else{
-      navigate("/digitalTalentProfile/valueassessmentform")
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/valueassessmentresult", {
+        state: { version: userData?.valuesVersionId },
+      });
+    } else {
+      navigate("/digitalTalentProfile/valueassessmentform");
     }
-  }
+  };
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -206,45 +210,37 @@ export const DigitalTalentProfile = () => {
               </div>
               <div className="flex w-full py-2">
                 <div className="w-full">
-                <p style={{ color: "#101828", fontSize: 14 }}>
-                  Profile completion
-                </p>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Box sx={{ width: "50%", mr: 1 }}>
-                    <BorderLinearProgress
-                      variant="determinate"
-                      value={userData?.personalInfo ? 100 : 0}
-                    />
+                  <p style={{ color: "#101828", fontSize: 14 }}>
+                    Profile completion
+                  </p>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ width: "50%", mr: 1 }}>
+                      <BorderLinearProgress
+                        variant="determinate"
+                        value={userData?.personalInfo ? 100 : 0}
+                      />
+                    </Box>
+                    <Box sx={{ minWidth: 35 }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary">{`${Math.round(
+                        userData?.personalInfo ? 100 : 0
+                      )}%`}</Typography>
+                    </Box>
                   </Box>
-                  <Box sx={{ minWidth: 35 }}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary">{`${Math.round(
-                      userData?.personalInfo ? 100 : 0
-                    )}%`}</Typography>
-                  </Box>
-                </Box>
-              </div>
-              <div className="w-32">
+                </div>
+                <div className="w-64">
                   <Button
-                    size="large"
+                    size="small"
                     variant="text"
-                    disabled={
-                      disableDTP
-                    }
-                    onClick={() => navigate("/digitalTalentProfileResult")}
                     style={{
-                      color:
-                        disableDTP
-                          ? "#9b84cf"
-                          : "#6633df",
+                      color: "#5E8EBD",
                       textTransform: "none",
-                      backgroundColor: "#F9F5FF",
-                      borderRadius: 16,
-                      paddingLeft: 10,
-                      paddingRight: 10,
+                    }}
+                    onClick={() => {
+                      navigate("/OutputofDigitalTalentProfile");
                     }}>
-                    show DTP
+                    Access DTP Description
                   </Button>
                 </div>
               </div>
@@ -284,7 +280,9 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.personalInfo ? "#58A20F" : "#101828",
+                            color: userData?.personalInfo
+                              ? "#58A20F"
+                              : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -332,7 +330,9 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/personalinfromation")}>
+                      onClick={() =>
+                        navigate("/digitalTalentProfile/personalinfromation")
+                      }>
                       {userData?.personalInfo ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -412,7 +412,9 @@ export const DigitalTalentProfile = () => {
                         fontSize: 14,
                       }}
                       endIcon={<FaArrowRight />}
-                      onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
+                      onClick={() =>
+                        navigate("/digitalTalentProfile/preferenceform")
+                      }>
                       {userData?.preferences ? "Edit" : "Not taken"}
                     </Button>
                   </CardActions>
@@ -442,7 +444,9 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.valueAssessment ? "#58A20F" : "#101828",
+                            color: userData?.valueAssessment
+                              ? "#58A20F"
+                              : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed
@@ -485,7 +489,9 @@ export const DigitalTalentProfile = () => {
                     <Button
                       size="small"
                       style={{
-                        color: userData?.valueAssessment ? "#FFA500" : "#E05880",
+                        color: userData?.valueAssessment
+                          ? "#FFA500"
+                          : "#E05880",
                         fontWeight: 600,
                         fontSize: 14,
                       }}
@@ -520,9 +526,7 @@ export const DigitalTalentProfile = () => {
                         <p
                           style={{
                             textAlign: "center",
-                            color: userData?.assessment
-                              ? "#58A20F"
-                              : "#101828",
+                            color: userData?.assessment ? "#58A20F" : "#101828",
                             fontWeight: 600,
                           }}>
                           Completed

@@ -116,14 +116,14 @@ export const ClientSideNav = () => {
                 mb: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "/candidate" ? "#008080" : "#ffffff",
-                color: currentState === "/candidate" ? "#ffffff" : "#475467",
+                bgcolor: currentState === "/dashboard" ? "#008080" : "#ffffff",
+                color: currentState === "/dashboard" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
-                // navigate("/candidate");
+                navigate("/profile");
               }}>
               <ListItemIcon
                 sx={{
@@ -132,13 +132,13 @@ export const ClientSideNav = () => {
                   justifyContent: "center",
                 }}>
                 <DashboardSvg
-                  COLOR={currentState === "/candidate" ? "#ffffff" : "#475467"}
+                  COLOR={currentState === "/dashboard" ? "#ffffff" : "#475467"}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Dashboard"}
                 primaryTypographyProps={{
-                  color: currentState === "/candidate" ? "#ffffff" : "#475467",
+                  color: currentState === "/dashboard" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
