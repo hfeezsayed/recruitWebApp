@@ -23,7 +23,7 @@ import {
 import { convertCompetencies } from "../../../utils/function";
 import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 
-export const ConformationScreen = () => {
+export const OutputofJobDescription = () => {
   const navigate = useNavigate();
   const [jobDetailsData, setJobDetailsData] = useState(JobTemplateListViewData);
   const [workValueData, setWorkValueData] = useState(workValueViewData);
@@ -80,91 +80,28 @@ export const ConformationScreen = () => {
         <TopNav />
       </div>
       <div className="w-full min-h-screen p-4">
-        <div className="flex justify-between items-center">
-          <div className="px-5">
-            <p
-              style={{
-                color: "#008080",
-                fontSize: 22,
-                fontWeight: 600,
-              }}>
-              Confirmation Screen
-            </p>
-            <p style={{ color: "#475467", fontSize: 14 }}>
-              Please review all the details below and make any necessary edits
-              or confirm to create a job
-            </p>
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              style={{ backgroundColor: "#008080", color: "#ffffff" }}
-              onClick={() => {
-                navigate("/job/createJob");
-              }}>
-              CONFIRM
-            </Button>
-          </div>
+        <div className="px-5">
+          <p
+            style={{
+              color: "#008080",
+              fontSize: 22,
+              fontWeight: 600,
+            }}>
+            Output of Job Description
+          </p>
+          <p style={{ color: "#475467", fontSize: 14 }}>
+            Below is the information for the created job description.
+          </p>
         </div>
 
         {/*  Job Details */}
         <Card className="p-4 my-4">
-          <div className="flex justify-between">
+          <div>
             <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
               Job Details
             </p>
-            <Button
-              variant="text"
-              style={{ color: "#5FAEDA", textTransform: "none" }}
-              onClick={() => {
-                navigate("/job/createJob");
-              }}>
-              Edit
-            </Button>
           </div>
           <div>
-            <div className="flex gap-14 py-1">
-              <p
-                style={{
-                  color: "#101828",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  width: 250,
-                }}>
-                Work Value Template Name
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {jobDetailsData?.templateName}
-              </p>
-            </div>
-            <div className="flex gap-14 py-1">
-              <p
-                style={{
-                  color: "#101828",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  width: 250,
-                }}>
-                Work Value Template Tags
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {jobDetailsData?.tag}
-              </p>
-            </div>
-            <div className="flex gap-14 py-1">
-              <p
-                style={{
-                  color: "#101828",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  width: 250,
-                }}>
-                Work Value Template Description
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {jobDetailsData?.templateDescription}
-              </p>
-            </div>
             <div className="flex gap-14 py-1">
               <p
                 style={{
@@ -378,49 +315,12 @@ export const ConformationScreen = () => {
 
         {/*  Work Value  */}
         <Card className="p-4 my-4">
-          <div className="flex justify-between">
+          <div>
             <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
               Work Value
             </p>
-            <Button
-              variant="text"
-              style={{ color: "#5FAEDA", textTransform: "none" }}
-              onClick={() => {
-                navigate("/job/createJob");
-              }}>
-              Edit
-            </Button>
           </div>
           <div>
-            <div className="flex gap-14 py-1">
-              <p
-                style={{
-                  color: "#101828",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  width: 250,
-                }}>
-                Work Value Template Tags
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {workValueData?.tag}
-              </p>
-            </div>
-            <div className="flex gap-14 py-1">
-              <p
-                style={{
-                  color: "#101828",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  width: 250,
-                }}>
-                Work Value Template Description
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {workValueData?.templateDescription}
-              </p>
-            </div>
-
             <Box sx={{ width: "100%", marginTop: 4 }}>
               <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
                 Work Value Analysis Result
@@ -484,44 +384,12 @@ export const ConformationScreen = () => {
         </Card>
         {/* Team Preference */}
         <Card className="p-4 my-4">
-          <div className="flex justify-between">
+          <div>
             <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
               Team Preference
             </p>
-            <Button
-              variant="text"
-              style={{ color: "#5FAEDA", textTransform: "none" }}
-              onClick={() => {
-                navigate("/job/createJob");
-              }}>
-              Edit
-            </Button>
           </div>
           <div>
-            <div className="grid grid-flow-row py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                Team Template Name
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {teamPreference?.templateName}
-              </p>
-            </div>
-            <div className="grid grid-flow-row py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                Team Template Tags
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {teamPreference?.tag}
-              </p>
-            </div>
-            <div className="grid grid-flow-row  py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                Team Template Description
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {teamPreference?.templateDescription}
-              </p>
-            </div>
             <div className="grid grid-flow-row  py-1">
               <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
                 What is the size of the team
@@ -578,44 +446,12 @@ export const ConformationScreen = () => {
         </Card>
         {/* ICP Analysis */}
         <Card className="p-4 my-4">
-          <div className="flex justify-between">
+          <div>
             <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
               ICP Analysis
             </p>
-            <Button
-              variant="text"
-              style={{ color: "#5FAEDA", textTransform: "none" }}
-              onClick={() => {
-                navigate("/job/createJob");
-              }}>
-              Edit
-            </Button>
           </div>
           <div>
-            <div className="grid grid-flow-row py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                ICP Template Name
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {icpAnalysisData?.templateName}
-              </p>
-            </div>
-            <div className="grid grid-flow-row py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                ICP Template Tags
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {icpAnalysisData?.tag}
-              </p>
-            </div>
-            <div className="grid grid-flow-row py-1">
-              <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                ICP Template Description
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                {icpAnalysisData?.description}
-              </p>
-            </div>
             <div className="flex gap-5 py-8">
               {/* spectrum analysis */}
               <div
