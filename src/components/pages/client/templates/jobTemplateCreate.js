@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import {
-  IoIosCloseCircleOutline,
-  IoMdRemoveCircleOutline,
-} from "react-icons/io";
+import axiosInstance from "../../../utils/axiosInstance";
 import {
   Dialog,
   DialogContent,
@@ -13,8 +10,11 @@ import {
   IconButton,
   DialogActions,
 } from "@mui/material";
+import {
+  IoIosCloseCircleOutline,
+  IoMdRemoveCircleOutline,
+} from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -31,36 +31,37 @@ export const JobTemplateCreate = () => {
   const [salary, setSalary] = useState("");
 
   // job description
-  const [aboutUs, setAbountUs] = useState("");
+  const [companyInfo, setCompanyInfo] = useState("");
   const [positionSummry, setPostionSummry] = useState("");
-  const [dutiesAndResponsibilities, setDutiesAndResponsibilities] =
+  const [responsibilities, setResponsibilities] =
     useState("");
-  const [benefitsAndCompensation, setBenefitsAndCompensation] = useState("");
+  const [benefits, setBenefits] = useState("");
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [experienceIndustry, setExperienceIndustry] = useState();
+  const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
   const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
-  const [typeOfRoles, setTypeOfROles] = useState();
-  const [timeOfRole, setTimeofRole] = useState();
-  const [travelRole, setTravelRole] = useState();
+  const [roleType, setRoleType] = useState();
+  const [roleTimings, setRoleTimings] = useState();
+  const [roleTravel, setRoleTravel] = useState();
   const [visa, setVisa] = useState();
 
   // Qualification and Requirements
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
-  const [requireAcademicQualification, setRequireAcademicQualification] =
+  const [requireRegulatory, setRequireRegulatory] =
     useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certificationsOrLicenses, setCertificationsOrLicenses] = useState([
+  const [certifications, setCertifications] = useState([
     { certificate: null },
   ]);
   const [
-    toolsOrSoftwaresetToolsOrSoftware,
-    setToolsOrSoftwaresetToolsOrSoftware,
+    softwares,
+    setSoftwares,
   ] = useState([{ tools: null }]);
-  const [successThreeyear, setSuccessThreeyear] = useState("");
+  const [envision, setEnvision] = useState("");
+
   // popup
   const [templateName, setTemplateName] = useState("");
   const [templateTag, setTemplateTag] = useState("");
@@ -76,43 +77,51 @@ export const JobTemplateCreate = () => {
     { label: "Schindler's List", year: 1993 },
     { label: "Pulp Fiction", year: 1994 },
   ];
+
   const yes_no = ["Yes", "No"];
 
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(`/saveJobTemplate?clientId=${user.userId}`, {
-        jobTitle,
-        jobCode,
-        jobFamily,
-        jobDepartment,
-        jobLocation,
-        salary,
-        aboutUs,
-        positionSummry,
-        dutiesAndResponsibilities,
-        benefitsAndCompensation,
-        equalEmployeeOpportunity,
-        experienceIndustry,
-        specifyIndusrtyExp,
-        industryKnowledge,
-        workSetting,
-        typeOfRoles,
-        timeOfRole,
-        travelRole,
-        visa,
-        minimumLevelQualification,
-        requireAcademicQualification,
-        differentAcademic,
-        certificationsOrLicenses,
-        toolsOrSoftwaresetToolsOrSoftware,
-        successThreeyear,
-        templateName,
-        templateTag,
-        templateDescription,
+      .post(
+        "/saveJobTemplate?clientId=" + user.userId,
+        {
+          jobTitle,
+          jobCode,
+          jobFamily,
+          jobDepartment,
+          jobLocation,
+          salary,
+          companyInfo,
+          positionSummry,
+          responsibilities,
+          benefits,
+          equalEmployeeOpportunity,
+          specificIndustryExperience,
+          specifyIndusrtyExp,
+          industryKnowledge,
+          workSetting,
+          roleType,
+          roleTimings,
+          roleTravel,
+          visa,
+          minimumLevelQualification,
+          requireRegulatory,
+          differentAcademic,
+          certifications,
+          softwares,
+          envision,
+          templateName,
+          templateTag,
+          templateDescription,
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        //localStorage.setItem("jobId", data.data.jobId);
+        navigate("/templates/jobTemplate");
       })
-      .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
     closePopup();
   };
@@ -126,42 +135,42 @@ export const JobTemplateCreate = () => {
 
   // certificate
   const addCertificate = () => {
-    setCertificationsOrLicenses([
-      ...certificationsOrLicenses,
+    setCertifications([
+      ...certifications,
       { certificate: null },
     ]);
   };
 
   const handleChangeCertificate = (e, value, i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues[i][e] = value;
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   const removeCertificate = (i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues.splice(i, 1);
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   // tools
   const addToolsAndSoftware = () => {
-    setToolsOrSoftwaresetToolsOrSoftware([
-      ...toolsOrSoftwaresetToolsOrSoftware,
+    setSoftwares([
+      ...softwares,
       { tools: null },
     ]);
   };
 
   const handleChangeToolsAndSoftware = (e, value, i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues[i][e] = value;
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
 
   const removeToolsAndSoftware = (i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues.splice(i, 1);
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
 
   return (
@@ -171,14 +180,15 @@ export const JobTemplateCreate = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Pre- Fill Job Details: Template 1
-              </p>
-              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please review and Create the information as needed, or use the
-                same template
-              </p>
+            <div className="flex justify-between">
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                  Job Details
+                </p>
+                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                  Please fill in the information as needed
+                </p>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-8 py-5">
               <div className="grid grid-flow-row gap-2">
@@ -259,6 +269,7 @@ export const JobTemplateCreate = () => {
                 </p>
                 <TextField
                   size="small"
+                  type="number"
                   disablePortal
                   value={salary || null}
                   onChange={(e) => setSalary(e.target.value)}
@@ -276,8 +287,8 @@ export const JobTemplateCreate = () => {
                   About us - info about the company
                 </p>
                 <textarea
-                  value={aboutUs}
-                  onChange={(e) => setAbountUs(e.target.value)}
+                  value={companyInfo}
+                  onChange={(e) => setCompanyInfo(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -285,7 +296,7 @@ export const JobTemplateCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -302,7 +313,7 @@ export const JobTemplateCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -310,8 +321,8 @@ export const JobTemplateCreate = () => {
                   Duties and Responsibilities
                 </p>
                 <textarea
-                  value={dutiesAndResponsibilities}
-                  onChange={(e) => setDutiesAndResponsibilities(e.target.value)}
+                  value={responsibilities}
+                  onChange={(e) => setResponsibilities(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -319,24 +330,25 @@ export const JobTemplateCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={4}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Benefits and Compensation
                 </p>
-                <textarea
-                  value={benefitsAndCompensation}
-                  onChange={(e) => setBenefitsAndCompensation(e.target.value)}
+                <TextField
+                  value={benefits}
+                  type="number"
+                  onChange={(e) => setBenefits(e.target.value)}
                   placeholder="type"
+                  size="small"
                   style={{
                     borderWidth: 1,
                     borderColor: "#D0D5DD",
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -370,9 +382,9 @@ export const JobTemplateCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
-                  value={experienceIndustry || null}
-                  onChange={(e, newvalue) => setExperienceIndustry(newvalue)}
+                  options={yes_no.map((option) => option)}
+                  value={specificIndustryExperience || null}
+                  onChange={(e, newvalue) => setSpecificIndustryExperience(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -434,8 +446,8 @@ export const JobTemplateCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={typeOfRoles || null}
-                    onChange={(e, newvalue) => setTypeOfROles(newvalue)}
+                    value={roleType || null}
+                    onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -450,8 +462,8 @@ export const JobTemplateCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={timeOfRole || null}
-                    onChange={(e, newvalue) => setTimeofRole(newvalue)}
+                    value={roleTimings || null}
+                    onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -466,8 +478,8 @@ export const JobTemplateCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={travelRole || null}
-                    onChange={(e, newvalue) => setTravelRole(newvalue)}
+                    value={roleTravel || null}
+                    onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -526,9 +538,9 @@ export const JobTemplateCreate = () => {
                     size="small"
                     disablePortal
                     options={yes_no}
-                    value={requireAcademicQualification || null}
+                    value={requireRegulatory || null}
                     onChange={(e, newvalue) =>
-                      setRequireAcademicQualification(newvalue)
+                      setRequireRegulatory(newvalue)
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
@@ -558,7 +570,7 @@ export const JobTemplateCreate = () => {
                   Are there any specific certifications or licenses that
                   candidates must hold?
                 </p>
-                {certificationsOrLicenses.map((value, index) => {
+                {certifications.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -580,7 +592,7 @@ export const JobTemplateCreate = () => {
                           )}
                         />
                       </div>
-                      {certificationsOrLicenses.length > 1 && (
+                      {certifications.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -624,7 +636,7 @@ export const JobTemplateCreate = () => {
                   Are there any particular tools or software applications
                   candidates should be adept with?
                 </p>
-                {toolsOrSoftwaresetToolsOrSoftware.map((value, index) => {
+                {softwares.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -646,7 +658,7 @@ export const JobTemplateCreate = () => {
                           )}
                         />
                       </div>
-                      {toolsOrSoftwaresetToolsOrSoftware.length > 1 && (
+                      {softwares.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -692,11 +704,12 @@ export const JobTemplateCreate = () => {
                 <TextField
                   size="small"
                   placeholder="type"
-                  value={successThreeyear}
-                  onChange={(e) => setSuccessThreeyear(e.target.value)}
+                  value={envision}
+                  onChange={(e) => setEnvision(e.target.value)}
                 />
               </div>
             </div>
+            {/* button */}
             <div className="py-8 gap-8 flex justify-end">
               <Button
                 onClick={() => {
@@ -712,7 +725,7 @@ export const JobTemplateCreate = () => {
                 }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                CONFIRM
+                SAVE AS TEMPLATE
               </Button>
             </div>
             {/* popup */}

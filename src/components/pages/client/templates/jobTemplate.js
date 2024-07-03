@@ -134,9 +134,9 @@ export const JobTemplate = () => {
                         {data?.data?.map((row, index) => {
                           return (
                             <TableRow key={index}>
-                              <TableCell align="center">{row.id}</TableCell>
+                              <TableCell align="center">{index + 1}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.title}
+                                {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}

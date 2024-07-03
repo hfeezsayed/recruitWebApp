@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
+import axiosInstance from "../../../utils/axiosInstance";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  DialogActions,
+} from "@mui/material";
 import {
   IoIosCloseCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import { useEffect } from "react";
 
 export const JobDetailEdit = () => {
   const navigate = useNavigate();
@@ -23,36 +32,42 @@ export const JobDetailEdit = () => {
   const [salary, setSalary] = useState("");
 
   // job description
-  const [aboutUs, setAbountUs] = useState("");
-  const [positionSummry, setPostionSummry] = useState("");
-  const [dutiesAndResponsibilities, setDutiesAndResponsibilities] =
+  const [companyInfo, setCompanyInfo] = useState("");
+  const [positionSummry, setPositionSummary] = useState("");
+  const [responsibilities, setResponsibilities] =
     useState("");
-  const [benefitsAndCompensation, setBenefitsAndCompensation] = useState("");
+  const [benefits, setBenefits] = useState("");
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [experienceIndustry, setExperienceIndustry] = useState();
-  const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
+  const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
+  const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
-  const [typeOfRoles, setTypeOfROles] = useState();
-  const [timeOfRole, setTimeofRole] = useState();
-  const [travelRole, setTravelRole] = useState();
+  const [roleType, setRoleType] = useState();
+  const [roleTimings, setRoleTimings] = useState();
+  const [roleTravel, setRoleTravel] = useState();
   const [visa, setVisa] = useState();
 
   // Qualification and Requirements
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
-  const [requireAcademicQualification, setRequireAcademicQualification] =
+  const [requireRegulatory, setRequireRegulatory] =
     useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certificationsOrLicenses, setCertificationsOrLicenses] = useState([
+  const [certifications, setCertifications] = useState([
     { certificate: null },
   ]);
   const [
-    toolsOrSoftwaresetToolsOrSoftware,
-    setToolsOrSoftwaresetToolsOrSoftware,
+    softwares,
+    setSoftwares,
   ] = useState([{ tools: null }]);
-  const [successThreeyear, setSuccessThreeyear] = useState("");
+  const [envision, setEnvision] = useState("");
+
+  // popup
+  const [templateName, setTemplateName] = useState("");
+  const [templateTag, setTemplateTag] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -66,101 +81,144 @@ export const JobDetailEdit = () => {
 
   const yes_no = ["Yes", "No"];
 
+  const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axiosInstance
+      .post(
+        "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
+        {
+          jobTitle,
+          jobCode,
+          jobFamily,
+          jobDepartment,
+          jobLocation,
+          salary,
+          companyInfo,
+          positionSummry,
+          responsibilities,
+          benefits,
+          equalEmployeeOpportunity,
+          specificIndustryExperience,
+          specifyIndustryExp,
+          industryKnowledge,
+          workSetting,
+          roleType,
+          roleTimings,
+          roleTravel,
+          visa,
+          minimumLevelQualification,
+          requireRegulatory,
+          differentAcademic,
+          certifications,
+          softwares,
+          envision,
+          templateName,
+          templateTag,
+          templateDescription,
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        //localStorage.setItem("jobId", data.data.jobId);
+        navigate("/job/CreateJob", { state: data.data.jobId });
+      })
+      .catch((e) => console.log(e));
+    closePopup();
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    if(location.state.jobData) {
+      axiosInstance
+      .get(
+        `/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setJobTitle(response.data.jobTitle)                              
+        setJobCode(response.data.jobCode)
+        setJobFamily(response.data.jobFamily)
+        setJobDepartment(response.data.jobDepartment)
+        setJobLocation(response.data.jobLocation)
+        setSalary(response.data.salary)
+        setCompanyInfo(response.data.companyInfo)
+        setPositionSummary(response.data.positionSummry)
+        setResponsibilities(response.data.responsibilities)
+        setBenefits(response.data.benefits)
+        setEqualEmployeeOpportunity(response.data.equalEmployeeOpportunity)
+        setSpecificIndustryExperience(response.data.specificIndustryExperience)
+        setSpecifyIndustryExp(response.data.specifyIndustryExp)
+        setIndustryknowledge(response.data.industryKnowledge)
+        setWorkSetting(response.data.setWorkSetting)
+        setRoleType(response.data.roleType)
+        setRoleTimings(response.data.roleTimings)
+        setRoleTravel(response.data.roleTravel)
+        setVisa(response.data.visa)
+        setMinimumLevelQualification(response.data.minimumLevelQualification)
+        setRequireRegulatory(response.data.requireRegulatory)
+        setDifferentAcademic(response.data.differentAcademic)
+        setCertifications(response.data.certifications)
+        setSoftwares(response.data.softwares)
+        setEnvision(response.data.envision)
+        setTemplateName(response.data.templateName)
+        setTemplateTag(response.data.templateTag)
+        setTemplateDescription(response.data.templateDescription)
+
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    }
+    
+  }, [location.state]);
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setTemplateName("");
+    setTemplateTag("");
+    setTemplateDescription("");
+  };
+
   // certificate
   const addCertificate = () => {
-    setCertificationsOrLicenses([
-      ...certificationsOrLicenses,
+    setCertifications([
+      ...certifications,
       { certificate: null },
     ]);
   };
 
   const handleChangeCertificate = (e, value, i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues[i][e] = value;
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   const removeCertificate = (i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues.splice(i, 1);
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   // tools
   const addToolsAndSoftware = () => {
-    setToolsOrSoftwaresetToolsOrSoftware([
-      ...toolsOrSoftwaresetToolsOrSoftware,
+    setSoftwares([
+      ...softwares,
       { tools: null },
     ]);
   };
 
   const handleChangeToolsAndSoftware = (e, value, i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues[i][e] = value;
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
 
   const removeToolsAndSoftware = (i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues.splice(i, 1);
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
-
-  const handleSubmit = async () => {
-    console.log(location.state);
-    const jobId = localStorage.getItem("jobId");
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance
-      .post(`/saveJobTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
-        jobTitle,
-        jobCode,
-        jobFamily,
-        jobDepartment,
-        jobLocation,
-        salary,
-        aboutUs,
-        positionSummry,
-        dutiesAndResponsibilities,
-        benefitsAndCompensation,
-        equalEmployeeOpportunity,
-        experienceIndustry,
-        specifyIndusrtyExp,
-        industryKnowledge,
-        workSetting,
-        typeOfRoles,
-        timeOfRole,
-        travelRole,
-        visa,
-        minimumLevelQualification,
-        requireAcademicQualification,
-        differentAcademic,
-        certificationsOrLicenses,
-        toolsOrSoftwaresetToolsOrSoftware,
-        successThreeyear,
-      })
-      .then((data) => {
-        console.log(data.data);
-      })
-      .catch((e) => console.log(e));
-    navigate("/job/createJob");
-  };
-
-  useEffect(() => {
-    console.log(location.state);
-    const user = JSON.parse(localStorage.getItem("token"));
-    if (location.state?.jobData) {
-      axiosInstance
-        .get(
-          `/getJobTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
-        )
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [location.state]);
 
   return (
     <div>
@@ -178,20 +236,6 @@ export const JobDetailEdit = () => {
                   Please fill in the information as needed, or use the existing
                   template.
                 </p>
-              </div>
-              <div>
-                <Button
-                  onClick={() => {
-                    navigate("/job/jobTemplateList");
-                  }}
-                  variant="text"
-                  style={{
-                    color: "#008080",
-                    backgroundColor: "#EAF4F5",
-                    fontSize: 14,
-                  }}>
-                  Copy data from the template
-                </Button>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-8 py-5">
@@ -273,6 +317,7 @@ export const JobDetailEdit = () => {
                 </p>
                 <TextField
                   size="small"
+                  type="number"
                   disablePortal
                   value={salary || null}
                   onChange={(e) => setSalary(e.target.value)}
@@ -290,8 +335,8 @@ export const JobDetailEdit = () => {
                   About us - info about the company
                 </p>
                 <textarea
-                  value={aboutUs}
-                  onChange={(e) => setAbountUs(e.target.value)}
+                  value={companyInfo}
+                  onChange={(e) => setCompanyInfo(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -299,7 +344,7 @@ export const JobDetailEdit = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -308,7 +353,7 @@ export const JobDetailEdit = () => {
                 </p>
                 <textarea
                   value={positionSummry}
-                  onChange={(e) => setPostionSummry(e.target.value)}
+                  onChange={(e) => setPositionSummary(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -316,7 +361,7 @@ export const JobDetailEdit = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -324,8 +369,8 @@ export const JobDetailEdit = () => {
                   Duties and Responsibilities
                 </p>
                 <textarea
-                  value={dutiesAndResponsibilities}
-                  onChange={(e) => setDutiesAndResponsibilities(e.target.value)}
+                  value={responsibilities}
+                  onChange={(e) => setResponsibilities(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -333,24 +378,25 @@ export const JobDetailEdit = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={4}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Benefits and Compensation
                 </p>
-                <textarea
-                  value={benefitsAndCompensation}
-                  onChange={(e) => setBenefitsAndCompensation(e.target.value)}
+                <TextField
+                  value={benefits}
+                  type="number"
+                  onChange={(e) => setBenefits(e.target.value)}
                   placeholder="type"
+                  size="small"
                   style={{
                     borderWidth: 1,
                     borderColor: "#D0D5DD",
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -384,9 +430,9 @@ export const JobDetailEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
-                  value={experienceIndustry || null}
-                  onChange={(e, newvalue) => setExperienceIndustry(newvalue)}
+                  options={yes_no.map((option) => option)}
+                  value={specificIndustryExperience || null}
+                  onChange={(e, newvalue) => setSpecificIndustryExperience(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -400,7 +446,7 @@ export const JobDetailEdit = () => {
                 <TextField
                   size="small"
                   disablePortal
-                  value={specifyIndusrtyExp}
+                  value={specifyIndustryExp}
                   onChange={(e) => setSpecifyIndustryExp(e.target.value)}
                   placeholder="type"
                 />
@@ -448,8 +494,8 @@ export const JobDetailEdit = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={typeOfRoles || null}
-                    onChange={(e, newvalue) => setTypeOfROles(newvalue)}
+                    value={roleType || null}
+                    onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -464,8 +510,8 @@ export const JobDetailEdit = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={timeOfRole || null}
-                    onChange={(e, newvalue) => setTimeofRole(newvalue)}
+                    value={roleTimings || null}
+                    onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -480,8 +526,8 @@ export const JobDetailEdit = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={travelRole || null}
-                    onChange={(e, newvalue) => setTravelRole(newvalue)}
+                    value={roleTravel || null}
+                    onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -540,9 +586,9 @@ export const JobDetailEdit = () => {
                     size="small"
                     disablePortal
                     options={yes_no}
-                    value={requireAcademicQualification || null}
+                    value={requireRegulatory || null}
                     onChange={(e, newvalue) =>
-                      setRequireAcademicQualification(newvalue)
+                      setRequireRegulatory(newvalue)
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
@@ -572,7 +618,7 @@ export const JobDetailEdit = () => {
                   Are there any specific certifications or licenses that
                   candidates must hold?
                 </p>
-                {certificationsOrLicenses.map((value, index) => {
+                {certifications.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -594,7 +640,7 @@ export const JobDetailEdit = () => {
                           )}
                         />
                       </div>
-                      {certificationsOrLicenses.length > 1 && (
+                      {certifications.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -638,7 +684,7 @@ export const JobDetailEdit = () => {
                   Are there any particular tools or software applications
                   candidates should be adept with?
                 </p>
-                {toolsOrSoftwaresetToolsOrSoftware.map((value, index) => {
+                {softwares.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -660,7 +706,7 @@ export const JobDetailEdit = () => {
                           )}
                         />
                       </div>
-                      {toolsOrSoftwaresetToolsOrSoftware.length > 1 && (
+                      {softwares.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -706,11 +752,12 @@ export const JobDetailEdit = () => {
                 <TextField
                   size="small"
                   placeholder="type"
-                  value={successThreeyear}
-                  onChange={(e) => setSuccessThreeyear(e.target.value)}
+                  value={envision}
+                  onChange={(e) => setEnvision(e.target.value)}
                 />
               </div>
             </div>
+            {/* button */}
             <div className="py-8 gap-8 flex justify-end">
               <Button
                 onClick={() => {
@@ -721,12 +768,93 @@ export const JobDetailEdit = () => {
                 back
               </Button>
               <Button
-                onClick={handleSubmit}
+                onClick={() => {
+                  setShowPopup(true);
+                }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                CONFIRM
+                SAVE AS TEMPLATE
               </Button>
             </div>
+            {/* popup */}
+            <Dialog open={showPopup} onClose={closePopup}>
+              <DialogTitle>Template Details</DialogTitle>
+              <IconButton
+                onClick={closePopup}
+                style={{ position: "absolute", top: 10, right: 10 }}>
+                <IoIosCloseCircleOutline />
+              </IconButton>
+              <Divider />
+              <DialogContent>
+                <div className="grid-cols-2 grid gap-8">
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Template Name
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateName}
+                      onChange={(e) => setTemplateName(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                  <div className="grid grid-flow-row gap-2">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Template Tags
+                    </p>
+                    <TextField
+                      size="small"
+                      disablePortal
+                      value={templateTag}
+                      onChange={(e) => setTemplateTag(e.target.value)}
+                      placeholder="type"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-flow-row gap-2 py-8">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Job Template Description
+                  </p>
+                  <textarea
+                    value={templateDescription}
+                    placeholder="type"
+                    onChange={(e) => setTemplateDescription(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={closePopup}
+                  variant="outlined"
+                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                  cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  SAVE
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </div>

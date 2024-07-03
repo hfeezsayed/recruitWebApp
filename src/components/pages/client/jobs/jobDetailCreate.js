@@ -31,36 +31,36 @@ export const JobDetailCreate = () => {
   const [salary, setSalary] = useState("");
 
   // job description
-  const [aboutUs, setAbountUs] = useState("");
+  const [companyInfo, setCompanyInfo] = useState("");
   const [positionSummry, setPostionSummry] = useState("");
-  const [dutiesAndResponsibilities, setDutiesAndResponsibilities] =
+  const [responsibilities, setResponsibilities] =
     useState("");
-  const [benefitsAndCompensation, setBenefitsAndCompensation] = useState("");
+  const [benefits, setBenefits] = useState("");
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [experienceIndustry, setExperienceIndustry] = useState();
+  const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
   const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
-  const [typeOfRoles, setTypeOfROles] = useState();
-  const [timeOfRole, setTimeofRole] = useState();
-  const [travelRole, setTravelRole] = useState();
+  const [roleType, setRoleType] = useState();
+  const [roleTimings, setRoleTimings] = useState();
+  const [roleTravel, setRoleTravel] = useState();
   const [visa, setVisa] = useState();
 
   // Qualification and Requirements
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
-  const [requireAcademicQualification, setRequireAcademicQualification] =
+  const [requireRegulatory, setRequireRegulatory] =
     useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certificationsOrLicenses, setCertificationsOrLicenses] = useState([
+  const [certifications, setCertifications] = useState([
     { certificate: null },
   ]);
   const [
-    toolsOrSoftwaresetToolsOrSoftware,
-    setToolsOrSoftwaresetToolsOrSoftware,
+    softwares,
+    setSoftwares,
   ] = useState([{ tools: null }]);
-  const [successThreeyear, setSuccessThreeyear] = useState("");
+  const [envision, setEnvision] = useState("");
 
   // popup
   const [templateName, setTemplateName] = useState("");
@@ -85,7 +85,7 @@ export const JobDetailCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        "/saveJobTemplate?clientId=" + user.userId + "&jobId=" + jobId,
+        "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
         {
           jobTitle,
           jobCode,
@@ -93,34 +93,29 @@ export const JobDetailCreate = () => {
           jobDepartment,
           jobLocation,
           salary,
-          aboutUs,
+          companyInfo,
           positionSummry,
-          dutiesAndResponsibilities,
-          benefitsAndCompensation,
+          responsibilities,
+          benefits,
           equalEmployeeOpportunity,
-          experienceIndustry,
+          specificIndustryExperience,
           specifyIndusrtyExp,
           industryKnowledge,
           workSetting,
-          typeOfRoles,
-          timeOfRole,
-          travelRole,
+          roleType,
+          roleTimings,
+          roleTravel,
           visa,
           minimumLevelQualification,
-          requireAcademicQualification,
+          requireRegulatory,
           differentAcademic,
-          certificationsOrLicenses,
-          toolsOrSoftwaresetToolsOrSoftware,
-          successThreeyear,
+          certifications,
+          softwares,
+          envision,
           templateName,
           templateTag,
           templateDescription,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
       )
       .then((data) => {
         console.log(data.data);
@@ -140,42 +135,42 @@ export const JobDetailCreate = () => {
 
   // certificate
   const addCertificate = () => {
-    setCertificationsOrLicenses([
-      ...certificationsOrLicenses,
+    setCertifications([
+      ...certifications,
       { certificate: null },
     ]);
   };
 
   const handleChangeCertificate = (e, value, i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues[i][e] = value;
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   const removeCertificate = (i) => {
-    let newFormValues = [...certificationsOrLicenses];
+    let newFormValues = [...certifications];
     newFormValues.splice(i, 1);
-    setCertificationsOrLicenses(newFormValues);
+    setCertifications(newFormValues);
   };
 
   // tools
   const addToolsAndSoftware = () => {
-    setToolsOrSoftwaresetToolsOrSoftware([
-      ...toolsOrSoftwaresetToolsOrSoftware,
+    setSoftwares([
+      ...softwares,
       { tools: null },
     ]);
   };
 
   const handleChangeToolsAndSoftware = (e, value, i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues[i][e] = value;
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
 
   const removeToolsAndSoftware = (i) => {
-    let newFormValues = [...toolsOrSoftwaresetToolsOrSoftware];
+    let newFormValues = [...softwares];
     newFormValues.splice(i, 1);
-    setToolsOrSoftwaresetToolsOrSoftware(newFormValues);
+    setSoftwares(newFormValues);
   };
 
   return (
@@ -289,6 +284,7 @@ export const JobDetailCreate = () => {
                 </p>
                 <TextField
                   size="small"
+                  type="number"
                   disablePortal
                   value={salary || null}
                   onChange={(e) => setSalary(e.target.value)}
@@ -306,8 +302,8 @@ export const JobDetailCreate = () => {
                   About us - info about the company
                 </p>
                 <textarea
-                  value={aboutUs}
-                  onChange={(e) => setAbountUs(e.target.value)}
+                  value={companyInfo}
+                  onChange={(e) => setCompanyInfo(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -315,7 +311,7 @@ export const JobDetailCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -332,7 +328,7 @@ export const JobDetailCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={2}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -340,8 +336,8 @@ export const JobDetailCreate = () => {
                   Duties and Responsibilities
                 </p>
                 <textarea
-                  value={dutiesAndResponsibilities}
-                  onChange={(e) => setDutiesAndResponsibilities(e.target.value)}
+                  value={responsibilities}
+                  onChange={(e) => setResponsibilities(e.target.value)}
                   placeholder="type"
                   style={{
                     borderWidth: 1,
@@ -349,24 +345,25 @@ export const JobDetailCreate = () => {
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
+                  rows={4}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Benefits and Compensation
                 </p>
-                <textarea
-                  value={benefitsAndCompensation}
-                  onChange={(e) => setBenefitsAndCompensation(e.target.value)}
+                <TextField
+                  value={benefits}
+                  type="number"
+                  onChange={(e) => setBenefits(e.target.value)}
                   placeholder="type"
+                  size="small"
                   style={{
                     borderWidth: 1,
                     borderColor: "#D0D5DD",
                     borderRadius: 8,
                     padding: 5,
                   }}
-                  rows={1.5}
                 />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
@@ -400,9 +397,9 @@ export const JobDetailCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
-                  value={experienceIndustry || null}
-                  onChange={(e, newvalue) => setExperienceIndustry(newvalue)}
+                  options={yes_no.map((option) => option)}
+                  value={specificIndustryExperience || null}
+                  onChange={(e, newvalue) => setSpecificIndustryExperience(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -464,8 +461,8 @@ export const JobDetailCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={typeOfRoles || null}
-                    onChange={(e, newvalue) => setTypeOfROles(newvalue)}
+                    value={roleType || null}
+                    onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -480,8 +477,8 @@ export const JobDetailCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={timeOfRole || null}
-                    onChange={(e, newvalue) => setTimeofRole(newvalue)}
+                    value={roleTimings || null}
+                    onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -496,8 +493,8 @@ export const JobDetailCreate = () => {
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
-                    value={travelRole || null}
-                    onChange={(e, newvalue) => setTravelRole(newvalue)}
+                    value={roleTravel || null}
+                    onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -556,9 +553,9 @@ export const JobDetailCreate = () => {
                     size="small"
                     disablePortal
                     options={yes_no}
-                    value={requireAcademicQualification || null}
+                    value={requireRegulatory || null}
                     onChange={(e, newvalue) =>
-                      setRequireAcademicQualification(newvalue)
+                      setRequireRegulatory(newvalue)
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
@@ -588,7 +585,7 @@ export const JobDetailCreate = () => {
                   Are there any specific certifications or licenses that
                   candidates must hold?
                 </p>
-                {certificationsOrLicenses.map((value, index) => {
+                {certifications.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -610,7 +607,7 @@ export const JobDetailCreate = () => {
                           )}
                         />
                       </div>
-                      {certificationsOrLicenses.length > 1 && (
+                      {certifications.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -654,7 +651,7 @@ export const JobDetailCreate = () => {
                   Are there any particular tools or software applications
                   candidates should be adept with?
                 </p>
-                {toolsOrSoftwaresetToolsOrSoftware.map((value, index) => {
+                {softwares.map((value, index) => {
                   return (
                     <>
                       <div>
@@ -676,7 +673,7 @@ export const JobDetailCreate = () => {
                           )}
                         />
                       </div>
-                      {toolsOrSoftwaresetToolsOrSoftware.length > 1 && (
+                      {softwares.length > 1 && (
                         <div className=" flex justify-end">
                           <Button
                             variant="outlined"
@@ -722,8 +719,8 @@ export const JobDetailCreate = () => {
                 <TextField
                   size="small"
                   placeholder="type"
-                  value={successThreeyear}
-                  onChange={(e) => setSuccessThreeyear(e.target.value)}
+                  value={envision}
+                  onChange={(e) => setEnvision(e.target.value)}
                 />
               </div>
             </div>
