@@ -15,7 +15,12 @@ const getCompetencyObject = (competency, name) => {
 
   if (name === "Sociability Skill") {
     mappings.push(
-      { name: "Communication skills", innerRadius: 100, outerRadius: 90, color: "#FBE29F" },
+      {
+        name: "Communication skills",
+        innerRadius: 100,
+        outerRadius: 90,
+        color: "#FBE29F",
+      },
       {
         name: "Collaboration",
         innerRadius: 85,
@@ -37,7 +42,12 @@ const getCompetencyObject = (competency, name) => {
     );
   } else if (name === "Cognitive Agility") {
     mappings.push(
-      { name: "Adaptability", innerRadius: 100, outerRadius: 90, color: "#62B2FD" },
+      {
+        name: "Adaptability",
+        innerRadius: 100,
+        outerRadius: 90,
+        color: "#62B2FD",
+      },
       {
         name: "Decision Making",
         innerRadius: 85,
@@ -106,15 +116,14 @@ const getCompetencyObject = (competency, name) => {
 
 export const convertCompetencies = (competencyList) => {
   console.log(competencyList);
-  const name = competencyList.pillar2
+  const name = competencyList?.pillar2;
   console.log(name);
-  const competencies = competencyList.competencies
-  return competencies.map((competency) =>
+  const competencies = competencyList?.competencies;
+  return competencies?.map((competency) =>
     getCompetencyObject(competency, name)
   );
 };
 
-
 export const convertCompetencies1 = (data) => {
   console.log(data);
-}
+};
