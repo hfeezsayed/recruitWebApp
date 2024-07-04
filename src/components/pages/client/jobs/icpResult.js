@@ -14,19 +14,10 @@ import { convertCompetencies } from "../../../utils/function";
 // import HumanBody from "../../../../assets/images/ColorBodyHuman.png";
 import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
+import Spinner from "../../../utils/spinner";
+
 
 export const IcpResult = () => {
-  const [userData, setUserData] = useState(icpTemplateResultData);
-  const [emotional, setEmotional] = useState(null);
-  const [cognitive, setCongnitive] = useState(null);
-  const [sociability, setSociability] = useState(null);
-  const { version } = useLocation().state || {};
-  const [spectrum1, setSpectrum1] = useState("spectrum1");
-  const [spectrum2, setSpectrum2] = useState("spectrum2");
-  const [spectrum3, setSpectrum3] = useState("spectrum3");
-  const [spectrum4, setSpectrum4] = useState("spectrum4");
-  const [spectrum5, setSpectrum5] = useState("spectrum5");
-
   const spectrums = [
     {
       spectrum: "spectrum 1",
@@ -54,6 +45,19 @@ export const IcpResult = () => {
         "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
     },
   ];
+  const [userData, setUserData] = useState(icpTemplateResultData);
+  const [pillars, setPillars] = useState(spectrums);
+  const [emotional, setEmotional] = useState(null);
+  const [cognitive, setCongnitive] = useState(null);
+  const [sociability, setSociability] = useState(null);
+  const { version } = useLocation().state || {};
+  const [spectrum1, setSpectrum1] = useState("spectrum1");
+  const [spectrum2, setSpectrum2] = useState("spectrum2");
+  const [spectrum3, setSpectrum3] = useState("spectrum3");
+  const [spectrum4, setSpectrum4] = useState("spectrum4");
+  const [spectrum5, setSpectrum5] = useState("spectrum5");
+  const [loading, setLoading] = useState(false);
+
 
   const location = useLocation();
 
@@ -70,6 +74,7 @@ export const IcpResult = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
+    setLoading(true);
     if (location.state.jobData) {
       axiosInstance
         .get(
@@ -77,16 +82,13 @@ export const IcpResult = () => {
         )
         .then((response) => {
           console.log(location.data);
-          // setUserData(response.data)
-          // setSpectrum1(response.data.pillars[0]);
-          // setSpectrum2(response.data.pillars[1]);
-          // setSpectrum3(response.data.pillars[2]);
-          // setSpectrum4(response.data.pillars[3]);
-          // setSpectrum5(response.data.pillars[4]);
-          //localStorage.setItem("jobId", data.data.id);
+          setUserData(response.data)
+          setPillars(response.data.pillars);
+          setLoading(false);
         })
         .catch((e) => {
           console.log(e);
+          setLoading(false);
         });
     } else {
       // setUserData(location.state)
@@ -104,6 +106,12 @@ export const IcpResult = () => {
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
+          { loading === true ? 
+          (
+            <Spinner/>
+          )
+          :
+          (
           <div className="p-8">
             <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
               Ideal Candidate Persona: Template 1
@@ -125,7 +133,7 @@ export const IcpResult = () => {
                 </p>
                 <div className="flex justify-center">
                   <div className="grid relative pt-5">
-                    {spectrums.map((row, index) => {
+                    {pillars.map((row, index) => {
                       return (
                         <div
                           className={`flex text-end mt-32 ${
@@ -163,7 +171,7 @@ export const IcpResult = () => {
                     <ColorBodySvg />
                   </div>
                   <div className="grid relative pt-5">
-                    {spectrums.map((row, index) => {
+                    {pillars.map((row, index) => {
                       return (
                         <div
                           className={`flex mt-16  ${
@@ -680,6 +688,7 @@ export const IcpResult = () => {
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
       <Footer />
