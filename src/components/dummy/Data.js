@@ -1010,7 +1010,7 @@ export const workValueViewData = {
   tag: "ABCD",
   templateDescription: "ABCD",
   data: [
-    { statement: "Self- Direction", rating: 4 }, 
+    { statement: "Self- Direction", rating: 4 },
     { statement: "Stimulation", rating: 3 },
     { statement: "Hedonism", rating: 3 },
     { statement: "Achievements", rating: 3 },
@@ -2059,4 +2059,64 @@ export const BatchPopUpData = {
       status: "Rejected",
     },
   ],
+};
+
+export const candidatePersonalInfoData = {
+  resume: "Ishita Sajwan’s UX/UI Resume",
+  title: "Engeniring",
+  mobileNumber: "91 8976890765",
+  linkdianLink: "https://www.linkedin.com/in/benjamin-grant-72381ujy3u.",
+  summry:
+    "As a Software Engineer, you will play a pivotal role in the development and maintenance of cutting-edge web applications. Your primary responsibility will be to collaborate with cross-functional teams to design, develop, test, deploy, and maintain scalable and responsive web applications that meet the evolving needs of our users and stakeholders.",
+  degree: "Bachelor of Science (B.S.)",
+  filedOfStudy: "computer science",
+  institute: "stnform univercioty",
+  city: "stanford",
+  state: "india",
+};
+
+export const candidatePreferenceFormData = {
+  academicQualification: "1 year",
+  specialization: "abcd",
+  academicBackground:
+    "I graduated with a Bachelor’s degree in Computer Science from XYZ University, where I developed a solid foundation in programming, software development, and user-centered design principles. During my studies, I took several courses on human-computer interaction, which sparked my interest in UX/UI design. After university, I completed a specialized certification in UX Design from ABC Institute, where I honed my skills in user research, wireframing, and prototyping. This certification program included a capstone project where I redesigned the interface of a local e-commerce website. I conducted user interviews, created personas, and developed a prototype that improved the site’s usability and overall user experience.",
+  specificCertifications: "No",
+  experiance: "1 year",
+  specificRole: "Abcd",
+  specificIndustry: "No",
+  experienceStakeholders: "No",
+  noticePeriod: "15 days",
+  teamHandling: "No",
+  industryExperience: {
+    industry: "E commerce",
+    experience: "1 year",
+  },
+  primarySkills: [
+    { skill: "wireford", experiance: "2 year" },
+    { skill: "coomerce", experiance: "1 year" },
+  ],
+  secondarySkills: [
+    { skill: "wireford", experiance: "2 year" },
+    { skill: "coomerce", experiance: "1 year" },
+  ],
+  softwareApplication: [
+    { tool: "wireford", experiance: "2 year" },
+    { tool: "wireford", experiance: "2 year" },
+  ],
+  workSetting: "in-office",
+  workShift: "flexible",
+  perfferdLocation: "Heydrabad",
+  openToRelocate: "yes",
+  requredToTravel: "often",
+  workShedule: "Day Time",
+  workTeam: "Independently",
+  salaryExpectations: {
+    range: "123497 - 19816",
+    payment: "Monthly",
+  },
+  typeOfJobopenings: "Full-Time Permanent Positions",
+  appealingWork: "Abccd",
+  workEnvironment: "Abcd",
+  environmentImportant: "ABCD",
+  visaStatus: "Abcd",
 };

@@ -72,6 +72,9 @@ import { CreateAssessment } from "./components/pages/candidate/AssessmentForm/cr
 import { CandidateAssessmentQuestionnaire } from "./components/pages/candidate/AssessmentForm/CandidateAssessmentQuestionnaire";
 import { ConformationScreen } from "./components/pages/client/jobs/conformationScreen";
 import { OutputofJobDescription } from "./components/pages/client/jobs/outputOfJobDescription";
+import { OutputofDigitalTalentProfile } from "./components/pages/candidate/HomePage/outputofDigitalTalentProfile";
+import { ConfirmationScreen } from "./components/pages/candidate/DigitalTalentProfile/confirmationScreen";
+import { ProfileDashboard } from "./components/pages/client/dashboard/profile";
 
 export const Routes = () => {
   return (
@@ -90,6 +93,10 @@ export const Routes = () => {
       />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
         <Route path="candidate" element={<HomePage />} />
+        <Route
+          path="outputofDigitalTalentProfile"
+          element={<OutputofDigitalTalentProfile />}
+        />
         <Route path="digitalTalentProfile" element={<DigitalTalentProfile />} />
         <Route
           path="digitalTalentProfile/personalinfromation"
@@ -116,6 +123,10 @@ export const Routes = () => {
           element={<TalentAnalysisResult />}
         />
         <Route
+          path="digitalTalentProfile/confirmationScreen"
+          element={<ConfirmationScreen />}
+        />
+        <Route
           path="comprehensiveAssessment"
           element={<CandidateAssessmentQuestionnaire />}
         />
@@ -125,6 +136,7 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
+        <Route path="profile" element={<ProfileDashboard />} />
         <Route path="job/allJobs" element={<AllJobs />} />
         <Route path="job/assignCandidates" element={<AssignCandidates />} />
         <Route path="job/createdJobs" element={<CreatedJobs />} />

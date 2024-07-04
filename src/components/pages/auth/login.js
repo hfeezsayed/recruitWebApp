@@ -29,14 +29,15 @@ export const Login = () => {
   }, []);
 
   const onSubmit = async (e) => {
-    // const dummy = {
-    //   userId: 3,
-    //   username: "Ram",
-    //   email: "ram@xenspire.co",
-    //   accessToken:
-    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
-    //   role: "ROLE_CLIENT",
-    // };
+    const dummy = {
+      userId: 3,
+      username: "Ram",
+      email: "ram@xenspire.co",
+      accessToken:
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
+      role: "ROLE_CLIENT",
+    };
+    localStorage.setItem("token", JSON.stringify(dummy));
     const username = email;
     e.preventDefault();
     await axiosInstance

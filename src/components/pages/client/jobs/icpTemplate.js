@@ -28,12 +28,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { IoSearchOutline } from "react-icons/io5";
+import { IoMdThumbsUp, IoMdThumbsDown } from "react-icons/io";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import axiosInstance from "../../../utils/axiosInstance";
-import { useLocation } from "react-router-dom";
-import { IoSearchOutline } from "react-icons/io5";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -163,7 +165,7 @@ export const JobIcpTemplate = () => {
     }
   };
 
-  const RankingQuestion = () => {
+  const RankingQuestionOld = () => {
     const [error, setError] = useState({ error: false, message: "" });
     const [ans, setAns] = useState([]);
 
@@ -252,6 +254,144 @@ export const JobIcpTemplate = () => {
         )}
         {/* button */}
         <div className="flex justify-end mt-5 gap-4">
+          <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
+            {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
+          </Button>
+        </div>
+      </form>
+    );
+  };
+
+  function ItemRanking({ id, content, index, moveItem }) {
+    const ref = React.useRef(null);
+
+    const [, drop] = useDrop({
+      accept: "item",
+      hover(item, monitor) {
+        if (!ref.current) {
+          return;
+        }
+        const dragIndex = item.index;
+        const hoverIndex = index;
+        if (dragIndex === hoverIndex) {
+          return;
+        }
+        const hoverBoundingRect = ref.current?.getBoundingClientRect();
+        const hoverMiddleY =
+          (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        const clientOffset = monitor.getClientOffset();
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
+        moveItem(dragIndex, hoverIndex);
+        item.index = hoverIndex;
+      },
+    });
+
+    const [{ isDragging }, drag] = useDrag({
+      type: "item",
+      item: { id, index },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    });
+
+    const opacity = isDragging ? 0 : 1;
+
+    drag(drop(ref));
+
+    return (
+      <div
+        ref={ref}
+        style={{
+          opacity,
+          padding: 3,
+        }}>
+        <text className=" pr-2 text-app-Teal text-2xl">&#x2022;</text>
+        <text>{content}</text>
+      </div>
+    );
+  }
+
+  const RankingQuestion = ({ question }) => {
+    const [items, setItems] = React.useState([]);
+
+    React.useEffect(() => {
+      // Fetch data from API
+      fetchData();
+    }, [question]);
+
+    const fetchData = async () => {
+      try {
+        const formattedData = question.options.map((item, index) => ({
+          id: index + 1,
+          content: item,
+        }));
+        setItems(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const moveItem = (dragIndex, hoverIndex) => {
+      const dragItem = items[dragIndex];
+      const newItems = [...items];
+      newItems.splice(dragIndex, 1);
+      newItems.splice(hoverIndex, 0, dragItem);
+      setItems(newItems);
+    };
+
+    const onSubmit = (e) => {
+      e.preventDefault();
+      if (items.length === 0) {
+        question.selectedOption = null;
+        question.selectedOrder = question;
+        return;
+      }
+      const newArray = items.map((item) => item.content);
+      question.selectedOption = null;
+      question.selectedOrder = newArray;
+      handleNext();
+    };
+
+    return (
+      <form onSubmit={onSubmit} className="py-5">
+        <DndProvider backend={HTML5Backend}>
+          <div>
+            <div className="flex gap-2 items-center">
+              <p style={{ color: "#475467", fontSize: 14 }}>Highest</p>
+              <IoMdThumbsUp style={{ color: "#58A20F", fontSize: 20 }} />
+            </div>
+            {items.map((item, index) => (
+              <ItemRanking
+                key={item.id}
+                id={item.id}
+                content={item.content}
+                index={index}
+                moveItem={moveItem}
+              />
+            ))}
+            <div className="flex gap-2 items-center">
+              <p style={{ color: "#475467", fontSize: 14 }}>Lowest</p>
+              <IoMdThumbsDown style={{ color: "#E05880", fontSize: 20 }} />
+            </div>
+          </div>
+        </DndProvider>
+        {/* button */}
+        <div className="flex justify-end mt-4 gap-4">
+          {/* {!(currentQuestion === 0) && (
+            <Button
+              variant="contained"
+              onClick={handleBack}
+              disabled={currentQuestion === 0}
+              sx={{ bgcolor: "#008080" }}>
+              Back
+            </Button>
+          )} */}
           <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
             {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
           </Button>
@@ -632,7 +772,7 @@ export const JobIcpTemplate = () => {
                   </div>
                   {/* questions */}
                   {IcpTemplateQuestion?.questionType === "RANKING" && (
-                    <RankingQuestion />
+                    <RankingQuestion question={IcpTemplateQuestion} />
                   )}
                   {IcpTemplateQuestion?.questionType === "RATING" && (
                     <RatingQuestion />
