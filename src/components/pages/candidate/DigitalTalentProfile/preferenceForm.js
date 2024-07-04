@@ -3,7 +3,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
@@ -14,6 +14,7 @@ import { useEffect } from "react";
 
 export const PreferenceForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeScreen, setActiveScreen] = useState(1);
   const [academicQualification, setAcademicQualification] = useState();
   const [specialization, setSpecialization] = useState();
@@ -86,7 +87,11 @@ export const PreferenceForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance.get("/getCandidatePreferences?candidateId="+user.userId,
+    let preferenceId = 0;
+    if(location.state) {
+      preferenceId = location.state;
+    }
+    axiosInstance.get(`/getCandidatePreferences?candidateId=${user.userId}&preferenceId=${location.state}`,
 
     )
     .then(response => {

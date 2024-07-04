@@ -21,14 +21,11 @@ import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 import { SideNav } from "../../../widgets/sidenav";
+import axiosInstance from "../../../utils/axiosInstance";
+import { useEffect } from "react";
+
 
 export const OutputofDigitalTalentProfile = () => {
-  const [personalInfo, setPersonalInfio] = useState(candidatePersonalInfoData);
-  const [preferenceForm, setPreferenceForm] = useState(
-    candidatePreferenceFormData
-  );
-  const [workValueData, setWorkValueData] = useState(workValueViewData);
-  const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const spectrums = [
     {
       spectrum: "spectrum 1",
@@ -56,6 +53,40 @@ export const OutputofDigitalTalentProfile = () => {
         "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
     },
   ];
+  const [personalInfo, setPersonalInfio] = useState(candidatePersonalInfoData);
+  const [preferenceForm, setPreferenceForm] = useState(
+    candidatePreferenceFormData
+  );
+  const [workValueData, setWorkValueData] = useState([]);
+  const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
+  const [pillars, setPillars] = useState(spectrums);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    //setLoading(true);
+    axiosInstance
+      .get(`/getCandidateDTPDescription?candidateId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setPersonalInfio(response.data.personalInfo);
+       // setPreferenceForm(response.data.preferences);
+        setWorkValueData(response.data?.values);
+        setIcpAnalysisData(response.data.dtpResult);
+        setPillars(response.data.dtpResult.pillars);
+        console.log(response.data.assessment === true);
+        //setLoading(false);
+        // setAssessment(response.data.assessment);
+        // setValueAssessment(response.data.valueAssessment);
+        // setPreferences(response.data.preferenes);
+        // setPersonalInfo(response.data.personalInfo);
+      })
+      .catch((error) => {
+        console.log(error);
+        //setLoading(false);
+      });
+  }, []);
 
   const convertedEmtional = convertCompetencies(
     icpAnalysisData?.emtionalFlexibility[0]
@@ -68,6 +99,7 @@ export const OutputofDigitalTalentProfile = () => {
   const convertCognitive = convertCompetencies(
     icpAnalysisData?.cognitiveAgility[0]
   );
+
 
   return (
     <div>
@@ -132,7 +164,7 @@ export const OutputofDigitalTalentProfile = () => {
                     LinkedIn Link
                   </p>
                   <p style={{ color: "#101828", fontSize: 16 }}>
-                    {personalInfo?.linkdianLink}
+                    {personalInfo?.url}
                   </p>
                 </div>
                 <div className="grid grid-flow-row  py-1">
@@ -141,7 +173,7 @@ export const OutputofDigitalTalentProfile = () => {
                     Summary
                   </p>
                   <p style={{ color: "#101828", fontSize: 16 }}>
-                    {personalInfo?.summry}
+                    {personalInfo?.summary}
                   </p>
                 </div>
                 <div className="py-4">
@@ -705,7 +737,7 @@ export const OutputofDigitalTalentProfile = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {workValueData?.data?.map((row, index) => {
+                        {workValueData?.map((row, index) => {
                           return (
                             <TableRow key={index}>
                               <TableCell
@@ -761,7 +793,7 @@ export const OutputofDigitalTalentProfile = () => {
                     </p>
                     <div className="flex justify-center">
                       <div className="grid relative pt-5">
-                        {spectrums.map((row, index) => {
+                        {pillars.map((row, index) => {
                           return (
                             <div
                               className={`flex text-end mt-32 ${
@@ -799,7 +831,7 @@ export const OutputofDigitalTalentProfile = () => {
                         <ColorBodySvg />
                       </div>
                       <div className="grid relative pt-5">
-                        {spectrums.map((row, index) => {
+                        {pillars.map((row, index) => {
                           return (
                             <div
                               className={`flex mt-16  ${

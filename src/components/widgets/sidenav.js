@@ -319,6 +319,7 @@ export const SideNav = () => {
               </ListItemIcon>
               <ListItemText
                 primary={"Assessments"}
+                onClick={() => navigate("/assesmentform", { state: 1 })}
                 primaryTypographyProps={{
                   color:
                     currentState === "/assesmentform" ? "#ffffff" : "#475467",
@@ -327,11 +328,11 @@ export const SideNav = () => {
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              {/* {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />} */}
             </ListItemButton>
           </ListItem>
           {/* collapse */}
-          <Collapse in={showAssesment} timeout="auto" unmountOnExit>
+          {/* <Collapse in={showAssesment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
               onClick={() => navigate("/assesmentform", { state: 1 })}>
@@ -371,7 +372,7 @@ export const SideNav = () => {
                 Clients - Assessment
               </p>
             </div>
-          </Collapse>
+          </Collapse> */}
 
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton

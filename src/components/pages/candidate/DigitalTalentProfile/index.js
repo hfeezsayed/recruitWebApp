@@ -27,6 +27,7 @@ import { DigitalTalentProfileData } from "../../../dummy/Data";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../../utils/spinner";
 
 export const DigitalTalentProfile = () => {
   const [userData, setUserData] = useState(DigitalTalentProfileData);
@@ -55,9 +56,11 @@ export const DigitalTalentProfile = () => {
   const [valueAssessment, setValueAssessment] = useState(false);
   const [prefereness, setPreferences] = useState(false);
   const [personalInfo, setPersonalInfo] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
     axiosInstance
       .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
       .then((response) => {
@@ -73,6 +76,7 @@ export const DigitalTalentProfile = () => {
           console.log("dtp = ", disableDTP);
           setDisableDTP(false);
         }
+        setLoading(false);
         // setAssessment(response.data.assessment);
         // setValueAssessment(response.data.valueAssessment);
         // setPreferences(response.data.preferenes);
@@ -80,6 +84,7 @@ export const DigitalTalentProfile = () => {
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -103,6 +108,14 @@ export const DigitalTalentProfile = () => {
     }
   };
 
+  const handlePreferences = () => {
+    if(userData.assessment === true){
+      navigate("/digitalTalentProfile/preferenceform", { state: userData?.preferencesVersionId });
+    } else {
+      navigate("/digitalTalentProfile/preferenceform");
+    }
+  }
+
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
       setUserData({
@@ -121,467 +134,474 @@ export const DigitalTalentProfile = () => {
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          <div className="p-8">
-            <div>
-              <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                Welcome to Our Talent Profile Creation
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                Craft your personalized talent profile now and let your skills
-                shine globally.
-              </p>
-              <div className="py-4 flex gap-6">
-                <div
-                  className="w-28 h-28 rounded-full "
-                  style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
-                  <img
-                    src={
-                      userData.image ||
-                      `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
-                    }
-                    alt="person"
-                    className="rounded-full"
-                  />
+          { loading === true ? 
+          (
+            <Spinner/>
+          )
+          :
+          (
+            <div className="p-8">
+              <div>
+                <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
+                  Welcome to Our Talent Profile Creation
+                </p>
+                <p style={{ color: "#475467", fontSize: 16 }}>
+                  Craft your personalized talent profile now and let your skills
+                  shine globally.
+                </p>
+                <div className="py-4 flex gap-6">
                   <div
-                    className="relative -mt-8 justify-end flex h-9"
-                    style={{ backgroundColor: "#" }}>
-                    <IconButton
-                      style={{ padding: 6, backgroundColor: "#66B2B2" }}>
-                      <BsFillCameraFill
-                        style={{ color: "#ffffff", fontSize: 22 }}
-                      />
-                    </IconButton>
-                  </div>
-                </div>
-                <div className="mt-9">
-                  <p
-                    style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
-                    {userName}
-                  </p>
-                  <div className="flex gap-2 items-center pt-1">
-                    <MdMailOutline
-                      style={{
-                        color: "#475467",
-                        fontSize: 24,
-                      }}
+                    className="w-28 h-28 rounded-full "
+                    style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
+                    <img
+                      src={
+                        userData.image ||
+                        `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
+                      }
+                      alt="person"
+                      className="rounded-full"
                     />
+                    <div
+                      className="relative -mt-8 justify-end flex h-9"
+                      style={{ backgroundColor: "#" }}>
+                      <IconButton
+                        style={{ padding: 6, backgroundColor: "#66B2B2" }}>
+                        <BsFillCameraFill
+                          style={{ color: "#ffffff", fontSize: 22 }}
+                        />
+                      </IconButton>
+                    </div>
+                  </div>
+                  <div className="mt-9">
                     <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                      }}>
-                      {JSON.parse(localStorage.getItem("token"))?.email ||
-                        userData?.email}
+                      style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
+                      {userName}
                     </p>
-                    {userData.resume && (
-                      <Button
-                        size="small"
-                        variant="text"
+                    <div className="flex gap-2 items-center pt-1">
+                      <MdMailOutline
                         style={{
-                          color: "#6941C6",
-                          textTransform: "none",
-                          backgroundColor: "#F9F5FF",
-                          borderRadius: 16,
-                          paddingLeft: 10,
-                          paddingRight: 10,
+                          color: "#475467",
+                          fontSize: 24,
                         }}
-                        startIcon={<HiOutlineDownload />}>
-                        Resume
-                      </Button>
-                    )}
-                    {userData.linkedin && (
-                      <Button
-                        size="small"
-                        variant="text"
+                      />
+                      <p
                         style={{
-                          color: "#3538CD",
-                          textTransform: "none",
-                          backgroundColor: "#EEF4FF",
-                          borderRadius: 16,
-                          paddingLeft: 10,
-                          paddingRight: 10,
-                        }}
-                        startIcon={<MdOutlineArrowOutward />}>
-                        Linkedin
-                      </Button>
-                    )}
+                          color: "#475467",
+                          fontSize: 16,
+                        }}>
+                        {JSON.parse(localStorage.getItem("token"))?.email ||
+                          userData?.email}
+                      </p>
+                      {userData.resume && (
+                        <Button
+                          size="small"
+                          variant="text"
+                          style={{
+                            color: "#6941C6",
+                            textTransform: "none",
+                            backgroundColor: "#F9F5FF",
+                            borderRadius: 16,
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                          }}
+                          startIcon={<HiOutlineDownload />}>
+                          Resume
+                        </Button>
+                      )}
+                      {userData.linkedIn && (
+                        <Button
+                          size="small"
+                          variant="text"
+                          style={{
+                            color: "#3538CD",
+                            textTransform: "none",
+                            backgroundColor: "#EEF4FF",
+                            borderRadius: 16,
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                          }}
+                          startIcon={<MdOutlineArrowOutward />}>
+                          Linkedin
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex w-full py-2">
+                  <div className="w-full">
+                    <p style={{ color: "#101828", fontSize: 14 }}>
+                      Profile completion
+                    </p>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Box sx={{ width: "50%", mr: 1 }}>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={userData?.personalInfo ? 100 : 0}
+                        />
+                      </Box>
+                      <Box sx={{ minWidth: 35 }}>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary">{`${Math.round(
+                          userData?.personalInfo ? 100 : 0
+                        )}%`}</Typography>
+                      </Box>
+                    </Box>
+                  </div>
+                  <div className="w-64">
+                    <Button
+                      size="small"
+                      variant="text"
+                      style={{
+                        color: "#5E8EBD",
+                        textTransform: "none",
+                      }}
+                      onClick={() => {
+                        navigate("/OutputofDigitalTalentProfile");
+                      }}>
+                      Access DTP Description
+                    </Button>
                   </div>
                 </div>
               </div>
-              <div className="flex w-full py-2">
-                <div className="w-full">
-                  <p style={{ color: "#101828", fontSize: 14 }}>
-                    Profile completion
-                  </p>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box sx={{ width: "50%", mr: 1 }}>
-                      <BorderLinearProgress
-                        variant="determinate"
-                        value={userData?.personalInfo ? 100 : 0}
-                      />
-                    </Box>
-                    <Box sx={{ minWidth: 35 }}>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary">{`${Math.round(
-                        userData?.personalInfo ? 100 : 0
-                      )}%`}</Typography>
-                    </Box>
-                  </Box>
-                </div>
-                <div className="w-64">
-                  <Button
-                    size="small"
-                    variant="text"
-                    style={{
-                      color: "#5E8EBD",
-                      textTransform: "none",
-                    }}
-                    onClick={() => {
-                      navigate("/OutputofDigitalTalentProfile");
-                    }}>
-                    Access DTP Description
-                  </Button>
+              <div className="py-10">
+                <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
+                  Complete all forms and assessments to begin
+                </p>
+                <p style={{ color: "#475467", fontSize: 16 }}>
+                  Please fill out all the necessary forms and complete the
+                  required assessments to get started
+                </p>
+                {/* card */}
+                <div className="grid grid-cols-2 gap-5 mt-5">
+                  <Card sx={{ borderRadius: 5 }}>
+                    <CardContent>
+                      <div className="flex gap-2">
+                        <div className="w-1/3">
+                          <Gauge
+                            height={100}
+                            value={userData?.personalInfo ? 100 : 0}
+                            startAngle={-110}
+                            endAngle={110}
+                            sx={{
+                              [`& .${gaugeClasses.valueText}`]: {
+                                fontSize: 20,
+                                transform: "translate(0px, 0px)",
+                                color: "#101828",
+                                fontWeight: 600,
+                              },
+                              [`& .${gaugeClasses.valueArc}`]: {
+                                fill: "#58A20F",
+                              },
+                            }}
+                            text={({ value }) => `${value} %`}
+                          />
+                          <p
+                            style={{
+                              textAlign: "center",
+                              color: userData?.personalInfo
+                                ? "#58A20F"
+                                : "#101828",
+                              fontWeight: 600,
+                            }}>
+                            Completed
+                          </p>
+                        </div>
+                        <div className="w-full">
+                          <div className="flex justify-between items-center">
+                            <p style={{ color: "#777980", fontSize: 14 }}>
+                              Step 1
+                            </p>
+                            <div className="flex gap-2 items-center">
+                              <MdOutlineWatchLater
+                                style={{ color: "#777980", fontSize: 16 }}
+                              />
+                              <p style={{ color: "#777980", fontSize: 14 }}>
+                                5-10 mins
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontWeight: 600,
+                                fontSize: 20,
+                              }}>
+                              Candidate Form
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 16 }}>
+                              This is the first step in creating your DTP.
+                              <br /> After completing this, you can proceed with
+                              the other forms.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <Divider />
+                    <CardActions style={{ justifyContent: "flex-end" }}>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.personalInfo ? "#1E90FF" : "#E05880",
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                        endIcon={<FaArrowRight />}
+                        onClick={() =>
+                          navigate("/digitalTalentProfile/personalinfromation")
+                        }>
+                        {userData?.personalInfo ? "Edit" : "Not taken"}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                  <Card sx={{ borderRadius: 5 }}>
+                    <CardContent>
+                      <div className="flex gap-2">
+                        <div className="w-1/3">
+                          <Gauge
+                            height={100}
+                            value={userData?.preferences ? 100 : 0}
+                            startAngle={-110}
+                            endAngle={110}
+                            sx={{
+                              [`& .${gaugeClasses.valueText}`]: {
+                                fontSize: 20,
+                                transform: "translate(0px, 0px)",
+                                color: "#101828",
+                                fontWeight: 600,
+                              },
+                              [`& .${gaugeClasses.valueArc}`]: {
+                                fill: "#58A20F",
+                              },
+                            }}
+                            text={({ value }) => `${value} %`}
+                          />
+                          <p
+                            style={{
+                              textAlign: "center",
+                              color: userData?.preferences
+                                ? "#58A20F"
+                                : "#101828",
+                              fontWeight: 600,
+                            }}>
+                            Completed
+                          </p>
+                        </div>
+                        <div className="w-full">
+                          <div className="flex justify-between items-center">
+                            <p style={{ color: "#777980", fontSize: 14 }}>
+                              Step 2
+                            </p>
+                            <div className="flex gap-2 items-center">
+                              <MdOutlineWatchLater
+                                style={{ color: "#777980", fontSize: 16 }}
+                              />
+                              <p style={{ color: "#777980", fontSize: 14 }}>
+                                5-10 mins
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontWeight: 600,
+                                fontSize: 20,
+                              }}>
+                              Preference Form
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 16 }}>
+                              This is the first step in creating your DTP.
+                              <br /> After completing this, you can proceed with
+                              the other forms.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <Divider />
+                    <CardActions style={{ justifyContent: "flex-end" }}>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.preferenes ? "#1E90FF" : "#E05880",
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                        endIcon={<FaArrowRight />}
+                        onClick={() =>
+                          handlePreferences()
+                        }>
+                        {userData?.preferences ? "Edit" : "Not taken"}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                  <Card sx={{ borderRadius: 5 }}>
+                    <CardContent>
+                      <div className="flex gap-2">
+                        <div className="w-1/3">
+                          <Gauge
+                            height={100}
+                            value={userData?.valueAssessment ? 100 : 0}
+                            startAngle={-110}
+                            endAngle={110}
+                            sx={{
+                              [`& .${gaugeClasses.valueText}`]: {
+                                fontSize: 20,
+                                transform: "translate(0px, 0px)",
+                                color: "#101828",
+                                fontWeight: 600,
+                              },
+                              [`& .${gaugeClasses.valueArc}`]: {
+                                fill: "#58A20F",
+                              },
+                            }}
+                            text={({ value }) => `${value} %`}
+                          />
+                          <p
+                            style={{
+                              textAlign: "center",
+                              color: userData?.valueAssessment
+                                ? "#58A20F"
+                                : "#101828",
+                              fontWeight: 600,
+                            }}>
+                            Completed
+                          </p>
+                        </div>
+                        <div className="w-full">
+                          <div className="flex justify-between items-center">
+                            <p style={{ color: "#777980", fontSize: 14 }}>
+                              Step 3
+                            </p>
+                            <div className="flex gap-2 items-center">
+                              <MdOutlineWatchLater
+                                style={{ color: "#777980", fontSize: 16 }}
+                              />
+                              <p style={{ color: "#777980", fontSize: 14 }}>
+                                5-10 mins
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontWeight: 600,
+                                fontSize: 20,
+                              }}>
+                              Value Assessment
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 16 }}>
+                              This is the first step in creating your DTP.
+                              <br /> After completing this, you can proceed with
+                              the other forms.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <Divider />
+                    <CardActions style={{ justifyContent: "flex-end" }}>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.valueAssessment
+                            ? "#FFA500"
+                            : "#E05880",
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                        endIcon={<FaArrowRight />}
+                        onClick={() => showValueAssessmentResult()}>
+                        {userData?.valueAssessment ? "view results" : "Not taken"}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                  <Card sx={{ borderRadius: 5 }}>
+                    <CardContent>
+                      <div className="flex gap-2">
+                        <div className="w-1/3">
+                          <Gauge
+                            height={100}
+                            value={userData?.assessment ? 100 : 0}
+                            startAngle={-110}
+                            endAngle={110}
+                            sx={{
+                              [`& .${gaugeClasses.valueText}`]: {
+                                fontSize: 20,
+                                transform: "translate(0px, 0px)",
+                                color: "#101828",
+                                fontWeight: 600,
+                              },
+                              [`& .${gaugeClasses.valueArc}`]: {
+                                fill: "#58A20F",
+                              },
+                            }}
+                            text={({ value }) => `${value} %`}
+                          />
+                          <p
+                            style={{
+                              textAlign: "center",
+                              color: userData?.assessment ? "#58A20F" : "#101828",
+                              fontWeight: 600,
+                            }}>
+                            Completed
+                          </p>
+                        </div>
+                        <div className="w-full">
+                          <div className="flex justify-between items-center">
+                            <p style={{ color: "#777980", fontSize: 14 }}>
+                              Step 4
+                            </p>
+                            <div className="flex gap-2 items-center">
+                              <MdOutlineWatchLater
+                                style={{ color: "#777980", fontSize: 16 }}
+                              />
+                              <p style={{ color: "#777980", fontSize: 14 }}>
+                                5-10 mins
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontWeight: 600,
+                                fontSize: 20,
+                              }}>
+                              Talent Spectrum Analysis
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 16 }}>
+                              This is the first step in creating your DTP.
+                              <br /> After completing this, you can proceed with
+                              the other forms.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <Divider />
+                    <CardActions style={{ justifyContent: "flex-end" }}>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.assessment ? "#FFA500" : "#E05880",
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                        endIcon={<FaArrowRight />}
+                        onClick={() => showAssessmentResult()}>
+                        {userData?.assessment ? "view results" : "Not taken"}
+                      </Button>
+                    </CardActions>
+                  </Card>
                 </div>
               </div>
             </div>
-            <div className="py-10">
-              <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                Complete all forms and assessments to begin
-              </p>
-              <p style={{ color: "#475467", fontSize: 16 }}>
-                Please fill out all the necessary forms and complete the
-                required assessments to get started
-              </p>
-              {/* card */}
-              <div className="grid grid-cols-2 gap-5 mt-5">
-                <Card sx={{ borderRadius: 5 }}>
-                  <CardContent>
-                    <div className="flex gap-2">
-                      <div className="w-1/3">
-                        <Gauge
-                          height={100}
-                          value={userData?.personalInfo ? 100 : 0}
-                          startAngle={-110}
-                          endAngle={110}
-                          sx={{
-                            [`& .${gaugeClasses.valueText}`]: {
-                              fontSize: 20,
-                              transform: "translate(0px, 0px)",
-                              color: "#101828",
-                              fontWeight: 600,
-                            },
-                            [`& .${gaugeClasses.valueArc}`]: {
-                              fill: "#58A20F",
-                            },
-                          }}
-                          text={({ value }) => `${value} %`}
-                        />
-                        <p
-                          style={{
-                            textAlign: "center",
-                            color: userData?.personalInfo
-                              ? "#58A20F"
-                              : "#101828",
-                            fontWeight: 600,
-                          }}>
-                          Completed
-                        </p>
-                      </div>
-                      <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <p style={{ color: "#777980", fontSize: 14 }}>
-                            Step 1
-                          </p>
-                          <div className="flex gap-2 items-center">
-                            <MdOutlineWatchLater
-                              style={{ color: "#777980", fontSize: 16 }}
-                            />
-                            <p style={{ color: "#777980", fontSize: 14 }}>
-                              5-10 mins
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              color: "#101828",
-                              fontWeight: 600,
-                              fontSize: 20,
-                            }}>
-                            Candidate Form
-                          </p>
-                          <p style={{ color: "#475467", fontSize: 16 }}>
-                            This is the first step in creating your DTP.
-                            <br /> After completing this, you can proceed with
-                            the other forms.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <Divider />
-                  <CardActions style={{ justifyContent: "flex-end" }}>
-                    <Button
-                      size="small"
-                      style={{
-                        color: userData?.personalInfo ? "#1E90FF" : "#E05880",
-                        fontWeight: 600,
-                        fontSize: 14,
-                      }}
-                      endIcon={<FaArrowRight />}
-                      onClick={() =>
-                        navigate("/digitalTalentProfile/personalinfromation")
-                      }>
-                      {userData?.personalInfo ? "Edit" : "Not taken"}
-                    </Button>
-                  </CardActions>
-                </Card>
-                <Card sx={{ borderRadius: 5 }}>
-                  <CardContent>
-                    <div className="flex gap-2">
-                      <div className="w-1/3">
-                        <Gauge
-                          height={100}
-                          value={userData?.preferences ? 100 : 0}
-                          startAngle={-110}
-                          endAngle={110}
-                          sx={{
-                            [`& .${gaugeClasses.valueText}`]: {
-                              fontSize: 20,
-                              transform: "translate(0px, 0px)",
-                              color: "#101828",
-                              fontWeight: 600,
-                            },
-                            [`& .${gaugeClasses.valueArc}`]: {
-                              fill: "#58A20F",
-                            },
-                          }}
-                          text={({ value }) => `${value} %`}
-                        />
-                        <p
-                          style={{
-                            textAlign: "center",
-                            color: userData?.preferences
-                              ? "#58A20F"
-                              : "#101828",
-                            fontWeight: 600,
-                          }}>
-                          Completed
-                        </p>
-                      </div>
-                      <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <p style={{ color: "#777980", fontSize: 14 }}>
-                            Step 2
-                          </p>
-                          <div className="flex gap-2 items-center">
-                            <MdOutlineWatchLater
-                              style={{ color: "#777980", fontSize: 16 }}
-                            />
-                            <p style={{ color: "#777980", fontSize: 14 }}>
-                              5-10 mins
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              color: "#101828",
-                              fontWeight: 600,
-                              fontSize: 20,
-                            }}>
-                            Preference Form
-                          </p>
-                          <p style={{ color: "#475467", fontSize: 16 }}>
-                            This is the first step in creating your DTP.
-                            <br /> After completing this, you can proceed with
-                            the other forms.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <Divider />
-                  <CardActions style={{ justifyContent: "flex-end" }}>
-                    <Button
-                      size="small"
-                      style={{
-                        color: userData?.preferenes ? "#1E90FF" : "#E05880",
-                        fontWeight: 600,
-                        fontSize: 14,
-                      }}
-                      endIcon={<FaArrowRight />}
-                      onClick={() =>
-                        navigate("/digitalTalentProfile/preferenceform")
-                      }>
-                      {userData?.preferences ? "Edit" : "Not taken"}
-                    </Button>
-                  </CardActions>
-                </Card>
-                <Card sx={{ borderRadius: 5 }}>
-                  <CardContent>
-                    <div className="flex gap-2">
-                      <div className="w-1/3">
-                        <Gauge
-                          height={100}
-                          value={userData?.valueAssessment ? 100 : 0}
-                          startAngle={-110}
-                          endAngle={110}
-                          sx={{
-                            [`& .${gaugeClasses.valueText}`]: {
-                              fontSize: 20,
-                              transform: "translate(0px, 0px)",
-                              color: "#101828",
-                              fontWeight: 600,
-                            },
-                            [`& .${gaugeClasses.valueArc}`]: {
-                              fill: "#58A20F",
-                            },
-                          }}
-                          text={({ value }) => `${value} %`}
-                        />
-                        <p
-                          style={{
-                            textAlign: "center",
-                            color: userData?.valueAssessment
-                              ? "#58A20F"
-                              : "#101828",
-                            fontWeight: 600,
-                          }}>
-                          Completed
-                        </p>
-                      </div>
-                      <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <p style={{ color: "#777980", fontSize: 14 }}>
-                            Step 3
-                          </p>
-                          <div className="flex gap-2 items-center">
-                            <MdOutlineWatchLater
-                              style={{ color: "#777980", fontSize: 16 }}
-                            />
-                            <p style={{ color: "#777980", fontSize: 14 }}>
-                              5-10 mins
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              color: "#101828",
-                              fontWeight: 600,
-                              fontSize: 20,
-                            }}>
-                            Value Assessment
-                          </p>
-                          <p style={{ color: "#475467", fontSize: 16 }}>
-                            This is the first step in creating your DTP.
-                            <br /> After completing this, you can proceed with
-                            the other forms.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <Divider />
-                  <CardActions style={{ justifyContent: "flex-end" }}>
-                    <Button
-                      size="small"
-                      style={{
-                        color: userData?.valueAssessment
-                          ? "#FFA500"
-                          : "#E05880",
-                        fontWeight: 600,
-                        fontSize: 14,
-                      }}
-                      endIcon={<FaArrowRight />}
-                      onClick={() => showValueAssessmentResult()}>
-                      {userData?.valueAssessment ? "view results" : "Not taken"}
-                    </Button>
-                  </CardActions>
-                </Card>
-                <Card sx={{ borderRadius: 5 }}>
-                  <CardContent>
-                    <div className="flex gap-2">
-                      <div className="w-1/3">
-                        <Gauge
-                          height={100}
-                          value={userData?.assessment ? 100 : 0}
-                          startAngle={-110}
-                          endAngle={110}
-                          sx={{
-                            [`& .${gaugeClasses.valueText}`]: {
-                              fontSize: 20,
-                              transform: "translate(0px, 0px)",
-                              color: "#101828",
-                              fontWeight: 600,
-                            },
-                            [`& .${gaugeClasses.valueArc}`]: {
-                              fill: "#58A20F",
-                            },
-                          }}
-                          text={({ value }) => `${value} %`}
-                        />
-                        <p
-                          style={{
-                            textAlign: "center",
-                            color: userData?.assessment ? "#58A20F" : "#101828",
-                            fontWeight: 600,
-                          }}>
-                          Completed
-                        </p>
-                      </div>
-                      <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <p style={{ color: "#777980", fontSize: 14 }}>
-                            Step 4
-                          </p>
-                          <div className="flex gap-2 items-center">
-                            <MdOutlineWatchLater
-                              style={{ color: "#777980", fontSize: 16 }}
-                            />
-                            <p style={{ color: "#777980", fontSize: 14 }}>
-                              5-10 mins
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              color: "#101828",
-                              fontWeight: 600,
-                              fontSize: 20,
-                            }}>
-                            Talent Spectrum Analysis
-                          </p>
-                          <p style={{ color: "#475467", fontSize: 16 }}>
-                            This is the first step in creating your DTP.
-                            <br /> After completing this, you can proceed with
-                            the other forms.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <Divider />
-                  <CardActions style={{ justifyContent: "flex-end" }}>
-                    <Button
-                      size="small"
-                      style={{
-                        color: userData?.assessment ? "#FFA500" : "#E05880",
-                        fontWeight: 600,
-                        fontSize: 14,
-                      }}
-                      endIcon={<FaArrowRight />}
-                      onClick={() => showAssessmentResult()}>
-                      {userData?.assessment ? "view results" : "Not taken"}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <Footer />

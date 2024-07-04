@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create Axios instance with default configuration
 const axiosInstance = axios.create({
- // baseURL: 'http://localhost:8080/xen', // Replace with your API base URL
+  //baseURL: 'http://localhost:8080/xen', // Replace with your API base URL
   baseURL : 'https://xenflexer.northcentralus.cloudapp.azure.com/xen',
   timeout: 1000000, // Timeout in milliseconds (optional)
 });
@@ -12,6 +12,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // You can modify headers, add tokens, etc. here before sending the request
     const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+    console.log(token);
     if (token) {
       const accessToken = JSON.parse(localStorage.getItem("token")).accessToken;
       config.headers.Authorization = `Bearer ${accessToken}`;

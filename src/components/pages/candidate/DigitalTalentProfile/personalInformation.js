@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { IoMdClose, IoMdRemoveCircleOutline } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import pdf from "../../../../assets/images/pdf.png";
 import axiosInstance from "../../../utils/axiosInstance";
 import { SideNav } from "../../../widgets/sidenav";
@@ -17,6 +17,7 @@ import { TopNav } from "../../../widgets/topNav";
 
 export const PersonalInformation = () => {
   const navigate = useNavigate();
+  const location = useNavigate();
   const [file, setFile] = useState();
   const [fullName, setFullName] = useState();
   const [title, setTitle] = useState();
@@ -87,7 +88,7 @@ export const PersonalInformation = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(user);
     axiosInstance
-      .get("/getCandidatePersonalInfo?candidateId=" + user.userId)
+      .get(`/getCandidatePersonalInfo?candidateId=${user.userId}`)
       .then((response) => {
         console.log(response.data.education.length);
         setFullName(
@@ -100,11 +101,29 @@ export const PersonalInformation = () => {
           response.data.contactNumber != null ? response.data.contactNumber : ""
         );
         if (response.data.education.length > 0) {
-          setEducation(...education, response.data.education);
+          setEducation(response.data.education);
         }
       })
       .catch((e) => console.log(e));
   }, []);
+
+
+  const handleUploadResume = (file) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const formData = new FormData();
+    formData.append("file", file);
+    axiosInstance
+          .post(
+            `/uploadCandidateResume?candidateId=${user.userId}`,
+             formData,
+          )
+          .then((response) => {
+            navigate("/assessmentsList")  
+          })
+          .catch(error => {
+            console.log(error);
+          })
+  }
 
   const onPersonalInfoSubmit = async (e) => {
     e.preventDefault();
@@ -191,7 +210,7 @@ export const PersonalInformation = () => {
                     <VisuallyHiddenInput
                       type="file"
                       accept="image/jpeg,image/png,application/pdf"
-                      onChange={(e) => setFile(e.target.files[0])}
+                      onChange={(e) => handleUploadResume(e.target.files[0])}
                     />
                   </Button>
                   {file?.name && (

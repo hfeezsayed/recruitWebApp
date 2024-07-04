@@ -105,7 +105,7 @@ const getCompetencyObject = (competency, name) => {
 };
 
 export const convertCompetencies = (competencyList) => {
-  console.log(competencyList.competencies);
+  console.log(competencyList);
   const name = competencyList.pillar2
   console.log(name);
   const competencies = competencyList.competencies
@@ -113,3 +113,8 @@ export const convertCompetencies = (competencyList) => {
     getCompetencyObject(competency, name)
   );
 };
+
+
+export const convertCompetencies1 = (data) => {
+  console.log(data);
+}

@@ -18,6 +18,7 @@ import { AllAssessmentData, ClientAssessmentData } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../../utils/spinner";
 
 export const AssesmentForm = () => {
   const [search, setSearch] = useState();
@@ -27,6 +28,7 @@ export const AssesmentForm = () => {
   const [selfAssessmentList, setSelfAssessmentList] = useState(ClientAssessmentData);
   const [clientAssessmentList, setClientAssessmentList] = useState(ClientAssessmentData);
   const [viewResults , setViewResult] = useState(-1);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ export const AssesmentForm = () => {
 
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
     axiosInstance.get(`/getCandidateAssessments?candidateId=${user.userId}`,
     )
     .then(response => {
@@ -46,10 +49,12 @@ export const AssesmentForm = () => {
         setSelfAssessmentList(response.data.candidateList);
         setClientAssessmentList(response.data.clientList);
         setAllAssessmentList([...selfAssessmentList, ...clientAssessmentList]);
+        setLoading(false);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
     }) 
     .catch(error => {
       console.log(error);
+      setLoading(false);
     })
   }, []);
 
@@ -426,100 +431,107 @@ export const AssesmentForm = () => {
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          <div className="p-8">
-            <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
-              Assessments
-            </p>
-            <div className="py-5 flex justify-between items-center">
-              <TextField
-                size="small"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <IoIosSearch />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <div className="flex gap-4">
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderColor: "#D0D5DD",
-                    color: "#252525",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
+          { loading === true ? 
+          (
+            <Spinner/>
+          )
+          :
+          (
+            <div className="p-8">
+              <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
+                Assessments
+              </p>
+              <div className="py-5 flex justify-between items-center">
+                <TextField
+                  size="small"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IoIosSearch />
+                      </InputAdornment>
+                    ),
                   }}
-                  startIcon={<IoFilterSharp />}>
-                  Filter
-                </Button>
-                <Button
-                  onClick={() => navigate("/createAssessment")}
-                  style={{
-                    color: "#008080",
-                    background: "#EAF4F5",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
-                  }}>
-                  Add New Assessment
-                </Button>
+                />
+                <div className="flex gap-4">
+                  <Button
+                    variant="outlined"
+                    style={{
+                      borderColor: "#D0D5DD",
+                      color: "#252525",
+                      textTransform: "none",
+                      fontWeight: 500,
+                      borderRadius: 8,
+                    }}
+                    startIcon={<IoFilterSharp />}>
+                    Filter
+                  </Button>
+                  <Button
+                    onClick={() => navigate("/createAssessment")}
+                    style={{
+                      color: "#008080",
+                      background: "#EAF4F5",
+                      textTransform: "none",
+                      fontWeight: 500,
+                      borderRadius: 8,
+                    }}>
+                    Add New Assessment
+                  </Button>
+                </div>
               </div>
-            </div>
-            <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  sx={{
-                    "& .MuiTab-root.Mui-selected": {
-                      color: "#101828",
-                    },
-                    "& .MuiTabs-indicator": {
-                      backgroundColor: "#101828",
-                      height: 3,
-                      borderTopLeftRadius: 5,
-                      borderTopRightRadius: 5,
-                    },
-                  }}>
-                  <Tab
-                    label="All - Assessments"
-                    id="1"
+              <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
                     sx={{
-                      color: "#475467",
-                      textTransform: "none",
-                      fontWeight: 500,
-                    }}
-                  />
-                  <Tab
-                    label="Self - Assessments"
-                    id="2"
-                    sx={{
-                      color: "#475467",
-                      textTransform: "none",
-                      fontWeight: 500,
-                    }}
-                  />
-                  <Tab
-                    label="Client Assessments"
-                    id="3"
-                    sx={{
-                      color: "#475467",
-                      textTransform: "none",
-                      fontWeight: 500,
-                    }}
-                  />
-                </Tabs>
+                      "& .MuiTab-root.Mui-selected": {
+                        color: "#101828",
+                      },
+                      "& .MuiTabs-indicator": {
+                        backgroundColor: "#101828",
+                        height: 3,
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                      },
+                    }}>
+                    <Tab
+                      label="All - Assessments"
+                      id="1"
+                      sx={{
+                        color: "#475467",
+                        textTransform: "none",
+                        fontWeight: 500,
+                      }}
+                    />
+                    <Tab
+                      label="Self - Assessments"
+                      id="2"
+                      sx={{
+                        color: "#475467",
+                        textTransform: "none",
+                        fontWeight: 500,
+                      }}
+                    />
+                    <Tab
+                      label="Client Assessments"
+                      id="3"
+                      sx={{
+                        color: "#475467",
+                        textTransform: "none",
+                        fontWeight: 500,
+                      }}
+                    />
+                  </Tabs>
+                </Box>
+                {value === 0 && <AllAssessment />}
+                {value === 1 && <SelfAssessment />}
+                {value === 2 && <ClientAssessment />}
               </Box>
-              {value === 0 && <AllAssessment />}
-              {value === 1 && <SelfAssessment />}
-              {value === 2 && <ClientAssessment />}
-            </Box>
-          </div>
+            </div>
+          )}
         </div>
       </div>
       <Footer />
