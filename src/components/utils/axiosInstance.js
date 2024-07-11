@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // Create Axios instance with default configuration
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/xen', // Replace with your API base URL
-  //baseURL : 'https://xenflexer.northcentralus.cloudapp.azure.com/xen',
+  //baseURL: 'http://localhost:8080/xen', // Replace with your API base URL
+  baseURL : 'https://xenflexer.northcentralus.cloudapp.azure.com/xen',
   timeout: 1000000, // Timeout in milliseconds (optional)
 });
 

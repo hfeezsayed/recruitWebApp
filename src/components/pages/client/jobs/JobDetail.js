@@ -25,7 +25,7 @@ import { JobDetailPopup } from "./jobDetailPopup";
 
 export const JobDetail = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(jobTemplateData);
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const location = useLocation();

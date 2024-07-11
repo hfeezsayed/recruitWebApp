@@ -31,10 +31,11 @@ export const JobTemplateCreate = () => {
   const [jobDepartment, setJobDepartment] = useState();
   const [jobLocation, setJobLocation] = useState();
   const [salary, setSalary] = useState("");
+  const [bulletPoints, setBulletPoints] = useState();
 
   // job description
   const [companyInfo, setCompanyInfo] = useState("");
-  const [positionSummry, setPostionSummry] = useState("");
+  const [positionSummry, setPositionSummary] = useState("");
   const [responsibilities, setResponsibilities] =
     useState("");
   const [benefits, setBenefits] = useState("");
@@ -42,7 +43,7 @@ export const JobTemplateCreate = () => {
 
   // Role Requirements
   const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
-  const [specifyIndusrtyExp, setSpecifyIndustryExp] = useState("");
+  const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
   const [roleType, setRoleType] = useState();
@@ -102,7 +103,7 @@ export const JobTemplateCreate = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-          specifyIndusrtyExp,
+          specifyIndustryExp,
           industryKnowledge,
           workSetting,
           roleType,
@@ -135,13 +136,40 @@ export const JobTemplateCreate = () => {
       .post(
         "https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/" ,
         {
-          title,
+          jobTitle,
+          jobCode,
+          jobFamily,
+          jobDepartment,
+          jobLocation,
+          salary,
+          companyInfo,
+          positionSummry,
+          responsibilities,
+          benefits,
+          equalEmployeeOpportunity,
+          specificIndustryExperience,
+          specifyIndustryExp,
+          industryKnowledge,
+          workSetting,
+          roleType,
+          roleTimings,
+          roleTravel,
+          visa,
+          minimumLevelQualification,
+          requireRegulatory,
+          differentAcademic,
+          certifications,
+          softwares,
+          envision,
+          templateName,
+          templateTag,
+          templateDescription,
           
         },
       )
       .then((data) => {
         console.log(data.data);
-        setJobDescription(data.data.description);
+        setJobDescription(data.data.job_description);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -245,6 +273,81 @@ export const JobTemplateCreate = () => {
     { label: "AWS", value: "AWS" },
   ]
 
+
+  const getCompanyOverview = async () => {
+    const title = jobTitle;
+    const company_info = companyInfo;
+    const bullet_points = bulletPoints;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/company-description/" ,
+        {
+          company_info,
+          bullet_points
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        setCompanyInfo(data.data.enhanced_description);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  }
+
+  const generateResponsibility = async () => {
+    const title = jobTitle;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-roles-responsibilities/" ,
+        {
+          responsibilities
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        setResponsibilities(data.data.enhanced_responsibilities);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  }
+
+
+  const generateJobSummary = async () => {
+    const title = jobTitle;
+    const position_summary = positionSummry;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-position-summary/" ,
+        {
+          position_summary
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        setPositionSummary(data.data.enhanced_position_summary);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  }
+
+
+  const generateBenefit = async () => {
+    const title = jobTitle;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-benefits/" ,
+        {
+          benefits
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        setBenefits(data.data.enhanced_benefits);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  }
+
   return (
     <div>
       <div className="flex">
@@ -342,84 +445,171 @@ export const JobTemplateCreate = () => {
                   type="number"
                   disablePortal
                   value={salary || null}
-                  onChange={(e) => setSalary(e.target.value)}
+                  onChange={(e) => setSalary(Number(e.target.value))}
                   placeholder="type"
                 />
               </div>
             </div>
             {/* Job Description */}
             <div className="py-5">
-              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+              {/* <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
                 Job Description
-              </p>
+              </p> */}
               <div className="grid grid-flow-row gap-2 mt-8">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Company Overview
-                </p>
-                <textarea
-                  value={companyInfo}
-                  onChange={(e) => setCompanyInfo(e.target.value)}
-                  placeholder="type"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                  rows={2}
-                />
+                    Company Overview
+                  </p>
+                <div className="grid grid-cols-2 gap-2 py-5">
+                  <div>
+                    <textarea
+                      value={companyInfo}
+                      onChange={(e) => setCompanyInfo(e.target.value)}
+                      placeholder="type"
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "#D0D5DD",
+                        borderRadius: 8,
+                        padding: 5,
+                        width: 500
+                      }}
+                      rows={5}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 py-5">
+                    <div>
+                      <TextField
+                        value={bulletPoints}
+                        type="number"
+                        onChange={(e) => setBulletPoints(e.target.value)}
+                        placeholder="required points"
+                        size="small"
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#D0D5DD",
+                          borderRadius: 8,
+                          padding: 5,
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        style={{
+                          color: "white",
+                          borderColor: "#008080",
+                          textTransform: "none",
+                          backgroundColor: "#008080"
+                        }}
+                        onClick={getCompanyOverview}
+                        >
+                        Generate Company Overview
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-flow-row gap-2 mt-6">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Job Summary
-                </p>
-                <textarea
-                  value={positionSummry}
-                  onChange={(e) => setPostionSummry(e.target.value)}
-                  placeholder="type"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                  rows={2}
-                />
+              <div className="grid grid-flow-row gap-2 py-8">
+                <div className="pt-3 gap-4 flex">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Job Summary
+                  </p>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "white",
+                      borderColor: "#008080",
+                      textTransform: "none",
+                      backgroundColor: "#008080"
+                    }}
+                    onClick={generateJobSummary}
+                    >
+                    Generate Job Summary
+                  </Button>
+                </div>
+
+                  <textarea
+                    value={positionSummry}
+                    row={10}
+                    placeholder="type"
+                    onChange={(e) => setPositionSummary(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
               </div>
-              <div className="grid grid-flow-row gap-2 mt-6">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Responsibilities
-                </p>
-                <textarea
-                  value={responsibilities}
-                  onChange={(e) => setResponsibilities(e.target.value)}
-                  placeholder="type"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                  rows={4}
-                />
+              <div className="grid grid-flow-row gap-2 py-8">
+                <div className="pt-3 gap-4 flex">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Responsibilities
+                  </p>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "white",
+                      borderColor: "#008080",
+                      textTransform: "none",
+                      backgroundColor: "#008080"
+                    }}
+                    onClick={generateResponsibility}
+                    >
+                    Generate Responsibilities
+                  </Button>
+                </div>
+
+                  <textarea
+                    value={responsibilities}
+                    row={10}
+                    placeholder="type"
+                    onChange={(e) => setResponsibilities(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
               </div>
-              <div className="grid grid-flow-row gap-2 mt-6">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Benefits 
-                </p>
-                <TextField
-                  value={benefits}
-                  type="number"
-                  onChange={(e) => setBenefits(e.target.value)}
-                  placeholder="type"
-                  size="small"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                />
+              <div className="grid grid-flow-row gap-2 py-8">
+                <div className="pt-3 gap-4 flex">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Benefits
+                  </p>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "white",
+                      borderColor: "#008080",
+                      textTransform: "none",
+                      backgroundColor: "#008080"
+                    }}
+                    onClick={generateBenefit}
+                    >
+                    Generate Benefits
+                  </Button>
+                </div>
+
+                  <textarea
+                    value={benefits}
+                    row={10}
+                    placeholder="type"
+                    onChange={(e) => setBenefits(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -468,7 +658,7 @@ export const JobTemplateCreate = () => {
                 <TextField
                   size="small"
                   disablePortal
-                  value={specifyIndusrtyExp}
+                  value={specifyIndustryExp}
                   onChange={(e) => setSpecifyIndustryExp(e.target.value)}
                   placeholder="type"
                 />
@@ -563,7 +753,7 @@ export const JobTemplateCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option)}
+                    options={options.map((option) => option.label)}
                     value={visa || null}
                     onChange={(e, newvalue) => setVisa(newvalue)}
                     renderInput={(params) => (

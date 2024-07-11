@@ -41,6 +41,15 @@ export const TeamCreate = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
+  const teamSizeOpts = [
+    { label : "1-5", value: "1-5"},
+    { label : "5-10", value: "5-10"},
+    { label : "10-15", value: "10-15"},
+    { label : "15-20", value: "15-20"},
+    { label : "20-30", value: "20-30"},
+    { label : "30+", value: "30+"}
+  ]
+
   const yes_no = ["Yes", "No"];
 
   const handleSubmit = async () => {
@@ -159,7 +168,7 @@ export const TeamCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={teamSizeOpts.map((option) => option.label)}
                   value={teamSize || null}
                   onChange={(e, newvalue) => setTeamSize(newvalue)}
                   renderInput={(params) => (
@@ -225,6 +234,7 @@ export const TeamCreate = () => {
                 value={teamWorkingDes}
                 onChange={(e) => setTeamWorkingDes(e.target.value)}
                 placeholder="type"
+                row={4}
                 style={{
                   borderWidth: 1,
                   borderColor: "#D0D5DD",
@@ -243,6 +253,7 @@ export const TeamCreate = () => {
                 value={describeContributions}
                 onChange={(e) => setDescribeContributions(e.target.value)}
                 placeholder="type"
+                row={4}
                 style={{
                   borderWidth: 1,
                   borderColor: "#D0D5DD",

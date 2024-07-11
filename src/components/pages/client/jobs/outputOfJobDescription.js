@@ -488,7 +488,7 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                   }}>
-                                  {row.statement}
+                                  {row.value}
                                 </TableCell>
                               </TableRow>
                             );

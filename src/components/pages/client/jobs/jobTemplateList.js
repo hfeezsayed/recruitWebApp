@@ -28,7 +28,7 @@ import { JobTemplateViewPopup } from "./jobTemplateViewPopup";
 
 export const JobTemplateList = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(assignmentBatchesData);
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState();

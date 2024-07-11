@@ -79,6 +79,15 @@ export const TeamTemplateCreate = () => {
     setTemplateDescription("");
   };
 
+  const teamSizeOpts = [
+  { label : "1-5", value: "1-5"},
+  { label : "5-10", value: "5-10"},
+  { label : "10-15", value: "10-15"},
+  { label : "15-20", value: "15-20"},
+  { label : "20-30", value: "20-30"},
+  { label : "30+", value: "30+"}
+]
+
   return (
     <div>
       <div className="flex">
@@ -105,7 +114,7 @@ export const TeamTemplateCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={teamSizeOpts.map((option) => option.label)}
                   value={teamSize || null}
                   onChange={(e, newvalue) => setTeamSize(newvalue)}
                   renderInput={(params) => (
