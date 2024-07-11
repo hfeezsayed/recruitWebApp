@@ -127,6 +127,14 @@ export const TeamsList = () => {
                         </TableCell>
                         <TableCell
                           sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          Template Tag
+                        </TableCell>
+                        <TableCell
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          Template Description
+                        </TableCell>
+                        <TableCell
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                           Created By
                         </TableCell>
                         <TableCell
@@ -158,6 +166,12 @@ export const TeamsList = () => {
                               {row.templateName}
                             </TableCell>
                             <TableCell sx={{ color: "#475467" }}>
+                              {row.templateTag}
+                            </TableCell>
+                            <TableCell sx={{ color: "#475467" }}>
+                              {row.templateDescription}
+                            </TableCell>
+                            <TableCell sx={{ color: "#475467" }}>
                               {row.createdBy}
                             </TableCell>
                             <TableCell
@@ -173,7 +187,7 @@ export const TeamsList = () => {
                                 }}
                                 onClick={() => {
                                   setShowPopup(true);
-                                  // setViewData(row);
+                                  setViewData(row);
                                 }}>
                                 View
                               </Button>

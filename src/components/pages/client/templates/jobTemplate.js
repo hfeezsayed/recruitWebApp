@@ -121,6 +121,14 @@ export const JobTemplate = () => {
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Template Tag
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Template Description
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Created By
                           </TableCell>
                           <TableCell
@@ -137,6 +145,12 @@ export const JobTemplate = () => {
                               <TableCell align="center">{index + 1}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.templateName}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateTag}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateDescription}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}

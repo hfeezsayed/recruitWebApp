@@ -7,6 +7,12 @@ import { Footer } from "../../../widgets/footer";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import { useState } from "react";
 import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
+import {
   Box,
   ButtonGroup,
   Card,
@@ -45,6 +51,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
+import {
+  IoIosCloseCircleOutline,
+  IoMdRemoveCircleOutline,
+} from "react-icons/io";
+import { FaLink } from "react-icons/fa";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -56,15 +67,93 @@ export const AllJobs = () => {
   const open = Boolean(anchorEl);
   const [anchorData, setAnchorData] = useState();
   const [loading, setLoading] = useState(true);
+  const [showClonePopup, setShowClonePopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [anchorjd, setAnchorjd] = useState();
+  const jdOpen = Boolean(anchorjd);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget);
   };
+
+  const handleJd = (event) => {
+    setAnchorjd(event.currentTarget);
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorjd(null);
     setAnchorData(null);
   };
+
+  const closePopup = () => {
+    setShowClonePopup(false);
+    setShowDeletePopup(false);
+  };
+
+  const handleJobEdit = () => {
+    console.log(anchorData);
+    navigate("/job/createJob", { state : anchorData.id})
+  }
+
+  const handleJobClone = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance
+      .get(
+        `/cloneJob?clientId=${user.userId}&jobId=${anchorData.id}`,
+      )
+      .then((response) => {
+        console.log(response.data);
+        setData(response?.data.data);
+        setLoading(false);
+        setShowClonePopup(false);
+        //setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setShowClonePopup(false);
+        console.log(e);
+      });
+  }
+
+  const handleJobDelete = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance
+      .get(
+        `/deleteJob?clientId=${user.userId}&jobId=${anchorData.id}`,
+      )
+      .then((response) => {
+        console.log(response.data);
+        setData(response?.data.data);
+        setLoading(false);
+        setShowDeletePopup(false);
+        //setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setShowDeletePopup(false);
+        console.log(e);
+      });
+  }
+
+
+  const handleStandard = () => {
+    navigate("/job/outputofJobDescription", {state: anchorData.id })
+  }
+
+  const handleJobDesc = () => {
+    navigate("/job/outputofJobDescription", {state: anchorData.id })
+  }
+
+  const handleIdentification = () => {
+    navigate("/job/outputofJobDescription", {state: anchorData.id })
+  }
+
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -145,7 +234,7 @@ export const AllJobs = () => {
                       fontWeight: 500,
                       marginTop: 25,
                     }}>
-                    No Jobs Created
+                    Jobs Summary
                   </p>
                   <Button
                     size="small"
@@ -166,11 +255,7 @@ export const AllJobs = () => {
             <div className="p-8 h-full">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                  Jobs Created
-                </p>
-                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                  Start the process by selecting an option: use an existing job
-                  template or create a new one job template.
+                  Jobs Summary
                 </p>
               </div>
               <div className="py-5 grid grid-flow-col gap-8 justify-between items-center">
@@ -250,7 +335,8 @@ export const AllJobs = () => {
                   All Jobs
                 </p>
 
-                {currentView === "Card" && (
+                {currentView === "Card" && 
+                (
                   <div className="grid grid-cols-3 gap-5 py-3">
                     {data?.map((row, index) => {
                       return (
@@ -486,7 +572,7 @@ export const AllJobs = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                   }}>
-                                  Type of Hire
+                                  posted on
                                 </TableCell>
                                 <TableCell
                                   sx={{
@@ -496,6 +582,15 @@ export const AllJobs = () => {
                                     borderColor: "#D0D5DD50",
                                   }}>
                                   Hiring Manger
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Access Job Description
                                 </TableCell>
                                 <TableCell
                                   align="center"
@@ -536,31 +631,7 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      <div className="flex gap-2">
-                                        {row?.typeOfHire.map((data, index) => {
-                                          return (
-                                            <p
-                                              key={index}
-                                              style={{
-                                                color:
-                                                  data === "Full Time"
-                                                    ? "#8314C7"
-                                                    : "#0862CE",
-                                                backgroundColor:
-                                                  data === "Full Time"
-                                                    ? "#FBF1FF"
-                                                    : "#F1F7FF",
-                                                fontSize: 16,
-                                                fontWeight: 500,
-                                                borderRadius: 3,
-                                                paddingLeft: 8,
-                                                paddingRight: 8,
-                                              }}>
-                                              {data}
-                                            </p>
-                                          );
-                                        })}
-                                      </div>
+                                       {row.postedTime}
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -569,6 +640,24 @@ export const AllJobs = () => {
                                         borderColor: "#D0D5DD50",
                                       }}>
                                       {row?.hiringManager}
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      padding="none"
+                                      sx={{
+                                        color: "#475467",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      <IconButton
+                                        onClick={(e) => {
+                                          handleJd(e);
+                                          setAnchorData(row);
+                                        }}>
+                                        <HiDotsVertical
+                                          style={{ color: "#D9D9D9" }}
+                                        />
+                                      </IconButton>
                                     </TableCell>
                                     <TableCell
                                       align="center"
@@ -599,7 +688,7 @@ export const AllJobs = () => {
                   </div>
                 )}
 
-                {/* menu */}
+                {/*Actions menu */}
                 <Menu
                   id="fade-menu"
                   MenuListProps={{
@@ -617,7 +706,7 @@ export const AllJobs = () => {
                     horizontal: "right",
                   }}
                   TransitionComponent={Fade}>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={handleJobEdit}>
                     <div className="flex gap-1 items-center">
                       <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
                       <p
@@ -630,7 +719,7 @@ export const AllJobs = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={() => setShowDeletePopup(true)}>
                     <div className="flex gap-1 items-center">
                       <RiDeleteBin6Line
                         style={{ color: "#E05880", fontSize: 14 }}
@@ -645,7 +734,7 @@ export const AllJobs = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={() => setShowClonePopup(true)}>
                     <div className="flex gap-1 items-center">
                       <LuFiles style={{ color: "#58A20F", fontSize: 14 }} />
                       <p
@@ -659,6 +748,144 @@ export const AllJobs = () => {
                     </div>
                   </MenuItem>
                 </Menu>
+                
+                {/* job description menu */}
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorjd}
+                  open={jdOpen}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  TransitionComponent={Fade}>
+                  <MenuItem onClick={handleStandard}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
+                      <p
+                        style={{
+                          color: "#5FAEDA",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Standard Job Description
+                      </p>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleJobDesc}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink
+                        style={{ color: "#E05880", fontSize: 14 }}
+                      />
+                      <p
+                        style={{
+                          color: "#E05880",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Job Description
+                      </p>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleIdentification}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
+                      <p
+                        style={{
+                          color: "#58A20F",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Job Identification
+                      </p>
+                    </div>
+                  </MenuItem>
+                </Menu>
+
+                {/* Job Clone popup */}
+                <Dialog open={showClonePopup} onClose={closePopup}>
+                  <DialogTitle>Confirm Clone</DialogTitle>
+                  <IconButton
+                    onClick={closePopup}
+                    style={{ position: "absolute", top: 10, right: 10 }}>
+                    <IoIosCloseCircleOutline />
+                  </IconButton>
+                  <Divider />
+                  <DialogContent>
+                      <div className="grid grid-flow-row gap-2">
+                        <p
+                          style={{
+                            color: "#344054",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}>
+                          Do you want to clone the Job `{anchorData?.jobName}`
+                        </p>
+                      </div>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={closePopup}
+                      variant="outlined"
+                      style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                      cancel
+                    </Button>
+                    <Button
+                      onClick={handleJobClone}
+                      variant="contained"
+                      style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                      clone
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+
+
+                {/* delete job popup */}
+                <Dialog open={showDeletePopup} onClose={closePopup}>
+                  <DialogTitle>Confirm Clone</DialogTitle>
+                  <IconButton
+                    onClick={closePopup}
+                    style={{ position: "absolute", top: 10, right: 10 }}>
+                    <IoIosCloseCircleOutline />
+                  </IconButton>
+                  <Divider />
+                  <DialogContent>
+                      <div className="grid grid-flow-row gap-2">
+                        <p
+                          style={{
+                            color: "#344054",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}>
+                          Do you want to clone the Job `{anchorData?.jobName}`
+                        </p>
+                      </div>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={closePopup}
+                      variant="outlined"
+                      style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                      cancel
+                    </Button>
+                    <Button
+                      onClick={handleJobDelete}
+                      variant="contained"
+                      style={{ color: "#ffffff", backgroundColor: "red" }}>
+                      delete
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
               </div>
             </div>
           )}

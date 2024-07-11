@@ -67,7 +67,7 @@ export const OutputofJobDescription = () => {
   useEffect(() => {
     setLoading(true);
     const user = JSON.parse(localStorage.getItem("token"));
-    console.log(workValueData);
+    console.log(location.state);
     if (location.state) {
       axiosInstance
         .get(
@@ -83,6 +83,7 @@ export const OutputofJobDescription = () => {
           setLoading(false);
         })
         .catch((e) => {
+          setLoading(false);
           console.log(e);
         });
     }

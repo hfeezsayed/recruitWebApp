@@ -104,7 +104,7 @@ export const TeamEdit = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Pre- Fill Job Details: Template 1
+                Team Details
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please review and edit the information as needed, or use the

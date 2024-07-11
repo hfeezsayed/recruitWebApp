@@ -129,7 +129,7 @@ export const WorkValueTemplateCreate = () => {
                             fontSize: 22,
                             fontWeight: 600,
                           }}>
-                          Output of Work Value Analysis Result
+                          Output of Work Value Template Analysis 
                         </p>
                         <p
                           style={{
@@ -137,7 +137,7 @@ export const WorkValueTemplateCreate = () => {
                             fontSize: 14,
                             fontWeight: 400,
                           }}>
-                          Below are the result of the Work Value Analysis taken.
+                          Below are the result of the Work Value Template Analysis taken.
                         </p>
                       </div>
                       <Box sx={{ width: "60%" }}>
@@ -310,7 +310,7 @@ export const WorkValueTemplateCreate = () => {
                             fontSize: 22,
                             fontWeight: 600,
                           }}>
-                          Work Value Analysis
+                          Work Value Template Analysis
                         </p>
                         <p
                           style={{

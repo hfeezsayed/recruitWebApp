@@ -19,6 +19,8 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { useEffect } from "react";
+import axios from 'axios';
+
 
 export const JobTemplateEdit = () => {
   const navigate = useNavigate();
@@ -68,6 +70,7 @@ export const JobTemplateEdit = () => {
   const [templateTag, setTemplateTag] = useState("");
   const [templateDescription, setTemplateDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [jobDescription, setJobDescription] = useState("");
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -80,6 +83,25 @@ export const JobTemplateEdit = () => {
   ];
 
   const yes_no = ["Yes", "No"];
+
+  const getJobDescription = async () => {
+    const title = jobTitle;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/" ,
+        {
+          title,
+          
+        },
+      )
+      .then((data) => {
+        console.log(data.data);
+        setJobDescription(data.data.description);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  }
+
 
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -146,7 +168,7 @@ export const JobTemplateEdit = () => {
         setSpecificIndustryExperience(row.specificIndustryExperience)
         setSpecifyIndustryExp(row.specifyIndustryExp)
         setIndustryknowledge(row.industryKnowledge)
-        setWorkSetting(row.setWorkSetting)
+        setWorkSetting(row.workSetting)
         setRoleType(row.roleType)
         setRoleTimings(row.roleTimings)
         setRoleTravel(row.roleTravel)
@@ -211,6 +233,56 @@ export const JobTemplateEdit = () => {
     setSoftwares(newFormValues);
   };
 
+  const workSettings = [
+    { label: "On-Site", value: "On-Site" },
+    { label: "Remote", value: "Remote" },
+    { label: "Hybrid", value: "Hybrid" },
+  ]
+
+  const roleTypes = [
+    { label: "Contract", value: "Contract" },
+    { label: "C2H", value: "C2H" },
+    { label: "Fulltime", value: "Fulltime" },
+  ]
+
+  const budgetOpts = [
+    { label: "yes", value: "yes" },
+    { label: "No", value: "No" },
+    { label: "Limited budget", value: "Limited budget" },
+  ]
+
+  const roleTimingOpts = [
+    { label: "Day Shift", value: "Day Shift" },
+    { label: "Night Shift", value: "Night Shift" },
+    { label: "Flexible", value: "Flexible" },
+  ]
+
+  const roleTravelOpts = [
+    { label: "No Travel", value: "No Travel" },
+    { label: "Occasional", value: "Occasional" },
+    { label: "Frequent", value: "Frequent" },
+  ]
+
+  const minQual = [
+    { label: "Bachelors", value: "Bachelors" },
+    { label: "Masters", value: "Masters" },
+    { label: "PhD", value: "PhD" },
+  ]
+
+  const certOpts = [
+    { label: "Six Sigma Green belt", value: "Six Sigma Green belt" },
+    { label: "PMP", value: "PMP" },
+    { label: "Scrum Master", value: "Scrum Master" },
+  ]
+
+  const tools = [
+    { label: "Azure DevOps", value: "Azure DevOps" },
+    { label: "SAP", value: "SAP" },
+    { label: "ABAP", value: "ABAP" },
+    { label: "ERP", value: "ERP" },
+    { label: "AWS", value: "AWS" },
+  ]
+
   return (
     <div>
       <div className="flex">
@@ -234,15 +306,12 @@ export const JobTemplateEdit = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Title
                 </p>
-                <Autocomplete
+                <TextField
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
                   value={jobTitle || null}
-                  onChange={(e, newvalue) => setJobTitle(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  onChange={(e) => setJobTitle(e.target.value)}
+                  placeholder="type"
                 />
               </div>
               <div className="grid grid-flow-row gap-2">
@@ -323,7 +392,7 @@ export const JobTemplateEdit = () => {
               </p>
               <div className="grid grid-flow-row gap-2 mt-8">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  About us - info about the company
+                  Company Overview
                 </p>
                 <textarea
                   value={companyInfo}
@@ -340,7 +409,7 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Position Summary
+                  Job Summary
                 </p>
                 <textarea
                   value={positionSummry}
@@ -357,7 +426,7 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Duties and Responsibilities
+                  Responsibilities
                 </p>
                 <textarea
                   value={responsibilities}
@@ -374,7 +443,7 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Benefits and Compensation
+                  Benefits 
                 </p>
                 <TextField
                   value={benefits}
@@ -392,7 +461,7 @@ export const JobTemplateEdit = () => {
               </div>
               <div className="grid grid-flow-row gap-2 mt-6">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Equal Employee Opportunity
+                  Equal Employee Opportunity (EEO)
                 </p>
                 <textarea
                   value={equalEmployeeOpportunity}
@@ -468,7 +537,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={workSettings.map((option) => option.label)}
                     value={workSetting || null}
                     onChange={(e, newvalue) => setWorkSetting(newvalue)}
                     renderInput={(params) => (
@@ -484,7 +553,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={roleTypes.map((option) => option.label)}
                     value={roleType || null}
                     onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
@@ -500,7 +569,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={roleTimingOpts.map((option) => option.label)}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -516,7 +585,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={roleTravelOpts.map((option) => option.label)}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
@@ -527,12 +596,12 @@ export const JobTemplateEdit = () => {
                 <div className="grid grid-flow-row gap-2 ">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    What kind of visa are you looking for ?
+                    Does this role offer visa sponsorship?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={options.map((option) => option)}
                     value={visa || null}
                     onChange={(e, newvalue) => setVisa(newvalue)}
                     renderInput={(params) => (
@@ -557,7 +626,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={minQual.map((option) => option.label)}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)
@@ -617,7 +686,7 @@ export const JobTemplateEdit = () => {
                           disablePortal
                           size="small"
                           fullWidth
-                          options={options.map((option) => option.label)}
+                          options={certOpts.map((option) => option.label)}
                           value={value.certificate || null}
                           onChange={(e, value) =>
                             handleChangeCertificate("certificate", value, index)
@@ -683,7 +752,7 @@ export const JobTemplateEdit = () => {
                           disablePortal
                           size="small"
                           fullWidth
-                          options={options.map((option) => option.label)}
+                          options={tools.map((option) => option.label)}
                           value={value.tools || null}
                           onChange={(e, value) =>
                             handleChangeToolsAndSoftware("tools", value, index)
@@ -747,6 +816,40 @@ export const JobTemplateEdit = () => {
                   onChange={(e) => setEnvision(e.target.value)}
                 />
               </div>
+              <div className="grid grid-flow-row gap-2 py-8">
+                <div className="pt-3 gap-4 flex">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Job Description
+                  </p>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{
+                      color: "white",
+                      borderColor: "#008080",
+                      textTransform: "none",
+                      backgroundColor: "#008080"
+                    }}
+                    onClick={getJobDescription}
+                    >
+                    Generate Job Description
+                  </Button>
+                </div>
+
+                  <textarea
+                    value={jobDescription}
+                    row={10}
+                    placeholder="type"
+                    onChange={(e) => setJobDescription(e.target.value)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
             </div>
             {/* button */}
             <div className="py-8 gap-8 flex justify-end">
@@ -764,7 +867,7 @@ export const JobTemplateEdit = () => {
                 }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                SAVE AS TEMPLATE
+                SAVE
               </Button>
             </div>
             {/* popup */}

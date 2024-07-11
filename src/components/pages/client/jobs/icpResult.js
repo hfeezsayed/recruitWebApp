@@ -116,14 +116,13 @@ export const IcpResult = () => {
             <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
               Ideal Candidate Persona: Template 1
             </p>
-
             <p style={{ color: "#475467", fontSize: 14 }}>
               Below are the result of Template 1
             </p>
             <div className="flex gap-5 py-8">
               {/* spectrum analysis */}
               <div
-                className="border rounded-lg p-4 w-full "
+                className="border rounded-lg p-4 w-full"
                 style={{
                   backgroundColor: "#ffffff",
                   borderColor: "#D0D5DD",
@@ -430,7 +429,7 @@ export const IcpResult = () => {
                             fontSize: 16,
                             fontWeight: 500,
                           }}>
-                          %
+                          Attribute
                         </p>
                       </div>
                     </div>
@@ -472,7 +471,7 @@ export const IcpResult = () => {
                                   color: "#475467",
                                   fontSize: 16,
                                 }}>
-                                {row.value} %
+                                {row.attribute}
                               </p>
                             </div>
                           </div>
@@ -532,7 +531,7 @@ export const IcpResult = () => {
                             fontSize: 16,
                             fontWeight: 500,
                           }}>
-                          %
+                          Attribute
                         </p>
                       </div>
                     </div>
@@ -574,7 +573,7 @@ export const IcpResult = () => {
                                   color: "#475467",
                                   fontSize: 16,
                                 }}>
-                                {row.value} %
+                                {row.attribute} 
                               </p>
                             </div>
                           </div>
@@ -634,7 +633,7 @@ export const IcpResult = () => {
                             fontSize: 16,
                             fontWeight: 500,
                           }}>
-                          %
+                          Attribute
                         </p>
                       </div>
                     </div>
@@ -676,7 +675,7 @@ export const IcpResult = () => {
                                   color: "#475467",
                                   fontSize: 16,
                                 }}>
-                                {row.value} %
+                                {row.attribute} 
                               </p>
                             </div>
                           </div>

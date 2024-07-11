@@ -117,12 +117,15 @@ export const WorkValueTemplate = () => {
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Created By
+                            Template Tag
                           </TableCell>
                           <TableCell
-                            align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Scores
+                            Template Description
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Created By
                           </TableCell>
                           <TableCell
                             align="center"
@@ -140,6 +143,12 @@ export const WorkValueTemplate = () => {
                                 {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
+                                {row.templateTag}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateDescription}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}
                               </TableCell>
                               <TableCell padding="none" align="center">
@@ -150,7 +159,7 @@ export const WorkValueTemplate = () => {
                                     color: "#28A745",
                                     textTransform: "none",
                                   }}
-                                  onClick={() => {}}>
+                                  onClick={() => navigate("/templates/workValueTemplateView", { state : row })}>
                                   View
                                 </Button>
                               </TableCell>

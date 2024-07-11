@@ -125,6 +125,14 @@ export const JobTemplateList = () => {
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Template Tag
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Template Description
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
                             Created By
                           </TableCell>
 
@@ -159,7 +167,13 @@ export const JobTemplateList = () => {
                               </TableCell>
                               <TableCell align="center">{row.id}</TableCell>
                               <TableCell sx={{ color: "#475467" }}>
-                                {row.batchName}
+                                {row.templateName}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateTag}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateDescription}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}

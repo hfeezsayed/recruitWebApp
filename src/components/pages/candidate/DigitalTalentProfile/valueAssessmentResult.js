@@ -80,7 +80,7 @@ export const ValueAssessmentResult = () => {
                   <PolarAngleAxis dataKey="name" />
                   <PolarRadiusAxis />
                   <Radar
-                    dataKey="x"
+                    dataKey="rating"
                     stroke="#008080"
                     fill="#ffffff"
                     fillOpacity={0}
@@ -121,7 +121,7 @@ export const ValueAssessmentResult = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          {row.name}
+                          {row.statement}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -129,7 +129,7 @@ export const ValueAssessmentResult = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          {row.x}
+                          {row.rating}
                         </TableCell>
                       </TableRow>
                     ))}

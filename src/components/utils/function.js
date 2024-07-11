@@ -106,7 +106,9 @@ const getCompetencyObject = (competency, name) => {
         label: competency.name,
         value: competency.percentage,
         rating: competency.rating,
+        attribute: competency.attribute,
         color: mapping.color,
+
       },
       { value: 100 - competency.percentage, color: "#D0D5DD45" },
     ],

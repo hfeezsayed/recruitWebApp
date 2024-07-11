@@ -51,7 +51,37 @@ export const TeamCreate = () => {
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`,
+        {
+          teamSize,
+          teamLocation,
+          crossFunctionality,
+          domainRole,
+          project,
+          contributions,
+          templateName,
+          templateTag,
+          templateDescription,
+        },
+        
+      )
+      .then((data) => {
+         console.log(data.data)
+         navigate("/job/createJob", { state : jobId});  
+      })
+      .catch((e) => console.log(e));
+  };
+
+
+  const saveAsTemplate = async () => {
+    const domainRole = specifyDomain;
+    const project = teamWorkingDes;
+    const contributions = describeContributions;
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axiosInstance
+      .post(
+        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=1`,
         {
           teamSize,
           teamLocation,
@@ -101,7 +131,7 @@ export const TeamCreate = () => {
             <div className="flex justify-between">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                  Team Template Details
+                  Team Details
                 </p>
                 <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                   Please fill in the information as needed, or use the existing
@@ -236,7 +266,7 @@ export const TeamCreate = () => {
                 }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                SAVE AS TEMPLATE
+                SAVE 
               </Button>
             </div>
             {/* popup */}
@@ -305,16 +335,16 @@ export const TeamCreate = () => {
               </DialogContent>
               <DialogActions>
                 <Button
-                  onClick={closePopup}
+                  onClick={handleSubmit}
                   variant="outlined"
-                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
-                  cancel
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  save
                 </Button>
                 <Button
-                  onClick={handleSubmit}
+                  onClick={saveAsTemplate}
                   variant="contained"
                   style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  SAVE
+                  SAVE As Template
                 </Button>
               </DialogActions>
             </Dialog>

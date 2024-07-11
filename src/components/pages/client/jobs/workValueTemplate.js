@@ -143,7 +143,32 @@ export const JobWorkValueTemplate = () => {
     const jobId = localStorage.getItem("jobId");
     await axiosInstance
       .post(
-        `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`,
+        {
+          ratingList,
+          templateName,
+          templateTag,
+          templateDescription,
+        },
+        
+      )
+      .then((data) => {
+        console.log(data.data);
+        //localStorage.setItem("jobId", data.data.jobId);
+        navigate("/job/createJob", { state : jobId});
+        //navigate("/templates/workValueTemplate", { state : { "job" : true }})
+      })
+      .catch((e) => console.log(e));
+    closePopup();
+  };
+
+
+  const saveAsTemplate = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    await axiosInstance
+      .post(
+        `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=1`,
         {
           ratingList,
           templateName,
@@ -489,7 +514,7 @@ export const JobWorkValueTemplate = () => {
                             backgroundColor: "#008080",
                             color: "#ffffff",
                           }}>
-                          SAVE AS TEMPLATE
+                          SAVE
                         </Button>
                       </div>
                       {/* popup */}
@@ -566,22 +591,22 @@ export const JobWorkValueTemplate = () => {
                         </DialogContent>
                         <DialogActions>
                           <Button
-                            onClick={closePopup}
-                            variant="outlined"
-                            style={{
-                              color: "#475467",
-                              borderColor: "#D0D5DD",
-                            }}>
-                            cancel
-                          </Button>
-                          <Button
                             onClick={handleSubmitRating}
-                            variant="contained"
+                            variant="outlined"
                             style={{
                               color: "#ffffff",
                               backgroundColor: "#008080",
                             }}>
                             SAVE
+                          </Button>
+                          <Button
+                            onClick={saveAsTemplate}
+                            variant="contained"
+                            style={{
+                              color: "#ffffff",
+                              backgroundColor: "#008080",
+                            }}>
+                            SAVE As Template
                           </Button>
                         </DialogActions>
                       </Dialog>

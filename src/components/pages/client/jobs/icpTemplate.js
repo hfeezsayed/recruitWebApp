@@ -469,7 +469,7 @@ export const JobIcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}`, {
+      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`, {
         questionList,
         templateName,
         templateTag,
@@ -482,6 +482,26 @@ export const JobIcpTemplate = () => {
       })
       .catch((error) => console.log(error));
   };
+
+  const saveAsTemplate = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axiosInstance
+      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=1`, {
+        questionList,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
+      .then((response) => {
+        console.log(response.data);
+        // navigate("/job/createJob", { state : jobId});
+        navigate("/job/conformationScreen", { state: jobId });
+      })
+      .catch((error) => console.log(error));
+  };
+
+
   return (
     <div>
       <div className="flex">
@@ -850,19 +870,22 @@ export const JobIcpTemplate = () => {
                     </DialogContent>
                     <DialogActions>
                       <Button
-                        onClick={closePopup}
-                        variant="outlined"
-                        style={{ color: "#475467", borderColor: "#D0D5DD" }}>
-                        cancel
-                      </Button>
-                      <Button
                         onClick={handleSubmitData}
-                        variant="contained"
+                        variant="outlined"
                         style={{
                           color: "#ffffff",
                           backgroundColor: "#008080",
                         }}>
                         SAVE
+                      </Button>
+                      <Button
+                        onClick={saveAsTemplate}
+                        variant="contained"
+                        style={{
+                          color: "#ffffff",
+                          backgroundColor: "#008080",
+                        }}>
+                        SAVE As Template
                       </Button>
                     </DialogActions>
                   </Dialog>

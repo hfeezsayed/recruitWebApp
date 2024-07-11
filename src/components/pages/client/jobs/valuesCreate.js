@@ -55,7 +55,7 @@ export const ValuesCreate = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Create Template 1
+                Work Value Analysis
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please review and Create the information as needed, or use the

@@ -26,7 +26,7 @@ export const TeamPopup = ({ data, setClose, open }) => {
           <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
             Team Template Tags
           </p>
-          <p style={{ color: "#475467", fontSize: 16 }}>{data?.tag}</p>
+          <p style={{ color: "#475467", fontSize: 16 }}>{data?.templateTag}</p>
         </div>
         <div className="grid grid-flow-row  py-1">
           <p style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>

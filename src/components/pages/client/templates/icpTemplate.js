@@ -18,7 +18,7 @@ import { jobTemplateData } from "../../../dummy/Data";
 
 export const IcpTemplate = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(jobTemplateData);
+  const [data, setData] = useState([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
 
@@ -118,12 +118,15 @@ export const IcpTemplate = () => {
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Created By
+                            Template Tag
                           </TableCell>
                           <TableCell
-                            align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                            Scores
+                            Template Description
+                          </TableCell>
+                          <TableCell
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            Created By
                           </TableCell>
                           <TableCell
                             align="center"
@@ -141,6 +144,12 @@ export const IcpTemplate = () => {
                                 {row.templateName}
                               </TableCell>
                               <TableCell sx={{ color: "#475467" }}>
+                                {row.templateTag}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateDescription}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
                                 {row.createdBy}
                               </TableCell>
                               <TableCell padding="none" align="center">
@@ -155,20 +164,6 @@ export const IcpTemplate = () => {
                                     navigate("/templates/icpResult", {state : row});
                                   }}>
                                   View
-                                </Button>
-                              </TableCell>
-                              <TableCell padding="none" align="center">
-                                <Button
-                                  size="small"
-                                  variant="text"
-                                  style={{
-                                    color: "#5E8EBD",
-                                    textTransform: "none",
-                                  }}
-                                  onClick={() => {
-                                    navigate("/templates/icpResult", {state : row});
-                                  }}>
-                                  Edit
                                 </Button>
                               </TableCell>
                             </TableRow>

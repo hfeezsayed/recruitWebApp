@@ -33,6 +33,12 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { candidateDetailsData, createJobData } from "../../../dummy/Data";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import Spinner from "../../../utils/spinner";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
+import { HiDotsVertical } from "react-icons/hi";
+import { FaLink } from "react-icons/fa";
+
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
@@ -46,6 +52,20 @@ export const CreateJob = () => {
   const [showRecomandation, setShowRecomandation] = useState(false);
   const [candidateDetails, setCandidateDetails] = useState(location.state?.selected || candidateDetailsData);
   const [loading, setLoading] = useState(false);
+  const [anchorjd, setAnchorjd] = useState();
+  const jdOpen = Boolean(anchorjd);
+  const [jobCompletion, setJobCompletion] = useState(0);
+  //const [anchorData, setAnchorData] = useState();
+
+
+  const handleJd = (event) => {
+    setAnchorjd(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorjd(null);
+  };
+
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -155,6 +175,18 @@ export const CreateJob = () => {
           if(data.data?.jobDetail && data.data?.workValues && data.data?.team && data.data?.icp){
             setAccessDescription(false);
           }
+          if(data.data?.jobDetail){
+            setJobCompletion(25);
+          }
+          if(data.data?.jobDetail && data.data?.workValues){
+            setJobCompletion(50);
+          }
+          if(data.data?.jobDetail && data.data?.workValues && data.data?.team){
+            setJobCompletion(75);
+          }
+          if(data.data?.jobDetail && data.data?.workValues && data.data?.team && data.data?.icp){
+            setJobCompletion(100);
+          }
           localStorage.setItem("jobId", data.data.id);
         })
         .catch((e) => {
@@ -162,6 +194,7 @@ export const CreateJob = () => {
         });
     }
   }, []);
+
 
   const handleJobDetails = (jobData) => {
     if (jobData?.jobDetail === true) {
@@ -202,6 +235,25 @@ export const CreateJob = () => {
       navigate("/job/icpTemplate");
     }
   };
+
+  const handleStandard = () => {
+    if(jobCompletion === 100){
+      navigate("/job/outputofJobDescription", {state: location.state })
+    }
+  }
+
+  const handleJobDescription = () => {
+    if(jobCompletion === 100){
+      navigate("/job/outputofJobDescription", {state: location.state })
+    }
+  }
+
+  const handleIdentification = () => {
+    if(jobCompletion === 100){
+      navigate("/job/outputofJobDescription", {state: location.state })
+    }
+  }
+
 
   const checkStatus = (status) => {
     let color = "";
@@ -282,14 +334,13 @@ export const CreateJob = () => {
                       <Box sx={{ width: "50%", mr: 1 }}>
                         <BorderLinearProgress
                           variant="determinate"
-                          value={userData?.jobCompletd}
+                          value={jobCompletion}
                         />
                       </Box>
                       <Box sx={{ minWidth: 35 }}>
                         <Typography
                           variant="body2"
-                          color="text.secondary">{`${Math.round(
-                          userData?.jobCompletd
+                          color="text.secondary">{`${Math.round(jobCompletion
                         )}%`}</Typography>
                       </Box>
                     </Box>
@@ -302,13 +353,22 @@ export const CreateJob = () => {
                         textTransform: "none",
                         disabled: {accessDescription}
                       }}
-                      onClick={() =>
-                        navigate("/job/outputofJobDescription", {
-                          state: location.state,
-                        })
-                      }>
+                      // onClick={() =>
+                      //   navigate("/job/outputofJobDescription", {
+                      //     state: location.state,
+                      //   })
+                      // }  
+                      >
                       Access Job Description
                     </Button>
+                    <IconButton
+                        onClick={(e) => {
+                          handleJd(e);
+                        }}>
+                        <HiDotsVertical
+                          style={{ color: "#D9D9D9" }}
+                        />
+                    </IconButton>
                   </div>
                 </div>
               </div>
@@ -398,7 +458,7 @@ export const CreateJob = () => {
                         onClick={() => {
                           handleJobDetails(userData);
                         }}>
-                        {userData?.jobDetail ? "Edit" : "Not taken"}
+                        {userData?.jobDetail ? "Edit" : "Start"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -478,7 +538,7 @@ export const CreateJob = () => {
                         onClick={() => {
                           handleWorkValues(userData);
                         }}>
-                        {userData?.workValues ? "Edit" : "Not taken"}
+                        {userData?.workValues ? "Edit" : "Start"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -558,7 +618,7 @@ export const CreateJob = () => {
                         onClick={() => {
                           handleTeam(userData);
                         }}>
-                        {userData?.team ? "Edit" : "Not taken"}
+                        {userData?.team ? "Edit" : "Start"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -638,7 +698,7 @@ export const CreateJob = () => {
                         onClick={() => {
                           handleJobPreferences(userData);
                         }}>
-                        {userData?.preference ? "Edit" : "Not taken"}
+                        {userData?.preference ? "Edit" : "Start"}
                       </Button>
                     </CardActions>
                   </Card> */}
@@ -718,7 +778,7 @@ export const CreateJob = () => {
                         onClick={() => {
                           handleIcp(userData);
                         }}>
-                        {userData?.icp ? "Edit" : "Not taken"}
+                        {userData?.icp ? "Edit" : "Start"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -1050,6 +1110,66 @@ export const CreateJob = () => {
                 )}
             </div>
           )}
+            {/* job description menu */}
+            <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorjd}
+                  open={jdOpen}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  TransitionComponent={Fade}>
+                  <MenuItem onClick={handleStandard}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
+                      <p
+                        style={{
+                          color: "#5FAEDA",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Standard Job Description
+                      </p>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleJobDescription}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink
+                        style={{ color: "#E05880", fontSize: 14 }}
+                      />
+                      <p
+                        style={{
+                          color: "#E05880",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Job Description
+                      </p>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleIdentification}>
+                    <div className="flex gap-1 items-center">
+                      <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
+                      <p
+                        style={{
+                          color: "#58A20F",
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}>
+                        Retrieve Job Identification
+                      </p>
+                    </div>
+                  </MenuItem>
+                </Menu>
         </div>
       </div>
       <Footer />

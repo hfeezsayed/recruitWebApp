@@ -331,7 +331,7 @@ export const IcpTemplateEdit = () => {
                         fontWeight: 500,
                         fontSize: 14,
                       }}>
-                      Ideal Candidate Persona
+                      Ideal Candidate Persona Template
                     </p>
                     <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
                     <p
