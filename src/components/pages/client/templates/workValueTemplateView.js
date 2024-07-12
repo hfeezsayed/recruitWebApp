@@ -14,8 +14,8 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueViewData } from "../../../dummy/Data";
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import {
   Radar,
   RadarChart,
@@ -47,7 +47,7 @@ export const WorkValueTemplateView = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Work Value Template Details: { data.templateName }
+                Work Value Template Details: {data.templateName}
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Below are the result of Template 1

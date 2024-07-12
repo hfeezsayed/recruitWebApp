@@ -15,33 +15,33 @@ import TableRow from "@mui/material/TableRow";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { valueAssesmentResult } from "../../../dummy/Data";
+import { valueAssesmentResult, workValueViewData } from "../../../dummy/Data";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
+import { Box, TableContainer } from "@mui/material";
 
 export const ValueAssessmentResult = () => {
-  const [assesmentData, setAssessmentData] = useState(valueAssesmentResult);
+  const [assesmentData, setAssessmentData] = useState(workValueViewData);
   const [loading, setLoading] = useState(false);
 
   const { version } = useLocation().state || {};
 
-
-  useEffect( () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    setLoading(true);
-    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version, 
-    )
-    .then(response => {
-        setAssessmentData(response.data);
-        setLoading(false);
-    })
-    .catch(error => {
-      console.log(error);
-      setLoading(false);
-    })
-  }, []);
+  // useEffect( () => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   setLoading(true);
+  //   axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version,
+  //   )
+  //   .then(response => {
+  //       setAssessmentData(response.data);
+  //       setLoading(false);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //     setLoading(false);
+  //   })
+  // }, []);
 
   return (
     <div>
@@ -49,12 +49,9 @@ export const ValueAssessmentResult = () => {
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-          (
-            <Spinner/>
-          )
-          :
-          (
+          {loading === true ? (
+            <Spinner />
+          ) : (
             <div className="p-8">
               <div className="flex justify-between">
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
@@ -73,11 +70,10 @@ export const ValueAssessmentResult = () => {
                   height={350}
                   width={450}
                   outerRadius="80%"
-                  data={assesmentData}>
+                  data={assesmentData.data}>
                   <PolarGrid />
                   <Tooltip />
-
-                  <PolarAngleAxis dataKey="name" />
+                  <PolarAngleAxis dataKey="statement" />
                   <PolarRadiusAxis />
                   <Radar
                     dataKey="rating"
@@ -87,55 +83,162 @@ export const ValueAssessmentResult = () => {
                   />
                 </RadarChart>
               </div>
-              <div>
-                <Table
-                  sx={{
-                    width: 625,
-                    border: 1,
-                    borderColor: "#D0D5DD",
-                  }}>
-                  <TableHead sx={{ bgcolor: "#F8F9FA" }}>
-                    <TableRow>
-                      <TableCell
-                        sx={{ color: "#101828", fontSize: 14, fontWeight: 600 }}>
-                        Work Attribute
-                      </TableCell>
-                      <TableCell
-                        sx={{ color: "#101828", fontSize: 14, fontWeight: 600 }}>
-                        Frequency Selected
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {assesmentData.map((row, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}>
+              <Box>
+                <TableContainer sx={{ minWidth: 500 }}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
                         <TableCell
-                          component="th"
-                          scope="row"
                           sx={{
-                            color: "#475467",
-                            fontSize: 14,
-                            fontWeight: 500,
+                            bgcolor: "#F8F9FA",
+                            color: "#101828",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            width: 250,
                           }}>
-                          {row.statement}
+                          Work Attribute
                         </TableCell>
                         <TableCell
                           sx={{
-                            color: "#008080",
-                            fontSize: 14,
-                            fontWeight: 500,
+                            bgcolor: "#F8F9FA",
+                            color: "#101828",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
                           }}>
-                          {row.rating}
+                          Frequency Selected
                         </TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}>
+                          Priority 4
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            backgroundColor: "#C2E0E8",
+                          }}>
+                          <div className="grid grid-cols-4 gap-y-2">
+                            {assesmentData?.data?.map((data) => {
+                              return Number(data?.rating) === 4 ? (
+                                <p>{data.statement}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}>
+                          Priority 3
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            backgroundColor: "#F2EFC9",
+                          }}>
+                          <div className="grid grid-cols-4 gap-y-2">
+                            {assesmentData?.data?.map((data) => {
+                              return Number(data?.rating) === 3 ? (
+                                <p>{data.statement}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}>
+                          Priority 2
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            backgroundColor: "#D1E6D5",
+                          }}>
+                          <div className="grid grid-cols-4 gap-y-2">
+                            {assesmentData?.data?.map((data) => {
+                              return Number(data?.rating) === 2 ? (
+                                <p>{data.statement}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}>
+                          Priority 1
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            backgroundColor: "#ECCCB7",
+                          }}>
+                          <div className="grid grid-cols-4 gap-y-2">
+                            {assesmentData?.data?.map((data) => {
+                              return Number(data?.rating) === 1 ? (
+                                <p>{data.statement}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}>
+                          No Priority
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#171717",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                            backgroundColor: "#EDDAD3",
+                          }}>
+                          <div className="grid grid-cols-4 gap-y-2">
+                            {assesmentData?.data?.map((data) => {
+                              return Number(data?.rating) === 0 ? (
+                                <p>{data.statement}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
             </div>
           )}
         </div>
