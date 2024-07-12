@@ -127,56 +127,162 @@ export const ValuesEdit = () => {
               </RadarChart>
             </div>
             <div>
-              <Box sx={{ width: "50%", marginTop: 4 }}>
-                <TableContainer>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                          }}>
-                          Work Attribute
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                          }}>
-                          Ratings
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data.map((row, index) => {
-                        return (
-                          <TableRow key={index}>
-                            <TableCell
-                              sx={{
-                                color: "#475467",
-                              }}>
-                              {row.value}
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#475467",
-                              }}>
-                                {/* <Rating
-                                  name={`rating-${index}`}
-                                  value={row?.rating}
-                                  max={4}
-                                  sx={{ color: "#66B2B2" }}
-                                ></Rating> */}
-                              {row.rating}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Box>
+            <Box>
+                        <TableContainer sx={{ minWidth: 500 }}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    width: 250,
+                                  }}>
+                                  Work Attribute
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Frequency Selected
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 1
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#C2E0E8",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {data?.map((data) => {
+                                      return Number(data?.rating) === 4 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 2
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#F2EFC9",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {data?.map((data) => {
+                                      return Number(data?.rating) === 3 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 3
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#D1E6D5",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {data?.map((data) => {
+                                      return Number(data?.rating) === 2 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 4
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#ECCCB7",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {data?.map((data) => {
+                                      return Number(data?.rating) === 1 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  No Priority
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#EDDAD3",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {data?.map((data) => {
+                                      return Number(data?.rating) === 0 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </Box>
               {/* <div className="flex justify-end py-8 gap-8">
                 <Button
                   variant="outlined"

@@ -21,31 +21,11 @@ import Spinner from "../../../utils/spinner";
 
 export const IcpTemplateResult = () => {
   const spectrums = [
-    {
-      spectrum: "spectrum 1",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 2",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 3",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 4",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 5",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
+    "spectrum1",
+    "spectrum2",
+    "spectrum3",
+    "spectrum4",
+    "spectrum5"
   ];
   const [userData, setUserData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
@@ -73,11 +53,12 @@ export const IcpTemplateResult = () => {
 
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
-  // useEffect(() => {
-  //   console.log(location.state);
-  //   setUserData(location.state);
-  //   setPillars(location.state.pillars);
-  // }, [location.state]);
+  useEffect(() => {
+     console.log(location.state);
+     setUserData(location.state);
+     setPillars(location.state.pillars);
+     setBehaviour(location.state.behaviourAttributes);
+ }, [location.state]);
 
   return (
     <div>
@@ -180,7 +161,7 @@ export const IcpTemplateResult = () => {
                                           fontSize: 20,
                                           fontWeight: 500,
                                         }}>
-                                        {row?.spectrum}
+                                        {row}
                                       </p>
                                       {/* <p style={{ color: "#475467", fontSize: 14 }}>
                                 {row?.description}

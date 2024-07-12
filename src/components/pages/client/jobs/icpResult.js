@@ -21,31 +21,11 @@ import Spinner from "../../../utils/spinner";
 
 export const IcpResult = () => {
   const spectrums = [
-    {
-      spectrum: "spectrum 1",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 2",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 3",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 4",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 5",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
+    "spectrum1",
+    "spectrum2",
+    "spectrum3",
+    "spectrum4",
+    "spectrum5"
   ];
   const [userData, setUserData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
@@ -73,35 +53,37 @@ export const IcpResult = () => {
 
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   console.log(location.state);
-  //   setLoading(true);
-  //   if (location.state.jobData) {
-  //     axiosInstance
-  //       .get(
-  //         `/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`
-  //       )
-  //       .then((response) => {
-  //         console.log(location.data);
-  //         setUserData(response.data);
-  //         setPillars(response.data.pillars);
-  //         setLoading(false);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //         setLoading(false);
-  //       });
-  //   } else {
-  //     // setUserData(location.state)
-  //     // setSpectrum1(location.state.pillars[0]);
-  //     // setSpectrum2(location.state.pillars[1]);
-  //     // setSpectrum3(location.state.pillars[2]);
-  //     // setSpectrum4(location.state.pillars[3]);
-  //     // setSpectrum5(location.state.pillars[4]);
-  //   }
-  //   setLoading(false);
-  // }, [location.state]);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
+    setLoading(true);
+    console.log(loading);
+    if (location.state.jobData) {
+      axiosInstance
+        .get(
+          `/getIcpResult?clientId=${user.userId}&jobId=${location.state.jobData.icpId}`
+        )
+        .then((response) => {
+          console.log(location.data);
+          setUserData(response.data);
+          setPillars(response.data.pillars);
+          setBehaviour(response.data.behaviourAttributes);
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setLoading(false);
+        });
+    } else {
+      // setUserData(location.state)
+      // setSpectrum1(location.state.pillars[0]);
+      // setSpectrum2(location.state.pillars[1]);
+      // setSpectrum3(location.state.pillars[2]);
+      // setSpectrum4(location.state.pillars[3]);
+      // setSpectrum5(location.state.pillars[4]);
+    }
+    setLoading(false);
+  }, [location.state]);
 
   return (
     <div>
@@ -111,7 +93,9 @@ export const IcpResult = () => {
           <TopNav />
           {loading === true ? (
             <Spinner />
-          ) : (
+          ) 
+          : 
+          (
             <div className="p-8">
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
                 Ideal Candidate Persona: Template 1
@@ -202,7 +186,7 @@ export const IcpResult = () => {
                                           fontSize: 20,
                                           fontWeight: 500,
                                         }}>
-                                        {row?.spectrum}
+                                        {row}
                                       </p>
                                       {/* <p style={{ color: "#475467", fontSize: 14 }}>
                                 {row?.description}

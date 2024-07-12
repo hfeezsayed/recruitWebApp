@@ -240,19 +240,19 @@ export const CreateJob = () => {
 
   const handleStandard = () => {
     if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: location.state })
+      navigate("/job/outputofJobDescription", {state: { jobId : location.state, fullAccess : true}})
     }
   }
 
   const handleJobDescription = () => {
     if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: location.state })
+      navigate("/job/outputofJobDescription", {state: { jobId : location.state, teamAccess : true}})
     }
   }
 
   const handleIdentification = () => {
     if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: location.state })
+      navigate("/job/outputofJobDescription", {state: { jobId : location.state, jdAccess : true }})
     }
   }
 
@@ -1143,7 +1143,7 @@ export const CreateJob = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={() => handleJobDescription}>
+                  <MenuItem onClick={handleJobDescription}>
                     <div className="flex gap-1 items-center">
                       <FaLink
                         style={{ color: "#E05880", fontSize: 14 }}
@@ -1158,7 +1158,7 @@ export const CreateJob = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={() => handleIdentification}>
+                  <MenuItem onClick={handleIdentification}>
                     <div className="flex gap-1 items-center">
                       <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
                       <p

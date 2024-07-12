@@ -1010,7 +1010,7 @@ export const workValueViewData = {
   tag: "ABCD",
   templateDescription: "ABCD",
   data: [
-    { statement: "Self- Direction", rating: 4 },
+    { statement: "Self-Direction", rating: 4 },
     { statement: "Stimulation", rating: 3 },
     { statement: "Hedonism", rating: 3 },
     { statement: "Achievements", rating: 3 },

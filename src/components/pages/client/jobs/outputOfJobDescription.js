@@ -38,66 +38,56 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 
 export const OutputofJobDescription = () => {
   const spectrums = [
-    {
-      spectrum: "spectrum 1",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 2",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 3",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 4",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 5",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
+    "spectrum1",
+    "spectrum2",
+    "spectrum3",
+    "spectrum4",
+    "spectrum5"
   ];
   const navigate = useNavigate();
   const location = useLocation();
   const [jobDetailsData, setJobDetailsData] = useState(JobTemplateListViewData);
-  const [workValueData, setWorkValueData] = useState(workValueViewData);
+  const [workValueData, setWorkValueData] = useState([]);
   const [teamPreference, setTeamPreference] = useState(JobTemplateListViewData);
   const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
   const [pillars, setPillars] = useState(spectrums);
   const [loading, setLoading] = useState(false);
+  const [fullAccess, setFullAccess] = useState(true);
+  const [teamAccess, setTeamAccess] = useState(true);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   console.log(location.state);
-  //   if (location.state) {
-  //     axiosInstance
-  //       .get(
-  //         `/getJobDescription?clientId=${user.userId}&jobId=${location.state}`
-  //       )
-  //       .then((data) => {
-  //         console.log(data);
-  //         setJobDetailsData(data.data?.jobDetail);
-  //         setWorkValueData(data.data?.values);
-  //         setTeamPreference(data.data?.team);
-  //         setIcpAnalysisData(data.data?.icp);
-  //         setPillars(data.data?.icp.pillars);
-  //         setLoading(false);
-  //       })
-  //       .catch((e) => {
-  //         setLoading(false);
-  //         console.log(e);
-  //       });
-  //   }
-  // }, []);
+  useEffect(() => {
+    setLoading(true);
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(location.state);
+    if (location.state) {
+      if(location.state.teamAccess){
+        setFullAccess(false);
+      }
+      if(location.state.jdAccess){
+        setFullAccess(false);
+        setTeamAccess(false);
+      }
+      axiosInstance
+        .get(
+          `/getJobDescription?clientId=${user.userId}&jobId=${location.state.jobId}`
+        )
+        .then((data) => {
+          console.log(data);
+          setJobDetailsData(data.data?.jobDetail);
+          setWorkValueData(data.data?.values);
+          setTeamPreference(data.data?.team);
+          setIcpAnalysisData(data.data?.icp);
+          setPillars(data.data?.icp.pillars);
+          setBehaviour(data.data?.icp.behaviourAttributes);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setLoading(false);
+          console.log(e);
+        });
+    }
+  }, []);
 
   const convertedEmtional = convertCompetencies(
     icpAnalysisData?.emtionalFlexibility[0]
@@ -262,7 +252,7 @@ export const OutputofJobDescription = () => {
                         Position Summary
                       </p>
                       <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.positionSummary}
+                        {jobDetailsData?.positionSummry}
                       </p>
                     </div>
                     <div>
@@ -274,13 +264,9 @@ export const OutputofJobDescription = () => {
                         }}>
                         Duties and Responsibility:
                       </p>
-                      {jobDetailsData?.responsibility?.map((row) => {
-                        return (
-                          <li style={{ color: "#333333", fontSize: 16 }}>
-                            {row}
-                          </li>
-                        );
-                      })}
+                      <p style={{ color: "#333333", fontSize: 16 }}>
+                        {jobDetailsData?.responsibilities}
+                      </p>
                     </div>
                     <div className="grid grid-flow-row  py-1">
                       <p
@@ -375,7 +361,7 @@ export const OutputofJobDescription = () => {
                         What is the work setting for the role?
                       </p>
                       <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.roleSetting}
+                        {jobDetailsData?.workSetting}
                       </p>
                     </div>
                     <div className="grid grid-flow-row  py-1">
@@ -414,7 +400,7 @@ export const OutputofJobDescription = () => {
                         How frequent does the role require to travel?
                       </p>
                       <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.roleTrav}
+                        {jobDetailsData?.roleTravel}
                       </p>
                     </div>
                     <div className="grid grid-flow-row  py-1">
@@ -435,7 +421,8 @@ export const OutputofJobDescription = () => {
               </Card>
 
               {/*  Work Value  */}
-              <Card className="p-4 my-4">
+              {fullAccess && 
+              (<Card className="p-4 my-4">
                 <div>
                   <p
                     style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
@@ -448,10 +435,10 @@ export const OutputofJobDescription = () => {
                       height={350}
                       width={450}
                       outerRadius="80%"
-                      data={workValueData.data}>
+                      data={workValueData}>
                       <PolarGrid />
                       <Tooltip />
-                      <PolarAngleAxis dataKey="statement" />
+                      <PolarAngleAxis dataKey="value" />
                       <PolarRadiusAxis />
                       <Radar
                         dataKey="rating"
@@ -505,9 +492,9 @@ export const OutputofJobDescription = () => {
                                 backgroundColor: "#C2E0E8",
                               }}>
                               <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.data?.map((data) => {
+                                {workValueData?.map((data) => {
                                   return Number(data?.rating) === 4 ? (
-                                    <p>{data.statement}</p>
+                                    <p>{data.value}</p>
                                   ) : null;
                                 })}
                               </div>
@@ -530,9 +517,9 @@ export const OutputofJobDescription = () => {
                                 backgroundColor: "#F2EFC9",
                               }}>
                               <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.data?.map((data) => {
+                                {workValueData?.map((data) => {
                                   return Number(data?.rating) === 3 ? (
-                                    <p>{data.statement}</p>
+                                    <p>{data.value}</p>
                                   ) : null;
                                 })}
                               </div>
@@ -555,9 +542,9 @@ export const OutputofJobDescription = () => {
                                 backgroundColor: "#D1E6D5",
                               }}>
                               <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.data?.map((data) => {
+                                {workValueData?.map((data) => {
                                   return Number(data?.rating) === 2 ? (
-                                    <p>{data.statement}</p>
+                                    <p>{data.value}</p>
                                   ) : null;
                                 })}
                               </div>
@@ -580,9 +567,9 @@ export const OutputofJobDescription = () => {
                                 backgroundColor: "#ECCCB7",
                               }}>
                               <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.data?.map((data) => {
+                                {workValueData?.map((data) => {
                                   return Number(data?.rating) === 1 ? (
-                                    <p>{data.statement}</p>
+                                    <p>{data.value}</p>
                                   ) : null;
                                 })}
                               </div>
@@ -605,9 +592,9 @@ export const OutputofJobDescription = () => {
                                 backgroundColor: "#EDDAD3",
                               }}>
                               <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.data?.map((data) => {
+                                {workValueData?.map((data) => {
                                   return Number(data?.rating) === 0 ? (
-                                    <p>{data.statement}</p>
+                                    <p>{data.value}</p>
                                   ) : null;
                                 })}
                               </div>
@@ -619,7 +606,10 @@ export const OutputofJobDescription = () => {
                   </Box>
                 </div>
               </Card>
+              )}
               {/* Team Preference */}
+              {(fullAccess || teamAccess) && 
+              (
               <Card className="p-4 my-4">
                 <div>
                   <p
@@ -678,21 +668,7 @@ export const OutputofJobDescription = () => {
                       candidate will be joining?
                     </p>
                     <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.teamWorkingProject}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      What problem/project is the team working on which the
-                      candidate will be joining?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.teamWorkingProjectProblem}
+                      {teamPreference?.project}
                     </p>
                   </div>
                   <div className="grid grid-flow-row  py-1">
@@ -712,7 +688,10 @@ export const OutputofJobDescription = () => {
                   </div>
                 </div>
               </Card>
+              )}
               {/* ICP Analysis */}
+              { fullAccess &&
+              (
               <Card className="p-4 my-4">
                 <div>
                   <p
@@ -804,7 +783,7 @@ export const OutputofJobDescription = () => {
                                               fontSize: 20,
                                               fontWeight: 500,
                                             }}>
-                                            {row?.spectrum}
+                                            {row}
                                           </p>
                                           {/* <p style={{ color: "#475467", fontSize: 14 }}>
                                 {row?.description}
@@ -1257,6 +1236,7 @@ export const OutputofJobDescription = () => {
                   </div>
                 </div>
               </Card>
+              )}
             </div>
           )}
         </div>

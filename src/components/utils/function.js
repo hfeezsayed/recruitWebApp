@@ -91,12 +91,9 @@ const getCompetencyObject = (competency, name) => {
     );
   }
 
-  console.log(mappings);
-  console.log(competency);
 
   const mapping = mappings.find((data) => data.name === competency.name);
 
-  console.log(mapping);
 
   return {
     innerRadius: mapping.innerRadius,
@@ -117,15 +114,9 @@ const getCompetencyObject = (competency, name) => {
 };
 
 export const convertCompetencies = (competencyList) => {
-  console.log(competencyList);
   const name = competencyList?.pillar2;
-  console.log(name);
   const competencies = competencyList?.competencies;
   return competencies?.map((competency) =>
     getCompetencyObject(competency, name)
   );
-};
-
-export const convertCompetencies1 = (data) => {
-  console.log(data);
 };

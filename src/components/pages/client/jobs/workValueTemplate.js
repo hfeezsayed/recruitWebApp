@@ -446,10 +446,10 @@ export const JobWorkValueTemplate = () => {
                           height={350}
                           width={450}
                           outerRadius="80%"
-                          data={viewData.data}>
+                          data={ratingList}>
                           <PolarGrid />
                           <Tooltip />
-                          <PolarAngleAxis dataKey="statement" />
+                          <PolarAngleAxis dataKey="value" />
                           <PolarRadiusAxis />
                           <Radar
                             dataKey="rating"
@@ -493,7 +493,7 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                   }}>
-                                  Priority 4
+                                  Priority 1
                                 </TableCell>
                                 <TableCell
                                   sx={{
@@ -503,34 +503,9 @@ export const JobWorkValueTemplate = () => {
                                     backgroundColor: "#C2E0E8",
                                   }}>
                                   <div className="grid grid-cols-4 gap-y-2">
-                                    {viewData?.data?.map((data) => {
+                                    {ratingList?.map((data) => {
                                       return Number(data?.rating) === 4 ? (
-                                        <p>{data.statement}</p>
-                                      ) : null;
-                                    })}
-                                  </div>
-                                </TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell
-                                  sx={{
-                                    color: "#171717",
-                                    border: 1,
-                                    borderColor: "#D0D5DD50",
-                                  }}>
-                                  Priority 3
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#171717",
-                                    border: 1,
-                                    borderColor: "#D0D5DD50",
-                                    backgroundColor: "#F2EFC9",
-                                  }}>
-                                  <div className="grid grid-cols-4 gap-y-2">
-                                    {viewData?.data?.map((data) => {
-                                      return Number(data?.rating) === 3 ? (
-                                        <p>{data.statement}</p>
+                                        <p>{data.value}</p>
                                       ) : null;
                                     })}
                                   </div>
@@ -550,12 +525,12 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                    backgroundColor: "#D1E6D5",
+                                    backgroundColor: "#F2EFC9",
                                   }}>
                                   <div className="grid grid-cols-4 gap-y-2">
-                                    {viewData?.data?.map((data) => {
-                                      return Number(data?.rating) === 2 ? (
-                                        <p>{data.statement}</p>
+                                    {ratingList?.map((data) => {
+                                      return Number(data?.rating) === 3 ? (
+                                        <p>{data.value}</p>
                                       ) : null;
                                     })}
                                   </div>
@@ -568,7 +543,32 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                   }}>
-                                  Priority 1
+                                  Priority 3
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#D1E6D5",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {ratingList?.map((data) => {
+                                      return Number(data?.rating) === 2 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 4
                                 </TableCell>
                                 <TableCell
                                   sx={{
@@ -578,9 +578,9 @@ export const JobWorkValueTemplate = () => {
                                     backgroundColor: "#ECCCB7",
                                   }}>
                                   <div className="grid grid-cols-4 gap-y-2">
-                                    {viewData?.data?.map((data) => {
+                                    {ratingList?.map((data) => {
                                       return Number(data?.rating) === 1 ? (
-                                        <p>{data.statement}</p>
+                                        <p>{data.value}</p>
                                       ) : null;
                                     })}
                                   </div>
@@ -603,9 +603,9 @@ export const JobWorkValueTemplate = () => {
                                     backgroundColor: "#EDDAD3",
                                   }}>
                                   <div className="grid grid-cols-4 gap-y-2">
-                                    {viewData?.data?.map((data) => {
+                                    {ratingList?.map((data) => {
                                       return Number(data?.rating) === 0 ? (
-                                        <p>{data.statement}</p>
+                                        <p>{data.value}</p>
                                       ) : null;
                                     })}
                                   </div>

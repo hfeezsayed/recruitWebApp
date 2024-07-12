@@ -142,15 +142,15 @@ export const AllJobs = () => {
 
 
   const handleStandard = () => {
-    navigate("/job/outputofJobDescription", {state: anchorData.id })
+    navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, fullAccess : true} })
   }
 
   const handleJobDesc = () => {
-    navigate("/job/outputofJobDescription", {state: anchorData.id })
+    navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, teamAccess : true} })
   }
 
   const handleIdentification = () => {
-    navigate("/job/outputofJobDescription", {state: anchorData.id })
+    navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, jdAccess : true} })
   }
 
 
@@ -780,7 +780,7 @@ export const AllJobs = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={() => handleJobDesc}>
+                  <MenuItem onClick={handleJobDesc}>
                     <div className="flex gap-1 items-center">
                       <FaLink
                         style={{ color: "#E05880", fontSize: 14 }}
@@ -795,7 +795,7 @@ export const AllJobs = () => {
                       </p>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={() => handleIdentification}>
+                  <MenuItem onClick={handleIdentification}>
                     <div className="flex gap-1 items-center">
                       <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
                       <p
