@@ -42,13 +42,14 @@ import { FaLink } from "react-icons/fa";
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
+  const userName = JSON.parse(localStorage.getItem("token"))?.username
+  ? JSON.parse(localStorage.getItem("token"))?.username
+  : userData.name;
   const [jobId, setJobId] = useState(0);
   const location = useLocation();
   const { state } = location;
   const [accessDescription, setAccessDescription] = useState(true);
-  const userName = JSON.parse(localStorage.getItem("token"))?.username
-    ? JSON.parse(localStorage.getItem("token"))?.username
-    : userData.name;
+  const [title, setTitle] = useState(userName)
   const [showRecomandation, setShowRecomandation] = useState(false);
   const [candidateDetails, setCandidateDetails] = useState(location.state?.selected || candidateDetailsData);
   const [loading, setLoading] = useState(false);
@@ -177,6 +178,7 @@ export const CreateJob = () => {
           }
           if(data.data?.jobDetail){
             setJobCompletion(25);
+            setTitle(data.data?.title);
           }
           if(data.data?.jobDetail && data.data?.workValues){
             setJobCompletion(50);
@@ -321,7 +323,7 @@ export const CreateJob = () => {
                   <div className="mt-9">
                     <p
                       style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
-                      {userName}
+                      {title}
                     </p>
                   </div>
                 </div>
