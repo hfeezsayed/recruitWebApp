@@ -1338,7 +1338,7 @@ export const AllJobsData = [
   {
     id: 1,
     new: true,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior Software",
     location: "Heydrabad",
     typeOfHire: ["Full Time", "Part Time"],
     jobProgress: 100,
@@ -1349,7 +1349,7 @@ export const AllJobsData = [
   {
     id: 2,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: " Software Engineer",
     location: "Heydrabad",
     typeOfHire: ["Full Time", "Part Time"],
     jobProgress: 58,
@@ -1371,7 +1371,7 @@ export const AllJobsData = [
   {
     id: 4,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior  ",
     location: "Heydrabad",
     typeOfHire: ["Part Time"],
     jobProgress: 100,
@@ -1382,7 +1382,7 @@ export const AllJobsData = [
   {
     id: 5,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior Software ",
     location: "Heydrabad",
     typeOfHire: ["Full Time", "Part Time"],
     jobProgress: 76,
@@ -1393,7 +1393,7 @@ export const AllJobsData = [
   {
     id: 6,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior Software tata",
     location: "Heydrabad",
     typeOfHire: ["Full Time"],
     jobProgress: 100,
@@ -1426,7 +1426,7 @@ export const AllJobsData = [
   {
     id: 9,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior Software nwe",
     location: "Heydrabad",
     typeOfHire: ["Full Time", "Part Time"],
     jobProgress: 100,
@@ -1448,7 +1448,7 @@ export const AllJobsData = [
   {
     id: 11,
     new: false,
-    jobName: "Senior Software Engineer",
+    jobName: "Senior  work",
     location: "Heydrabad",
     typeOfHire: ["Full Time", "Part Time"],
     jobProgress: 100,
@@ -1459,7 +1459,7 @@ export const AllJobsData = [
 ];
 
 export const JobDetails = {
-  jobName: "Senior Software Engineer",
+  jobName: "Senior Sare neer",
   location: "Heydrabad",
   typeOfHire: ["Full Time", "Part Time"],
   companyName: "Linear Company",
