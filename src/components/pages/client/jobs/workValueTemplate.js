@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Button,
   InputAdornment,
@@ -40,6 +40,14 @@ import {
 import { IoSearchOutline } from "react-icons/io5";
 import { ValuesPopup } from "./valuesPopup";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+  Tooltip,
+} from "recharts";
 
 export const JobWorkValueTemplate = () => {
   const navigate = useNavigate();
@@ -110,12 +118,10 @@ export const JobWorkValueTemplate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
-      )
+      .get(`/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
-        setData(data.data);
+        // setData(data.data);
         setPage(data?.pageNo || 1);
       })
       .catch((e) => {
@@ -128,12 +134,11 @@ export const JobWorkValueTemplate = () => {
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .get(
-        `/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`,
-        
+        `/assignValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}&valuesId=${selected.id}`
       )
       .then((data) => {
         console.log(data.data);
-        navigate("/job/createJob", { state : jobId});
+        navigate("/job/createJob", { state: jobId });
       })
       .catch((e) => console.log(e));
   };
@@ -149,19 +154,17 @@ export const JobWorkValueTemplate = () => {
           templateName,
           templateTag,
           templateDescription,
-        },
-        
+        }
       )
       .then((data) => {
         console.log(data.data);
         //localStorage.setItem("jobId", data.data.jobId);
-        navigate("/job/createJob", { state : jobId});
+        navigate("/job/createJob", { state: jobId });
         //navigate("/templates/workValueTemplate", { state : { "job" : true }})
       })
       .catch((e) => console.log(e));
     closePopup();
   };
-
 
   const saveAsTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -174,13 +177,12 @@ export const JobWorkValueTemplate = () => {
           templateName,
           templateTag,
           templateDescription,
-        },
-        
+        }
       )
       .then((data) => {
         console.log(data.data);
         //localStorage.setItem("jobId", data.data.jobId);
-        navigate("/job/createJob", { state : jobId});
+        navigate("/job/createJob", { state: jobId });
         //navigate("/templates/workValueTemplate", { state : { "job" : true }})
       })
       .catch((e) => console.log(e));
@@ -188,11 +190,11 @@ export const JobWorkValueTemplate = () => {
   };
 
   const handlepopup = (row) => {
-    const data = {data : row.valuesData};
+    const data = { data: row.valuesData };
     console.log(row.valuesData);
     setViewData(data);
     setShowPopup(true);
-  }
+  };
 
   return (
     <div>
@@ -439,20 +441,38 @@ export const JobWorkValueTemplate = () => {
                           Below are the result of the Work Value Analysis taken.
                         </p>
                       </div>
-                      <Box sx={{ width: "60%" }}>
+                      <div className="py-5">
+                        <RadarChart
+                          height={350}
+                          width={450}
+                          outerRadius="80%"
+                          data={viewData.data}>
+                          <PolarGrid />
+                          <Tooltip />
+                          <PolarAngleAxis dataKey="statement" />
+                          <PolarRadiusAxis />
+                          <Radar
+                            dataKey="rating"
+                            stroke="#008080"
+                            fill="#ffffff"
+                            fillOpacity={0}
+                          />
+                        </RadarChart>
+                      </div>
+                      <Box>
                         <TableContainer sx={{ minWidth: 500 }}>
                           <Table>
                             <TableHead>
                               <TableRow>
                                 <TableCell
-                                  align="center"
                                   sx={{
                                     bgcolor: "#F8F9FA",
                                     color: "#101828",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
+                                    width: 250,
                                   }}>
-                                  Ranking out of 4
+                                  Work Attribute
                                 </TableCell>
                                 <TableCell
                                   sx={{
@@ -461,34 +481,136 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                   }}>
-                                  Work Attribute
+                                  Frequency Selected
                                 </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {ratingList?.map((row, index) => {
-                                return (
-                                  <TableRow key={index}>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        color: "#008080",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      {row.rating}
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        color: "#475467",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      {row.value}
-                                    </TableCell>
-                                  </TableRow>
-                                );
-                              })}
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 4
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#C2E0E8",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {viewData?.data?.map((data) => {
+                                      return Number(data?.rating) === 4 ? (
+                                        <p>{data.statement}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 3
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#F2EFC9",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {viewData?.data?.map((data) => {
+                                      return Number(data?.rating) === 3 ? (
+                                        <p>{data.statement}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 2
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#D1E6D5",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {viewData?.data?.map((data) => {
+                                      return Number(data?.rating) === 2 ? (
+                                        <p>{data.statement}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 1
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#ECCCB7",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {viewData?.data?.map((data) => {
+                                      return Number(data?.rating) === 1 ? (
+                                        <p>{data.statement}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  No Priority
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#EDDAD3",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {viewData?.data?.map((data) => {
+                                      return Number(data?.rating) === 0 ? (
+                                        <p>{data.statement}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
                             </TableBody>
                           </Table>
                         </TableContainer>

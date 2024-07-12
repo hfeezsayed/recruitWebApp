@@ -15,13 +15,45 @@ import TableRow from "@mui/material/TableRow";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { HumanBody } from "../../../../assets/icon/humanBody";
 import { convertCompetencies } from "../../../utils/function";
+import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
+import { BehaviouralAttributes } from "../../../dummy/Data";
 
 export const IcpPopup = ({ data, setClose, open }) => {
+  const spectrums = [
+    {
+      spectrum: "spectrum 1",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 2",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 3",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 4",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+    {
+      spectrum: "spectrum 5",
+      description:
+        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
+    },
+  ];
   const [spectrum1, setSpectrum1] = useState("spectrum1");
   const [spectrum2, setSpectrum2] = useState("spectrum2");
   const [spectrum3, setSpectrum3] = useState("spectrum3");
   const [spectrum4, setSpectrum4] = useState("spectrum4");
   const [spectrum5, setSpectrum5] = useState("spectrum5");
+
+  const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
+  const [pillars, setPillars] = useState(spectrums);
 
   const convertedEmtional = convertCompetencies(data?.emtionalFlexibility[0]);
 
@@ -41,214 +73,122 @@ export const IcpPopup = ({ data, setClose, open }) => {
       </IconButton>
       <Divider />
       <DialogContent>
-        <div className="flex gap-5 pb-8">
-          {/* spectrum analysis */}
-          <div
-            className="border rounded-lg p-4"
-            style={{
-              backgroundColor: "#ffffff",
-              borderColor: "#D0D5DD",
-            }}>
-            <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-              Spectrum Analysis
-            </p>
-            <div className="flex">
-              <div className="py-8">
-                <HumanBody COLOR={"#404040"} />
-              </div>
-              <div className="grid justify-end relative pt-5 -ml-24">
-                <div className="grid grid-flow-row gap-4">
-                  <div className="grid grid-flow-col w-64">
-                    <div className="flex items-center justify-end p-2">
-                      <p
-                        style={{
-                          color: "#7FAD89",
-                          fontSize: 33,
-                        }}>
-                        <span style={{ fontSize: 30 }}>&#x2022;</span>
-                        &#x2015;
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        borderLeftWidth: 2,
-                        borderRightWidth: 2,
-                        borderLeftColor: "#7FAD89",
-                        borderRightColor: "#7FAD89",
-                        padding: 5,
-                        borderRadius: 8,
-                      }}>
-                      <p
-                        style={{
-                          color: "#7FAD89",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        {spectrum1}
-                      </p>
-                      <p style={{ color: "#7FAD89", fontSize: 12 }}>
-                        They serve as guiding <br /> principles that influence
-                        <br />
-                        decision-making, behavior, and <br />
-                        interactions in both personal
-                        <br /> and professional settings.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-flow-col">
-                    <div className="flex items-center justify-end p-2">
-                      <p
-                        style={{
-                          color: "#E1756B",
-                          fontSize: 33,
-                        }}>
-                        <span style={{ fontSize: 30 }}>&#x2022;</span>
-                        &#x2015;
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        borderLeftWidth: 2,
-                        borderRightWidth: 2,
-                        borderLeftColor: "#E1756B",
-                        borderRightColor: "#E1756B",
-                        padding: 5,
-                        borderRadius: 8,
-                      }}>
-                      <p
-                        style={{
-                          color: "#E1756B",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        {spectrum2}
-                      </p>
-                      <p style={{ color: "#E1756B", fontSize: 12 }}>
-                        They serve as guiding <br /> principles that influence
-                        <br />
-                        decision-making, behavior, and <br />
-                        interactions in both personal
-                        <br /> and professional settings.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-flow-col">
-                    <div className="flex items-center justify-end p-2">
-                      <p
-                        style={{
-                          color: "#0F71CD",
-                          fontSize: 33,
-                        }}>
-                        <span style={{ fontSize: 30 }}>&#x2022;</span>
-                        &#x2015;
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        borderLeftWidth: 2,
-                        borderRightWidth: 2,
-                        borderLeftColor: "#0F71CD",
-                        borderRightColor: "#0F71CD",
-                        padding: 5,
-                        borderRadius: 8,
-                      }}>
-                      <p
-                        style={{
-                          color: "#0F71CD",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        {spectrum3}
-                      </p>
-                      <p style={{ color: "#0F71CD", fontSize: 12 }}>
-                        They serve as guiding <br /> principles that influence
-                        <br />
-                        decision-making, behavior, and <br />
-                        interactions in both personal
-                        <br /> and professional settings.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-flow-col">
-                    <div className="flex items-center justify-end p-2">
-                      <p
-                        style={{
-                          color: "#FFB44F",
-                          fontSize: 33,
-                        }}>
-                        <span style={{ fontSize: 30 }}>&#x2022;</span>
-                        &#x2015;
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        borderLeftWidth: 2,
-                        borderRightWidth: 2,
-                        borderLeftColor: "#FFB44F",
-                        borderRightColor: "#FFB44F",
-                        padding: 5,
-                        borderRadius: 8,
-                      }}>
-                      <p
-                        style={{
-                          color: "#FFB44F",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        {spectrum4}
-                      </p>
-                      <p style={{ color: "#FFB44F", fontSize: 12 }}>
-                        They serve as guiding <br /> principles that influence
-                        <br />
-                        decision-making, behavior, and <br />
-                        interactions in both personal
-                        <br /> and professional settings.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-flow-col">
-                    <div className="flex items-center justify-end p-2">
-                      <p
-                        style={{
-                          color: "#A8A3CF",
-                          fontSize: 33,
-                        }}>
-                        <span style={{ fontSize: 30 }}>&#x2022;</span>
-                        &#x2015;
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        borderLeftWidth: 2,
-                        borderRightWidth: 2,
-                        borderLeftColor: "#A8A3CF",
-                        borderRightColor: "#A8A3CF",
-                        padding: 5,
-                        borderRadius: 8,
-                      }}>
-                      <p
-                        style={{
-                          color: "#A8A3CF",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        {spectrum5}
-                      </p>
-                      <p style={{ color: "#A8A3CF", fontSize: 12 }}>
-                        They serve as guiding <br /> principles that influence
-                        <br />
-                        decision-making, behavior, and <br />
-                        interactions in both personal
-                        <br /> and professional settings.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <p
+          style={{
+            color: "#101828",
+            fontSize: 22,
+            fontWeight: 600,
+            marginTop: 10,
+          }}>
+          Spectrum Analysis
+        </p>
+
+        <div className="flex gap-5 py-5">
           {/* table */}
-          <div>
+          <Table
+            sx={{
+              borderWidth: 1,
+            }}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                    minWidth: 600,
+                  }}>
+                  Talent Dimensions
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Behavioural Attributes
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <Fragment>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#475467",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      borderWidth: 1,
+                    }}
+                    rowSpan={behaviour?.length + 1}>
+                    {/* <div
+                              className="border rounded-lg p-4 w-full"
+                              style={{
+                                backgroundColor: "#ffffff",
+                                borderColor: "#D0D5DD",
+                              }}> */}
+                    <div className="flex justify-center">
+                      <ColorBodySvg />
+
+                      <div className="grid relative pt-5">
+                        {pillars.map((row, index) => {
+                          return (
+                            <div className={`flex mt-10`} key={index}>
+                              {/* <div className="flex text-center p-2"></div> */}
+                              <div className="flex gap-3 items-center">
+                                <p
+                                  style={{
+                                    color: "#475467",
+                                    fontSize: 33,
+                                  }}>
+                                  &#x2015;
+                                  <span style={{ fontSize: 30 }}>&#x2022;</span>
+                                </p>
+                                <p
+                                  style={{
+                                    color: "#101828",
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                  }}>
+                                  {row?.spectrum}
+                                </p>
+                                {/* <p style={{ color: "#475467", fontSize: 14 }}>
+                                {row?.description}
+                              </p> */}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {/* </div> */}
+                  </TableCell>
+                </TableRow>
+              </Fragment>
+              <Fragment>
+                {behaviour?.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell
+                      sx={{
+                        color: "#475467",
+                        fontSize: 14,
+                        fontWeight: 500,
+                        borderWidth: 1,
+                      }}>
+                      {row}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </Fragment>
+            </TableBody>
+          </Table>
+        </div>
+        {/* table */}
+        {/* <div>
             <Table
               sx={{
                 width: 550,
@@ -416,316 +356,425 @@ export const IcpPopup = ({ data, setClose, open }) => {
                 </Fragment>
               </TableBody>
             </Table>
-          </div>
-        </div>
+          </div> */}
+
         {/* charts */}
-        <div className="grid grid-cols-3 gap-5 py-3">
-          {/* chart 1 Emotional Flexibility */}
-          <div>
-            <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
-              Emotional Flexibility
-            </p>
-
-            {/* circle chart */}
-            <div className="py-5">
-              <div className="flex justify-end">
-                <PieChart
-                  series={convertedEmtional}
-                  width={300}
-                  height={200}
-                  slotProps={{
-                    legend: {
-                      hidden: true,
-                    },
+        <p
+          style={{
+            color: "#101828",
+            fontSize: 22,
+            fontWeight: 600,
+            marginTop: 10,
+          }}>
+          Pie Charts
+        </p>
+        {/* chart 1 table */}
+        <div className="mt-5">
+          <Table
+            sx={{
+              borderWidth: 1,
+            }}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Emotional Flexibility
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Labels
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
                   }}
-                />
-              </div>
-              <div className="mt-3">
-                {/* header */}
-                <div className="grid grid-cols-4">
-                  <div className="col-span-2">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Label
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Rating out of 5
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      %
-                    </p>
-                  </div>
-                </div>
-                {/* body */}
-                <div className="grid grid-flow-row gap-3">
-                  {convertedEmtional.map((data, index) => {
-                    let row = data.data[0];
-                    return (
-                      <div
-                        className="grid grid-cols-4"
-                        style={{
-                          borderLeftWidth: 3,
-                          borderLeftColor: row.color,
-                          borderRadius: 3,
-                          paddingLeft: 5,
+                  align="center">
+                  Rating out of 5
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Attributes
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <Fragment>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#475467",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      borderWidth: 1,
+                      width: 450,
+                    }}
+                    rowSpan={5}>
+                    <div className="flex justify-end">
+                      <PieChart
+                        series={convertedEmtional}
+                        width={300}
+                        height={200}
+                        slotProps={{
+                          legend: {
+                            hidden: true,
+                          },
                         }}
-                        key={index}>
-                        <div className="col-span-2">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.label}
-                          </p>
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              </Fragment>
+              <Fragment>
+                {convertedEmtional?.map((data, index) => {
+                  let row = data.data[0];
+                  return (
+                    <TableRow key={index}>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        <div
+                          className="flex"
+                          style={{
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.rating}
-                          </p>
-                        </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.value} %
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* chart 2 Cognitive Agility */}
-          <div>
-            <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
-              Cognitive Agility
-            </p>
-
-            {/* circle chart */}
-            <div className="py-5">
-              <div className="flex justify-end">
-                <PieChart
-                  series={convertCognitive}
-                  width={300}
-                  height={200}
-                  slotProps={{
-                    legend: {
-                      hidden: true,
-                    },
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}
+                        align="center">
+                        {row.rating}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        {row.attribute}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </Fragment>
+            </TableBody>
+          </Table>
+        </div>
+        {/* chart 2 table */}
+        <div className="mt-5">
+          <Table
+            sx={{
+              borderWidth: 1,
+            }}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Cognitive Agility
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Labels
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
                   }}
-                />
-              </div>
-              <div className="mt-3">
-                {/* header */}
-                <div className="grid grid-cols-4">
-                  <div className="col-span-2">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Label
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Rating out of 5
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      %
-                    </p>
-                  </div>
-                </div>
-                {/* body */}
-                <div className="grid grid-flow-row gap-3">
-                  {convertCognitive.map((data, index) => {
-                    let row = data.data[0];
-                    return (
-                      <div
-                        className="grid grid-cols-4"
-                        style={{
-                          borderLeftWidth: 3,
-                          borderLeftColor: row.color,
-                          borderRadius: 3,
-                          paddingLeft: 5,
+                  align="center">
+                  Rating out of 5
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Attributes
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <Fragment>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#475467",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      borderWidth: 1,
+                      width: 450,
+                    }}
+                    rowSpan={5}>
+                    <div className="flex justify-end">
+                      <PieChart
+                        series={convertCognitive}
+                        width={300}
+                        height={200}
+                        slotProps={{
+                          legend: {
+                            hidden: true,
+                          },
                         }}
-                        key={index}>
-                        <div className="col-span-2">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.label}
-                          </p>
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              </Fragment>
+              <Fragment>
+                {convertCognitive?.map((data, index) => {
+                  let row = data.data[0];
+                  return (
+                    <TableRow key={index}>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        <div
+                          className="flex"
+                          style={{
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.rating}
-                          </p>
-                        </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.value} %
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* chart 3 Sociability Skills */}
-          <div>
-            <p style={{ color: "#475467", fontSize: 18, fontWeight: 600 }}>
-              Sociability Skills
-            </p>
-
-            {/* circle chart */}
-            <div className="py-5">
-              <div className="flex justify-end">
-                <PieChart
-                  series={convertSociability}
-                  width={300}
-                  height={200}
-                  slotProps={{
-                    legend: {
-                      hidden: true,
-                    },
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}
+                        align="center">
+                        {row.rating}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        {row.attribute}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </Fragment>
+            </TableBody>
+          </Table>
+        </div>
+        {/* chart 3 table */}
+        <div className="mt-5">
+          <Table
+            sx={{
+              borderWidth: 1,
+            }}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Sociability Skills
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Labels
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
                   }}
-                />
-              </div>
-              <div className="mt-3">
-                {/* header */}
-                <div className="grid grid-cols-4">
-                  <div className="col-span-2">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Label
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Rating out of 5
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      %
-                    </p>
-                  </div>
-                </div>
-                {/* body */}
-                <div className="grid grid-flow-row gap-3">
-                  {convertSociability.map((data, index) => {
-                    let row = data.data[0];
-                    return (
-                      <div
-                        className="grid grid-cols-4"
-                        style={{
-                          borderLeftWidth: 3,
-                          borderLeftColor: row.color,
-                          borderRadius: 3,
-                          paddingLeft: 5,
+                  align="center">
+                  Rating out of 5
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderWidth: 1,
+                    bgcolor: "#F8F9FA",
+                  }}>
+                  Attributes
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <Fragment>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#475467",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      borderWidth: 1,
+                      width: 450,
+                    }}
+                    rowSpan={5}>
+                    <div className="flex justify-end">
+                      <PieChart
+                        series={convertSociability}
+                        width={300}
+                        height={200}
+                        slotProps={{
+                          legend: {
+                            hidden: true,
+                          },
                         }}
-                        key={index}>
-                        <div className="col-span-2">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.label}
-                          </p>
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              </Fragment>
+              <Fragment>
+                {convertSociability?.map((data, index) => {
+                  let row = data.data[0];
+                  return (
+                    <TableRow key={index}>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        <div
+                          className="flex"
+                          style={{
+                            borderLeftWidth: 3,
+                            borderLeftColor: row.color,
+                            borderRadius: 3,
+                            paddingLeft: 5,
+                          }}
+                          key={index}>
+                          <div className="col-span-2">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {row.label}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.rating}
-                          </p>
-                        </div>
-                        <div className="flex justify-center">
-                          <p
-                            style={{
-                              color: "#475467",
-                              fontSize: 16,
-                            }}>
-                            {row.value} %
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}
+                        align="center">
+                        {row.rating}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderWidth: 1,
+                        }}>
+                        {row.attribute}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </Fragment>
+            </TableBody>
+          </Table>
         </div>
       </DialogContent>
     </Dialog>
