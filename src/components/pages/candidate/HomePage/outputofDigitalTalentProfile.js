@@ -35,66 +35,47 @@ import { useEffect } from "react";
 
 export const OutputofDigitalTalentProfile = () => {
   const spectrums = [
-    {
-      spectrum: "spectrum 1",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 2",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 3",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 4",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 5",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
+    "spectrum1",
+    "spectrum2",
+    "spectrum3",
+    "spectrum4",
+    "spectrum5"
   ];
   const [personalInfo, setPersonalInfio] = useState(candidatePersonalInfoData);
   const [preferenceForm, setPreferenceForm] = useState(
     candidatePreferenceFormData
   );
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
-  const [workValueData, setWorkValueData] = useState(workValueViewData);
+  const [workValueData, setWorkValueData] = useState([]);
   const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const [pillars, setPillars] = useState(spectrums);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   //setLoading(true);
-  //   axiosInstance
-  //     .get(`/getCandidateDTPDescription?candidateId=${user.userId}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setPersonalInfio(response.data.personalInfo);
-  //       // setPreferenceForm(response.data.preferences);
-  //       setWorkValueData(response.data?.values);
-  //       setIcpAnalysisData(response.data.dtpResult);
-  //       setPillars(response.data.dtpResult.pillars);
-  //       console.log(response.data.assessment === true);
-  //       //setLoading(false);
-  //       // setAssessment(response.data.assessment);
-  //       // setValueAssessment(response.data.valueAssessment);
-  //       // setPreferences(response.data.preferenes);
-  //       // setPersonalInfo(response.data.personalInfo);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       //setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    //setLoading(true);
+    axiosInstance
+      .get(`/getCandidateDTPDescription?candidateId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setPersonalInfio(response.data.personalInfo);
+        // setPreferenceForm(response.data.preferences);
+        setWorkValueData(response.data?.values);
+        setIcpAnalysisData(response.data.dtpResult);
+        setPillars(response.data.dtpResult.pillars);
+        setBehaviour(response.data.dtpResult.behaviourAttributes);
+        console.log(response.data.assessment === true);
+        //setLoading(false);
+        // setAssessment(response.data.assessment);
+        // setValueAssessment(response.data.valueAssessment);
+        // setPreferences(response.data.preferenes);
+        // setPersonalInfo(response.data.personalInfo);
+      })
+      .catch((error) => {
+        console.log(error);
+        //setLoading(false);
+      });
+  }, []);
 
   const convertedEmtional = convertCompetencies(
     icpAnalysisData?.emtionalFlexibility[0]
@@ -717,7 +698,7 @@ export const OutputofDigitalTalentProfile = () => {
                     height={350}
                     width={450}
                     outerRadius="80%"
-                    data={workValueData.data}>
+                    data={workValueData}>
                     <PolarGrid />
                     <Tooltip />
                     <PolarAngleAxis dataKey="statement" />
@@ -774,7 +755,7 @@ export const OutputofDigitalTalentProfile = () => {
                               backgroundColor: "#C2E0E8",
                             }}>
                             <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.data?.map((data) => {
+                              {workValueData?.map((data) => {
                                 return Number(data?.rating) === 4 ? (
                                   <p>{data.statement}</p>
                                 ) : null;
@@ -799,7 +780,7 @@ export const OutputofDigitalTalentProfile = () => {
                               backgroundColor: "#F2EFC9",
                             }}>
                             <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.data?.map((data) => {
+                              {workValueData?.map((data) => {
                                 return Number(data?.rating) === 3 ? (
                                   <p>{data.statement}</p>
                                 ) : null;
@@ -824,7 +805,7 @@ export const OutputofDigitalTalentProfile = () => {
                               backgroundColor: "#D1E6D5",
                             }}>
                             <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.data?.map((data) => {
+                              {workValueData?.map((data) => {
                                 return Number(data?.rating) === 2 ? (
                                   <p>{data.statement}</p>
                                 ) : null;
@@ -849,7 +830,7 @@ export const OutputofDigitalTalentProfile = () => {
                               backgroundColor: "#ECCCB7",
                             }}>
                             <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.data?.map((data) => {
+                              {workValueData?.map((data) => {
                                 return Number(data?.rating) === 1 ? (
                                   <p>{data.statement}</p>
                                 ) : null;
@@ -874,7 +855,7 @@ export const OutputofDigitalTalentProfile = () => {
                               backgroundColor: "#EDDAD3",
                             }}>
                             <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.data?.map((data) => {
+                              {workValueData?.map((data) => {
                                 return Number(data?.rating) === 0 ? (
                                   <p>{data.statement}</p>
                                 ) : null;
@@ -979,7 +960,7 @@ export const OutputofDigitalTalentProfile = () => {
                                             fontSize: 20,
                                             fontWeight: 500,
                                           }}>
-                                          {row?.spectrum}
+                                          {row}
                                         </p>
                                         {/* <p style={{ color: "#475467", fontSize: 14 }}>
                                 {row?.description}

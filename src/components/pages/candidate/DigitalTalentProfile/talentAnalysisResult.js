@@ -24,31 +24,11 @@ import { SideNav } from "../../../widgets/sidenav";
 
 export const TalentAnalysisResult = () => {
   const spectrums = [
-    {
-      spectrum: "spectrum 1",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 2",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 3",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 4",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
-    {
-      spectrum: "spectrum 5",
-      description:
-        "They serve as guiding principles that influence decision-making, behavior, and interactions in both personal and professional settings.",
-    },
+    "spectrum1",
+    "spectrum2",
+    "spectrum3",
+    "spectrum4",
+    "spectrum5"
   ];
 
   const [userData, setUserData] = useState(icpTemplateResultData);
@@ -67,32 +47,33 @@ export const TalentAnalysisResult = () => {
 
   const location = useLocation();
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   setLoading(true);
-  //   axiosInstance
-  //     .get(
-  //       "/getCandidateSpectrumResults?candidateId=" +
-  //         user.userId +
-  //         "&versionNo=" +
-  //         version
-  //     )
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       // setUserData(response.data);
-  //       setPillars(response.data.pillars);
-  //       setLoading(false);
-  //       // setSpectrum2(response.data.pillars[1]);
-  //       // setSpectrum3(response.data.pillars[2]);
-  //       // setSpectrum4(response.data.pillars[3]);
-  //       // setSpectrum5(response.data.pillars[4]);
-  //       //console.log(response.data?.emtionalFlexibility[1].competencies);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance
+      .get(
+        "/getCandidateSpectrumResults?candidateId=" +
+          user.userId +
+          "&versionNo=" +
+          version
+      )
+      .then((response) => {
+        console.log(response.data);
+        setUserData(response.data);
+        setPillars(response.data.pillars);
+        setBehaviour(response.data.behaviourAttributes);
+        setLoading(false);
+        // setSpectrum2(response.data.pillars[1]);
+        // setSpectrum3(response.data.pillars[2]);
+        // setSpectrum4(response.data.pillars[3]);
+        // setSpectrum5(response.data.pillars[4]);
+        //console.log(response.data?.emtionalFlexibility[1].competencies);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
   const convertedEmtional = convertCompetencies(
     userData?.emtionalFlexibility[0]
@@ -208,7 +189,7 @@ export const TalentAnalysisResult = () => {
                                           fontSize: 20,
                                           fontWeight: 500,
                                         }}>
-                                        {row?.spectrum}
+                                        {row}
                                       </p>
                                       {/* <p style={{ color: "#475467", fontSize: 14 }}>
                                 {row?.description}

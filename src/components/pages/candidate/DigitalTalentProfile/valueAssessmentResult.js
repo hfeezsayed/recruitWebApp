@@ -23,25 +23,25 @@ import Spinner from "../../../utils/spinner";
 import { Box, TableContainer } from "@mui/material";
 
 export const ValueAssessmentResult = () => {
-  const [assesmentData, setAssessmentData] = useState(workValueViewData);
+  const [assesmentData, setAssessmentData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { version } = useLocation().state || {};
 
-  // useEffect( () => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   setLoading(true);
-  //   axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version,
-  //   )
-  //   .then(response => {
-  //       setAssessmentData(response.data);
-  //       setLoading(false);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     setLoading(false);
-  //   })
-  // }, []);
+  useEffect( () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version,
+    )
+    .then(response => {
+        setAssessmentData(response.data);
+        setLoading(false);
+    })
+    .catch(error => {
+      console.log(error);
+      setLoading(false);
+    })
+  }, []);
 
   return (
     <div>
@@ -70,7 +70,7 @@ export const ValueAssessmentResult = () => {
                   height={350}
                   width={450}
                   outerRadius="80%"
-                  data={assesmentData.data}>
+                  data={assesmentData}>
                   <PolarGrid />
                   <Tooltip />
                   <PolarAngleAxis dataKey="statement" />
@@ -127,7 +127,7 @@ export const ValueAssessmentResult = () => {
                             backgroundColor: "#C2E0E8",
                           }}>
                           <div className="grid grid-cols-4 gap-y-2">
-                            {assesmentData?.data?.map((data) => {
+                            {assesmentData?.map((data) => {
                               return Number(data?.rating) === 4 ? (
                                 <p>{data.statement}</p>
                               ) : null;
@@ -152,7 +152,7 @@ export const ValueAssessmentResult = () => {
                             backgroundColor: "#F2EFC9",
                           }}>
                           <div className="grid grid-cols-4 gap-y-2">
-                            {assesmentData?.data?.map((data) => {
+                            {assesmentData?.map((data) => {
                               return Number(data?.rating) === 3 ? (
                                 <p>{data.statement}</p>
                               ) : null;
@@ -177,7 +177,7 @@ export const ValueAssessmentResult = () => {
                             backgroundColor: "#D1E6D5",
                           }}>
                           <div className="grid grid-cols-4 gap-y-2">
-                            {assesmentData?.data?.map((data) => {
+                            {assesmentData?.map((data) => {
                               return Number(data?.rating) === 2 ? (
                                 <p>{data.statement}</p>
                               ) : null;
@@ -202,7 +202,7 @@ export const ValueAssessmentResult = () => {
                             backgroundColor: "#ECCCB7",
                           }}>
                           <div className="grid grid-cols-4 gap-y-2">
-                            {assesmentData?.data?.map((data) => {
+                            {assesmentData?.map((data) => {
                               return Number(data?.rating) === 1 ? (
                                 <p>{data.statement}</p>
                               ) : null;
@@ -227,7 +227,7 @@ export const ValueAssessmentResult = () => {
                             backgroundColor: "#EDDAD3",
                           }}>
                           <div className="grid grid-cols-4 gap-y-2">
-                            {assesmentData?.data?.map((data) => {
+                            {assesmentData?.map((data) => {
                               return Number(data?.rating) === 0 ? (
                                 <p>{data.statement}</p>
                               ) : null;

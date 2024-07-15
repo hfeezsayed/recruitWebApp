@@ -426,7 +426,7 @@ export const DigitalTalentProfile = () => {
                       <Button
                         size="small"
                         style={{
-                          color: userData?.preferenes ? "#1E90FF" : "#E05880",
+                          color: userData?.preferences ? "#1E90FF" : "#E05880",
                           fontWeight: 600,
                           fontSize: 14,
                         }}

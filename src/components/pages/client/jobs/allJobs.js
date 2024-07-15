@@ -635,7 +635,7 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Location
+                                      Department
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -644,7 +644,7 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      posted on
+                                      Created 
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -653,7 +653,43 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Hiring Manger
+                                      Status
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Total
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      New
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Active
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Hired
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -711,7 +747,39 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row?.hiringManager}
+                                          Part time
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          50
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          5
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          5
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          0
                                         </TableCell>
                                         <TableCell
                                           align="center"

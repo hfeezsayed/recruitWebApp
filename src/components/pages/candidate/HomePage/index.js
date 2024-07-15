@@ -109,6 +109,34 @@ export const HomePage = () => {
   }, []);
 
 
+  const showAssessmentResult = () => {
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/talentanalysisresult", {
+        state: { version: userData?.assessmentVersionId },
+      });
+    } else {
+      navigate("/digitalTalentProfile/analysisassessmentform");
+    }
+  };
+
+  const showValueAssessmentResult = () => {
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/valueassessmentresult", {
+        state: { version: userData?.valuesVersionId },
+      });
+    } else {
+      navigate("/digitalTalentProfile/valueassessmentform");
+    }
+  };
+
+  const handlePreferences = () => {
+    if(userData.assessment === true){
+      navigate("/digitalTalentProfile/preferenceform", { state: userData?.preferencesVersionId });
+    } else {
+      navigate("/digitalTalentProfile/preferenceform");
+    }
+  }
+
   const downloadResume = async() =>{
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
@@ -427,13 +455,13 @@ export const HomePage = () => {
                       <Button
                         size="small"
                         style={{
-                          color: userData?.preferenes ? "#1E90FF" : "#E05880",
+                          color: userData?.preferences ? "#1E90FF" : "#E05880",
                           fontWeight: 600,
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
                         onClick={() =>
-                          navigate("/digitalTalentProfile/preferenceform")
+                          handlePreferences()
                         }>
                         {userData?.preferences ? "Edit" : "Not taken"}
                       </Button>
@@ -516,14 +544,8 @@ export const HomePage = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() =>
-                          userData?.valueAssessment
-                            ? ""
-                            : navigate(
-                                "/digitalTalentProfile/valueassessmentform"
-                              )
-                        }>
-                        {userData?.valueAssessment ? "Done" : "Not taken"}
+                        onClick={() => showValueAssessmentResult()}>
+                        {userData?.valueAssessment ? "view results" : "Not taken"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -600,14 +622,8 @@ export const HomePage = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() =>
-                          userData?.assessment
-                            ? ""
-                            : navigate(
-                                "/digitalTalentProfile/analysisassessmentform"
-                              )
-                        }>
-                        {userData?.assessment ? "Done" : "Not taken"}
+                        onClick={() => showAssessmentResult()}>
+                        {userData?.assessment ? "view results" : "Not taken"}
                       </Button>
                     </CardActions>
                   </Card>
