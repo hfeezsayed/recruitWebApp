@@ -180,16 +180,22 @@ export const AllJobs = () => {
   };
 
   const handleStandard = () => {
-      navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, fullAccess : true}})
-  }
+    navigate("/job/outputofJobDescription", {
+      state: { jobId: anchorData.id, fullAccess: true },
+    });
+  };
 
   const handleJobDescription = () => {
-      navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, teamAccess : true}})
-  }
+    navigate("/job/outputofJobDescription", {
+      state: { jobId: anchorData.id, teamAccess: true },
+    });
+  };
 
   const handleIdentification = () => {
-      navigate("/job/outputofJobDescription", {state: { jobId : anchorData.id, jdAccess : true }})
-  }
+    navigate("/job/outputofJobDescription", {
+      state: { jobId: anchorData.id, jdAccess: true },
+    });
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -644,7 +650,7 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Created 
+                                      Created
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -746,8 +752,33 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
+                                            display: "flex",
+                                            gap: 2,
                                           }}>
-                                          Part time
+                                          {row?.typeOfHire?.map((time) => {
+                                            return (
+                                              <p
+                                                style={{
+                                                  color:
+                                                    time === "Part Time"
+                                                      ? "#0862CE"
+                                                      : "#8314C7",
+                                                  fontSize: 14,
+                                                  fontWeight: 500,
+                                                  paddingLeft: 10,
+                                                  paddingRight: 10,
+                                                  paddingTop: 5,
+                                                  paddingBottom: 5,
+                                                  backgroundColor:
+                                                    time === "Part Time"
+                                                      ? "#F1F7FF"
+                                                      : "#FBF1FF",
+                                                }}
+                                                key={time}>
+                                                {time}
+                                              </p>
+                                            );
+                                          })}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -788,6 +819,7 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
+                                            width: 140,
                                           }}>
                                           <IconButton
                                             onClick={(e) => {
@@ -806,6 +838,7 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
+                                            width: 100,
                                           }}>
                                           <IconButton
                                             onClick={(e) => {

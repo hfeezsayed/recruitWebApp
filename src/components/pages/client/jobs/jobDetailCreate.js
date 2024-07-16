@@ -18,7 +18,7 @@ import { FiPlus } from "react-icons/fi";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import axios from 'axios';
+import axios from "axios";
 import { useEffect } from "react";
 
 export const JobDetailCreate = () => {
@@ -40,7 +40,8 @@ export const JobDetailCreate = () => {
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
+  const [specificIndustryExperience, setSpecificIndustryExperience] =
+    useState();
   const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
@@ -57,16 +58,10 @@ export const JobDetailCreate = () => {
 
   // Qualification and Requirements
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
-  const [requireRegulatory, setRequireRegulatory] =
-    useState();
+  const [requireRegulatory, setRequireRegulatory] = useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certifications, setCertifications] = useState([
-    { certificate: null },
-  ]);
-  const [
-    softwares,
-    setSoftwares,
-  ] = useState([{ tools: null }]);
+  const [certifications, setCertifications] = useState([{ certificate: null }]);
+  const [softwares, setSoftwares] = useState([{ tools: null }]);
   const [envision, setEnvision] = useState("");
 
   // popup
@@ -89,43 +84,43 @@ export const JobDetailCreate = () => {
     { label: "On-Site", value: "On-Site" },
     { label: "Remote", value: "Remote" },
     { label: "Hybrid", value: "Hybrid" },
-  ]
+  ];
 
   const roleTypes = [
     { label: "Contract", value: "Contract" },
     { label: "C2H", value: "C2H" },
     { label: "Fulltime", value: "Fulltime" },
-  ]
+  ];
 
   const budgetOpts = [
     { label: "yes", value: "yes" },
     { label: "No", value: "No" },
     { label: "Limited budget", value: "Limited budget" },
-  ]
+  ];
 
   const roleTimingOpts = [
     { label: "Day Shift", value: "Day Shift" },
     { label: "Night Shift", value: "Night Shift" },
     { label: "Flexible", value: "Flexible" },
-  ]
+  ];
 
   const roleTravelOpts = [
     { label: "No Travel", value: "No Travel" },
     { label: "Occasional", value: "Occasional" },
     { label: "Frequent", value: "Frequent" },
-  ]
+  ];
 
   const minQual = [
     { label: "Bachelors", value: "Bachelors" },
     { label: "Masters", value: "Masters" },
     { label: "PhD", value: "PhD" },
-  ]
+  ];
 
   const certOpts = [
     { label: "Six Sigma Green belt", value: "Six Sigma Green belt" },
     { label: "PMP", value: "PMP" },
     { label: "Scrum Master", value: "Scrum Master" },
-  ]
+  ];
 
   const tools = [
     { label: "Azure DevOps", value: "Azure DevOps" },
@@ -133,98 +128,98 @@ export const JobDetailCreate = () => {
     { label: "ABAP", value: "ABAP" },
     { label: "ERP", value: "ERP" },
     { label: "AWS", value: "AWS" },
-  ]
+  ];
 
   const yes_no = ["Yes", "No"];
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    if(locations.state?.selected) {
-        const selected = locations.state.selected;
-        console.log(selected);
-        setJobTitle(selected.jobTitle)                              
-        setJobCode(selected.jobCode)
-        setJobFamily(selected.jobFamily)
-        setJobDepartment(selected.jobDepartment)
-        setJobLocation(selected.jobLocation)
-        setSalary(selected.salary)
-        setCompanyInfo(selected.companyInfo)
-        setPositionSummary(selected.positionSummry)
-        setResponsibilities(selected.responsibilities)
-        setBenefits(selected.benefits)
-        setEqualEmployeeOpportunity(selected.equalEmployeeOpportunity)
-        setSpecificIndustryExperience(selected.specificIndustryExperience)
-        setSpecifyIndustryExp(selected.specifyIndustryExp)
-        setIndustryknowledge(selected.industryKnowledge)
-        setWorkSetting(selected.workSetting)
-        setRoleType(selected.roleType)
-        setRoleTimings(selected.roleTimings)
-        setRoleTravel(selected.roleTravel)
-        setVisa(selected.visa)
-        setMinimumLevelQualification(selected.minimumLevelQualification)
-        setRequireRegulatory(selected.requireRegulatory)
-        setDifferentAcademic(selected.differentAcademic)
-        setCertifications(selected.certifications)
-        setSoftwares(selected.softwares)
-        setEnvision(selected.envision)
-        setTemplateName(selected.templateName)
-        setTemplateTag(selected.templateTag)
-        setTemplateDescription(selected.templateDescription)
+    if (locations.state?.selected) {
+      const selected = locations.state.selected;
+      console.log(selected);
+      setJobTitle(selected.jobTitle);
+      setJobCode(selected.jobCode);
+      setJobFamily(selected.jobFamily);
+      setJobDepartment(selected.jobDepartment);
+      setJobLocation(selected.jobLocation);
+      setSalary(selected.salary);
+      setCompanyInfo(selected.companyInfo);
+      setPositionSummary(selected.positionSummry);
+      setResponsibilities(selected.responsibilities);
+      setBenefits(selected.benefits);
+      setEqualEmployeeOpportunity(selected.equalEmployeeOpportunity);
+      setSpecificIndustryExperience(selected.specificIndustryExperience);
+      setSpecifyIndustryExp(selected.specifyIndustryExp);
+      setIndustryknowledge(selected.industryKnowledge);
+      setWorkSetting(selected.workSetting);
+      setRoleType(selected.roleType);
+      setRoleTimings(selected.roleTimings);
+      setRoleTravel(selected.roleTravel);
+      setVisa(selected.visa);
+      setMinimumLevelQualification(selected.minimumLevelQualification);
+      setRequireRegulatory(selected.requireRegulatory);
+      setDifferentAcademic(selected.differentAcademic);
+      setCertifications(selected.certifications);
+      setSoftwares(selected.softwares);
+      setEnvision(selected.envision);
+      setTemplateName(selected.templateName);
+      setTemplateTag(selected.templateTag);
+      setTemplateDescription(selected.templateDescription);
     }
-    
   }, [locations.state]);
 
   const getJobDescription = async () => {
     const title = jobTitle;
     axios
-      .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/",
-        {
-          jobTitle,
-          jobCode,
-          jobFamily,
-          jobDepartment,
-          jobLocation,
-          salary,
-          companyInfo,
-          positionSummry,
-          responsibilities,
-          benefits,
-          equalEmployeeOpportunity,
-          specificIndustryExperience,
-          specifyIndustryExp,
-          industryKnowledge,
-          workSetting,
-          roleType,
-          roleTimings,
-          roleTravel,
-          visa,
-          minimumLevelQualification,
-          requireRegulatory,
-          differentAcademic,
-          certifications,
-          softwares,
-          envision,
-          templateName,
-          templateTag,
-          templateDescription,
-          
-        },
-      )
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/", {
+        jobTitle,
+        jobCode,
+        jobFamily,
+        jobDepartment,
+        jobLocation,
+        salary,
+        companyInfo,
+        positionSummry,
+        responsibilities,
+        benefits,
+        equalEmployeeOpportunity,
+        specificIndustryExperience,
+        specifyIndustryExp,
+        industryKnowledge,
+        workSetting,
+        roleType,
+        roleTimings,
+        roleTravel,
+        visa,
+        minimumLevelQualification,
+        requireRegulatory,
+        differentAcademic,
+        certifications,
+        softwares,
+        envision,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((data) => {
         console.log(data.data);
         setJobDescription(data.data.job_description);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   const savejobDetail = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId + "&template="+0,
+        "/saveJobTemplateForJob?clientId=" +
+          user.userId +
+          "&jobId=" +
+          jobId +
+          "&template=" +
+          0,
         {
           jobTitle,
           jobCode,
@@ -254,7 +249,7 @@ export const JobDetailCreate = () => {
           templateName,
           templateTag,
           templateDescription,
-        },
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -265,13 +260,17 @@ export const JobDetailCreate = () => {
     closePopup();
   };
 
-
   const saveAsTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId + "&template="+1,
+        "/saveJobTemplateForJob?clientId=" +
+          user.userId +
+          "&jobId=" +
+          jobId +
+          "&template=" +
+          1,
         {
           jobTitle,
           jobCode,
@@ -301,7 +300,7 @@ export const JobDetailCreate = () => {
           templateName,
           templateTag,
           templateDescription,
-        },
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -321,10 +320,7 @@ export const JobDetailCreate = () => {
 
   // certificate
   const addCertificate = () => {
-    setCertifications([
-      ...certifications,
-      { certificate: null },
-    ]);
+    setCertifications([...certifications, { certificate: null }]);
   };
 
   const handleChangeCertificate = (e, value, i) => {
@@ -341,10 +337,7 @@ export const JobDetailCreate = () => {
 
   // tools
   const addToolsAndSoftware = () => {
-    setSoftwares([
-      ...softwares,
-      { tools: null },
-    ]);
+    setSoftwares([...softwares, { tools: null }]);
   };
 
   const handleChangeToolsAndSoftware = (e, value, i) => {
@@ -365,11 +358,11 @@ export const JobDetailCreate = () => {
     const bullet_points = bulletPoints;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/company-description/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/company-description/",
         {
           company_info,
-          bullet_points
-        },
+          bullet_points,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -377,16 +370,16 @@ export const JobDetailCreate = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   const generateResponsibility = async () => {
     const title = jobTitle;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-roles-responsibilities/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-roles-responsibilities/",
         {
-          responsibilities
-        },
+          responsibilities,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -394,18 +387,17 @@ export const JobDetailCreate = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   const generateJobSummary = async () => {
     const title = jobTitle;
     const position_summary = positionSummry;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-position-summary/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-position-summary/",
         {
-          position_summary
-        },
+          position_summary,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -413,17 +405,16 @@ export const JobDetailCreate = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   const generateBenefit = async () => {
     const title = jobTitle;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-benefits/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-benefits/",
         {
-          benefits
-        },
+          benefits,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -431,7 +422,7 @@ export const JobDetailCreate = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   return (
     <div>
@@ -554,27 +545,44 @@ export const JobDetailCreate = () => {
               {/* <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
                 Job Description
               </p> */}
-              <div className="grid grid-flow-row gap-2 mt-8">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Company Overview
-                  </p>
-                <div className="grid grid-cols-2 gap-2 py-5">
-                  <div>
-                    <textarea
-                      value={companyInfo}
-                      onChange={(e) => setCompanyInfo(e.target.value)}
-                      placeholder="type"
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
                       style={{
-                        borderWidth: 1,
-                        borderColor: "#D0D5DD",
-                        borderRadius: 8,
-                        padding: 5,
-                        width: 500
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Company Overview
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
                       }}
-                      rows={5}
-                    />
+                      onClick={getCompanyOverview}>
+                      Generate Company Overview
+                    </Button>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 py-5">
+
+                  <textarea
+                    value={companyInfo}
+                    onChange={(e) => setCompanyInfo(e.target.value)}
+                    placeholder="type"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                    rows={4}
+                  />
+                  {/* <div className="grid grid-cols-2 gap-2 py-5">
                     <div>
                       <TextField
                         value={bulletPoints}
@@ -590,49 +598,58 @@ export const JobDetailCreate = () => {
                         }}
                       />
                     </div>
-                    <div>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        style={{
-                          color: "white",
-                          borderColor: "#008080",
-                          textTransform: "none",
-                          backgroundColor: "#008080"
-                        }}
-                        onClick={getCompanyOverview}
-                        >
-                        Generate Company Overview
-                      </Button>
-                    </div>
-                  </div>
+                  </div> */}
                 </div>
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Job Summary
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateJobSummary}
-                    >
-                    Generate Job Summary
-                  </Button>
+                      color: companyInfo ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    At Xen Recruiter, we adhere to a practice of continuous
+                    innovation in the recruitment industry. By leveraging
+                    cutting-edge technology and insightful data analysis, we
+                    ensure that our solutions not only streamline but also
+                    enhance the hiring process. Our commitment to excellence
+                    drives us to develop tailored strategies.
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Summary
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateJobSummary}>
+                      Generate Job Summary
+                    </Button>
+                  </div>
 
                   <textarea
                     value={positionSummry}
-                    row={10}
                     placeholder="type"
+                    rows={4}
                     onChange={(e) => setPositionSummary(e.target.value)}
                     style={{
                       borderWidth: 1,
@@ -641,31 +658,56 @@ export const JobDetailCreate = () => {
                       padding: 5,
                     }}
                   />
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                </div>
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Responsibilities
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateResponsibility}
-                    >
-                    Generate Responsibilities
-                  </Button>
+                      color: positionSummry ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    At Xen Recruiter, we adhere to a practice of continuous
+                    innovation in the recruitment industry. By leveraging
+                    cutting-edge technology and insightful data analysis, we
+                    ensure that our solutions not only streamline but also
+                    enhance the hiring process. Our commitment to excellence
+                    drives us to develop tailored strategies.
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Responsibilities
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateResponsibility}>
+                      Generate Responsibilities
+                    </Button>
+                  </div>
 
                   <textarea
                     value={responsibilities}
-                    row={10}
+                    rows={4}
                     placeholder="type"
                     onChange={(e) => setResponsibilities(e.target.value)}
                     style={{
@@ -675,31 +717,56 @@ export const JobDetailCreate = () => {
                       padding: 5,
                     }}
                   />
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                </div>
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Benefits
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateBenefit}
-                    >
-                    Generate Benefits
-                  </Button>
+                      color: responsibilities ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    At Xen Recruiter, we adhere to a practice of continuous
+                    innovation in the recruitment industry. By leveraging
+                    cutting-edge technology and insightful data analysis, we
+                    ensure that our solutions not only streamline but also
+                    enhance the hiring process. Our commitment to excellence
+                    drives us to develop tailored strategies.
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Benefits
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateBenefit}>
+                      Generate Benefits
+                    </Button>
+                  </div>
 
                   <textarea
                     value={benefits}
-                    row={10}
+                    rows={4}
                     placeholder="type"
                     onChange={(e) => setBenefits(e.target.value)}
                     style={{
@@ -709,23 +776,87 @@ export const JobDetailCreate = () => {
                       padding: 5,
                     }}
                   />
+                </div>
+                <div className="py-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Recommended Practice
+                  </p>
+                  <p
+                    style={{
+                      color: benefits ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    At Xen Recruiter, we adhere to a practice of continuous
+                    innovation in the recruitment industry. By leveraging
+                    cutting-edge technology and insightful data analysis, we
+                    ensure that our solutions not only streamline but also
+                    enhance the hiring process. Our commitment to excellence
+                    drives us to develop tailored strategies.
+                  </p>
+                </div>
               </div>
-              <div className="grid grid-flow-row gap-2 mt-6">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Equal Employee Opportunity (EEO)
-                </p>
-                <textarea
-                  value={equalEmployeeOpportunity}
-                  onChange={(e) => setEqualEmployeeOpportunity(e.target.value)}
-                  placeholder="type"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                  rows={1.5}
-                />
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Equal Employee Opportunity (EEO)
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={() => {}}>
+                      Generate EEO
+                    </Button>
+                  </div>
+                  <textarea
+                    value={equalEmployeeOpportunity}
+                    onChange={(e) =>
+                      setEqualEmployeeOpportunity(e.target.value)
+                    }
+                    rows={4}
+                    placeholder="type"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
+                <div className="py-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Recommended Practice
+                  </p>
+                  <p
+                    style={{
+                      color: equalEmployeeOpportunity ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    At Xen Recruiter, we adhere to a practice of continuous
+                    innovation in the recruitment industry. By leveraging
+                    cutting-edge technology and insightful data analysis, we
+                    ensure that our solutions not only streamline but also
+                    enhance the hiring process. Our commitment to excellence
+                    drives us to develop tailored strategies.
+                  </p>
+                </div>
               </div>
             </div>
             {/* Role Requirements and Preferences */}{" "}
@@ -743,7 +874,9 @@ export const JobDetailCreate = () => {
                   disablePortal
                   options={yes_no.map((option) => option)}
                   value={specificIndustryExperience || null}
-                  onChange={(e, newvalue) => setSpecificIndustryExperience(newvalue)}
+                  onChange={(e, newvalue) =>
+                    setSpecificIndustryExperience(newvalue)
+                  }
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -898,9 +1031,7 @@ export const JobDetailCreate = () => {
                     disablePortal
                     options={yes_no}
                     value={requireRegulatory || null}
-                    onChange={(e, newvalue) =>
-                      setRequireRegulatory(newvalue)
-                    }
+                    onChange={(e, newvalue) => setRequireRegulatory(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -1080,26 +1211,25 @@ export const JobDetailCreate = () => {
                       color: "white",
                       borderColor: "#008080",
                       textTransform: "none",
-                      backgroundColor: "#008080"
+                      backgroundColor: "#008080",
                     }}
-                    onClick={getJobDescription}
-                    >
+                    onClick={getJobDescription}>
                     Generate Job Description
                   </Button>
                 </div>
 
-                  <textarea
-                    value={jobDescription}
-                    row={10}
-                    placeholder="type"
-                    onChange={(e) => setJobDescription(e.target.value)}
-                    style={{
-                      borderWidth: 1,
-                      borderColor: "#D0D5DD",
-                      borderRadius: 8,
-                      padding: 5,
-                    }}
-                  />
+                <textarea
+                  value={jobDescription}
+                  row={10}
+                  placeholder="type"
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                />
               </div>
             </div>
             {/* button */}

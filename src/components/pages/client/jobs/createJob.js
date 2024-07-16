@@ -21,52 +21,64 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { IoPeopleOutline } from "react-icons/io5";
-import { useNavigate, useLocation } from "react-router-dom";
-import { MdOutlineWatchLater } from "react-icons/md";
-import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import { FaArrowRight } from "react-icons/fa6";
-import { BsFillCameraFill } from "react-icons/bs";
-import { Footer } from "../../../widgets/footer";
-import { TopNav } from "../../../widgets/topNav";
-import { ClientSideNav } from "../../../widgets/clientSideNav";
-import { candidateDetailsData, createJobData } from "../../../dummy/Data";
-import NoDataFound from "../../../../assets/images/noData Found.png";
-import Spinner from "../../../utils/spinner";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { HiDotsVertical } from "react-icons/hi";
 import { FaLink } from "react-icons/fa";
 
+import { IoPeopleOutline } from "react-icons/io5";
+import { useNavigate, useLocation } from "react-router-dom";
+import { MdOutlineWatchLater, MdOutlineRemoveRedEye } from "react-icons/md";
+import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
+import { FaArrowRight } from "react-icons/fa6";
+import { BsFillCameraFill } from "react-icons/bs";
+import { Footer } from "../../../widgets/footer";
+import { TopNav } from "../../../widgets/topNav";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
+import {
+  candidateDetailsData,
+  candistaeDetailsDataNew,
+  createJobData,
+} from "../../../dummy/Data";
+import NoDataFound from "../../../../assets/images/noData Found.png";
+import Spinner from "../../../utils/spinner";
+import { FiEdit } from "react-icons/fi";
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
-  ? JSON.parse(localStorage.getItem("token"))?.username
-  : userData.name;
+    ? JSON.parse(localStorage.getItem("token"))?.username
+    : userData.name;
   const [jobId, setJobId] = useState(0);
   const location = useLocation();
   const { state } = location;
   const [accessDescription, setAccessDescription] = useState(true);
-  const [title, setTitle] = useState(userName)
+  const [title, setTitle] = useState(userName);
   const [showRecomandation, setShowRecomandation] = useState(false);
-  const [candidateDetails, setCandidateDetails] = useState(location.state?.selected || candidateDetailsData);
+  const [candidateDetails, setCandidateDetails] = useState(
+    location.state?.selected || candistaeDetailsDataNew
+  );
   const [loading, setLoading] = useState(false);
   const [anchorjd, setAnchorjd] = useState();
   const jdOpen = Boolean(anchorjd);
-  const [jobCompletion, setJobCompletion] = useState(0);
+  const [anchorLd, setAnchorLd] = useState();
+  const ldOpen = Boolean(anchorLd);
+  const [jobCompletion, setJobCompletion] = useState(60);
   //const [anchorData, setAnchorData] = useState();
-
 
   const handleJd = (event) => {
     setAnchorjd(event.currentTarget);
-  }
+  };
+
+  const handleLd = (event) => {
+    setAnchorLd(event.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorjd(null);
+    setAnchorLd(null);
   };
-
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -173,20 +185,34 @@ export const CreateJob = () => {
         .then((data) => {
           console.log(data);
           setUserData(data?.data);
-          if(data.data?.jobDetail && data.data?.workValues && data.data?.team && data.data?.icp){
+          if (
+            data.data?.jobDetail &&
+            data.data?.workValues &&
+            data.data?.team &&
+            data.data?.icp
+          ) {
             setAccessDescription(false);
           }
-          if(data.data?.jobDetail){
+          if (data.data?.jobDetail) {
             setJobCompletion(25);
             setTitle(data.data?.title);
           }
-          if(data.data?.jobDetail && data.data?.workValues){
+          if (data.data?.jobDetail && data.data?.workValues) {
             setJobCompletion(50);
           }
-          if(data.data?.jobDetail && data.data?.workValues && data.data?.team){
+          if (
+            data.data?.jobDetail &&
+            data.data?.workValues &&
+            data.data?.team
+          ) {
             setJobCompletion(75);
           }
-          if(data.data?.jobDetail && data.data?.workValues && data.data?.team && data.data?.icp){
+          if (
+            data.data?.jobDetail &&
+            data.data?.workValues &&
+            data.data?.team &&
+            data.data?.icp
+          ) {
             setJobCompletion(100);
           }
           localStorage.setItem("jobId", data.data.id);
@@ -196,7 +222,6 @@ export const CreateJob = () => {
         });
     }
   }, []);
-
 
   const handleJobDetails = (jobData) => {
     if (jobData?.jobDetail === true) {
@@ -239,23 +264,28 @@ export const CreateJob = () => {
   };
 
   const handleStandard = () => {
-    if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: { jobId : location.state, fullAccess : true}})
+    if (jobCompletion === 100) {
+      navigate("/job/outputofJobDescription", {
+        state: { jobId: location.state, fullAccess: true },
+      });
     }
-  }
+  };
 
   const handleJobDescription = () => {
-    if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: { jobId : location.state, teamAccess : true}})
+    if (jobCompletion === 100) {
+      navigate("/job/outputofJobDescription", {
+        state: { jobId: location.state, teamAccess: true },
+      });
     }
-  }
+  };
 
   const handleIdentification = () => {
-    if(jobCompletion === 100){
-      navigate("/job/outputofJobDescription", {state: { jobId : location.state, jdAccess : true }})
+    if (jobCompletion === 100) {
+      navigate("/job/outputofJobDescription", {
+        state: { jobId: location.state, jdAccess: true },
+      });
     }
-  }
-
+  };
 
   const checkStatus = (status) => {
     let color = "";
@@ -266,9 +296,51 @@ export const CreateJob = () => {
       color = "#5FAEDA";
     } else if (status === "Initiated") {
       color = "#FFA500";
+    } else if (status === "Reject") {
+      color = "#E05880";
+    } else if (status === "Not Recommended") {
+      color = "#E05880";
+    } else if (status === "Under Review") {
+      color = "#FFA500";
+    } else if (status === "Recommended") {
+      color = "#58A20F";
     }
 
     return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
+  };
+
+  const checkStatusRound = (status) => {
+    let color = "";
+    let backGround = "";
+
+    if (status === "Completed") {
+      color = "#58A20F";
+      backGround = "#58A20F20";
+    } else if (status === "Hired") {
+      color = "#5FAEDA";
+      backGround = "#5FAEDA20";
+    } else if (status === "In Progress") {
+      color = "#FFA500";
+      backGround = "#FFA50020";
+    } else if (status === "Rejected") {
+      color = "#E05880";
+      backGround = "#E0588020";
+    }
+    return (
+      <p
+        style={{
+          color: color,
+          fontSize: 14,
+          backgroundColor: backGround,
+          paddingLeft: 8,
+          paddingRight: 8,
+          paddingTop: 5,
+          paddingBottom: 5,
+          borderRadius: 20,
+        }}>
+        {status}
+      </p>
+    );
   };
 
   const topCandidates = candidateDetails;
@@ -282,12 +354,9 @@ export const CreateJob = () => {
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-          (
-            <Spinner/>
-          )
-          :
-          (
+          {loading === true ? (
+            <Spinner />
+          ) : (
             <div className="p-8">
               <div>
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
@@ -322,7 +391,11 @@ export const CreateJob = () => {
                   </div>
                   <div className="mt-9">
                     <p
-                      style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 24,
+                      }}>
                       {title}
                     </p>
                   </div>
@@ -342,7 +415,8 @@ export const CreateJob = () => {
                       <Box sx={{ minWidth: 35 }}>
                         <Typography
                           variant="body2"
-                          color="text.secondary">{`${Math.round(jobCompletion
+                          color="text.secondary">{`${Math.round(
+                          jobCompletion
                         )}%`}</Typography>
                       </Box>
                     </Box>
@@ -353,23 +427,21 @@ export const CreateJob = () => {
                       style={{
                         color: "#5E8EBD",
                         textTransform: "none",
-                        disabled: {accessDescription}
+                        disabled: { accessDescription },
                       }}
                       // onClick={() =>
                       //   navigate("/job/outputofJobDescription", {
                       //     state: location.state,
                       //   })
-                      // }  
-                      >
+                      // }
+                    >
                       Access Job Description
                     </Button>
                     <IconButton
-                        onClick={(e) => {
-                          handleJd(e);
-                        }}>
-                        <HiDotsVertical
-                          style={{ color: "#D9D9D9" }}
-                        />
+                      onClick={(e) => {
+                        handleJd(e);
+                      }}>
+                      <HiDotsVertical style={{ color: "#D9D9D9" }} />
                     </IconButton>
                   </div>
                 </div>
@@ -409,7 +481,9 @@ export const CreateJob = () => {
                           <p
                             style={{
                               textAlign: "center",
-                              color: userData?.jobDetails ? "#58A20F" : "#101828",
+                              color: userData?.jobDetails
+                                ? "#58A20F"
+                                : "#101828",
                               fontWeight: 600,
                             }}>
                             Completed
@@ -439,9 +513,9 @@ export const CreateJob = () => {
                               Job Details
                             </p>
                             <p style={{ color: "#475467", fontSize: 16 }}>
-                              This is the first step in creating a job . Start by
-                              choosing a template and filling in the relevant job
-                              details.
+                              This is the first step in creating a job . Start
+                              by choosing a template and filling in the relevant
+                              job details.
                             </p>
                           </div>
                         </div>
@@ -489,7 +563,9 @@ export const CreateJob = () => {
                           <p
                             style={{
                               textAlign: "center",
-                              color: userData?.workValues ? "#58A20F" : "#101828",
+                              color: userData?.workValues
+                                ? "#58A20F"
+                                : "#101828",
                               fontWeight: 600,
                             }}>
                             Completed
@@ -520,8 +596,8 @@ export const CreateJob = () => {
                             </p>
                             <p style={{ color: "#475467", fontSize: 16 }}>
                               This is the second step in creating a job.
-                              <br /> Choose a template and fill in the job details
-                              to create your ICP.
+                              <br /> Choose a template and fill in the job
+                              details to create your ICP.
                             </p>
                           </div>
                         </div>
@@ -599,9 +675,9 @@ export const CreateJob = () => {
                               Team Preference
                             </p>
                             <p style={{ color: "#475467", fontSize: 16 }}>
-                              This is the third step in creating a job . Start by
-                              choosing a template and filling in the relevant job
-                              details.
+                              This is the third step in creating a job . Start
+                              by choosing a template and filling in the relevant
+                              job details.
                             </p>
                           </div>
                         </div>
@@ -759,9 +835,9 @@ export const CreateJob = () => {
                               ICP Template
                             </p>
                             <p style={{ color: "#475467", fontSize: 16 }}>
-                              This is the fifth step in creating a job . Start by
-                              choosing a template and filling in the relevant job
-                              details.
+                              This is the fifth step in creating a job . Start
+                              by choosing a template and filling in the relevant
+                              job details.
                             </p>
                           </div>
                         </div>
@@ -860,9 +936,13 @@ export const CreateJob = () => {
                             Run Recommendation
                           </Button>
                         </div>
-                        <Box sx={{ width: "100%" }}>
-                          <Paper sx={{ width: "100%", mb: 2 }}>
-                            <TableContainer sx={{ maxHeight: 500 }}>
+
+                        <Box sx={{ width: 980 }}>
+                          <Paper sx={{ width: "100%", my: 2 }}>
+                            <TableContainer
+                              sx={{
+                                maxHeight: 500,
+                              }}>
                               <Table stickyHeader>
                                 <TableHead>
                                   <TableRow>
@@ -873,7 +953,7 @@ export const CreateJob = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Candidate Name
+                                      Applicant Name
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -882,10 +962,66 @@ export const CreateJob = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Request a date
+                                      Applied job Title
                                     </TableCell>
                                     <TableCell
                                       align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Created Timestamp
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Job Screening response
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Application Status
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Application Sub-status
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Resume
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Assessments
+                                    </TableCell>
+                                    <TableCell
                                       sx={{
                                         bgcolor: "#F8F9FA",
                                         color: "#101828",
@@ -924,6 +1060,54 @@ export const CreateJob = () => {
                                       }}>
                                       Latest Alignment Date
                                     </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Recommendation Rank
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Recommendation Status
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Application Source
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Job Id
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Action
+                                    </TableCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -936,7 +1120,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.username}
+                                          {row.name}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -944,7 +1128,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.requestedData}
+                                          {row.title}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -953,7 +1137,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {checkStatus(row.dtpStatus)}
+                                          {row.timeStemp}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -963,41 +1147,117 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.dtpAccess ? (
+                                          <Button
+                                            size="small"
+                                            variant="text"
+                                            style={{
+                                              color: "#28A745",
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() => {}}>
+                                            View
+                                          </Button>
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {checkStatusRound(
+                                            row.application_status
+                                          )}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row.application_sub_status}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          <Button
+                                            size="small"
+                                            variant="text"
+                                            style={{
+                                              color: "#5FAEDA",
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() => {}}>
+                                            Resume.pdf
+                                          </Button>
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          padding="none"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          <Button
+                                            size="small"
+                                            variant="text"
+                                            style={{
+                                              color: "#28A745",
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() => {}}>
+                                            View
+                                          </Button>
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {checkStatus(row.dtp_status)}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          padding="none"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row.dtp_status.includes(
+                                            "Approved"
+                                          ) ||
+                                          row.dtp_status.includes("Reject") ? (
                                             <Button
                                               size="small"
                                               variant="text"
                                               style={{
-                                                color: "#5E8EBD",
+                                                color: "#848382",
+                                                backgroundColor: "#84838220",
                                                 textTransform: "none",
                                               }}
-                                              onClick={() => {
-                                                navigate(
-                                                  "/digitalTalentProfileResult",
-                                                  {
-                                                    state: {
-                                                      candidateId:
-                                                        row.candidateId,
-                                                      dtpReportId:
-                                                        row.dtpReportId,
-                                                    },
-                                                  }
-                                                );
-                                              }}>
-                                              {row.notify}
+                                              disabled>
+                                              Notify
                                             </Button>
                                           ) : (
                                             <Button
                                               size="small"
                                               variant="text"
                                               style={{
-                                                color: "#5E8EBD",
+                                                color: "#66B2B2",
+                                                backgroundColor: "#66B2B220",
                                                 textTransform: "none",
                                               }}
-                                              onClick={() =>
-                                                handleDtpAccess(row)
-                                              }>
-                                              {row.notify}
+                                              onClick={() => {}}>
+                                              Notify
                                             </Button>
                                           )}
                                         </TableCell>
@@ -1008,7 +1268,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.matchingScore}
+                                          {row.score}%
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1018,6 +1278,57 @@ export const CreateJob = () => {
                                             borderColor: "#D0D5DD50",
                                           }}>
                                           {row.alignmentDate}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row.rank}
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {checkStatus(row.recommended_status)}
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row.application_source}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row.jobId}
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          padding="none"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          <IconButton
+                                            onClick={(e) => {
+                                              handleLd(e);
+                                            }}>
+                                            <HiDotsVertical
+                                              style={{ color: "#D9D9D9" }}
+                                            />
+                                          </IconButton>
                                         </TableCell>
                                       </TableRow>
                                     );
@@ -1112,66 +1423,111 @@ export const CreateJob = () => {
                 )}
             </div>
           )}
-            {/* job description menu */}
-            <Menu
-                  id="fade-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "fade-button",
-                  }}
-                  anchorEl={anchorjd}
-                  open={jdOpen}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  TransitionComponent={Fade}>
-                  <MenuItem onClick={handleStandard}>
-                    <div className="flex gap-1 items-center">
-                      <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
-                      <p
-                        style={{
-                          color: "#5FAEDA",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}>
-                        Retrieve Standard Job Description
-                      </p>
-                    </div>
-                  </MenuItem>
-                  <MenuItem onClick={handleJobDescription}>
-                    <div className="flex gap-1 items-center">
-                      <FaLink
-                        style={{ color: "#E05880", fontSize: 14 }}
-                      />
-                      <p
-                        style={{
-                          color: "#E05880",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}>
-                        Retrieve Job Description
-                      </p>
-                    </div>
-                  </MenuItem>
-                  <MenuItem onClick={handleIdentification}>
-                    <div className="flex gap-1 items-center">
-                      <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
-                      <p
-                        style={{
-                          color: "#58A20F",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}>
-                        Retrieve Job Identification
-                      </p>
-                    </div>
-                  </MenuItem>
-                </Menu>
+          {/* job description menu */}
+          <Menu
+            id="fade-menu"
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorjd}
+            open={jdOpen}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            TransitionComponent={Fade}>
+            <MenuItem onClick={handleStandard}>
+              <div className="flex gap-1 items-center">
+                <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#5FAEDA",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Retrieve Standard Job Description
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={handleJobDescription}>
+              <div className="flex gap-1 items-center">
+                <FaLink style={{ color: "#E05880", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#E05880",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Retrieve Job Description
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={handleIdentification}>
+              <div className="flex gap-1 items-center">
+                <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#58A20F",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Retrieve Job Identification
+                </p>
+              </div>
+            </MenuItem>
+          </Menu>
+
+          {/* list menu */}
+          <Menu
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorLd}
+            open={ldOpen}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            TransitionComponent={Fade}>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <FiEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#5FAEDA",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Edit
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <MdOutlineRemoveRedEye
+                  style={{ color: "#58A20F", fontSize: 14 }}
+                />
+                <p
+                  style={{
+                    color: "#58A20F",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  View
+                </p>
+              </div>
+            </MenuItem>
+          </Menu>
         </div>
       </div>
       <Footer />
