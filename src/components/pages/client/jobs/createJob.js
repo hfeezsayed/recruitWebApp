@@ -10,9 +10,16 @@ import {
   CardActions,
   CardContent,
   Divider,
+  FormControlLabel,
+  Switch,
   IconButton,
   styled,
+  TextField,
+  ButtonGroup,
+  InputAdornment,
 } from "@mui/material";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -26,13 +33,24 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { HiDotsVertical } from "react-icons/hi";
 import { FaLink } from "react-icons/fa";
-
-import { IoPeopleOutline } from "react-icons/io5";
+import { FiEdit } from "react-icons/fi";
+import { CiEdit, CiSearch } from "react-icons/ci";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { IoMenu, IoPeopleOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
+import { BsThreeDots, BsFillCameraFill } from "react-icons/bs";
+import { TiFolderOpen } from "react-icons/ti";
+import { IoIosCalendar } from "react-icons/io";
+import { BiBell } from "react-icons/bi";
+import { IoEyeOutline } from "react-icons/io5";
+import {
+  HiOutlineSquares2X2,
+  HiSquares2X2,
+  HiOutlineDocumentDuplicate,
+} from "react-icons/hi2";
 import { MdOutlineWatchLater, MdOutlineRemoveRedEye } from "react-icons/md";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { FaArrowRight } from "react-icons/fa6";
-import { BsFillCameraFill } from "react-icons/bs";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
@@ -43,10 +61,10 @@ import {
 } from "../../../dummy/Data";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import Spinner from "../../../utils/spinner";
-import { FiEdit } from "react-icons/fi";
+import { GoPlus } from "react-icons/go";
 
 export const CreateJob = () => {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(createJobData);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
@@ -64,11 +82,154 @@ export const CreateJob = () => {
   const jdOpen = Boolean(anchorjd);
   const [anchorLd, setAnchorLd] = useState();
   const ldOpen = Boolean(anchorLd);
-  const [jobCompletion, setJobCompletion] = useState(0);
-  //const [anchorData, setAnchorData] = useState();
+  const [anchorkb, setAnchorkb] = useState();
+  const kbOpen = Boolean(anchorkb);
+  const [jobCompletion, setJobCompletion] = useState(60);
+  const [tableWidth, setTableWidth] = useState(1200);
+  const [search, setSearch] = useState("");
+  const [currentView, setCurrentView] = useState("Card");
+
+  // radio profile
+  const [publishFeature, setPublishFeature] = useState(false);
+  const [screeningQuestions, setScreeningQuestions] = useState(false);
+  const [assessments, setAssessments] = useState(false);
+  const [sourcing, setSourcing] = useState(false);
+  const [onboarding, setOnboarding] = useState(false);
+  const [serviceStaffing, setServiceStaffing] = useState(false);
+
+  const [tasks, setTasks] = useState({
+    initiated: {
+      name: "Initiated",
+      items: [
+        {
+          id: "task-1",
+          dtp: "INITIATED",
+          jonId: 100,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+        {
+          id: "task-2",
+          dtp: "INITIATED",
+          jonId: 101,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+      ],
+    },
+    inProgress: {
+      name: "In Progress",
+      items: [
+        {
+          id: "task-3",
+          dtp: "IN PROGRESS",
+          jonId: 152,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+        {
+          id: "task-4",
+          dtp: "IN PROGRESS",
+          jonId: 158,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+      ],
+    },
+    approved: {
+      name: "Approved",
+      items: [
+        {
+          id: "task-5",
+          dtp: "APPROVED",
+          jonId: 168,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+        {
+          id: "task-6",
+          dtp: "APPROVED",
+          jonId: 172,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+      ],
+    },
+    rejected: {
+      name: "Rejected",
+      items: [
+        {
+          id: "task-7",
+          dtp: "REJECTED",
+          jonId: 174,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+        {
+          id: "task-8",
+          dtp: "REJECTED",
+          jonId: 132,
+          name: "Anna Mathew",
+          role: "Senior Backend Developer",
+          timeStamp: "Jan 25, 2024",
+          sub_Status: "Phone call",
+          date: "14 April, 24",
+          document: "Resume",
+          application_Status: 70,
+          profile_Status: 10,
+        },
+      ],
+    },
+  });
 
   const handleJd = (event) => {
     setAnchorjd(event.currentTarget);
+  };
+
+  const handleKd = (event) => {
+    setAnchorkb(event.currentTarget);
   };
 
   const handleLd = (event) => {
@@ -78,6 +239,7 @@ export const CreateJob = () => {
   const handleClose = () => {
     setAnchorjd(null);
     setAnchorLd(null);
+    setAnchorkb(null);
   };
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -92,6 +254,19 @@ export const CreateJob = () => {
       background: `linear-gradient(90deg, #66B2B2 ${
         100 - userData?.jobCompletd ? userData?.jobCompletd : 0
       }%, #008080 100%)`,
+    },
+  }));
+
+  const BorderLinearProgresskan = styled(LinearProgress)(({ theme }) => ({
+    height: 4.9,
+    borderRadius: 10,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      background: "#58A20F",
     },
   }));
   const navigate = useNavigate();
@@ -223,6 +398,79 @@ export const CreateJob = () => {
     }
   }, []);
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    if (source.droppableId === destination.droppableId) {
+      const items = Array.from(tasks[source.droppableId].items);
+      const [reorderedItem] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, reorderedItem);
+
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: {
+          ...prev[source.droppableId],
+          items,
+        },
+      }));
+    } else {
+      const sourceItems = Array.from(tasks[source.droppableId].items);
+      const [movedItem] = sourceItems.splice(source.index, 1);
+      const destinationItems = Array.from(tasks[destination.droppableId].items);
+      destinationItems.splice(destination.index, 0, movedItem);
+
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: {
+          ...prev[source.droppableId],
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...prev[destination.droppableId],
+          items: destinationItems,
+        },
+      }));
+    }
+  };
+
+  const DtpStatus = (status) => {
+    let color = "#ffffff";
+    let bg = "#ffffff";
+
+    if (status === "Initiated") {
+      color = "#FFA500";
+      bg = "#FFF2DB";
+    }
+    if (status === "In Progress") {
+      color = "#5FAEDA";
+      bg = "#E9F4FA";
+    }
+    if (status === "Approved") {
+      color = "#58A20F";
+      bg = "#58A20F20";
+    }
+    if (status === "Rejected") {
+      color = "#E05880";
+      bg = "#E0588020";
+    }
+
+    return (
+      <div
+        style={{
+          padding: "4px 8px",
+          borderWidth: 1,
+          borderColor: color,
+          borderRadius: 20,
+          backgroundColor: bg,
+        }}>
+        <p style={{ color: color, fontSize: 8, fontWeight: 600 }}>
+          Dtp Status: {status?.toUpperCase()}
+        </p>
+      </div>
+    );
+  };
   const handleJobDetails = (jobData) => {
     if (jobData?.jobDetail === true) {
       navigate("/job/jobDetailEdit", { state: { jobData: jobData } });
@@ -366,63 +614,261 @@ export const CreateJob = () => {
                   Complete all the steps to generate a job offer for the
                   candidate.
                 </p>
-                <div className="py-4 flex gap-6">
-                  <div
-                    className="w-28 h-28 rounded-full "
-                    style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
-                    <img
-                      src={
-                        userData.image ||
-                        `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
-                      }
-                      alt="person"
-                      className="rounded-full"
-                    />
-                    <div
-                      className="relative -mt-8 justify-end flex h-9"
-                      style={{ backgroundColor: "#" }}>
-                      <IconButton
-                        style={{ padding: 6, backgroundColor: "#66B2B2" }}>
-                        <BsFillCameraFill
-                          style={{ color: "#ffffff", fontSize: 22 }}
-                        />
-                      </IconButton>
+                <Card className="grid grid-cols-2 gap-8 border border-[#D3DFE7] p-3 mt-5 rounded-xl bg-[#FBFCFE]">
+                  <div>
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 18,
+                        fontWeight: 500,
+                      }}>
+                      Company Name:{" "}
+                      <span style={{ color: "#101828" }}>
+                        {" "}
+                        {userData?.companyName}
+                      </span>
+                    </p>
+                    <div className="w-full py-3">
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        Job Creation Completed
+                      </p>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box sx={{ width: "70%", mr: 1 }}>
+                          <BorderLinearProgress
+                            variant="determinate"
+                            value={jobCompletion}
+                          />
+                        </Box>
+                        <Box sx={{ minWidth: 35 }}>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary">{`${Math.round(
+                            jobCompletion
+                          )}%`}</Typography>
+                        </Box>
+                      </Box>
+                    </div>
+                    <div>
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 20,
+                          fontWeight: 500,
+                        }}>
+                        Status
+                      </p>
+                      <div className="flex gap-12">
+                        <p style={{ color: "#475467", fontSize: 16 }}>
+                          Job Status
+                        </p>
+                        <p
+                          style={{
+                            color: "#58A20F",
+                            fontSize: 16,
+                            fontWeight: 600,
+                          }}>
+                          {userData?.jobStatus}
+                        </p>
+                      </div>
+                      <div className="flex gap-4">
+                        <p style={{ color: "#475467", fontSize: 16 }}>
+                          Job Sub-status
+                        </p>
+                        <p style={{ color: "#EDCC57", fontSize: 16 }}>
+                          {userData?.jobSubStatus}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-9">
+                  <div>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          sx={{
+                            "& .Mui-checked": {
+                              "& + .MuiSwitch-track": {
+                                backgroundColor: "#475467",
+                              },
+                              "& .MuiSwitch-thumb": {
+                                color: "#475467",
+                              },
+                            },
+                          }}
+                        />
+                      }
+                      value={publishFeature}
+                      onChange={(e) => setPublishFeature(e.target.checked)}
+                      label={
+                        <p style={{ color: "#475467", fontSize: 16 }}>
+                          Publish Feature
+                        </p>
+                      }
+                    />
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="flex flex-col gap-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Optional Features
+                        </p>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              sx={{
+                                "& .Mui-checked": {
+                                  "& + .MuiSwitch-track": {
+                                    backgroundColor: "#3B25A9",
+                                  },
+                                  "& .MuiSwitch-thumb": {
+                                    color: "#3B25A9",
+                                  },
+                                },
+                              }}
+                            />
+                          }
+                          value={screeningQuestions}
+                          onChange={(e) =>
+                            setScreeningQuestions(e.target.checked)
+                          }
+                          label={
+                            <p style={{ color: "#3B25A9", fontSize: 16 }}>
+                              Screening Questions
+                            </p>
+                          }
+                        />
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              sx={{
+                                "& .Mui-checked": {
+                                  "& + .MuiSwitch-track": {
+                                    backgroundColor: "#A92525",
+                                  },
+                                  "& .MuiSwitch-thumb": {
+                                    color: "#A92525",
+                                  },
+                                },
+                              }}
+                            />
+                          }
+                          value={assessments}
+                          onChange={(e) => setAssessments(e.target.checked)}
+                          label={
+                            <p style={{ color: "#A92525", fontSize: 16 }}>
+                              Assessments
+                            </p>
+                          }
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          External Support
+                        </p>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              sx={{
+                                "& .Mui-checked": {
+                                  "& + .MuiSwitch-track": {
+                                    backgroundColor: "#D9B020",
+                                  },
+                                  "& .MuiSwitch-thumb": {
+                                    color: "#D9B020",
+                                  },
+                                },
+                              }}
+                            />
+                          }
+                          value={sourcing}
+                          onChange={(e) => setSourcing(e.target.checked)}
+                          label={
+                            <p style={{ color: "#D9B020", fontSize: 16 }}>
+                              Sourcing
+                            </p>
+                          }
+                        />
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              sx={{
+                                "& .Mui-checked": {
+                                  "& + .MuiSwitch-track": {
+                                    backgroundColor: "#9BC53D",
+                                  },
+                                  "& .MuiSwitch-thumb": {
+                                    color: "#9BC53D",
+                                  },
+                                },
+                              }}
+                            />
+                          }
+                          value={onboarding}
+                          onChange={(e) => setOnboarding(e.target.checked)}
+                          label={
+                            <p style={{ color: "#9BC53D", fontSize: 16 }}>
+                              Onboarding
+                            </p>
+                          }
+                        />
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              sx={{
+                                "& .Mui-checked": {
+                                  "& + .MuiSwitch-track": {
+                                    backgroundColor: "#2C7DA0",
+                                  },
+                                  "& .MuiSwitch-thumb": {
+                                    color: "#2C7DA0",
+                                  },
+                                },
+                              }}
+                            />
+                          }
+                          value={serviceStaffing}
+                          onChange={(e) => setServiceStaffing(e.target.checked)}
+                          label={
+                            <p style={{ color: "#2C7DA0", fontSize: 16 }}>
+                              Full-Service Staffing
+                            </p>
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+              <div className="py-10">
+                <div className="flex justify-between">
+                  <div>
                     <p
                       style={{
                         color: "#101828",
                         fontWeight: 600,
-                        fontSize: 24,
+                        fontSize: 20,
                       }}>
-                      {title}
+                      Complete all forms and assessments to begin
                     </p>
-                  </div>
-                </div>
-                <div className="flex w-full py-2">
-                  <div className="w-full">
-                    <p style={{ color: "#101828", fontSize: 14 }}>
-                      Job Creation Completed
-                    </p>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Box sx={{ width: "50%", mr: 1 }}>
-                        <BorderLinearProgress
-                          variant="determinate"
-                          value={jobCompletion}
-                        />
-                      </Box>
-                      <Box sx={{ minWidth: 35 }}>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary">{`${Math.round(
-                          jobCompletion
-                        )}%`}</Typography>
-                      </Box>
-                    </Box>
-                  </div>
-                  <div className="w-64">
                     <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 16,
+                        fontWeight: 500,
+                      }}>
+                      Please fill out all the necessary forms and complete the
+                      required assessments to get started
+                    </p>
+                  </div>
+                  <div>
+                    <Button
                       variant="text"
                       style={{
                         color: "#5E8EBD",
@@ -436,26 +882,390 @@ export const CreateJob = () => {
                       // }
                     >
                       Access Job Description
-                      <IconButton
-                        onClick={(e) => {
-                          handleJd(e);
-                        }}>
-                        <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                      </IconButton>
-                    </p>
+                    </Button>
+                    {/* <IconButton
+                      onClick={(e) => {
+                        handleJd(e);
+                      }}>
+                      <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                    </IconButton> */}
                   </div>
                 </div>
-              </div>
-              <div className="py-10">
-                <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                  Complete all forms and assessments to begin
-                </p>
-                <p style={{ color: "#475467", fontSize: 16 }}>
-                  Please fill out all the necessary forms and complete the
-                  required assessments to get started
-                </p>
+                {/* all forms */}
+                <div className="flex gap-10 mt-3 justify-between">
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.jobDetail ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      Job Details
+                    </p>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Step 1
+                      </p>
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        5-10 mins
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      style={{
+                        color: userData?.jobDetail ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                      }}
+                      endIcon={
+                        userData?.jobDetail ? <CiEdit /> : <FaArrowRight />
+                      }
+                      onClick={() => {
+                        handleJobDetails(userData);
+                      }}>
+                      {userData?.jobDetail ? "Edit" : "Start"}
+                    </Button>
+                  </div>
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.workValues ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      Work Values
+                    </p>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Step 2
+                      </p>
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        5-10 mins
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      style={{
+                        color: userData?.workValues ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                      }}
+                      endIcon={
+                        userData?.workValues ? <CiEdit /> : <FaArrowRight />
+                      }
+                      onClick={() => {
+                        handleWorkValues(userData);
+                      }}>
+                      {userData?.workValues ? "Edit" : "Start"}
+                    </Button>
+                  </div>
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.team ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      Team Preference
+                    </p>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Step 3
+                      </p>
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        5-10 mins
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      style={{
+                        color: userData?.team ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                      }}
+                      endIcon={userData?.team ? <CiEdit /> : <FaArrowRight />}
+                      onClick={() => {
+                        handleTeam(userData);
+                      }}>
+                      {userData?.team ? "Edit" : "Start"}
+                    </Button>
+                  </div>
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.icp ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      ICP Analysis
+                    </p>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Step 4
+                      </p>
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        5-10 mins
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      style={{
+                        color: userData?.icp ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                      }}
+                      endIcon={userData?.icp ? <CiEdit /> : <FaArrowRight />}
+                      onClick={() => {
+                        handleIcp(userData);
+                      }}>
+                      {userData?.icp ? "Edit" : "Start"}
+                    </Button>
+                  </div>
+                  {screeningQuestions && (
+                    <div className="w-36">
+                      <Gauge
+                        value={userData?.screening ? 100 : 0}
+                        startAngle={0}
+                        endAngle={360}
+                        innerRadius="80%"
+                        outerRadius="100%"
+                        height={80}
+                        width={80}
+                        sx={(theme) => ({
+                          [`& .${gaugeClasses.valueText}`]: {
+                            fontSize: 10,
+                            color: "#525252",
+                          },
+                          [`& .${gaugeClasses.valueArc}`]: {
+                            fill: "#70CF97",
+                          },
+                        })}
+                        text={({ value }) => `${value}%`}
+                      />
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontWeight: 600,
+                          fontSize: 18,
+                        }}>
+                        Screening
+                      </p>
+                      <div className="flex justify-between">
+                        <p
+                          style={{
+                            color: "#808191",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          Step 5
+                        </p>
+                        <p
+                          style={{
+                            color: "#808191",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          5-10 mins
+                        </p>
+                      </div>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.screening ? "#1E90FF" : "#FF9900",
+                          fontSize: 12,
+                          textTransform: "none",
+                        }}
+                        endIcon={
+                          userData?.screening ? <CiEdit /> : <FaArrowRight />
+                        }
+                        onClick={() => {
+                          navigate("/job/screeningQuestions");
+                        }}>
+                        {userData?.screening ? "Edit" : "Start"}
+                      </Button>
+                    </div>
+                  )}
+                  {assessments && (
+                    <div className="w-36">
+                      <Gauge
+                        value={userData?.assessments ? 100 : 0}
+                        startAngle={0}
+                        endAngle={360}
+                        innerRadius="80%"
+                        outerRadius="100%"
+                        height={80}
+                        width={80}
+                        sx={(theme) => ({
+                          [`& .${gaugeClasses.valueText}`]: {
+                            fontSize: 10,
+                            color: "#525252",
+                          },
+                          [`& .${gaugeClasses.valueArc}`]: {
+                            fill: "#70CF97",
+                          },
+                        })}
+                        text={({ value }) => `${value}%`}
+                      />
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontWeight: 600,
+                          fontSize: 18,
+                        }}>
+                        Assessments
+                      </p>
+                      <div className="flex justify-between">
+                        <p
+                          style={{
+                            color: "#808191",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          Step 6
+                        </p>
+                        <p
+                          style={{
+                            color: "#808191",
+                            fontSize: 16,
+                            fontWeight: 500,
+                          }}>
+                          5-10 mins
+                        </p>
+                      </div>
+                      <Button
+                        size="small"
+                        style={{
+                          color: userData?.assessments ? "#1E90FF" : "#FF9900",
+                          fontSize: 12,
+                          textTransform: "none",
+                        }}
+                        endIcon={
+                          userData?.assessments ? <CiEdit /> : <FaArrowRight />
+                        }
+                        onClick={() => {}}>
+                        {userData?.assessments ? "Edit" : "Start"}
+                      </Button>
+                    </div>
+                  )}
+                </div>
                 {/* card */}
-                <div className="grid grid-cols-2 gap-5 mt-5">
+                {/* <div className="grid grid-cols-2 gap-5 mt-5">
                   <Card sx={{ borderRadius: 5 }}>
                     <CardContent>
                       <div className="flex gap-2">
@@ -700,86 +1510,6 @@ export const CreateJob = () => {
                       </Button>
                     </CardActions>
                   </Card>
-                  {/* <Card sx={{ borderRadius: 5 }}>
-                    <CardContent>
-                      <div className="flex gap-2">
-                        <div className="w-1/3">
-                          <Gauge
-                            height={100}
-                            value={userData?.preference ? 100 : 0}
-                            startAngle={-110}
-                            endAngle={110}
-                            sx={{
-                              [`& .${gaugeClasses.valueText}`]: {
-                                fontSize: 20,
-                                transform: "translate(0px, 0px)",
-                                color: "#101828",
-                                fontWeight: 600,
-                              },
-                              [`& .${gaugeClasses.valueArc}`]: {
-                                fill: "#58A20F",
-                              },
-                            }}
-                            text={({ value }) => `${value} %`}
-                          />
-                          <p
-                            style={{
-                              textAlign: "center",
-                              color: userData?.preference ? "#58A20F" : "#101828",
-                              fontWeight: 600,
-                            }}>
-                            Completed
-                          </p>
-                        </div>
-                        <div className="w-full">
-                          <div className="flex justify-between items-center">
-                            <p style={{ color: "#777980", fontSize: 14 }}>
-                              Step 4
-                            </p>
-                            <div className="flex gap-2 items-center">
-                              <MdOutlineWatchLater
-                                style={{ color: "#777980", fontSize: 16 }}
-                              />
-                              <p style={{ color: "#777980", fontSize: 14 }}>
-                                5-10 mins
-                              </p>
-                            </div>
-                          </div>
-                          <div>
-                            <p
-                              style={{
-                                color: "#101828",
-                                fontWeight: 600,
-                                fontSize: 20,
-                              }}>
-                              Job Preference
-                            </p>
-                            <p style={{ color: "#475467", fontSize: 16 }}>
-                              This is the forth step in creating a job . Start by
-                              choosing a template and filling in the relevant job
-                              details.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <Divider />
-                    <CardActions style={{ justifyContent: "flex-end" }}>
-                      <Button
-                        size="small"
-                        style={{
-                          color: userData?.preference ? "#1E90FF" : "#E05880",
-                          fontWeight: 600,
-                          fontSize: 14,
-                        }}
-                        endIcon={<FaArrowRight />}
-                        onClick={() => {
-                          handleJobPreferences(userData);
-                        }}>
-                        {userData?.preference ? "Edit" : "Start"}
-                      </Button>
-                    </CardActions>
-                  </Card> */}
                   <Card sx={{ borderRadius: 5 }}>
                     <CardContent>
                       <div className="flex gap-2">
@@ -860,7 +1590,7 @@ export const CreateJob = () => {
                       </Button>
                     </CardActions>
                   </Card>
-                </div>
+                </div> */}
               </div>
               {userData?.jobDetail &&
                 userData?.workValues &&
@@ -918,426 +1648,735 @@ export const CreateJob = () => {
                       </div>
                     ) : (
                       <div>
-                        <div className="py-5">
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            style={{
-                              color: "#008080",
-                              fontSize: 14,
-                              textTransform: "none",
-                              backgroundColor: "#F8F9FA",
-                              borderColor: "#D0D5DD50",
-                            }}
-                            startIcon={<IoPeopleOutline />}
-                            onClick={() => {
-                              setShowRecomandation(true);
-                            }}>
-                            Run Recommendation
-                          </Button>
+                        <div className="py-5 flex justify-between">
+                          <div className="flex gap-8">
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              style={{
+                                color: "#008080",
+                                fontSize: 14,
+                                textTransform: "none",
+                                backgroundColor: "#F8F9FA",
+                                borderColor: "#D0D5DD50",
+                              }}
+                              startIcon={<IoPeopleOutline />}
+                              onClick={() => {
+                                setShowRecomandation(true);
+                              }}>
+                              Run Recommendation
+                            </Button>
+
+                            <div>
+                              <TextField
+                                fullWidth
+                                size="small"
+                                placeholder="Search..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                InputProps={{
+                                  startAdornment: (
+                                    <InputAdornment position="start">
+                                      <CiSearch />
+                                    </InputAdornment>
+                                  ),
+                                }}
+                                sx={{ minWidth: 350 }}
+                              />
+                            </div>
+                          </div>
+                          <ButtonGroup
+                            style={{ color: "#008080" }}
+                            aria-label="Medium-sized button group">
+                            <Button
+                              style={{
+                                backgroundColor:
+                                  currentView === "Card"
+                                    ? "#E6E9ED"
+                                    : "#F6F8F9",
+                                color:
+                                  currentView === "Card"
+                                    ? "#008080"
+                                    : "#47546770",
+                                borderColor: "#EAECF0",
+                              }}
+                              startIcon={
+                                currentView === "Card" ? (
+                                  <HiSquares2X2 />
+                                ) : (
+                                  <HiOutlineSquares2X2 />
+                                )
+                              }
+                              onClick={() => setCurrentView("Card")}
+                            />
+
+                            <Button
+                              style={{
+                                backgroundColor:
+                                  currentView === "List"
+                                    ? "#E6E9ED"
+                                    : "#F6F8F9",
+                                color:
+                                  currentView === "List"
+                                    ? "#008080"
+                                    : "#47546770",
+                                borderColor: "#EAECF0",
+                              }}
+                              endIcon={<IoMenu />}
+                              onClick={() => setCurrentView("List")}
+                            />
+                          </ButtonGroup>
                         </div>
 
-                        <Box sx={{ width: 980 }}>
-                          <Paper sx={{ width: "100%", my: 2 }}>
-                            <TableContainer
-                              sx={{
-                                maxHeight: 500,
-                              }}>
-                              <Table stickyHeader>
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Applicant Name
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Applied job Title
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Created Timestamp
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Job Screening response
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Application Status
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Application Sub-status
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Resume
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Assessments
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      DTP Status
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Notify
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Alignment Score
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Latest Alignment Date
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Recommendation Rank
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Recommendation Status
-                                    </TableCell>
-                                    <TableCell
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Application Source
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Job Id
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      sx={{
-                                        bgcolor: "#F8F9FA",
-                                        color: "#101828",
-                                        border: 1,
-                                        borderColor: "#D0D5DD50",
-                                      }}>
-                                      Action
-                                    </TableCell>
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {candidateDetails?.map((row, index) => {
-                                    return (
-                                      <TableRow key={index}>
-                                        <TableCell
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
+                        {currentView === "Card" && (
+                          <div>
+                            <DragDropContext onDragEnd={onDragEnd}>
+                              <div style={{ display: "flex" }}>
+                                {Object.entries(tasks).map(([key, column]) => (
+                                  <Droppable droppableId={key} key={key}>
+                                    {(provided, snapshot) => (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                        style={{
+                                          margin: "0 8px",
+                                          padding: "8px",
+                                          width: "260px",
+                                          backgroundColor:
+                                            snapshot.isDraggingOver
+                                              ? "lightblue"
+                                              : "white",
+                                        }}>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            borderBottomWidth: 2,
+                                            paddingBottom: 2,
+                                            borderColor: "#00808070",
                                           }}>
-                                          {row.name}
-                                        </TableCell>
-                                        <TableCell
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.title}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.timeStamp}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          padding="none"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          <Button
-                                            size="small"
-                                            variant="text"
-                                            style={{
-                                              color: "#28A745",
-                                              textTransform: "none",
-                                            }}
-                                            onClick={() => {}}>
-                                            View
-                                          </Button>
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {checkStatusRound(
-                                            row.application_status
-                                          )}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.application_sub_status}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          <Button
-                                            size="small"
-                                            variant="text"
-                                            style={{
-                                              color: "#5FAEDA",
-                                              textTransform: "none",
-                                            }}
-                                            onClick={() => {}}>
-                                            Resume.pdf
-                                          </Button>
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          padding="none"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          <Button
-                                            size="small"
-                                            variant="text"
-                                            style={{
-                                              color: "#28A745",
-                                              textTransform: "none",
-                                            }}
-                                            onClick={() => {}}>
-                                            View
-                                          </Button>
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {checkStatus(row.dtpStatus)}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          padding="none"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.dtpStatus.includes(
-                                            "Approved"
-                                          ) ||
-                                          row.dtpStatus.includes("Reject") ? (
+                                          <div className="flex gap-2">
+                                            <p
+                                              style={{
+                                                color: "#1E293B",
+                                                fontSize: 14,
+                                                fontWeight: 500,
+                                              }}>
+                                              {column?.name}
+                                            </p>
+                                            <div className="flex items-center justify-center h-6 w-8 border border-[#E2E8F0] bg-[#FFB58020]">
+                                              <p
+                                                style={{
+                                                  color: "#94A3B8",
+                                                  fontSize: 14,
+                                                  fontWeight: 500,
+                                                }}>
+                                                {column?.items?.length}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <div className="flex items-center">
+                                            <IconButton>
+                                              <GoPlus
+                                                style={{
+                                                  color: "#94A3B8",
+                                                  fontSize: 16,
+                                                }}
+                                              />{" "}
+                                            </IconButton>
+                                            <IconButton>
+                                              <BsThreeDots
+                                                style={{
+                                                  color: "#94A3B8",
+                                                  fontSize: 16,
+                                                }}
+                                              />{" "}
+                                            </IconButton>
+                                          </div>
+                                        </div>
+                                        {column.items.map((item, index) => (
+                                          <Draggable
+                                            key={item.id}
+                                            draggableId={item.id}
+                                            index={index}>
+                                            {(provided, snapshot) => (
+                                              <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                // style={{
+                                                //   userSelect: "none",
+                                                //   padding: "16px",
+                                                //   margin: "4px 0",
+                                                //   minHeight: "50px",
+                                                //   backgroundColor: snapshot.isDragging
+                                                //     ? "#263B4A"
+                                                //     : "#456C86",
+                                                //   color: "white",
+                                                //   ...provided.draggableProps.style,
+                                                // }}
+                                                style={{
+                                                  borderWidth: 1,
+                                                  borderColor: "#E2E8F0",
+                                                  backgroundColor:
+                                                    snapshot.isDragging
+                                                      ? "#CFC8C980"
+                                                      : "#ffffff",
+                                                  borderRadius: 8,
+                                                  marginTop: 10,
+                                                }}>
+                                                <div className="flex justify-between items-center p-2">
+                                                  {DtpStatus(column?.name)}
+                                                  <p
+                                                    style={{
+                                                      color: "#7E8795",
+                                                      fontWeight: 500,
+                                                      fontSize: 10,
+                                                    }}>
+                                                    Job Id : {item.jonId}
+                                                  </p>
+                                                </div>
+                                                <div className="flex justify-between items-center p-2">
+                                                  <div className="flex gap-2 items-center">
+                                                    <img
+                                                      src="https://picsum.photos/200"
+                                                      alt="person"
+                                                      style={{
+                                                        width: 32,
+                                                        height: 32,
+                                                        borderRadius: "100%",
+                                                      }}
+                                                    />
+                                                    <div>
+                                                      <p
+                                                        style={{
+                                                          color: "#1E293B",
+                                                          fontSize: 16,
+                                                          fontWeight: 600,
+                                                        }}>
+                                                        {item?.name}
+                                                      </p>
+                                                      <p
+                                                        style={{
+                                                          color: "#252C32",
+                                                          fontSize: 10,
+                                                        }}>
+                                                        {item?.role}
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="w-6 h-6 flex justify-center items-center border border-[#DDDDDD] rounded-md">
+                                                    <IconButton
+                                                      onClick={handleKd}>
+                                                      <BsThreeDots
+                                                        style={{
+                                                          color: "#6F6F6F",
+                                                          fontSize: 16,
+                                                        }}
+                                                      />
+                                                    </IconButton>
+                                                  </div>
+                                                </div>
+                                                <div className="w-10 h-4 rounded-r-full bg-[#E20008] flex justify-center items-center">
+                                                  <p
+                                                    style={{
+                                                      color: "#ffffff",
+                                                      fontSize: 10,
+                                                    }}>
+                                                    {item.profile_Status}%
+                                                  </p>
+                                                </div>
+                                                <div className="p-2 ">
+                                                  <p
+                                                    style={{
+                                                      color: "#787486",
+                                                      fontSize: 10,
+                                                    }}>
+                                                    Created Timestamp:{" "}
+                                                    {item?.timeStamp}
+                                                  </p>
+                                                  <p
+                                                    style={{
+                                                      color: "#787486",
+                                                      fontSize: 10,
+                                                    }}>
+                                                    Application Sub-status:{" "}
+                                                    {item?.sub_Status}
+                                                  </p>
+                                                </div>
+                                                <div className="mx-2 border-b border-[#E2E8F0]" />
+                                                <div className="p-2 flex gap-2">
+                                                  <div className="flex gap-1">
+                                                    <TiFolderOpen
+                                                      style={{
+                                                        color: "#5FAEDA",
+                                                      }}
+                                                    />
+                                                    <p
+                                                      style={{
+                                                        color: "#5FAEDA",
+                                                        fontSize: 10,
+                                                      }}>
+                                                      {item?.document}
+                                                    </p>
+                                                  </div>
+                                                  <div className="flex gap-1">
+                                                    <IoIosCalendar
+                                                      style={{
+                                                        color: "#800080",
+                                                      }}
+                                                    />
+                                                    <p
+                                                      style={{
+                                                        color: "#800080",
+                                                        fontSize: 10,
+                                                      }}>
+                                                      {item?.date}
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                                <div className="w-full px-2 py-[2px]">
+                                                  <p
+                                                    style={{
+                                                      color: "#7E8795",
+                                                      fontSize: 8,
+                                                    }}>
+                                                    Application Status
+                                                  </p>
+                                                  <Box
+                                                    sx={{
+                                                      display: "flex",
+                                                      alignItems: "center",
+                                                    }}>
+                                                    <BorderLinearProgresskan
+                                                      variant="determinate"
+                                                      value={
+                                                        item.application_Status
+                                                      }
+                                                      style={{ width: "100%" }}
+                                                    />
+                                                  </Box>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </Draggable>
+                                        ))}
+                                        {provided.placeholder}
+                                      </div>
+                                    )}
+                                  </Droppable>
+                                ))}
+                              </div>
+                            </DragDropContext>
+                          </div>
+                        )}
+                        {currentView === "List" && (
+                          <Box sx={{ width: tableWidth }}>
+                            <Paper sx={{ width: "100%", my: 2 }}>
+                              <TableContainer
+                                sx={{
+                                  maxHeight: 500,
+                                }}>
+                                <Table stickyHeader>
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Applicant Name
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Applied job Title
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Created Timestamp
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Job Screening response
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Application Status
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Application Sub-status
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Resume
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Assessments
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        DTP Status
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Notify
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Alignment Score
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Latest Alignment Date
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Recommendation Rank
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Recommendation Status
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Application Source
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Job Id
+                                      </TableCell>
+                                      <TableCell
+                                        align="center"
+                                        sx={{
+                                          bgcolor: "#F8F9FA",
+                                          color: "#101828",
+                                          border: 1,
+                                          borderColor: "#D0D5DD50",
+                                        }}>
+                                        Action
+                                      </TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {candidateDetails?.map((row, index) => {
+                                      return (
+                                        <TableRow key={index}>
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.name}
+                                          </TableCell>
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.title}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.timeStemp}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            padding="none"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
                                             <Button
                                               size="small"
                                               variant="text"
                                               style={{
-                                                color: "#848382",
-                                                backgroundColor: "#84838220",
-                                                textTransform: "none",
-                                              }}
-                                              disabled>
-                                              Notify
-                                            </Button>
-                                          ) : (
-                                            <Button
-                                              size="small"
-                                              variant="text"
-                                              style={{
-                                                color: "#66B2B2",
-                                                backgroundColor: "#66B2B220",
+                                                color: "#28A745",
                                                 textTransform: "none",
                                               }}
                                               onClick={() => {}}>
-                                              Notify
+                                              View
                                             </Button>
-                                          )}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.score}%
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.alignmentDate}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.rank}
-                                        </TableCell>
-                                        <TableCell
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {checkStatus(row.recommended_status)}
-                                        </TableCell>
-                                        <TableCell
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.application_source}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          {row.jobId}
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          padding="none"
-                                          sx={{
-                                            color: "#475467",
-                                            border: 1,
-                                            borderColor: "#D0D5DD50",
-                                          }}>
-                                          <IconButton
-                                            onClick={(e) => {
-                                              handleLd(e);
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
                                             }}>
-                                            <HiDotsVertical
-                                              style={{ color: "#D9D9D9" }}
-                                            />
-                                          </IconButton>
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  })}
-                                </TableBody>
-                              </Table>
-                            </TableContainer>
-                          </Paper>
-                        </Box>
+                                            {checkStatusRound(
+                                              row.application_status
+                                            )}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.application_sub_status}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            <Button
+                                              size="small"
+                                              variant="text"
+                                              style={{
+                                                color: "#5FAEDA",
+                                                textTransform: "none",
+                                              }}
+                                              onClick={() => {}}>
+                                              Resume.pdf
+                                            </Button>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            padding="none"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            <Button
+                                              size="small"
+                                              variant="text"
+                                              style={{
+                                                color: "#28A745",
+                                                textTransform: "none",
+                                              }}
+                                              onClick={() => {}}>
+                                              View
+                                            </Button>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {checkStatus(row.dtp_status)}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            padding="none"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.dtp_status?.includes(
+                                              "Approved"
+                                            ) ||
+                                            row.dtp_status?.includes(
+                                              "Reject"
+                                            ) ? (
+                                              <Button
+                                                size="small"
+                                                variant="text"
+                                                style={{
+                                                  color: "#848382",
+                                                  backgroundColor: "#84838220",
+                                                  textTransform: "none",
+                                                }}
+                                                disabled>
+                                                Notify
+                                              </Button>
+                                            ) : (
+                                              <Button
+                                                size="small"
+                                                variant="text"
+                                                style={{
+                                                  color: "#66B2B2",
+                                                  backgroundColor: "#66B2B220",
+                                                  textTransform: "none",
+                                                }}
+                                                onClick={() => {}}>
+                                                Notify
+                                              </Button>
+                                            )}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.score}%
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.alignmentDate}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.rank}
+                                          </TableCell>
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {checkStatus(
+                                              row.recommended_status
+                                            )}
+                                          </TableCell>
+                                          <TableCell
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.application_source}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            {row.jobId}
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            padding="none"
+                                            sx={{
+                                              color: "#475467",
+                                              border: 1,
+                                              borderColor: "#D0D5DD50",
+                                            }}>
+                                            <IconButton
+                                              onClick={(e) => {
+                                                handleLd(e);
+                                              }}>
+                                              <HiDotsVertical
+                                                style={{ color: "#D9D9D9" }}
+                                              />
+                                            </IconButton>
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Paper>
+                          </Box>
+                        )}
                         {showRecomandation && (
                           <div>
                             <div>
@@ -1521,6 +2560,92 @@ export const CreateJob = () => {
                   style={{
                     color: "#58A20F",
                     fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  View
+                </p>
+              </div>
+            </MenuItem>
+          </Menu>
+
+          {/* kanban */}
+          <Menu
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorkb}
+            open={kbOpen}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            TransitionComponent={Fade}>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <FiEdit style={{ color: "#FF7F50", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#FF7F50",
+                    fontSize: 8,
+                    fontWeight: 500,
+                  }}>
+                  Job Screening
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <HiOutlineDocumentDuplicate
+                  style={{ color: "#E05880", fontSize: 14 }}
+                />
+                <p
+                  style={{
+                    color: "#E05880",
+                    fontSize: 8,
+                    fontWeight: 500,
+                  }}>
+                  Assessment
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <BiBell style={{ color: "#66B2B2", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#66B2B2",
+                    fontSize: 8,
+                    fontWeight: 500,
+                  }}>
+                  Notify
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <FiEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#5FAEDA",
+                    fontSize: 8,
+                    fontWeight: 500,
+                  }}>
+                  Edit
+                </p>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={() => {}}>
+              <div className="flex gap-2 items-center">
+                <IoEyeOutline style={{ color: "#58A20F", fontSize: 14 }} />
+                <p
+                  style={{
+                    color: "#58A20F",
+                    fontSize: 8,
                     fontWeight: 500,
                   }}>
                   View
