@@ -266,7 +266,7 @@ export const CreateJob = () => {
   const handleStandard = () => {
     if (jobCompletion === 100) {
       navigate("/job/outputofJobDescription", {
-        state: { jobId: location.state, fullAccess: true },
+        state: { jobId: location.state, jdAccess: true },
       });
     }
   };
@@ -282,7 +282,7 @@ export const CreateJob = () => {
   const handleIdentification = () => {
     if (jobCompletion === 100) {
       navigate("/job/outputofJobDescription", {
-        state: { jobId: location.state, jdAccess: true },
+        state: { jobId: location.state, fullAccess: true },
       });
     }
   };

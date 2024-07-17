@@ -183,11 +183,12 @@ export const AllJobs = () => {
 
   const handleStandard = () => {
     navigate("/job/outputofJobDescription", {
-      state: { jobId: anchorData.id, fullAccess: true },
+      state: { jobId: anchorData.id, jdAccess: true },
     });
   };
 
   const handleJobDescription = () => {
+    
     navigate("/job/outputofJobDescription", {
       state: { jobId: anchorData.id, teamAccess: true },
     });
@@ -195,7 +196,7 @@ export const AllJobs = () => {
 
   const handleIdentification = () => {
     navigate("/job/outputofJobDescription", {
-      state: { jobId: anchorData.id, jdAccess: true },
+      state: { jobId: anchorData.id, fullAccess: true },
     });
   };
 
