@@ -75,6 +75,7 @@ import { OutputofJobDescription } from "./components/pages/client/jobs/outputOfJ
 import { OutputofDigitalTalentProfile } from "./components/pages/candidate/HomePage/outputofDigitalTalentProfile";
 import { ConfirmationScreen } from "./components/pages/candidate/DigitalTalentProfile/confirmationScreen";
 import { ProfileDashboard } from "./components/pages/client/dashboard/profile";
+import { ScreeningQuestions } from "./components/pages/client/jobs/screeningQuestions";
 
 export const Routes = () => {
   return (
@@ -171,6 +172,7 @@ export const Routes = () => {
           path="job/outputofJobDescription"
           element={<OutputofJobDescription />}
         />
+        <Route path="job/screeningQuestions" element={<ScreeningQuestions />} />
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
         <Route
