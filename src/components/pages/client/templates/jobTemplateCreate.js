@@ -273,6 +273,11 @@ export const JobTemplateCreate = () => {
     { label: "AWS", value: "AWS" },
   ]
 
+  const [companyOverview, setCompanyOverview] = useState("");
+  const [jobSummary, setJobSummary] = useState("");
+  const [responsebility, setResponsibility] = useState("");
+  const [benefit, setBenefit] = useState("");
+  const [eeo, setEeo] = useState("");
 
   const getCompanyOverview = async () => {
     const title = jobTitle;
@@ -288,7 +293,7 @@ export const JobTemplateCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setCompanyInfo(data.data.enhanced_description);
+        setCompanyOverview(data.data.enhanced_description);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -305,7 +310,7 @@ export const JobTemplateCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setResponsibilities(data.data.enhanced_responsibilities);
+        setResponsibility(data.data.enhanced_responsibilities);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -324,7 +329,7 @@ export const JobTemplateCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setPositionSummary(data.data.enhanced_position_summary);
+        setJobSummary(data.data.enhanced_position_summary);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -342,7 +347,7 @@ export const JobTemplateCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setBenefits(data.data.enhanced_benefits);
+        setBenefit(data.data.enhanced_benefits);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -364,6 +369,20 @@ export const JobTemplateCreate = () => {
                   Please fill in the information as needed, or use the existing
                   template.
                 </p>
+              </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    navigate("/job/jobTemplateList");
+                  }}
+                  variant="text"
+                  style={{
+                    color: "#008080",
+                    backgroundColor: "#EAF4F5",
+                    fontSize: 14,
+                  }}>
+                  Copy data from the template
+                </Button>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-8 py-5">
@@ -455,27 +474,44 @@ export const JobTemplateCreate = () => {
               {/* <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
                 Job Description
               </p> */}
-              <div className="grid grid-flow-row gap-2 mt-8">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Company Overview
-                  </p>
-                <div className="grid grid-cols-2 gap-2 py-5">
-                  <div>
-                    <textarea
-                      value={companyInfo}
-                      onChange={(e) => setCompanyInfo(e.target.value)}
-                      placeholder="type"
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
                       style={{
-                        borderWidth: 1,
-                        borderColor: "#D0D5DD",
-                        borderRadius: 8,
-                        padding: 5,
-                        width: 500
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Company Overview
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
                       }}
-                      rows={5}
-                    />
+                      onClick={getCompanyOverview}>
+                      Generate Company Overview
+                    </Button>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 py-5">
+
+                  <textarea
+                    value={companyInfo}
+                    onChange={(e) => setCompanyInfo(e.target.value)}
+                    placeholder="type"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                    rows={4}
+                  />
+                  {/* <div className="grid grid-cols-2 gap-2 py-5">
                     <div>
                       <TextField
                         value={bulletPoints}
@@ -491,49 +527,53 @@ export const JobTemplateCreate = () => {
                         }}
                       />
                     </div>
-                    <div>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        style={{
-                          color: "white",
-                          borderColor: "#008080",
-                          textTransform: "none",
-                          backgroundColor: "#008080"
-                        }}
-                        onClick={getCompanyOverview}
-                        >
-                        Generate Company Overview
-                      </Button>
-                    </div>
-                  </div>
+                  </div> */}
                 </div>
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Job Summary
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateJobSummary}
-                    >
-                    Generate Job Summary
-                  </Button>
+                      color: companyInfo ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                    {companyOverview}
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Job Summary
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateJobSummary}>
+                      Generate Job Summary
+                    </Button>
+                  </div>
 
                   <textarea
                     value={positionSummry}
-                    row={10}
                     placeholder="type"
+                    rows={4}
                     onChange={(e) => setPositionSummary(e.target.value)}
                     style={{
                       borderWidth: 1,
@@ -542,31 +582,51 @@ export const JobTemplateCreate = () => {
                       padding: 5,
                     }}
                   />
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                </div>
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Responsibilities
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateResponsibility}
-                    >
-                    Generate Responsibilities
-                  </Button>
+                      color: positionSummry ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                      {jobSummary}
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Responsibilities
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateResponsibility}>
+                      Generate Responsibilities
+                    </Button>
+                  </div>
 
                   <textarea
                     value={responsibilities}
-                    row={10}
+                    rows={4}
                     placeholder="type"
                     onChange={(e) => setResponsibilities(e.target.value)}
                     style={{
@@ -576,31 +636,51 @@ export const JobTemplateCreate = () => {
                       padding: 5,
                     }}
                   />
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+                </div>
+                <div className="py-2">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Benefits
+                    Recommended Practice
                   </p>
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <p
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
-                      textTransform: "none",
-                      backgroundColor: "#008080"
-                    }}
-                    onClick={generateBenefit}
-                    >
-                    Generate Benefits
-                  </Button>
+                      color: responsibilities ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                      {responsebility}
+                  </p>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Benefits
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={generateBenefit}>
+                      Generate Benefits
+                    </Button>
+                  </div>
 
                   <textarea
                     value={benefits}
-                    row={10}
+                    rows={4}
                     placeholder="type"
                     onChange={(e) => setBenefits(e.target.value)}
                     style={{
@@ -610,23 +690,77 @@ export const JobTemplateCreate = () => {
                       padding: 5,
                     }}
                   />
+                </div>
+                <div className="py-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Recommended Practice
+                  </p>
+                  <p
+                    style={{
+                      color: benefits ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                      {benefit}
+                  </p>
+                </div>
               </div>
-              <div className="grid grid-flow-row gap-2 mt-6">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Equal Employee Opportunity (EEO)
-                </p>
-                <textarea
-                  value={equalEmployeeOpportunity}
-                  onChange={(e) => setEqualEmployeeOpportunity(e.target.value)}
-                  placeholder="type"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "#D0D5DD",
-                    borderRadius: 8,
-                    padding: 5,
-                  }}
-                  rows={1.5}
-                />
+              <div className="grid grid-cols-2 gap-8 py-5">
+                <div className="grid grid-flow-row gap-2">
+                  <div className="gap-5 flex items-center justify-between">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}>
+                      Equal Employee Opportunity (EEO)
+                    </p>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "white",
+                        borderColor: "#008080",
+                        textTransform: "none",
+                        backgroundColor: "#008080",
+                      }}
+                      onClick={() => {}}>
+                      Generate EEO
+                    </Button>
+                  </div>
+                  <textarea
+                    value={equalEmployeeOpportunity}
+                    onChange={(e) =>
+                      setEqualEmployeeOpportunity(e.target.value)
+                    }
+                    rows={4}
+                    placeholder="type"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#D0D5DD",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  />
+                </div>
+                <div className="py-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Recommended Practice
+                  </p>
+                  <p
+                    style={{
+                      color: equalEmployeeOpportunity ? "#008080" : "#101828",
+                      fontSize: 16,
+                      fontStyle: "italic",
+                      marginTop: 10,
+                    }}>
+                      {eeo}
+                  </p>
+                </div>
               </div>
             </div>
             {/* Role Requirements and Preferences */}{" "}
@@ -644,7 +778,9 @@ export const JobTemplateCreate = () => {
                   disablePortal
                   options={yes_no.map((option) => option)}
                   value={specificIndustryExperience || null}
-                  onChange={(e, newvalue) => setSpecificIndustryExperience(newvalue)}
+                  onChange={(e, newvalue) =>
+                    setSpecificIndustryExperience(newvalue)
+                  }
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
@@ -755,7 +891,7 @@ export const JobTemplateCreate = () => {
                     disablePortal
                     options={options.map((option) => option.label)}
                     value={visa || null}
-                    onChange={(e, newvalue) => setVisa(newvalue)}
+                    onChange={(e, newvalue) => setVisa(newvalue.value)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -799,9 +935,7 @@ export const JobTemplateCreate = () => {
                     disablePortal
                     options={yes_no}
                     value={requireRegulatory || null}
-                    onChange={(e, newvalue) =>
-                      setRequireRegulatory(newvalue)
-                    }
+                    onChange={(e, newvalue) => setRequireRegulatory(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -981,27 +1115,26 @@ export const JobTemplateCreate = () => {
                       color: "white",
                       borderColor: "#008080",
                       textTransform: "none",
-                      backgroundColor: "#008080"
+                      backgroundColor: "#008080",
                     }}
-                    onClick={getJobDescription}
-                    >
+                    onClick={getJobDescription}>
                     Generate Job Description
                   </Button>
                 </div>
 
-                  <textarea
-                    value={jobDescription}
-                    row={10}
-                    placeholder="type"
-                    onChange={(e) => setJobDescription(e.target.value)}
-                    style={{
-                      borderWidth: 1,
-                      borderColor: "#D0D5DD",
-                      borderRadius: 8,
-                      padding: 5,
-                    }}
-                  />
-                </div>
+                <textarea
+                  value={jobDescription}
+                  row={10}
+                  placeholder="type"
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#D0D5DD",
+                    borderRadius: 8,
+                    padding: 5,
+                  }}
+                />
+              </div>
             </div>
             {/* button */}
             <div className="py-8 gap-8 flex justify-end">

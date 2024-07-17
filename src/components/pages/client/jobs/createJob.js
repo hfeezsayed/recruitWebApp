@@ -46,7 +46,7 @@ import Spinner from "../../../utils/spinner";
 import { FiEdit } from "react-icons/fi";
 
 export const CreateJob = () => {
-  const [userData, setUserData] = useState(createJobData);
+  const [userData, setUserData] = useState([]);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
@@ -64,7 +64,7 @@ export const CreateJob = () => {
   const jdOpen = Boolean(anchorjd);
   const [anchorLd, setAnchorLd] = useState();
   const ldOpen = Boolean(anchorLd);
-  const [jobCompletion, setJobCompletion] = useState(60);
+  const [jobCompletion, setJobCompletion] = useState(0);
   //const [anchorData, setAnchorData] = useState();
 
   const handleJd = (event) => {

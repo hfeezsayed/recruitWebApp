@@ -352,6 +352,11 @@ export const JobDetailCreate = () => {
     setSoftwares(newFormValues);
   };
 
+  const [jobSummary, setJobSummary] = useState("");
+  const [responsebility, setResponsibility] = useState("");
+  const [benefit, setBenefit] = useState("");
+  const [eeo, setEeo] = useState("");
+
   const getCompanyOverview = async () => {
     const title = jobTitle;
     const company_info = companyInfo;
@@ -366,7 +371,7 @@ export const JobDetailCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setCompanyInfo(data.data.enhanced_description);
+        setCompanyOverview(data.data.enhanced_description);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -383,7 +388,7 @@ export const JobDetailCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setResponsibilities(data.data.enhanced_responsibilities);
+        setResponsibility(data.data.enhanced_responsibilities);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -401,7 +406,7 @@ export const JobDetailCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setPositionSummary(data.data.enhanced_position_summary);
+        setJobSummary(data.data.enhanced_position_summary);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -418,7 +423,7 @@ export const JobDetailCreate = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setBenefits(data.data.enhanced_benefits);
+        setBenefit(data.data.enhanced_benefits);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -612,12 +617,7 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                    At Xen Recruiter, we adhere to a practice of continuous
-                    innovation in the recruitment industry. By leveraging
-                    cutting-edge technology and insightful data analysis, we
-                    ensure that our solutions not only streamline but also
-                    enhance the hiring process. Our commitment to excellence
-                    drives us to develop tailored strategies.
+                      {companyOverview}
                   </p>
                 </div>
               </div>
@@ -671,12 +671,7 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                    At Xen Recruiter, we adhere to a practice of continuous
-                    innovation in the recruitment industry. By leveraging
-                    cutting-edge technology and insightful data analysis, we
-                    ensure that our solutions not only streamline but also
-                    enhance the hiring process. Our commitment to excellence
-                    drives us to develop tailored strategies.
+                      {jobSummary}
                   </p>
                 </div>
               </div>
@@ -730,12 +725,7 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                    At Xen Recruiter, we adhere to a practice of continuous
-                    innovation in the recruitment industry. By leveraging
-                    cutting-edge technology and insightful data analysis, we
-                    ensure that our solutions not only streamline but also
-                    enhance the hiring process. Our commitment to excellence
-                    drives us to develop tailored strategies.
+                      {responsebility}
                   </p>
                 </div>
               </div>
@@ -789,12 +779,7 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                    At Xen Recruiter, we adhere to a practice of continuous
-                    innovation in the recruitment industry. By leveraging
-                    cutting-edge technology and insightful data analysis, we
-                    ensure that our solutions not only streamline but also
-                    enhance the hiring process. Our commitment to excellence
-                    drives us to develop tailored strategies.
+                      {benefit}
                   </p>
                 </div>
               </div>
@@ -849,12 +834,7 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                    At Xen Recruiter, we adhere to a practice of continuous
-                    innovation in the recruitment industry. By leveraging
-                    cutting-edge technology and insightful data analysis, we
-                    ensure that our solutions not only streamline but also
-                    enhance the hiring process. Our commitment to excellence
-                    drives us to develop tailored strategies.
+                      {eeo}
                   </p>
                 </div>
               </div>
