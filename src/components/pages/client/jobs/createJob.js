@@ -422,7 +422,7 @@ export const CreateJob = () => {
                     </Box>
                   </div>
                   <div className="w-64">
-                    <Button
+                    <p
                       variant="text"
                       style={{
                         color: "#5E8EBD",
@@ -436,13 +436,13 @@ export const CreateJob = () => {
                       // }
                     >
                       Access Job Description
-                    </Button>
-                    <IconButton
-                      onClick={(e) => {
-                        handleJd(e);
-                      }}>
-                      <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                    </IconButton>
+                      <IconButton
+                        onClick={(e) => {
+                          handleJd(e);
+                        }}>
+                        <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                      </IconButton>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1137,7 +1137,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.timeStemp}
+                                          {row.timeStamp}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1222,7 +1222,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {checkStatus(row.dtp_status)}
+                                          {checkStatus(row.dtpStatus)}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1232,10 +1232,10 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.dtp_status.includes(
+                                          {row.dtpStatus.includes(
                                             "Approved"
                                           ) ||
-                                          row.dtp_status.includes("Reject") ? (
+                                          row.dtpStatus.includes("Reject") ? (
                                             <Button
                                               size="small"
                                               variant="text"
@@ -1450,7 +1450,7 @@ export const CreateJob = () => {
                     fontSize: 14,
                     fontWeight: 500,
                   }}>
-                  Retrieve Standard Job Description
+                  Job Description (Standard)
                 </p>
               </div>
             </MenuItem>
@@ -1463,7 +1463,7 @@ export const CreateJob = () => {
                     fontSize: 14,
                     fontWeight: 500,
                   }}>
-                  Retrieve Job Description
+                  Job Description (Recruiter)
                 </p>
               </div>
             </MenuItem>
@@ -1476,7 +1476,7 @@ export const CreateJob = () => {
                     fontSize: 14,
                     fontWeight: 500,
                   }}>
-                  Retrieve Job Identification
+                  Job Identification
                 </p>
               </div>
             </MenuItem>

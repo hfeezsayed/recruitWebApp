@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Autocomplete, Button, FormControl, InputLabel, Select, TableSortLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -61,7 +61,7 @@ export const AllJobs = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(AllJobsData);
+  const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState();
@@ -71,7 +71,9 @@ export const AllJobs = () => {
   const [showClonePopup, setShowClonePopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [anchorjd, setAnchorjd] = useState();
+  const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
+  const [filter, setFilter] = useState(false);
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
@@ -197,6 +199,26 @@ export const AllJobs = () => {
     });
   };
 
+  const handleFilter = (value) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(value);
+    setFilterValue(value.target.value);
+    setLoading(true);
+    setFilter(true);
+    axiosInstance
+      .get(`/getFilterJobs?clientId=${user.userId}&filterValue=${value.target.value}`)
+      .then((response) => {
+        console.log(response.data);
+        setFilterData(response?.data.data);
+        setLoading(false);
+        //setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        setLoading(false);
+        console.log(e);
+      });
+  }
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
@@ -204,7 +226,7 @@ export const AllJobs = () => {
       .get(`/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((response) => {
         console.log(response.data);
-        setData(response?.data.data);
+        //setData(response?.data.data);
         setFilterData(response?.data.data);
         setLoading(false);
         //setPage(data?.pageNo || 1);
@@ -229,6 +251,35 @@ export const AllJobs = () => {
 
   const [hovered, setHovered] = useState(false);
 
+  const filterOpts = [
+    { label: "Closed", value: "Closed" },
+    { label: "Active", value: "Active" },
+    { label: "Past 90 Days", value: "Past 90 Days" },
+    { label: "Past 365 Days", value: "Past 365 Days" },
+    { label: "All", value: "All" },
+  ];
+
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('name');
+  
+    const handleRequestSort = (property) => {
+      const isAsc = orderBy === property && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(property);
+    };
+  
+    const sortComparator = (a, b, orderBy) => {
+      if (b[orderBy] < a[orderBy]) {
+        return order === 'asc' ? -1 : 1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return order === 'asc' ? 1 : -1;
+      }
+      return 0;
+    };
+  
+    const sortedRows = filterData.sort((a, b) => sortComparator(a, b, orderBy));
+
   return (
     <div>
       <div className="flex">
@@ -239,7 +290,7 @@ export const AllJobs = () => {
             <Spinner />
           ) : (
             <div>
-              {filterData.length === 0 ? (
+              {(filterData.length === 0 && filter === false) ? (
                 <div className="p-8 h-full">
                   <div>
                     <p
@@ -358,21 +409,21 @@ export const AllJobs = () => {
                       />
                     </div>
                     <div className="flex gap-4">
-                      <Button
-                        variant="outlined"
-                        style={{
-                          borderColor: "#D0D5DD",
-                          color: "#252525",
-                          textTransform: "none",
-                          fontWeight: 500,
-                          borderRadius: 8,
-                        }}
-                        onClick={(e) => {
-                          handleClickFilter(e);
-                        }}
-                        startIcon={<IoFilterSharp />}>
-                        Filter
-                      </Button>
+                    <FormControl fullWidth>
+                      <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
+                      <Select
+                        size="medium"
+                        labelId="dropdown-label"
+                        value={filterValue}
+                        onChange={handleFilter}
+                      >
+                        <MenuItem value="Active">Active</MenuItem>
+                        <MenuItem value="Closed">Closed</MenuItem>
+                        <MenuItem value="90Days">Past 90 Days</MenuItem>
+                        <MenuItem value="365Days">Past 365 Days</MenuItem>
+                        <MenuItem value="All">All</MenuItem>
+                      </Select>
+                    </FormControl>
                       <Button
                         onClick={() =>
                           navigate("/job/createJob", { state: { new: true } })
@@ -632,7 +683,13 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Job Name
+                                      <TableSortLabel
+                                          active={orderBy === 'jobName'}
+                                          direction={orderBy === 'jobName' ? order : 'asc'}
+                                          onClick={() => handleRequestSort('jobName')}
+                                        >
+                                          Job Name
+                                        </TableSortLabel>
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -719,7 +776,7 @@ export const AllJobs = () => {
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                  {filterData?.map((row, index) => {
+                                  {sortedRows?.map((row, index) => {
                                     return (
                                       <TableRow key={index}>
                                         <TableCell
@@ -1034,7 +1091,7 @@ export const AllJobs = () => {
                               fontSize: 14,
                               fontWeight: 500,
                             }}>
-                            Retrieve Standard Job Description
+                            Job Description (Standard)
                           </p>
                         </div>
                       </MenuItem>
@@ -1047,7 +1104,7 @@ export const AllJobs = () => {
                               fontSize: 14,
                               fontWeight: 500,
                             }}>
-                            Retrieve Job Description
+                            Job Description (Recruiter)
                           </p>
                         </div>
                       </MenuItem>
@@ -1060,7 +1117,7 @@ export const AllJobs = () => {
                               fontSize: 14,
                               fontWeight: 500,
                             }}>
-                            Retrieve Job Identification
+                            Job Identification
                           </p>
                         </div>
                       </MenuItem>

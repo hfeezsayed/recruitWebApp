@@ -11,6 +11,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import logoNew from "../../assets/images/xenrecruit.png";
 import { DashboardSvg } from "../../assets/icon/dashboardsvg";
 import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
@@ -98,12 +99,7 @@ export const ClientSideNav = () => {
       </div>
       <Drawer variant="permanent" open={open} className="z-0">
         <DrawerHeader sx={{ justifyContent: "center" }}>
-          <img src={logo} alt="logo" />
-          {open && (
-            <p style={{ color: "#000000", fontSize: 25, marginLeft: 5 }}>
-              Xenhire
-            </p>
-          )}
+          <img src={logoNew} alt="logo" style={{ width: 180, marginTop: '20px' }} />
         </DrawerHeader>
         <div>
           <ListItem disablePadding sx={{ display: "block" }}>
