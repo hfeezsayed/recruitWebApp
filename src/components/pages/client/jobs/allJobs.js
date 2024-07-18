@@ -1,11 +1,14 @@
-import React from "react";
-import { Autocomplete, Button, FormControl, InputLabel, Select, TableSortLabel } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Autocomplete,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  TableSortLabel,
+} from "@mui/material";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
-import { ClientSideNav } from "../../../widgets/clientSideNav";
-import { TopNav } from "../../../widgets/topNav";
-import { Footer } from "../../../widgets/footer";
-import NoDataFound from "../../../../assets/images/noData Found.png";
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -30,10 +33,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
-import { IoFilterSharp, IoMenu } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { GrLocation } from "react-icons/gr";
-import { IoTimeOutline } from "react-icons/io5";
+import { IoTimeOutline, IoMenu } from "react-icons/io5";
 import { TbEdit } from "react-icons/tb";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -42,30 +44,36 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { FaLink } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { GoPlus } from "react-icons/go";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { HiDotsVertical } from "react-icons/hi";
+import { BsBagDash, BsThreeDots } from "react-icons/bs";
+import { HiDotsVertical, HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { AllJobsData } from "../../../dummy/Data";
-import { useEffect } from "react";
+import { RiDeleteBin5Line, RiDeleteBin6Line } from "react-icons/ri";
+import { AllJobsData, allJobsKanBanData } from "../../../dummy/Data";
 import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
-import {
-  IoIosCloseCircleOutline,
-  IoMdRemoveCircleOutline,
-} from "react-icons/io";
-import { FaLink } from "react-icons/fa";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
+import { TopNav } from "../../../widgets/topNav";
+import { Footer } from "../../../widgets/footer";
+import NoDataFound from "../../../../assets/images/noData Found.png";
+import { WorkflowOutlinesvg } from "../../../../assets/icon/workflowOutlinesvg";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(AllJobsData);
   const [filterData, setFilterData] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
+  const [anchorkb, setAnchorkb] = useState();
+  const kbOpen = Boolean(anchorkb);
   const [anchorData, setAnchorData] = useState();
   const [loading, setLoading] = useState(true);
   const [showClonePopup, setShowClonePopup] = useState(false);
@@ -74,6 +82,7 @@ export const AllJobs = () => {
   const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
   const [filter, setFilter] = useState(false);
+  const [tasks, setTasks] = useState(allJobsKanBanData);
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
@@ -92,11 +101,14 @@ export const AllJobs = () => {
   const handleJd = (event) => {
     setAnchorjd(event.currentTarget);
   };
-
+  const handleKd = (event) => {
+    setAnchorkb(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
     setAnchorjd(null);
     setAnchorData(null);
+    setAnchorkb(null);
   };
 
   const closePopup = () => {
@@ -188,7 +200,6 @@ export const AllJobs = () => {
   };
 
   const handleJobDescription = () => {
-    
     navigate("/job/outputofJobDescription", {
       state: { jobId: anchorData.id, teamAccess: true },
     });
@@ -207,7 +218,9 @@ export const AllJobs = () => {
     setLoading(true);
     setFilter(true);
     axiosInstance
-      .get(`/getFilterJobs?clientId=${user.userId}&filterValue=${value.target.value}`)
+      .get(
+        `/getFilterJobs?clientId=${user.userId}&filterValue=${value.target.value}`
+      )
       .then((response) => {
         console.log(response.data);
         setFilterData(response?.data.data);
@@ -218,7 +231,7 @@ export const AllJobs = () => {
         setLoading(false);
         console.log(e);
       });
-  }
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -260,26 +273,63 @@ export const AllJobs = () => {
     { label: "All", value: "All" },
   ];
 
-    const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('name');
-  
-    const handleRequestSort = (property) => {
-      const isAsc = orderBy === property && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(property);
-    };
-  
-    const sortComparator = (a, b, orderBy) => {
-      if (b[orderBy] < a[orderBy]) {
-        return order === 'asc' ? -1 : 1;
-      }
-      if (b[orderBy] > a[orderBy]) {
-        return order === 'asc' ? 1 : -1;
-      }
-      return 0;
-    };
-  
-    const sortedRows = filterData.sort((a, b) => sortComparator(a, b, orderBy));
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const sortComparator = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return order === "asc" ? -1 : 1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return order === "asc" ? 1 : -1;
+    }
+    return 0;
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    if (source.droppableId === destination.droppableId) {
+      const items = Array.from(tasks[source.droppableId].items);
+      const [reorderedItem] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, reorderedItem);
+
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: {
+          ...prev[source.droppableId],
+          items,
+        },
+      }));
+    } else {
+      const sourceItems = Array.from(tasks[source.droppableId].items);
+      const [movedItem] = sourceItems.splice(source.index, 1);
+      const destinationItems = Array.from(tasks[destination.droppableId].items);
+      destinationItems.splice(destination.index, 0, movedItem);
+
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: {
+          ...prev[source.droppableId],
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...prev[destination.droppableId],
+          items: destinationItems,
+        },
+      }));
+    }
+  };
+
+  const sortedRows = filterData.sort((a, b) => sortComparator(a, b, orderBy));
 
   return (
     <div>
@@ -291,7 +341,7 @@ export const AllJobs = () => {
             <Spinner />
           ) : (
             <div>
-              {(filterData.length === 0 && filter === false) ? (
+              {filterData.length === 0 && filter === false ? (
                 <div className="p-8 h-full">
                   <div>
                     <p
@@ -371,6 +421,28 @@ export const AllJobs = () => {
                         style={{
                           backgroundColor: "#F8F9FA",
                           color:
+                            currentView === "WorkFlow"
+                              ? "#008080"
+                              : "#47546770",
+                          borderColor: "#D0D5DD",
+                          textTransform: "none",
+                        }}
+                        startIcon={
+                          <WorkflowOutlinesvg
+                            COLOR={
+                              currentView === "WorkFlow"
+                                ? "#008080"
+                                : "#47546770"
+                            }
+                          />
+                        }
+                        onClick={() => setCurrentView("WorkFlow")}>
+                        Workflow View
+                      </Button>
+                      <Button
+                        style={{
+                          backgroundColor: "#F8F9FA",
+                          color:
                             currentView === "Card" ? "#008080" : "#47546770",
                           borderColor: "#D0D5DD",
                           textTransform: "none",
@@ -392,7 +464,7 @@ export const AllJobs = () => {
                         List View
                       </Button>
                     </ButtonGroup>
-                    <div >
+                    <div>
                       <TextField
                         fullWidth
                         size="small"
@@ -406,26 +478,28 @@ export const AllJobs = () => {
                             </InputAdornment>
                           ),
                         }}
-                        sx={{ minWidth: 350 }}
+                        sx={{ minWidth: 300 }}
                       />
                     </div>
+
                     <div className="flex gap-4">
-                    <FormControl >
-                      <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
-                      <Select
-                        size="medium"
-                        labelId="dropdown-label"
-                        value={filterValue}
-                        onChange={handleFilter}
-                      >
-                        <MenuItem value="Active">Active</MenuItem>
-                        <MenuItem value="Closed">Closed</MenuItem>
-                        <MenuItem value="90Days">Past 90 Days</MenuItem>
-                        <MenuItem value="365Days">Past 365 Days</MenuItem>
-                        <MenuItem value="All">All</MenuItem>
-                      </Select>
-                    </FormControl>
+                      <FormControl fullWidth sx={{ minWidth: 130 }}>
+                        <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
+                        <Select
+                          size="small"
+                          label="dropdown-label"
+                          value={filterValue}
+                          onChange={handleFilter}>
+                          <MenuItem value="Active">Active</MenuItem>
+                          <MenuItem value="Closed">Closed</MenuItem>
+                          <MenuItem value="90Days">Past 90 Days</MenuItem>
+                          <MenuItem value="365Days">Past 365 Days</MenuItem>
+                          <MenuItem value="All">All</MenuItem>
+                        </Select>
+                      </FormControl>
                       <Button
+                        size="small"
+                        fullWidth
                         onClick={() =>
                           navigate("/job/createJob", { state: { new: true } })
                         }
@@ -449,6 +523,210 @@ export const AllJobs = () => {
                       }}>
                       All Jobs
                     </p>
+
+                    {currentView === "WorkFlow" && (
+                      <div>
+                        <DragDropContext onDragEnd={onDragEnd}>
+                          <div
+                            style={{
+                              display: "flex",
+                              width: "100%",
+                              justifyContent: "space-between",
+                            }}>
+                            {Object.entries(tasks).map(([key, column]) => (
+                              <Droppable droppableId={key} key={key}>
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                    style={{
+                                      margin: "0 8px",
+                                      padding: "8px",
+                                      minWidth: "260px",
+                                      maxWidth: "360px",
+                                      backgroundColor: snapshot.isDraggingOver
+                                        ? "lightblue"
+                                        : "white",
+                                    }}>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        borderBottomWidth: 2,
+                                        paddingBottom: 2,
+                                        borderColor: "#00808070",
+                                      }}>
+                                      <div className="flex gap-2">
+                                        <p
+                                          style={{
+                                            color: "#1E293B",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                          }}>
+                                          {column?.name}
+                                        </p>
+                                        <div className="flex items-center justify-center h-6 w-8 border border-[#E2E8F0] bg-[#FFB58020]">
+                                          <p
+                                            style={{
+                                              color: "#94A3B8",
+                                              fontSize: 14,
+                                              fontWeight: 500,
+                                            }}>
+                                            {column?.items?.length}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center">
+                                        <IconButton>
+                                          <GoPlus
+                                            style={{
+                                              color: "#94A3B8",
+                                              fontSize: 16,
+                                            }}
+                                          />
+                                        </IconButton>
+                                        <IconButton>
+                                          <BsThreeDots
+                                            style={{
+                                              color: "#94A3B8",
+                                              fontSize: 16,
+                                            }}
+                                          />
+                                        </IconButton>
+                                      </div>
+                                    </div>
+                                    {column.items.map((item, index) => (
+                                      <Draggable
+                                        key={item.id}
+                                        draggableId={item.id}
+                                        index={index}>
+                                        {(provided, snapshot) => (
+                                          <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            style={{
+                                              borderWidth: 1,
+                                              borderColor: "#E2E8F0",
+                                              backgroundColor:
+                                                snapshot.isDragging
+                                                  ? "#CFC8C980"
+                                                  : "#ffffff",
+
+                                              borderRadius: 8,
+                                              marginTop: 10,
+                                              ...provided.draggableProps.style,
+                                            }}>
+                                            <div className="flex justify-between items-center p-2">
+                                              <div className="flex gap-2 items-center">
+                                                <img
+                                                  src="https://picsum.photos/200"
+                                                  alt="person"
+                                                  style={{
+                                                    width: 32,
+                                                    height: 32,
+                                                    borderRadius: "100%",
+                                                  }}
+                                                />
+                                                <div>
+                                                  <p
+                                                    style={{
+                                                      color: "#1E293B",
+                                                      fontSize: 16,
+                                                      fontWeight: 600,
+                                                    }}>
+                                                    {item?.name}
+                                                  </p>
+                                                  <p
+                                                    style={{
+                                                      color: "#252C32",
+                                                      fontSize: 10,
+                                                    }}>
+                                                    {item?.role}
+                                                  </p>
+                                                </div>
+                                              </div>
+                                              <div className="w-6 h-6 flex justify-center items-center border border-[#DDDDDD] rounded-md">
+                                                <IconButton onClick={handleKd}>
+                                                  <BsThreeDots
+                                                    style={{
+                                                      color: "#6F6F6F",
+                                                      fontSize: 16,
+                                                    }}
+                                                  />
+                                                </IconButton>
+                                              </div>
+                                            </div>
+
+                                            <div className="p-2 ">
+                                              <p
+                                                style={{
+                                                  color: "#787486",
+                                                  fontSize: 10,
+                                                }}>
+                                                Created Date: {item?.date}
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#787486",
+                                                  fontSize: 10,
+                                                }}>
+                                                Job Type: {item?.jobType}
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#787486",
+                                                  fontSize: 10,
+                                                }}>
+                                                Application Sub-status:{" "}
+                                                {item?.sub_Status}
+                                              </p>
+                                            </div>
+                                            <div className="mx-2 border-b border-[#E2E8F0]" />
+
+                                            <div className="flex justify-between p-2">
+                                              <p
+                                                style={{
+                                                  color: "#5FAEDA",
+                                                  fontSize: 10,
+                                                }}>
+                                                Total: {item?.jobTotal}
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#800080",
+                                                  fontSize: 10,
+                                                }}>
+                                                New: {item?.jobNew}
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#FFA500",
+                                                  fontSize: 10,
+                                                }}>
+                                                Active: {item?.jobActive}
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#7FB27F",
+                                                  fontSize: 10,
+                                                }}>
+                                                New: {item?.jobNew}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                  </div>
+                                )}
+                              </Droppable>
+                            ))}
+                          </div>
+                        </DragDropContext>
+                      </div>
+                    )}
 
                     {currentView === "Card" && (
                       <div className="grid grid-cols-3 gap-5 py-3">
@@ -586,7 +864,7 @@ export const AllJobs = () => {
                                           {row?.jobProgress} %
                                         </p>
                                       </div>
-                                      <Box sx={{ width: "70%" }}>
+                                      <Box sx={{ width: "100%" }}>
                                         <BorderLinearProgress
                                           variant="determinate"
                                           value={row?.jobProgress || 0}
@@ -633,7 +911,7 @@ export const AllJobs = () => {
                                           {row?.jobProgress} %
                                         </p>
                                       </div>
-                                      <Box sx={{ width: "70%" }}>
+                                      <Box sx={{ width: "100%" }}>
                                         <BorderLinearProgress
                                           variant="determinate"
                                           value={row?.jobProgress || 100}
@@ -685,12 +963,15 @@ export const AllJobs = () => {
                                         borderColor: "#D0D5DD50",
                                       }}>
                                       <TableSortLabel
-                                          active={orderBy === 'jobName'}
-                                          direction={orderBy === 'jobName' ? order : 'asc'}
-                                          onClick={() => handleRequestSort('jobName')}
-                                        >
-                                          Job Name
-                                        </TableSortLabel>
+                                        active={orderBy === "jobName"}
+                                        direction={
+                                          orderBy === "jobName" ? order : "asc"
+                                        }
+                                        onClick={() =>
+                                          handleRequestSort("jobName")
+                                        }>
+                                        Job Name
+                                      </TableSortLabel>
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -1119,6 +1400,84 @@ export const AllJobs = () => {
                               fontWeight: 500,
                             }}>
                             Job Identification
+                          </p>
+                        </div>
+                      </MenuItem>
+                    </Menu>
+
+                    {/* kanban */}
+                    <Menu
+                      MenuListProps={{
+                        "aria-labelledby": "fade-button",
+                      }}
+                      anchorEl={anchorkb}
+                      open={kbOpen}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      TransitionComponent={Fade}>
+                      <MenuItem onClick={() => {}}>
+                        <div className="flex gap-2 items-center">
+                          <BsBagDash
+                            style={{ color: "#FFA412", fontSize: 16 }}
+                          />
+                          <p
+                            style={{
+                              color: "#FFA412",
+                              fontSize: 12,
+                              fontWeight: 500,
+                            }}>
+                            Job
+                          </p>
+                        </div>
+                      </MenuItem>
+                      <MenuItem onClick={() => {}}>
+                        <div className="flex gap-2 items-center">
+                          <FiEdit style={{ color: "#5FAEDA", fontSize: 16 }} />
+                          <p
+                            style={{
+                              color: "#5FAEDA",
+                              fontSize: 12,
+                              fontWeight: 500,
+                            }}>
+                            Edit
+                          </p>
+                        </div>
+                      </MenuItem>
+                      <MenuItem onClick={() => {}}>
+                        <div className="flex gap-2 items-center">
+                          <RiDeleteBin5Line
+                            style={{ color: "#E05880", fontSize: 16 }}
+                          />
+                          <p
+                            style={{
+                              color: "#E05880",
+                              fontSize: 12,
+                              fontWeight: 500,
+                            }}>
+                            Delete
+                          </p>
+                        </div>
+                      </MenuItem>
+
+                      <MenuItem onClick={() => {}}>
+                        <div className="flex gap-2 items-center">
+                          <HiOutlineDocumentDuplicate
+                            style={{ color: "#58A20F", fontSize: 16 }}
+                          />
+                          <p
+                            style={{
+                              color: "#58A20F",
+                              fontSize: 12,
+                              fontWeight: 500,
+                            }}>
+                            Clone
                           </p>
                         </div>
                       </MenuItem>

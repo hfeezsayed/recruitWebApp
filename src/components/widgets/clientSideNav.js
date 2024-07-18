@@ -7,6 +7,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Collapse } from "@mui/material";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { LuSettings } from "react-icons/lu";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -99,7 +101,11 @@ export const ClientSideNav = () => {
       </div>
       <Drawer variant="permanent" open={open} className="z-0">
         <DrawerHeader sx={{ justifyContent: "center" }}>
-          <img src={logoNew} alt="logo" style={{ width: 180, marginTop: '20px' }} />
+          <img
+            src={logoNew}
+            alt="logo"
+            style={{ width: 180, marginTop: "20px" }}
+          />
         </DrawerHeader>
         <div>
           <ListItem disablePadding sx={{ display: "block" }}>
@@ -119,7 +125,7 @@ export const ClientSideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/profile");
+                navigate("/dashboard");
               }}>
               <ListItemIcon
                 sx={{
@@ -404,6 +410,93 @@ export const ClientSideNav = () => {
                 primary={"Candidates"}
                 primaryTypographyProps={{
                   color: currentState === "/candidates" ? "#ffffff" : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor:
+                  currentState === "/externalHelp" ? "#008080" : "#ffffff",
+                color: currentState === "/externalHelp" ? "#ffffff" : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                navigate("/externalHelp");
+              }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}>
+                <AiOutlineQuestionCircle
+                  style={{
+                    color:
+                      currentState === "/externalHelp" ? "#ffffff" : "#475467",
+                    fontSize: 22,
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"External Staffing Service"}
+                primaryTypographyProps={{
+                  color:
+                    currentState === "/externalHelp" ? "#ffffff" : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor: currentState === "/settings" ? "#008080" : "#ffffff",
+                color: currentState === "/settings" ? "#ffffff" : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                navigate("/settings");
+              }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}>
+                <LuSettings
+                  style={{
+                    color: currentState === "/settings" ? "#ffffff" : "#475467",
+                    fontSize: 22,
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Settings"}
+                primaryTypographyProps={{
+                  color: currentState === "/settings" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}

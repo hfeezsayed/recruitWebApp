@@ -2248,13 +2248,592 @@ export const candidatePreferenceFormData = {
 };
 
 export const ScreeningQuestionsData = [
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
-  "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  {
+    id: 1,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 2,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 3,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 4,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 5,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 6,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 7,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 8,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+  {
+    id: 9,
+    question:
+      "Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget.",
+  },
+];
+
+export const kanvanTaskData = {
+  initiated: {
+    name: "Initiated",
+    items: [
+      {
+        id: "task-1",
+        dtp: "INITIATED",
+        jonId: 100,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+      {
+        id: "task-2",
+        dtp: "INITIATED",
+        jonId: 101,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+    ],
+  },
+  inProgress: {
+    name: "In Progress",
+    items: [
+      {
+        id: "task-3",
+        dtp: "IN PROGRESS",
+        jonId: 152,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+      {
+        id: "task-4",
+        dtp: "IN PROGRESS",
+        jonId: 158,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+    ],
+  },
+  approved: {
+    name: "Approved",
+    items: [
+      {
+        id: "task-5",
+        dtp: "APPROVED",
+        jonId: 168,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+      {
+        id: "task-6",
+        dtp: "APPROVED",
+        jonId: 172,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+    ],
+  },
+  rejected: {
+    name: "Rejected",
+    items: [
+      {
+        id: "task-7",
+        dtp: "REJECTED",
+        jonId: 174,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+      {
+        id: "task-8",
+        dtp: "REJECTED",
+        jonId: 132,
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        document: "Resume",
+        application_Status: 70,
+        profile_Status: 10,
+      },
+    ],
+  },
+};
+
+export const allJobsKanBanData = {
+  Requirement: {
+    name: "New Requirement",
+    items: [
+      {
+        id: "task-1",
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+      {
+        id: "task-2",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+    ],
+  },
+  Sourcing: {
+    name: "Sourcing Candidates",
+    items: [
+      {
+        id: "task-3",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+      {
+        id: "task-4",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+    ],
+  },
+  Screening: {
+    name: "Screening & Evaluation",
+    items: [
+      {
+        id: "task-5",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+      {
+        id: "task-6",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+    ],
+  },
+  Interviewing: {
+    name: "Interviewing",
+    items: [
+      {
+        id: "task-7",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+      {
+        id: "task-8",
+
+        name: "Anna Mathew",
+        role: "Senior Backend Developer",
+        timeStamp: "Jan 25, 2024",
+        sub_Status: "Phone call",
+        date: "14 April, 24",
+        jobType: "Part-time",
+        jobTotal: 50,
+        jobNew: 5,
+        jobActive: 7,
+      },
+    ],
+  },
+};
+
+export const setSourcingHelpListData = [
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Pending",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Opened",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Closed",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Pending",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Closed",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Opened",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Closed",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Opened",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+  {
+    jobId: 101,
+    jobName: "Software Engineer",
+    department: "Engineering",
+    status: "Closed",
+    location: "Remote",
+    postedDate: "2024-07-01",
+    declineDate: "2024-09-12",
+  },
+];
+
+export const jobOverviewData = {
+  jobDetails: {
+    title: "Senior Software Engineer",
+    family: "Software Development",
+    code: "SSE21324",
+    status: "interview",
+    department: "Engneering",
+    date: "25 jan, 2027",
+    location: "New York",
+  },
+  candidateDetails: {
+    id: "CAN78",
+    name: "Leadership Skills Evaluation",
+    email: "arpitamathewsharma.09@gmail.com",
+    no: 9849656871,
+    location: "New York",
+    experiance: "8 years",
+    education: "B.sc computer",
+    skills: ["java", "c", "js", "python"],
+    status: "interview",
+    date: "25 jan, 2027",
+  },
+  candidateEvaluationForm: {
+    date: "25 jan, 2027",
+    recomndation: true,
+    recomndationWhy:
+      "John has demonstrated a strong understanding of the key responsibilities required for the role and has shown a high level of professionalism throughout the interview process. His past experience aligns well with our needs, and his enthusiasm for the position is evident.",
+    experience: true,
+    experienceWhy:
+      "John has over five years of experience in project management, specifically in the tech industry, which matches the requirements of the role. He has successfully led multiple teams and delivered projects on time and within budget.",
+  },
+  overallScoring: [
+    {
+      criateria: "Presentation Skills",
+      rate: 4,
+      comment: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Relevant Skill Set",
+      rate: 5,
+      comment:
+        "Highly relevant to the job, including proficiency in agile methodologies",
+    },
+    {
+      criateria: "Professionalism",
+      rate: 4,
+      comment:
+        "Maintained a professional demeanour throughout the interview process",
+    },
+    {
+      criateria: "Motivation",
+      rate: 5,
+      comment: "Highly motivated but should provide more specific examples",
+    },
+    {
+      criateria: "Communication Skills",
+      rate: 5,
+      comment:
+        "Capable communicator, with potential to simplify technical jargon",
+    },
+    {
+      criateria: "Flexibility",
+      rate: 4,
+      comment: "Showcased strong adaptability by managing changes in project",
+    },
+    {
+      criateria: "Culture Fit",
+      rate: 4,
+      comment:
+        "John’s values and working style align well with our company culture",
+    },
+  ],
+  interview: {
+    scheduledBy: " Nilesh garje",
+    mode: "Online",
+    date: "July 1, 2024",
+    link: "https://www.zoom.com/meetingchdijiso",
+  },
+  overallReview: [],
+  notes: [],
+  attechments: [
+    {
+      name: "Resume_JaneDoe.pdf",
+      fileType: "PDF",
+      date: "July 5, 2024",
+      uploadBy: "Jane Doe",
+      description: "Candidate Resume",
+    },
+    {
+      name: "Resume_JaneDoe.pdf",
+      fileType: "PDF",
+      date: "July 5, 2024",
+      uploadBy: "Jane Doe",
+      description: "Candidate Resume",
+    },
+    {
+      name: "Resume_JaneDoe.pdf",
+      fileType: "PDF",
+      date: "July 5, 2024",
+      uploadBy: "Jane Doe",
+      description: "Candidate Resume",
+    },
+    {
+      name: "Resume_JaneDoe.pdf",
+      fileType: "PDF",
+      date: "July 5, 2024",
+      uploadBy: "Jane Doe",
+      description: "Candidate Resume",
+    },
+    {
+      name: "Resume_JaneDoe.pdf",
+      fileType: "PDF",
+      date: "July 5, 2024",
+      uploadBy: "Jane Doe",
+      description: "Candidate Resume",
+    },
+  ],
+};
+
+export const jobScreeningQuestionData = {
+  date: "Jan 10, 2024",
+  answersList: [
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+    {
+      questino: "Why are you interested in this role?",
+      ans: "I am passionate about software development and have been following your company's innovative projects.",
+    },
+  ],
+};
+
+export const jobAssessmentsResultsData = [
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 85,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 15,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 85,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 85,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 15,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
+  {
+    date: "Jan 10, 2024",
+    title: "Technical Skills Test",
+    score: 85,
+    comment:
+      "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
+  },
 ];

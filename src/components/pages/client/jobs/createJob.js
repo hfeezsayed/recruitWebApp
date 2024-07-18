@@ -19,7 +19,6 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -49,6 +48,7 @@ import {
   HiOutlineDocumentDuplicate,
 } from "react-icons/hi2";
 import { MdOutlineWatchLater, MdOutlineRemoveRedEye } from "react-icons/md";
+import { GoPlus } from "react-icons/go";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { FaArrowRight } from "react-icons/fa6";
 import { Footer } from "../../../widgets/footer";
@@ -58,10 +58,10 @@ import {
   candidateDetailsData,
   candistaeDetailsDataNew,
   createJobData,
+  kanvanTaskData,
 } from "../../../dummy/Data";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import Spinner from "../../../utils/spinner";
-import { GoPlus } from "react-icons/go";
 
 export const CreateJob = () => {
   const [userData, setUserData] = useState(createJobData);
@@ -97,132 +97,7 @@ export const CreateJob = () => {
   const [onboarding, setOnboarding] = useState(false);
   const [serviceStaffing, setServiceStaffing] = useState(false);
 
-  const [tasks, setTasks] = useState({
-    initiated: {
-      name: "Initiated",
-      items: [
-        {
-          id: "task-1",
-          dtp: "INITIATED",
-          jonId: 100,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-        {
-          id: "task-2",
-          dtp: "INITIATED",
-          jonId: 101,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-      ],
-    },
-    inProgress: {
-      name: "In Progress",
-      items: [
-        {
-          id: "task-3",
-          dtp: "IN PROGRESS",
-          jonId: 152,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-        {
-          id: "task-4",
-          dtp: "IN PROGRESS",
-          jonId: 158,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-      ],
-    },
-    approved: {
-      name: "Approved",
-      items: [
-        {
-          id: "task-5",
-          dtp: "APPROVED",
-          jonId: 168,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-        {
-          id: "task-6",
-          dtp: "APPROVED",
-          jonId: 172,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-      ],
-    },
-    rejected: {
-      name: "Rejected",
-      items: [
-        {
-          id: "task-7",
-          dtp: "REJECTED",
-          jonId: 174,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-        {
-          id: "task-8",
-          dtp: "REJECTED",
-          jonId: 132,
-          name: "Anna Mathew",
-          role: "Senior Backend Developer",
-          timeStamp: "Jan 25, 2024",
-          sub_Status: "Phone call",
-          date: "14 April, 24",
-          document: "Resume",
-          application_Status: 70,
-          profile_Status: 10,
-        },
-      ],
-    },
-  });
+  const [tasks, setTasks] = useState(kanvanTaskData);
 
   const handleJd = (event) => {
     setAnchorjd(event.currentTarget);
@@ -345,30 +220,30 @@ export const CreateJob = () => {
   const handleScreeningQuestions = (value) => {
     setScreeningQuestions(value);
     axiosInstance
-    .get(
-      `/updateScreeningQuestion?clientId=${userData.clientId}&jobId=${userData.id}&screening=${value}`
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }
+      .get(
+        `/updateScreeningQuestion?clientId=${userData.clientId}&jobId=${userData.id}&screening=${value}`
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleAssessment = (value) => {
     setAssessments(value);
     axiosInstance
-    .get(
-      `/updateAssessment?clientId=${userData.clientId}&jobId=${userData.id}&assessment=${value}`
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }
+      .get(
+        `/updateAssessment?clientId=${userData.clientId}&jobId=${userData.id}&assessment=${value}`
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -902,7 +777,7 @@ export const CreateJob = () => {
                     </p>
                   </div>
                   <div>
-                  <p
+                    <p
                       variant="text"
                       style={{
                         color: "#5E8EBD",
@@ -1765,7 +1640,12 @@ export const CreateJob = () => {
                         {currentView === "Card" && (
                           <div>
                             <DragDropContext onDragEnd={onDragEnd}>
-                              <div style={{ display: "flex" }}>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  width: "100%",
+                                  justifyContent: "space-between",
+                                }}>
                                 {Object.entries(tasks).map(([key, column]) => (
                                   <Droppable droppableId={key} key={key}>
                                     {(provided, snapshot) => (
@@ -1775,7 +1655,8 @@ export const CreateJob = () => {
                                         style={{
                                           margin: "0 8px",
                                           padding: "8px",
-                                          width: "260px",
+                                          minWidth: "260px",
+                                          maxWidth: "360px",
                                           backgroundColor:
                                             snapshot.isDraggingOver
                                               ? "lightblue"
@@ -1816,7 +1697,7 @@ export const CreateJob = () => {
                                                   color: "#94A3B8",
                                                   fontSize: 16,
                                                 }}
-                                              />{" "}
+                                              />
                                             </IconButton>
                                             <IconButton>
                                               <BsThreeDots
@@ -1824,7 +1705,7 @@ export const CreateJob = () => {
                                                   color: "#94A3B8",
                                                   fontSize: 16,
                                                 }}
-                                              />{" "}
+                                              />
                                             </IconButton>
                                           </div>
                                         </div>
@@ -1858,6 +1739,8 @@ export const CreateJob = () => {
                                                       : "#ffffff",
                                                   borderRadius: 8,
                                                   marginTop: 10,
+                                                  ...provided.draggableProps
+                                                    .style,
                                                 }}>
                                                 <div className="flex justify-between items-center p-2">
                                                   {DtpStatus(column?.name)}
@@ -2233,9 +2116,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {checkStatusRound(
-                                              "In Progress"
-                                            )}
+                                            {checkStatusRound("In Progress")}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2364,9 +2245,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {checkStatus(
-                                              "In Progress"
-                                            )}
+                                            {checkStatus("In Progress")}
                                           </TableCell>
                                           <TableCell
                                             sx={{
