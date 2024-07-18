@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import {
   Button,
   Card,
@@ -35,6 +35,8 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
 import Spinner from "../../../utils/spinner";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 export const OutputofJobDescription = () => {
   const spectrums = [
@@ -100,6 +102,17 @@ export const OutputofJobDescription = () => {
   const convertCognitive = convertCompetencies(
     icpAnalysisData?.cognitiveAgility[0]
   );
+
+  const contentRef = useRef();
+
+  const handleDownload = async () => {
+    const element = contentRef.current;
+    const canvas = await html2canvas(element);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 0, 0);
+    pdf.save('download.pdf');
+  };
 
   return (
     <div>
@@ -737,7 +750,7 @@ export const OutputofJobDescription = () => {
                               borderWidth: 1,
                               bgcolor: "#F8F9FA",
                             }}>
-                            Behavioural Attributes
+                            Attributes
                           </TableCell>
                         </TableRow>
                       </TableHead>

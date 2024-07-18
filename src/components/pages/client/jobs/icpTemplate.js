@@ -159,11 +159,15 @@ export const JobIcpTemplate = () => {
   const handleNext = (e) => {
     e?.preventDefault();
     if (currentQuestion === questionList.length - 1) {
-      setShowQuestionPopup(true);
+      // setShowQuestionPopup(true);
     } else {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
+
+  const handleSaveTemplate = () => {
+    setShowQuestionPopup(true);
+  }
 
   const RankingQuestionOld = () => {
     const [error, setError] = useState({ error: false, message: "" });
@@ -254,9 +258,14 @@ export const JobIcpTemplate = () => {
         )}
         {/* button */}
         <div className="flex justify-end mt-5 gap-4">
-          <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
-            {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
+          <Button variant="contained" onClick={handleSubmitData} type="submit" sx={{ bgcolor: "#008080" }}>
+            {currentQuestion === questionList.length - 1 ? "Save" : "Next"}
           </Button>
+          { currentQuestion === questionList.length - 1 && (
+            <Button variant="contained" onClick={handleSaveTemplate} type="submit" sx={{ bgcolor: "#008080" }}>
+             Save As Template
+          </Button>
+          )}
         </div>
       </form>
     );
@@ -382,19 +391,15 @@ export const JobIcpTemplate = () => {
           </div>
         </DndProvider>
         {/* button */}
-        <div className="flex justify-end mt-4 gap-4">
-          {/* {!(currentQuestion === 0) && (
-            <Button
-              variant="contained"
-              onClick={handleBack}
-              disabled={currentQuestion === 0}
-              sx={{ bgcolor: "#008080" }}>
-              Back
-            </Button>
-          )} */}
-          <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
-            {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
+        <div className="flex justify-end mt-5 gap-4">
+          <Button variant="contained" onClick={handleSubmitData} type="submit" sx={{ bgcolor: "#008080" }}>
+            {currentQuestion === questionList.length - 1 ? "Save" : "Next"}
           </Button>
+          { currentQuestion === questionList.length - 1 && (
+            <Button variant="contained" onClick={handleSaveTemplate} type="submit" sx={{ bgcolor: "#008080" }}>
+             Save As Template
+          </Button>
+          )}
         </div>
       </form>
     );
@@ -456,10 +461,15 @@ export const JobIcpTemplate = () => {
           </RadioGroup>
         </div>
         {/* button */}
-        <div className="flex justify-end mt-4 gap-4">
-          <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
-            {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
+        <div className="flex justify-end mt-5 gap-4">
+          <Button variant="contained" onClick={handleSubmitData} type="submit" sx={{ bgcolor: "#008080" }}>
+            {currentQuestion === questionList.length - 1 ? "Save" : "Next"}
           </Button>
+          { currentQuestion === questionList.length - 1 && (
+            <Button variant="contained" onClick={handleSaveTemplate} type="submit" sx={{ bgcolor: "#008080" }}>
+             Save As Template
+          </Button>
+          )}
         </div>
       </form>
     );
@@ -468,19 +478,21 @@ export const JobIcpTemplate = () => {
   const handleSubmitData = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    axiosInstance
-      .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`, {
-        questionList,
-        templateName,
-        templateTag,
-        templateDescription,
-      })
-      .then((response) => {
-        console.log(response.data);
-        // navigate("/job/createJob", { state : jobId});
-        navigate("/job/conformationScreen", { state: jobId });
-      })
-      .catch((error) => console.log(error));
+    if (currentQuestion === questionList.length - 1) { 
+      axiosInstance
+        .post(`/saveIcpTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`, {
+          questionList,
+          templateName,
+          templateTag,
+          templateDescription,
+        })
+        .then((response) => {
+          console.log(response.data);
+          // navigate("/job/createJob", { state : jobId});
+          navigate("/job/conformationScreen", { state: jobId });
+        })
+        .catch((error) => console.log(error));
+      }
   };
 
   const saveAsTemplate = async () => {
@@ -870,22 +882,13 @@ export const JobIcpTemplate = () => {
                     </DialogContent>
                     <DialogActions>
                       <Button
-                        onClick={handleSubmitData}
-                        variant="outlined"
-                        style={{
-                          color: "#ffffff",
-                          backgroundColor: "#008080",
-                        }}>
-                        SAVE
-                      </Button>
-                      <Button
                         onClick={saveAsTemplate}
                         variant="contained"
                         style={{
                           color: "#ffffff",
                           backgroundColor: "#008080",
                         }}>
-                        SAVE As Template
+                        SAVE
                       </Button>
                     </DialogActions>
                   </Dialog>

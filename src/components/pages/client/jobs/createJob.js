@@ -290,6 +290,9 @@ export const CreateJob = () => {
   const checkStatus = (status) => {
     let color = "";
 
+    if (status === "Completed") {
+      color = "#58A20F";
+    }
     if (status === "Approved") {
       color = "#58A20F";
     } else if (status === "In Progress") {
@@ -937,7 +940,7 @@ export const CreateJob = () => {
                           </Button>
                         </div>
 
-                        <Box sx={{ width: 980 }}>
+                        <Box sx={{ width: 1200 }}>
                           <Paper sx={{ width: "100%", my: 2 }}>
                             <TableContainer
                               sx={{
@@ -1120,7 +1123,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.name}
+                                          {row.username}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1128,7 +1131,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.title}
+                                          {title}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1137,7 +1140,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.timeStamp}
+                                          {row.requestedData}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1166,7 +1169,7 @@ export const CreateJob = () => {
                                             borderColor: "#D0D5DD50",
                                           }}>
                                           {checkStatusRound(
-                                            row.application_status
+                                            "In Progress"
                                           )}
                                         </TableCell>
                                         <TableCell
@@ -1176,7 +1179,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.application_sub_status}
+                                          Technical Interview
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1268,7 +1271,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.score}%
+                                          {row.matchingScore}%
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1286,7 +1289,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.rank}
+                                          1
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1294,7 +1297,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {checkStatus(row.recommended_status)}
+                                          {checkStatus("Recommended")}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1302,7 +1305,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.application_source}
+                                          LinkedIn
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1311,7 +1314,7 @@ export const CreateJob = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.jobId}
+                                          {userData.id}
                                         </TableCell>
                                         <TableCell
                                           align="center"

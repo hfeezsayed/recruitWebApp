@@ -262,7 +262,7 @@ export const TeamCreate = () => {
                 }}
               />
             </div>
-            <div className="py-8 gap-8 flex justify-end">
+            <div className="py-8 gap-4 flex justify-end">
               <Button
                 onClick={() => {
                   navigate(-1);
@@ -272,12 +272,18 @@ export const TeamCreate = () => {
                 back
               </Button>
               <Button
+                  onClick={handleSubmit}
+                  variant="outlined"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  save
+                </Button>
+              <Button
                 onClick={() => {
                   setShowPopup(true);
                 }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                SAVE 
+                SAVE As Template
               </Button>
             </div>
             {/* popup */}
@@ -346,16 +352,10 @@ export const TeamCreate = () => {
               </DialogContent>
               <DialogActions>
                 <Button
-                  onClick={handleSubmit}
-                  variant="outlined"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  save
-                </Button>
-                <Button
                   onClick={saveAsTemplate}
                   variant="contained"
                   style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  SAVE As Template
+                  SAVE 
                 </Button>
               </DialogActions>
             </Dialog>

@@ -190,6 +190,11 @@ export const JobDetailEdit = () => {
   const saveJobDetail = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
+    setCompanyInfo(companyOverview);
+    setResponsibilities(responsebility);
+    setBenefits(benefit);
+    setPositionSummary(jobSummary);
+    setEqualEmployeeOpportunity(eeo);
     axiosInstance
       .post(
         "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
@@ -222,6 +227,7 @@ export const JobDetailEdit = () => {
           templateName,
           templateTag,
           templateDescription,
+          jobDescription
         }
       )
       .then((data) => {
@@ -268,6 +274,7 @@ export const JobDetailEdit = () => {
           templateName,
           templateTag,
           templateDescription,
+          jobDescription
         }
       )
       .then((data) => {
@@ -318,6 +325,7 @@ export const JobDetailEdit = () => {
           setTemplateName(response.data.templateName);
           setTemplateTag(response.data.templateTag);
           setTemplateDescription(response.data.templateDescription);
+          setJobDescription(response.data.jobDescription);
         })
         .catch((e) => {
           console.log(e);
@@ -357,6 +365,7 @@ export const JobDetailEdit = () => {
     setTemplateName(obj.templateName);
     setTemplateTag(obj.templateTag);
     setTemplateDescription(obj.templateDescription);
+    setJobDescription(obj.jobDescription);
   };
 
   const closePopup = () => {
@@ -420,7 +429,7 @@ export const JobDetailEdit = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setCompanyOverview(data.data.enhanced_description);
+        setCompanyInfo(data.data.enhanced_company_info);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -437,7 +446,7 @@ export const JobDetailEdit = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setResponsibility(data.data.enhanced_responsibilities);
+        setResponsibilities(data.data.enhanced_responsibilities);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -455,7 +464,7 @@ export const JobDetailEdit = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setJobSummary(data.data.enhanced_position_summary);
+        setPositionSummary(data.data.enhanced_position_summary);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
@@ -472,11 +481,30 @@ export const JobDetailEdit = () => {
       )
       .then((data) => {
         console.log(data.data);
-        setBenefit(data.data.enhanced_benefits);
+        setBenefits(data.data.enhanced_benefits);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
   };
+
+  const generateEEO = async () => {
+    const title = jobTitle;
+    const position_summary = positionSummry;
+    axios
+      .post(
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-eoe/",
+        {
+          equalEmployeeOpportunity
+        }
+      )
+      .then((data) => {
+        console.log(data.data);
+        setEqualEmployeeOpportunity(data.data.enhanced_equal_opportunity);
+        //localStorage.setItem("jobId", data.data.jobId);
+      })
+      .catch((e) => console.log(e));
+  };
+
 
   return (
     <div>
@@ -606,7 +634,7 @@ export const JobDetailEdit = () => {
                         backgroundColor: "#008080",
                       }}
                       onClick={getCompanyOverview}>
-                      Generate Company Overview
+                      Ask JobGPT AI
                     </Button>
                   </div>
 
@@ -652,7 +680,9 @@ export const JobDetailEdit = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      {companyOverview}
+                      For the Company Overview, ensure it succinctly captures the mission and culture of the company in three sentences. 
+                      This summary should provide a clear and compelling introduction to what drives the company and its values, helping to 
+                      communicate its essence effectively.
                   </p>
                 </div>
               </div>
@@ -677,7 +707,7 @@ export const JobDetailEdit = () => {
                         backgroundColor: "#008080",
                       }}
                       onClick={generateJobSummary}>
-                      Generate Job Summary
+                      Ask JobGPT AI
                     </Button>
                   </div>
 
@@ -706,7 +736,7 @@ export const JobDetailEdit = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      {jobSummary}
+                      The job summary should succinctly outline the expectations of this role in three sentences. Include details on the reporting manager's role to provide clarity on hierarchical structure and responsibilities.
                   </p>
                 </div>
               </div>
@@ -731,7 +761,7 @@ export const JobDetailEdit = () => {
                         backgroundColor: "#008080",
                       }}
                       onClick={generateResponsibility}>
-                      Generate Responsibilities
+                      Ask JobGPT AI
                     </Button>
                   </div>
 
@@ -760,7 +790,7 @@ export const JobDetailEdit = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      {responsebility}
+                      Outline detailed but concise core responsibilities, emphasizing unique organizational duties (e.g., social media expertise for event promotion). Highlight daily activities to give candidates a clear view of the role and company fit. Specify reporting structure and organizational impact to show the role's place and significance within the company. Keep it to 10 bullets to maintain clarity and focus.
                   </p>
                 </div>
               </div>
@@ -785,7 +815,7 @@ export const JobDetailEdit = () => {
                         backgroundColor: "#008080",
                       }}
                       onClick={generateBenefit}>
-                      Generate Benefits
+                      Ask JobGPT AI
                     </Button>
                   </div>
 
@@ -814,7 +844,7 @@ export const JobDetailEdit = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      {benefit}
+                      Include benefits in 3-5 words each, such as 'Flexible work schedules' and 'Health Insurance', to attract top talent.
                   </p>
                 </div>
               </div>
@@ -838,8 +868,8 @@ export const JobDetailEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={() => {}}>
-                      Generate EEO
+                      onClick={generateEEO}>
+                      Ask JobGPT AI
                     </Button>
                   </div>
                   <textarea
@@ -869,7 +899,7 @@ export const JobDetailEdit = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      {eeo}
+                      Craft an effective EEO statement: Be specific about compliance with EEOC rules, mention relevant employment practices beyond hiring, highlight diversity and inclusion efforts, affirm merit-based hiring decisions, and direct to additional resources for more information.
                   </p>
                 </div>
               </div>

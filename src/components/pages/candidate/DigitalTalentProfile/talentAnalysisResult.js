@@ -143,7 +143,7 @@ export const TalentAnalysisResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}>
-                        Behavioural Attributes
+                        Attributes
                       </TableCell>
                     </TableRow>
                   </TableHead>

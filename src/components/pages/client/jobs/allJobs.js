@@ -392,7 +392,7 @@ export const AllJobs = () => {
                         List View
                       </Button>
                     </ButtonGroup>
-                    <div>
+                    <div >
                       <TextField
                         fullWidth
                         size="small"
@@ -410,7 +410,7 @@ export const AllJobs = () => {
                       />
                     </div>
                     <div className="flex gap-4">
-                    <FormControl fullWidth>
+                    <FormControl >
                       <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
                       <Select
                         size="medium"

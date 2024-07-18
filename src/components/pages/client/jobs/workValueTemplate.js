@@ -615,7 +615,7 @@ export const JobWorkValueTemplate = () => {
                           </Table>
                         </TableContainer>
                       </Box>
-                      <div className="flex justify-end py-8 gap-8">
+                      <div className="flex justify-end py-8 gap-4">
                         <Button
                           variant="outlined"
                           style={{
@@ -628,6 +628,15 @@ export const JobWorkValueTemplate = () => {
                           Back
                         </Button>
                         <Button
+                            onClick={handleSubmitRating}
+                            variant="outlined"
+                            style={{
+                              color: "#ffffff",
+                              backgroundColor: "#008080",
+                            }}>
+                            SAVE
+                          </Button>
+                        <Button
                           onClick={() => {
                             setShowRatingPopUp(true);
                           }}
@@ -636,7 +645,7 @@ export const JobWorkValueTemplate = () => {
                             backgroundColor: "#008080",
                             color: "#ffffff",
                           }}>
-                          SAVE
+                          SAVE AS TEMPLATE
                         </Button>
                       </div>
                       {/* popup */}
@@ -713,22 +722,13 @@ export const JobWorkValueTemplate = () => {
                         </DialogContent>
                         <DialogActions>
                           <Button
-                            onClick={handleSubmitRating}
-                            variant="outlined"
-                            style={{
-                              color: "#ffffff",
-                              backgroundColor: "#008080",
-                            }}>
-                            SAVE
-                          </Button>
-                          <Button
                             onClick={saveAsTemplate}
                             variant="contained"
                             style={{
                               color: "#ffffff",
                               backgroundColor: "#008080",
                             }}>
-                            SAVE As Template
+                            SAVE
                           </Button>
                         </DialogActions>
                       </Dialog>
