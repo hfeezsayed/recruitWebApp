@@ -342,6 +342,34 @@ export const CreateJob = () => {
     }
   };
 
+  const handleScreeningQuestions = (value) => {
+    setScreeningQuestions(value);
+    axiosInstance
+    .get(
+      `/updateScreeningQuestion?clientId=${userData.clientId}&jobId=${userData.id}&screening=${value}`
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
+
+  const handleAssessment = (value) => {
+    setAssessments(value);
+    axiosInstance
+    .get(
+      `/updateAssessment?clientId=${userData.clientId}&jobId=${userData.id}&assessment=${value}`
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
@@ -360,6 +388,8 @@ export const CreateJob = () => {
         .then((data) => {
           console.log(data);
           setUserData(data?.data);
+          setScreeningQuestions(data?.data.screening);
+          setAssessments(data?.data?.assessment);
           if (
             data.data?.jobDetail &&
             data.data?.workValues &&
@@ -537,7 +567,9 @@ export const CreateJob = () => {
 
   const checkStatus = (status) => {
     let color = "";
-
+    if (status === "Completed") {
+      color = "#5FAEDA";
+    }
     if (status === "Approved") {
       color = "#58A20F";
     } else if (status === "In Progress") {
@@ -727,11 +759,12 @@ export const CreateJob = () => {
                                   },
                                 },
                               }}
+                              checked={screeningQuestions}
                             />
                           }
                           value={screeningQuestions}
                           onChange={(e) =>
-                            setScreeningQuestions(e.target.checked)
+                            handleScreeningQuestions(e.target.checked)
                           }
                           label={
                             <p style={{ color: "#3B25A9", fontSize: 16 }}>
@@ -752,10 +785,11 @@ export const CreateJob = () => {
                                   },
                                 },
                               }}
+                              checked={assessments}
                             />
                           }
                           value={assessments}
-                          onChange={(e) => setAssessments(e.target.checked)}
+                          onChange={(e) => handleAssessment(e.target.checked)}
                           label={
                             <p style={{ color: "#A92525", fontSize: 16 }}>
                               Assessments
@@ -868,7 +902,7 @@ export const CreateJob = () => {
                     </p>
                   </div>
                   <div>
-                    <Button
+                  <p
                       variant="text"
                       style={{
                         color: "#5E8EBD",
@@ -882,13 +916,13 @@ export const CreateJob = () => {
                       // }
                     >
                       Access Job Description
-                    </Button>
-                    {/* <IconButton
-                      onClick={(e) => {
-                        handleJd(e);
-                      }}>
-                      <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                    </IconButton> */}
+                      <IconButton
+                        onClick={(e) => {
+                          handleJd(e);
+                        }}>
+                        <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                      </IconButton>
+                    </p>
                   </div>
                 </div>
                 {/* all forms */}
@@ -1204,7 +1238,7 @@ export const CreateJob = () => {
                   {assessments && (
                     <div className="w-36">
                       <Gauge
-                        value={userData?.assessments ? 100 : 0}
+                        value={userData?.assessment ? 100 : 0}
                         startAngle={0}
                         endAngle={360}
                         innerRadius="80%"
@@ -1251,15 +1285,15 @@ export const CreateJob = () => {
                       <Button
                         size="small"
                         style={{
-                          color: userData?.assessments ? "#1E90FF" : "#FF9900",
+                          color: userData?.assessment ? "#1E90FF" : "#FF9900",
                           fontSize: 12,
                           textTransform: "none",
                         }}
                         endIcon={
-                          userData?.assessments ? <CiEdit /> : <FaArrowRight />
+                          userData?.assessment ? <CiEdit /> : <FaArrowRight />
                         }
                         onClick={() => {}}>
-                        {userData?.assessments ? "Edit" : "Start"}
+                        {userData?.assessment ? "Edit" : "Start"}
                       </Button>
                     </div>
                   )}
@@ -2154,7 +2188,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.name}
+                                            {row.username}
                                           </TableCell>
                                           <TableCell
                                             sx={{
@@ -2162,7 +2196,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.title}
+                                            {userData.title}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2171,7 +2205,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.timeStemp}
+                                            {row.requestedData}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2200,7 +2234,7 @@ export const CreateJob = () => {
                                               borderColor: "#D0D5DD50",
                                             }}>
                                             {checkStatusRound(
-                                              row.application_status
+                                              "In Progress"
                                             )}
                                           </TableCell>
                                           <TableCell
@@ -2210,7 +2244,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.application_sub_status}
+                                            Phone Call
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2256,7 +2290,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {checkStatus(row.dtp_status)}
+                                            {checkStatus(row.dtpStatus)}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2266,10 +2300,10 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.dtp_status?.includes(
+                                            {row.dtpStatus?.includes(
                                               "Approved"
                                             ) ||
-                                            row.dtp_status?.includes(
+                                            row.dtpStatus?.includes(
                                               "Reject"
                                             ) ? (
                                               <Button
@@ -2304,7 +2338,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.score}%
+                                            {row.matchingScore}%
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2322,7 +2356,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.rank}
+                                            1
                                           </TableCell>
                                           <TableCell
                                             sx={{
@@ -2331,7 +2365,7 @@ export const CreateJob = () => {
                                               borderColor: "#D0D5DD50",
                                             }}>
                                             {checkStatus(
-                                              row.recommended_status
+                                              "In Progress"
                                             )}
                                           </TableCell>
                                           <TableCell
@@ -2340,7 +2374,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.application_source}
+                                            LinkedIn
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2349,7 +2383,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.jobId}
+                                            {userData.jobId}
                                           </TableCell>
                                           <TableCell
                                             align="center"
