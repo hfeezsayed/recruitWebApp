@@ -213,40 +213,36 @@ export const JobPreferenceTemplateCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        `/savePreferenceTemplate?clientId=${user.userId}`,
-        {
-          experianceInIndustry,
-          specifyIndusrtyExp,
-          jobDescription,
-          scopOfRole,
-          depthKnowledge,
-          typeOfRoles,
-          timeOfRole,
-          workSetting,
-          locationRole,
-          relocation,
-          relocationBudget,
-          travelRole,
-          visa,
-          compensationOffered,
-          compensationOfferedRate,
-          primarySkills,
-          secoundrySkills,
-          minimumLevelQualification,
-          requireAcademicQualification,
-          differentAcademic,
-          certificationsOrLicenses,
-          toolsOrSoftwaresetToolsOrSoftware,
-          successThreeyear,
-          templateName,
-          templateTag,
-          templateDescription,
-        },
-        
-      )
+      .post(`/savePreferenceTemplate?clientId=${user.userId}`, {
+        experianceInIndustry,
+        specifyIndusrtyExp,
+        jobDescription,
+        scopOfRole,
+        depthKnowledge,
+        typeOfRoles,
+        timeOfRole,
+        workSetting,
+        locationRole,
+        relocation,
+        relocationBudget,
+        travelRole,
+        visa,
+        compensationOffered,
+        compensationOfferedRate,
+        primarySkills,
+        secoundrySkills,
+        minimumLevelQualification,
+        requireAcademicQualification,
+        differentAcademic,
+        certificationsOrLicenses,
+        toolsOrSoftwaresetToolsOrSoftware,
+        successThreeyear,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((data) => {
-        console.log(data.data)
+        console.log(data.data);
         navigate("/templates/jobPreferenceTemplate");
       })
       .catch((e) => console.log(e));
@@ -255,7 +251,7 @@ export const JobPreferenceTemplateCreate = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

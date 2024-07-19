@@ -25,7 +25,7 @@ export const IcpTemplateResult = () => {
     "spectrum2",
     "spectrum3",
     "spectrum4",
-    "spectrum5"
+    "spectrum5",
   ];
   const [userData, setUserData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
@@ -54,16 +54,16 @@ export const IcpTemplateResult = () => {
   const convertCognitive = convertCompetencies(userData?.cognitiveAgility[0]);
 
   useEffect(() => {
-     console.log(location.state);
-     setUserData(location.state);
-     setPillars(location.state.pillars);
-     setBehaviour(location.state.behaviourAttributes);
- }, [location.state]);
+    console.log(location.state);
+    setUserData(location.state);
+    setPillars(location.state.pillars);
+    setBehaviour(location.state.behaviourAttributes);
+  }, [location.state]);
 
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           {loading === true ? (

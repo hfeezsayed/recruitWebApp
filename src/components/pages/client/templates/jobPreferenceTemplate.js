@@ -25,8 +25,7 @@ export const JobPreferenceTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -46,8 +45,7 @@ export const JobPreferenceTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
+        `/getAllPreferenceTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -62,7 +60,7 @@ export const JobPreferenceTemplate = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

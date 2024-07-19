@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export const JobPreferenceTemplateEdit = () => {
   const navigate = useNavigate();
@@ -52,50 +52,49 @@ export const JobPreferenceTemplateEdit = () => {
   ] = useState([{ tools: null }]);
   const [successThreeyear, setSuccessThreeyear] = useState("");
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     if (location.state) {
       console.log(location.state);
-      if(location.state.jobData){
+      if (location.state.jobData) {
         axiosInstance
-            .get(
-              `/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}` ,
-            )
-            .then((data) => {
-              console.log(data);
-              const row = data.data;
-              setExperianceInindustry(row.experianceInIndustry);     
-              setSpecifyIndustryExp(row.specifyIndusrtyExp);
-              setJobDescription(row.jobDescription);
-              setScopOfRole(row.scopOfRole);
-              setDepthKnowledge(row.depthKnowledge);
-              setTypeOfROles(row.typeOfRoles);
-              setTimeofRole(row.timeOfRole);
-              setWorkSetting(row.workSetting);
-              setLocationRole(row.locationRole);
-              setRelocation(row.relocation);
-              setRelocationBudget(row.relocationBudget);
-              setTravelRole(row.travelRole);
-              setVisa(row.visa);
-              setCompensationOffered(row.compensationOffered);
-              setPrimarySkill(row.primarySkills);
-              setSecoundrySkill(row.secoundrySkills);
-              setMinimumLevelQualification(row.minimumLevelQualification);
-              setRequireAcademicQualification(row.requireAcademicQualification);
-              setDifferentAcademic(row.differentAcademic);
-              setCertificationsOrLicenses(row.certificationsOrLicenses);
-              setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
-              setSuccessThreeyear(row.successThreeYear);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-
-      }
-      else{
+          .get(
+            `/getPreferenceTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          )
+          .then((data) => {
+            console.log(data);
+            const row = data.data;
+            setExperianceInindustry(row.experianceInIndustry);
+            setSpecifyIndustryExp(row.specifyIndusrtyExp);
+            setJobDescription(row.jobDescription);
+            setScopOfRole(row.scopOfRole);
+            setDepthKnowledge(row.depthKnowledge);
+            setTypeOfROles(row.typeOfRoles);
+            setTimeofRole(row.timeOfRole);
+            setWorkSetting(row.workSetting);
+            setLocationRole(row.locationRole);
+            setRelocation(row.relocation);
+            setRelocationBudget(row.relocationBudget);
+            setTravelRole(row.travelRole);
+            setVisa(row.visa);
+            setCompensationOffered(row.compensationOffered);
+            setPrimarySkill(row.primarySkills);
+            setSecoundrySkill(row.secoundrySkills);
+            setMinimumLevelQualification(row.minimumLevelQualification);
+            setRequireAcademicQualification(row.requireAcademicQualification);
+            setDifferentAcademic(row.differentAcademic);
+            setCertificationsOrLicenses(row.certificationsOrLicenses);
+            setToolsOrSoftwaresetToolsOrSoftware(
+              row.toolsOrSoftwaresetToolsOrSoftware
+            );
+            setSuccessThreeyear(row.successThreeYear);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
         const row = location.state;
-        setExperianceInindustry(row.experianceInIndustry);     
+        setExperianceInindustry(row.experianceInIndustry);
         setSpecifyIndustryExp(row.specifyIndusrtyExp);
         setJobDescription(row.jobDescription);
         setScopOfRole(row.scopOfRole);
@@ -115,7 +114,9 @@ export const JobPreferenceTemplateEdit = () => {
         setRequireAcademicQualification(row.requireAcademicQualification);
         setDifferentAcademic(row.differentAcademic);
         setCertificationsOrLicenses(row.certificationsOrLicenses);
-        setToolsOrSoftwaresetToolsOrSoftware(row.toolsOrSoftwaresetToolsOrSoftware);
+        setToolsOrSoftwaresetToolsOrSoftware(
+          row.toolsOrSoftwaresetToolsOrSoftware
+        );
         setSuccessThreeyear(row.successThreeyear);
       }
     }
@@ -284,8 +285,7 @@ export const JobPreferenceTemplateEdit = () => {
         certificationsOrLicenses,
         toolsOrSoftwaresetToolsOrSoftware,
         successThreeyear,
-      },
-      )
+      })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
@@ -293,7 +293,7 @@ export const JobPreferenceTemplateEdit = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

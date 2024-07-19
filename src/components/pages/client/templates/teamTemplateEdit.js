@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -44,38 +44,33 @@ export const TeamTemplateEdit = () => {
         domainRole,
         project,
         contributions,
-      },
-      )
+      })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
   };
-
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     if (location.state) {
       console.log(location.state);
-      if(location.state?.jobData) {
+      if (location.state?.jobData) {
         axiosInstance
-        .get(
-          `/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
-        )
-        .then((data) => {
-          console.log(data);
-          setTeamSize(data.data.teamSize);
-          setTeamLocation(data.data.teamLocation);
-          setCrossFunctionality(data.data.crossFunctionality);
-          setSpecifyDomain(data.data.domainRole);
-          setTeamWorkingDes(data.data.project);
-          setDescribeContributions(data.data.contributions);
-        },
-        
-        )
-        .catch((e) => {
-          console.log(e);
-        });
-      }
-      else{
+          .get(
+            `/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.jobDetailId}`
+          )
+          .then((data) => {
+            console.log(data);
+            setTeamSize(data.data.teamSize);
+            setTeamLocation(data.data.teamLocation);
+            setCrossFunctionality(data.data.crossFunctionality);
+            setSpecifyDomain(data.data.domainRole);
+            setTeamWorkingDes(data.data.project);
+            setDescribeContributions(data.data.contributions);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
         setTeamSize(location.state.teamSize);
         setTeamLocation(location.state.teamLocation);
         setCrossFunctionality(location.state.crossFunctionality);
@@ -86,12 +81,10 @@ export const TeamTemplateEdit = () => {
     }
   }, [location.state]);
 
-
-
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

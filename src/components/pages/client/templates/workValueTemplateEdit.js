@@ -42,7 +42,7 @@ export const WorkValueTemplateEdit = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true}/>
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

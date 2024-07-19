@@ -19,9 +19,8 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
-
 
 export const JobTemplateEdit = () => {
   const navigate = useNavigate();
@@ -38,13 +37,13 @@ export const JobTemplateEdit = () => {
   // job description
   const [companyInfo, setCompanyInfo] = useState("");
   const [positionSummry, setPositionSummary] = useState("");
-  const [responsibilities, setResponsibilities] =
-    useState("");
+  const [responsibilities, setResponsibilities] = useState("");
   const [benefits, setBenefits] = useState("");
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [specificIndustryExperience, setSpecificIndustryExperience] = useState();
+  const [specificIndustryExperience, setSpecificIndustryExperience] =
+    useState();
   const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
@@ -55,16 +54,10 @@ export const JobTemplateEdit = () => {
 
   // Qualification and Requirements
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
-  const [requireRegulatory, setRequireRegulatory] =
-    useState();
+  const [requireRegulatory, setRequireRegulatory] = useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certifications, setCertifications] = useState([
-    { certificate: null },
-  ]);
-  const [
-    softwares,
-    setSoftwares,
-  ] = useState([{ tools: null }]);
+  const [certifications, setCertifications] = useState([{ certificate: null }]);
+  const [softwares, setSoftwares] = useState([{ tools: null }]);
   const [envision, setEnvision] = useState("");
 
   // popup
@@ -89,87 +82,79 @@ export const JobTemplateEdit = () => {
   const getJobDescription = async () => {
     const title = jobTitle;
     axios
-      .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/" ,
-        {
-          jobTitle,
-          jobCode,
-          jobFamily,
-          jobDepartment,
-          jobLocation,
-          salary,
-          companyInfo,
-          positionSummry,
-          responsibilities,
-          benefits,
-          equalEmployeeOpportunity,
-          specificIndustryExperience,
-          specifyIndustryExp,
-          industryKnowledge,
-          workSetting,
-          roleType,
-          roleTimings,
-          roleTravel,
-          visa,
-          minimumLevelQualification,
-          requireRegulatory,
-          differentAcademic,
-          certifications,
-          softwares,
-          envision,
-          templateName,
-          templateTag,
-          templateDescription,
-          
-        },
-      )
+      .post("https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/", {
+        jobTitle,
+        jobCode,
+        jobFamily,
+        jobDepartment,
+        jobLocation,
+        salary,
+        companyInfo,
+        positionSummry,
+        responsibilities,
+        benefits,
+        equalEmployeeOpportunity,
+        specificIndustryExperience,
+        specifyIndustryExp,
+        industryKnowledge,
+        workSetting,
+        roleType,
+        roleTimings,
+        roleTravel,
+        visa,
+        minimumLevelQualification,
+        requireRegulatory,
+        differentAcademic,
+        certifications,
+        softwares,
+        envision,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((data) => {
         console.log(data.data);
         setJobDescription(data.data.job_description);
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        "/saveJobTemplate?clientId=" + user.userId,
-        {
-          jobTitle,
-          jobCode,
-          jobFamily,
-          jobDepartment,
-          jobLocation,
-          salary,
-          companyInfo,
-          positionSummry,
-          responsibilities,
-          benefits,
-          equalEmployeeOpportunity,
-          specificIndustryExperience,
-          specifyIndustryExp,
-          industryKnowledge,
-          workSetting,
-          roleType,
-          roleTimings,
-          roleTravel,
-          visa,
-          minimumLevelQualification,
-          requireRegulatory,
-          differentAcademic,
-          certifications,
-          softwares,
-          envision,
-          templateName,
-          templateTag,
-          templateDescription,
-          jobDescription
-        },
-      )
+      .post("/saveJobTemplate?clientId=" + user.userId, {
+        jobTitle,
+        jobCode,
+        jobFamily,
+        jobDepartment,
+        jobLocation,
+        salary,
+        companyInfo,
+        positionSummry,
+        responsibilities,
+        benefits,
+        equalEmployeeOpportunity,
+        specificIndustryExperience,
+        specifyIndustryExp,
+        industryKnowledge,
+        workSetting,
+        roleType,
+        roleTimings,
+        roleTravel,
+        visa,
+        minimumLevelQualification,
+        requireRegulatory,
+        differentAcademic,
+        certifications,
+        softwares,
+        envision,
+        templateName,
+        templateTag,
+        templateDescription,
+        jobDescription,
+      })
       .then((data) => {
         console.log(data.data);
         //localStorage.setItem("jobId", data.data.jobId);
@@ -181,40 +166,39 @@ export const JobTemplateEdit = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    if(location.state.details) {
-        const row = location.state.details;
-        console.log(location.state.details);
-        setJobTitle(row.jobTitle)                              
-        setJobCode(row.jobCode)
-        setJobFamily(row.jobFamily)
-        setJobDepartment(row.jobDepartment)
-        setJobLocation(row.jobLocation)
-        setSalary(row.salary)
-        setCompanyInfo(row.companyInfo)
-        setPositionSummary(row.positionSummry)
-        setResponsibilities(row.responsibilities)
-        setBenefits(row.benefits)
-        setEqualEmployeeOpportunity(row.equalEmployeeOpportunity)
-        setSpecificIndustryExperience(row.specificIndustryExperience)
-        setSpecifyIndustryExp(row.specifyIndustryExp)
-        setIndustryknowledge(row.industryKnowledge)
-        setWorkSetting(row.workSetting)
-        setRoleType(row.roleType)
-        setRoleTimings(row.roleTimings)
-        setRoleTravel(row.roleTravel)
-        setVisa(row.visa)
-        setMinimumLevelQualification(row.minimumLevelQualification)
-        setRequireRegulatory(row.requireRegulatory)
-        setDifferentAcademic(row.differentAcademic)
-        setCertifications(row.certifications)
-        setSoftwares(row.softwares)
-        setEnvision(row.envision)
-        setTemplateName(row.templateName)
-        setTemplateTag(row.templateTag)
-        setTemplateDescription(row.templateDescription)
-        setJobDescription(row.jobDescription)
+    if (location.state.details) {
+      const row = location.state.details;
+      console.log(location.state.details);
+      setJobTitle(row.jobTitle);
+      setJobCode(row.jobCode);
+      setJobFamily(row.jobFamily);
+      setJobDepartment(row.jobDepartment);
+      setJobLocation(row.jobLocation);
+      setSalary(row.salary);
+      setCompanyInfo(row.companyInfo);
+      setPositionSummary(row.positionSummry);
+      setResponsibilities(row.responsibilities);
+      setBenefits(row.benefits);
+      setEqualEmployeeOpportunity(row.equalEmployeeOpportunity);
+      setSpecificIndustryExperience(row.specificIndustryExperience);
+      setSpecifyIndustryExp(row.specifyIndustryExp);
+      setIndustryknowledge(row.industryKnowledge);
+      setWorkSetting(row.workSetting);
+      setRoleType(row.roleType);
+      setRoleTimings(row.roleTimings);
+      setRoleTravel(row.roleTravel);
+      setVisa(row.visa);
+      setMinimumLevelQualification(row.minimumLevelQualification);
+      setRequireRegulatory(row.requireRegulatory);
+      setDifferentAcademic(row.differentAcademic);
+      setCertifications(row.certifications);
+      setSoftwares(row.softwares);
+      setEnvision(row.envision);
+      setTemplateName(row.templateName);
+      setTemplateTag(row.templateTag);
+      setTemplateDescription(row.templateDescription);
+      setJobDescription(row.jobDescription);
     }
-    
   }, [location.state]);
 
   const closePopup = () => {
@@ -226,10 +210,7 @@ export const JobTemplateEdit = () => {
 
   // certificate
   const addCertificate = () => {
-    setCertifications([
-      ...certifications,
-      { certificate: null },
-    ]);
+    setCertifications([...certifications, { certificate: null }]);
   };
 
   const handleChangeCertificate = (e, value, i) => {
@@ -246,10 +227,7 @@ export const JobTemplateEdit = () => {
 
   // tools
   const addToolsAndSoftware = () => {
-    setSoftwares([
-      ...softwares,
-      { tools: null },
-    ]);
+    setSoftwares([...softwares, { tools: null }]);
   };
 
   const handleChangeToolsAndSoftware = (e, value, i) => {
@@ -268,43 +246,43 @@ export const JobTemplateEdit = () => {
     { label: "On-Site", value: "On-Site" },
     { label: "Remote", value: "Remote" },
     { label: "Hybrid", value: "Hybrid" },
-  ]
+  ];
 
   const roleTypes = [
     { label: "Contract", value: "Contract" },
     { label: "C2H", value: "C2H" },
     { label: "Fulltime", value: "Fulltime" },
-  ]
+  ];
 
   const budgetOpts = [
     { label: "yes", value: "yes" },
     { label: "No", value: "No" },
     { label: "Limited budget", value: "Limited budget" },
-  ]
+  ];
 
   const roleTimingOpts = [
     { label: "Day Shift", value: "Day Shift" },
     { label: "Night Shift", value: "Night Shift" },
     { label: "Flexible", value: "Flexible" },
-  ]
+  ];
 
   const roleTravelOpts = [
     { label: "No Travel", value: "No Travel" },
     { label: "Occasional", value: "Occasional" },
     { label: "Frequent", value: "Frequent" },
-  ]
+  ];
 
   const minQual = [
     { label: "Bachelors", value: "Bachelors" },
     { label: "Masters", value: "Masters" },
     { label: "PhD", value: "PhD" },
-  ]
+  ];
 
   const certOpts = [
     { label: "Six Sigma Green belt", value: "Six Sigma Green belt" },
     { label: "PMP", value: "PMP" },
     { label: "Scrum Master", value: "Scrum Master" },
-  ]
+  ];
 
   const tools = [
     { label: "Azure DevOps", value: "Azure DevOps" },
@@ -312,7 +290,7 @@ export const JobTemplateEdit = () => {
     { label: "ABAP", value: "ABAP" },
     { label: "ERP", value: "ERP" },
     { label: "AWS", value: "AWS" },
-  ]
+  ];
 
   const [companyOverview, setCompanyOverview] = useState("");
   const [jobSummary, setJobSummary] = useState("");
@@ -320,18 +298,17 @@ export const JobTemplateEdit = () => {
   const [benefit, setBenefit] = useState("");
   const [eeo, setEeo] = useState("");
 
-
   const getCompanyOverview = async () => {
     const title = jobTitle;
     const company_info = companyInfo;
     const bullet_points = bulletPoints;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/company-description/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/company-description/",
         {
           company_info,
-          bullet_points
-        },
+          bullet_points,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -339,7 +316,7 @@ export const JobTemplateEdit = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   const generateEEO = async () => {
     const title = jobTitle;
@@ -359,15 +336,14 @@ export const JobTemplateEdit = () => {
       .catch((e) => console.log(e));
   };
 
-
   const generateResponsibility = async () => {
     const title = jobTitle;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-roles-responsibilities/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-roles-responsibilities/",
         {
-          responsibilities
-        },
+          responsibilities,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -375,18 +351,17 @@ export const JobTemplateEdit = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   const generateJobSummary = async () => {
     const title = jobTitle;
     const position_summary = positionSummry;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-position-summary/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-position-summary/",
         {
-          position_summary
-        },
+          position_summary,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -394,17 +369,16 @@ export const JobTemplateEdit = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   const generateBenefit = async () => {
     const title = jobTitle;
     axios
       .post(
-        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-benefits/" ,
+        "https://xenflexer.northcentralus.cloudapp.azure.com/api/enhance-benefits/",
         {
-          benefits
-        },
+          benefits,
+        }
       )
       .then((data) => {
         console.log(data.data);
@@ -412,13 +386,12 @@ export const JobTemplateEdit = () => {
         //localStorage.setItem("jobId", data.data.jobId);
       })
       .catch((e) => console.log(e));
-  }
-
+  };
 
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

@@ -469,11 +469,12 @@ export const IcpTemplateEdit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        `/saveIcpTemplate?clientId=${user.userId}`,
-        { questionList, templateName, templateTag, templateDescription },
-        
-      )
+      .post(`/saveIcpTemplate?clientId=${user.userId}`, {
+        questionList,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((response) => {
         console.log(response.data);
         navigate("/templates/icp");
@@ -484,7 +485,7 @@ export const IcpTemplateEdit = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
@@ -805,7 +806,7 @@ export const IcpTemplateEdit = () => {
                           color: "#ffffff",
                           backgroundColor: "#008080",
                         }}>
-                        SAVE 
+                        SAVE
                       </Button>
                     </DialogActions>
                   </Dialog>

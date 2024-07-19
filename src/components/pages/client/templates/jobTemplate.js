@@ -26,8 +26,7 @@ export const JobTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllJobTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllJobTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -44,16 +43,13 @@ export const JobTemplate = () => {
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
   const handleEdit = (row) => {
-      navigate("/templates/jobTemplateEdit", { state: { "details" : row }})
-  }
+    navigate("/templates/jobTemplateEdit", { state: { details: row } });
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllJobTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAllJobTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -67,7 +63,7 @@ export const JobTemplate = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
@@ -166,7 +162,7 @@ export const JobTemplate = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() => handleEdit(row) }>
+                                  onClick={() => handleEdit(row)}>
                                   Edit
                                 </Button>
                               </TableCell>

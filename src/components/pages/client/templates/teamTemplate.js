@@ -25,8 +25,7 @@ export const TeamTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllTeamTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllTeamTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -45,10 +44,7 @@ export const TeamTemplate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllTeamTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAllTeamTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -62,7 +58,7 @@ export const TeamTemplate = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

@@ -69,11 +69,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const ClientSideNav = () => {
+export const ClientSideNav = ({ openTemplate }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
-  const [showAcordian, setShowAcordian] = React.useState(false);
+  const [showAcordian, setShowAcordian] = React.useState(
+    openTemplate ? true : false
+  );
 
   const handleDrawer = () => {
     setOpen(!open);

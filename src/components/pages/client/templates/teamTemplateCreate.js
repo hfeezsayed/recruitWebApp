@@ -50,24 +50,20 @@ export const TeamTemplateCreate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        `/saveTeamTemplate?clientId=${user.userId}`,
-        {
-          teamSize,
-          teamLocation,
-          crossFunctionality,
-          domainRole,
-          project,
-          contributions,
-          templateName,
-          templateTag,
-          templateDescription,
-        },
-        
-      )
+      .post(`/saveTeamTemplate?clientId=${user.userId}`, {
+        teamSize,
+        teamLocation,
+        crossFunctionality,
+        domainRole,
+        project,
+        contributions,
+        templateName,
+        templateTag,
+        templateDescription,
+      })
       .then((data) => {
-         console.log(data.data)
-         navigate("/templates/teamTemplate");  
+        console.log(data.data);
+        navigate("/templates/teamTemplate");
       })
       .catch((e) => console.log(e));
   };
@@ -80,18 +76,18 @@ export const TeamTemplateCreate = () => {
   };
 
   const teamSizeOpts = [
-  { label : "1-5", value: "1-5"},
-  { label : "5-10", value: "5-10"},
-  { label : "10-15", value: "10-15"},
-  { label : "15-20", value: "15-20"},
-  { label : "20-30", value: "20-30"},
-  { label : "30+", value: "30+"}
-]
+    { label: "1-5", value: "1-5" },
+    { label: "5-10", value: "5-10" },
+    { label: "10-15", value: "10-15" },
+    { label: "15-20", value: "15-20" },
+    { label: "20-30", value: "20-30" },
+    { label: "30+", value: "30+" },
+  ];
 
   return (
     <div>
       <div className="flex">
-        <ClientSideNav />
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
