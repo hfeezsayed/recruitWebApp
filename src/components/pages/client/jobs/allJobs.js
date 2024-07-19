@@ -34,8 +34,14 @@ import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
+import { PiUserFocus } from "react-icons/pi";
 import { GrLocation } from "react-icons/gr";
-import { IoTimeOutline, IoMenu } from "react-icons/io5";
+import {
+  IoTimeOutline,
+  IoMenu,
+  IoFilter,
+  IoBagRemoveOutline,
+} from "react-icons/io5";
 import { TbEdit } from "react-icons/tb";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -45,10 +51,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { FaLink } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
-import { MdOutlineArrowOutward } from "react-icons/md";
+import { MdOutlineArrowOutward, MdOutlinePersonOutline } from "react-icons/md";
 import { BsBagDash, BsThreeDots } from "react-icons/bs";
 import { HiDotsVertical, HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
@@ -86,6 +91,7 @@ export const AllJobs = () => {
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
+
   const handleClickFilter = (event) => {
     setAnchorFilter(event.currentTarget);
   };
@@ -214,15 +220,14 @@ export const AllJobs = () => {
   const handleFilter = (value) => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(value);
-    setFilterValue(value.target.value);
+    setFilterValue(value);
     setLoading(true);
     setFilter(true);
     axiosInstance
-      .get(
-        `/getFilterJobs?clientId=${user.userId}&filterValue=${value.target.value}`
-      )
+      .get(`/getFilterJobs?clientId=${user.userId}&filterValue=${value}`)
       .then((response) => {
         console.log(response.data);
+        setData(response?.data.data);
         setFilterData(response?.data.data);
         setLoading(false);
         //setPage(data?.pageNo || 1);
@@ -231,6 +236,7 @@ export const AllJobs = () => {
         setLoading(false);
         console.log(e);
       });
+    handleCloseFilter();
   };
 
   useEffect(() => {
@@ -240,7 +246,7 @@ export const AllJobs = () => {
       .get(`/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((response) => {
         console.log(response.data);
-        //setData(response?.data.data);
+        setData(response?.data.data);
         setFilterData(response?.data.data);
         setLoading(false);
         //setPage(data?.pageNo || 1);
@@ -329,6 +335,47 @@ export const AllJobs = () => {
     }
   };
 
+  const jobStatusColor = (status) => {
+    let color = "#ffffff";
+    let bg = "#ffffff";
+
+    if (status === "Interviewing") {
+      color = "#FFA500";
+      bg = "#FFA50020";
+    }
+    if (status === "Screening & Evaluation") {
+      color = "#F3CA36";
+      bg = "#F3CA3620";
+    }
+    if (status === "New Requirement") {
+      color = "#5FAEDA";
+      bg = "#5FAEDA20";
+    }
+    if (status === "Hiring Manager Review") {
+      color = "#C89EC8";
+      bg = "#C89EC820";
+    }
+    if (status === "Closed - Successful") {
+      color = "#58A20F";
+      bg = "#58A20F20";
+    }
+    if (status === "Offer Processing") {
+      color = "#FE8D9E";
+      bg = "#FE8D9E20";
+    }
+
+    return (
+      <div
+        style={{
+          padding: "4px 8px",
+          borderRadius: 20,
+          backgroundColor: bg,
+        }}>
+        <p style={{ color: color, fontSize: 14 }}>{status}</p>
+      </div>
+    );
+  };
+
   const sortedRows = filterData.sort((a, b) => sortComparator(a, b, orderBy));
 
   return (
@@ -414,76 +461,84 @@ export const AllJobs = () => {
                     </p>
                   </div>
                   <div className="py-5 grid grid-flow-col gap-8 justify-between items-center">
-                    <ButtonGroup
-                      style={{ color: "#008080" }}
-                      aria-label="Medium-sized button group">
-                      <Button
-                        style={{
-                          backgroundColor: "#F8F9FA",
-                          color:
-                            currentView === "WorkFlow"
-                              ? "#008080"
-                              : "#47546770",
-                          borderColor: "#D0D5DD",
-                          textTransform: "none",
-                        }}
-                        startIcon={
-                          <WorkflowOutlinesvg
-                            COLOR={
+                    <div className="flex gap-5">
+                      <ButtonGroup
+                        style={{ color: "#008080" }}
+                        aria-label="Medium-sized button group">
+                        <Button
+                          style={{
+                            backgroundColor: "#F8F9FA",
+                            color:
                               currentView === "WorkFlow"
                                 ? "#008080"
-                                : "#47546770"
-                            }
-                          />
-                        }
-                        onClick={() => setCurrentView("WorkFlow")}>
-                        Workflow View
-                      </Button>
-                      <Button
-                        style={{
-                          backgroundColor: "#F8F9FA",
-                          color:
-                            currentView === "Card" ? "#008080" : "#47546770",
-                          borderColor: "#D0D5DD",
-                          textTransform: "none",
-                        }}
-                        startIcon={<HiOutlineSquares2X2 />}
-                        onClick={() => setCurrentView("Card")}>
-                        Board View
-                      </Button>
-                      <Button
-                        style={{
-                          backgroundColor: "#F8F9FA",
-                          color:
-                            currentView === "List" ? "#008080" : "#47546770",
-                          borderColor: "#D0D5DD",
-                          textTransform: "none",
-                        }}
-                        startIcon={<IoMenu />}
-                        onClick={() => setCurrentView("List")}>
-                        List View
-                      </Button>
-                    </ButtonGroup>
-                    <div>
-                      <TextField
-                        fullWidth
-                        size="small"
-                        placeholder="Search..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <CiSearch />
-                            </InputAdornment>
-                          ),
-                        }}
-                        sx={{ minWidth: 300 }}
-                      />
+                                : "#47546770",
+                            borderColor: "#D0D5DD",
+                            textTransform: "none",
+                            fontSize: 12,
+                            fontWeight: 500,
+                          }}
+                          startIcon={
+                            <WorkflowOutlinesvg
+                              COLOR={
+                                currentView === "WorkFlow"
+                                  ? "#008080"
+                                  : "#47546770"
+                              }
+                            />
+                          }
+                          onClick={() => setCurrentView("WorkFlow")}>
+                          Workflow View
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "#F8F9FA",
+                            color:
+                              currentView === "Card" ? "#008080" : "#47546770",
+                            borderColor: "#D0D5DD",
+                            textTransform: "none",
+                            fontSize: 12,
+                            fontWeight: 500,
+                          }}
+                          startIcon={<HiOutlineSquares2X2 />}
+                          onClick={() => setCurrentView("Card")}>
+                          Board View
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "#F8F9FA",
+                            color:
+                              currentView === "List" ? "#008080" : "#47546770",
+                            borderColor: "#D0D5DD",
+                            textTransform: "none",
+                            fontSize: 12,
+                            fontWeight: 500,
+                          }}
+                          startIcon={<IoMenu />}
+                          onClick={() => setCurrentView("List")}>
+                          List View
+                        </Button>
+                      </ButtonGroup>
+                      <div>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          placeholder="Search..."
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <CiSearch />
+                              </InputAdornment>
+                            ),
+                          }}
+                          sx={{ minWidth: 412 }}
+                        />
+                      </div>
                     </div>
 
                     <div className="flex gap-4">
-                      <FormControl fullWidth sx={{ minWidth: 130 }}>
+                      {/* <FormControl fullWidth sx={{ minWidth: 130 }}>
                         <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
                         <Select
                           size="small"
@@ -496,10 +551,26 @@ export const AllJobs = () => {
                           <MenuItem value="365Days">Past 365 Days</MenuItem>
                           <MenuItem value="All">All</MenuItem>
                         </Select>
-                      </FormControl>
+                      </FormControl> */}
                       <Button
                         size="small"
-                        fullWidth
+                        variant="outlined"
+                        onClick={handleClickFilter}
+                        style={{
+                          color: "#252525",
+                          borderColor: "#D0D5DD",
+                          textTransform: "none",
+                          fontSize: 14,
+                          fontWeight: 500,
+                          borderRadius: 8,
+                          width: 94,
+                          height: 38,
+                        }}
+                        startIcon={<IoFilter style={{ color: "#252525" }} />}>
+                        Filter
+                      </Button>
+                      <Button
+                        size="small"
                         onClick={() =>
                           navigate("/job/createJob", { state: { new: true } })
                         }
@@ -507,10 +578,13 @@ export const AllJobs = () => {
                           color: "#008080",
                           background: "#EAF4F5",
                           textTransform: "none",
+                          fontSize: 14,
                           fontWeight: 500,
                           borderRadius: 8,
+                          width: 120,
+                          height: 38,
                         }}>
-                        Add Job
+                        Create New Job
                       </Button>
                     </div>
                   </div>
@@ -998,7 +1072,25 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Status
+                                      Job Type
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Job Status
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Job Sub - Status
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -1043,7 +1135,16 @@ export const AllJobs = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      Access Job Description
+                                      Job Description
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        bgcolor: "#F8F9FA",
+                                        color: "#101828",
+                                        border: 1,
+                                        borderColor: "#D0D5DD50",
+                                      }}>
+                                      Download Pdf
                                     </TableCell>
                                     <TableCell
                                       align="center"
@@ -1084,7 +1185,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.postedTime}
+                                          {row.created}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1125,7 +1226,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          50
+                                          {jobStatusColor(row?.jobStatus)}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1133,7 +1234,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          5
+                                          {row?.jobSubStatus}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1141,7 +1242,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          5
+                                          {row?.total}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1149,7 +1250,23 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          0
+                                          {row?.new}
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row?.active}
+                                        </TableCell>
+                                        <TableCell
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
+                                          }}>
+                                          {row?.hired}
                                         </TableCell>
                                         <TableCell
                                           align="center"
@@ -1158,7 +1275,6 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                            width: 140,
                                           }}>
                                           <IconButton
                                             onClick={(e) => {
@@ -1177,7 +1293,24 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                            width: 100,
+                                          }}>
+                                          <Button
+                                            style={{
+                                              color: "#5FAEDA",
+                                              fontSize: 14,
+                                              textTransform: "none",
+                                            }}
+                                            onClick={() => {}}>
+                                            Download
+                                          </Button>
+                                        </TableCell>
+                                        <TableCell
+                                          align="center"
+                                          padding="none"
+                                          sx={{
+                                            color: "#475467",
+                                            border: 1,
+                                            borderColor: "#D0D5DD50",
                                           }}>
                                           <IconButton
                                             onClick={(e) => {
@@ -1281,7 +1414,7 @@ export const AllJobs = () => {
                       TransitionComponent={Fade}>
                       <MenuItem
                         onClick={() => {
-                          handleFilterDrop("completed");
+                          handleFilter("Active");
                         }}>
                         <p
                           style={{
@@ -1289,12 +1422,12 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          Completed
+                          Active
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          handleFilterDrop("NotCompleted");
+                          handleFilter("Closed");
                         }}>
                         <p
                           style={{
@@ -1302,12 +1435,12 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          Not Completed
+                          Closed
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          handleFilterDrop("90daysback");
+                          handleFilter("90Days");
                         }}>
                         <p
                           style={{
@@ -1315,12 +1448,12 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          90days back
+                          90Days
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          handleFilterDrop("1yearback");
+                          handleFilter("365Days");
                         }}>
                         <p
                           style={{
@@ -1328,12 +1461,12 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          1year back
+                          365Days
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          handleFilterDrop("all");
+                          handleFilter("All");
                         }}>
                         <p
                           style={{
@@ -1341,7 +1474,7 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          all
+                          All
                         </p>
                       </MenuItem>
                     </Menu>
@@ -1366,7 +1499,9 @@ export const AllJobs = () => {
                       TransitionComponent={Fade}>
                       <MenuItem onClick={handleStandard}>
                         <div className="flex gap-1 items-center">
-                          <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
+                          <IoBagRemoveOutline
+                            style={{ color: "#5FAEDA", fontSize: 22 }}
+                          />
                           <p
                             style={{
                               color: "#5FAEDA",
@@ -1379,10 +1514,12 @@ export const AllJobs = () => {
                       </MenuItem>
                       <MenuItem onClick={handleJobDescription}>
                         <div className="flex gap-1 items-center">
-                          <FaLink style={{ color: "#E05880", fontSize: 14 }} />
+                          <MdOutlinePersonOutline
+                            style={{ color: "#58A20F", fontSize: 22 }}
+                          />
                           <p
                             style={{
-                              color: "#E05880",
+                              color: "#58A20F",
                               fontSize: 14,
                               fontWeight: 500,
                             }}>
@@ -1392,10 +1529,12 @@ export const AllJobs = () => {
                       </MenuItem>
                       <MenuItem onClick={handleIdentification}>
                         <div className="flex gap-1 items-center">
-                          <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
+                          <PiUserFocus
+                            style={{ color: "#FF6347", fontSize: 22 }}
+                          />
                           <p
                             style={{
-                              color: "#58A20F",
+                              color: "#FF6347",
                               fontSize: 14,
                               fontWeight: 500,
                             }}>

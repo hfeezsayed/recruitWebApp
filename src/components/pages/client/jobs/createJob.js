@@ -35,7 +35,7 @@ import { FaLink } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { CiEdit, CiSearch } from "react-icons/ci";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { IoMenu, IoPeopleOutline } from "react-icons/io5";
+import { IoBagRemoveOutline, IoMenu, IoPeopleOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BsThreeDots, BsFillCameraFill } from "react-icons/bs";
 import { TiFolderOpen } from "react-icons/ti";
@@ -47,7 +47,11 @@ import {
   HiSquares2X2,
   HiOutlineDocumentDuplicate,
 } from "react-icons/hi2";
-import { MdOutlineWatchLater, MdOutlineRemoveRedEye } from "react-icons/md";
+import {
+  MdOutlineWatchLater,
+  MdOutlineRemoveRedEye,
+  MdOutlinePersonOutline,
+} from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { FaArrowRight } from "react-icons/fa6";
@@ -62,9 +66,10 @@ import {
 } from "../../../dummy/Data";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import Spinner from "../../../utils/spinner";
+import { PiUserFocus } from "react-icons/pi";
 
 export const CreateJob = () => {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(createJobData);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
@@ -521,7 +526,9 @@ export const CreateJob = () => {
                   Complete all the steps to generate a job offer for the
                   candidate.
                 </p>
-                <Card className="grid grid-cols-2 gap-8 border border-[#D3DFE7] p-3 mt-5 rounded-xl bg-[#FBFCFE]">
+                <Card
+                  sx={{ borderRadius: 4, padding: 2 }}
+                  className="grid grid-cols-2 gap-8 border border-[#D3DFE7] mt-5 bg-[#FBFCFE]">
                   <div>
                     <p
                       style={{
@@ -535,23 +542,38 @@ export const CreateJob = () => {
                         {userData?.companyName}
                       </span>
                     </p>
-                    <div className="w-full py-3">
+                    <div className="w-full py-4">
                       <p style={{ color: "#475467", fontSize: 16 }}>
                         Job Creation Completed
                       </p>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Box sx={{ width: "70%", mr: 1 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          position: "relative",
+                          width: "70%",
+                        }}>
+                        <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
                           <BorderLinearProgress
                             variant="determinate"
-                            value={jobCompletion}
+                            value={100}
                           />
                         </Box>
-                        <Box sx={{ minWidth: 35 }}>
-                          <Typography
-                            variant="body2"
-                            color="text.secondary">{`${Math.round(
-                            jobCompletion
-                          )}%`}</Typography>
+                        <Box
+                          sx={{
+                            minWidth: 35,
+                            position: "absolute",
+                            left: `${Math.round(jobCompletion - 3)}%`,
+                            mt: 2,
+                          }}>
+                          <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center shadow-xl border border-[#D0D5DD]">
+                            <p
+                              style={{
+                                color: "#101828",
+                                fontSize: 11,
+                                fontWeight: 600,
+                              }}>{`${Math.round(jobCompletion)}%`}</p>
+                          </div>
                         </Box>
                       </Box>
                     </div>
@@ -700,7 +722,7 @@ export const CreateJob = () => {
                           onChange={(e) => setSourcing(e.target.checked)}
                           label={
                             <p style={{ color: "#D9B020", fontSize: 16 }}>
-                              Sourcing
+                              Sourcing help
                             </p>
                           }
                         />
@@ -723,7 +745,7 @@ export const CreateJob = () => {
                           onChange={(e) => setOnboarding(e.target.checked)}
                           label={
                             <p style={{ color: "#9BC53D", fontSize: 16 }}>
-                              Onboarding
+                              Onboarding help
                             </p>
                           }
                         />
@@ -746,7 +768,7 @@ export const CreateJob = () => {
                           onChange={(e) => setServiceStaffing(e.target.checked)}
                           label={
                             <p style={{ color: "#2C7DA0", fontSize: 16 }}>
-                              Full-Service Staffing
+                              Full-Service Staffing help
                             </p>
                           }
                         />
@@ -2395,7 +2417,9 @@ export const CreateJob = () => {
             TransitionComponent={Fade}>
             <MenuItem onClick={handleStandard}>
               <div className="flex gap-1 items-center">
-                <FaLink style={{ color: "#5FAEDA", fontSize: 14 }} />
+                <IoBagRemoveOutline
+                  style={{ color: "#5FAEDA", fontSize: 22 }}
+                />
                 <p
                   style={{
                     color: "#5FAEDA",
@@ -2408,10 +2432,12 @@ export const CreateJob = () => {
             </MenuItem>
             <MenuItem onClick={handleJobDescription}>
               <div className="flex gap-1 items-center">
-                <FaLink style={{ color: "#E05880", fontSize: 14 }} />
+                <MdOutlinePersonOutline
+                  style={{ color: "#58A20F", fontSize: 22 }}
+                />
                 <p
                   style={{
-                    color: "#E05880",
+                    color: "#58A20F",
                     fontSize: 14,
                     fontWeight: 500,
                   }}>
@@ -2421,10 +2447,10 @@ export const CreateJob = () => {
             </MenuItem>
             <MenuItem onClick={handleIdentification}>
               <div className="flex gap-1 items-center">
-                <FaLink style={{ color: "#58A20F", fontSize: 14 }} />
+                <PiUserFocus style={{ color: "#FF6347", fontSize: 22 }} />
                 <p
                   style={{
-                    color: "#58A20F",
+                    color: "#FF6347",
                     fontSize: 14,
                     fontWeight: 500,
                   }}>

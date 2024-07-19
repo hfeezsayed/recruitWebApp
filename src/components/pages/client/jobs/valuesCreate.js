@@ -35,8 +35,7 @@ export const ValuesCreate = () => {
     axiosInstance
       .post(
         `/saveValueTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
-        ratingList,
-        
+        ratingList
       )
       .then((response) => {
         console.log(response.data);
@@ -141,7 +140,7 @@ export const ValuesCreate = () => {
                   onClick={() => handleSubmit()}
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}>
-                  CONFIRM
+                  Save Template
                 </Button>
               </div>
             </div>

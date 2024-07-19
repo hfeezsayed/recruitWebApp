@@ -20,6 +20,7 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import axios from "axios";
 import { useEffect } from "react";
+import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
 
 export const JobDetailCreate = () => {
   const navigate = useNavigate();
@@ -42,7 +43,6 @@ export const JobDetailCreate = () => {
   // Role Requirements
   const [specificIndustryExperience, setSpecificIndustryExperience] =
     useState();
-  const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
   const [roleType, setRoleType] = useState();
@@ -149,7 +149,6 @@ export const JobDetailCreate = () => {
       setBenefits(selected.benefits);
       setEqualEmployeeOpportunity(selected.equalEmployeeOpportunity);
       setSpecificIndustryExperience(selected.specificIndustryExperience);
-      setSpecifyIndustryExp(selected.specifyIndustryExp);
       setIndustryknowledge(selected.industryKnowledge);
       setWorkSetting(selected.workSetting);
       setRoleType(selected.roleType);
@@ -185,7 +184,7 @@ export const JobDetailCreate = () => {
         benefits,
         equalEmployeeOpportunity,
         specificIndustryExperience,
-        specifyIndustryExp,
+
         industryKnowledge,
         workSetting,
         roleType,
@@ -239,7 +238,7 @@ export const JobDetailCreate = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-          specifyIndustryExp,
+
           industryKnowledge,
           workSetting,
           roleType,
@@ -255,7 +254,7 @@ export const JobDetailCreate = () => {
           templateName,
           templateTag,
           templateDescription,
-          jobDescription
+          jobDescription,
         }
       )
       .then((data) => {
@@ -296,7 +295,7 @@ export const JobDetailCreate = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-          specifyIndustryExp,
+
           industryKnowledge,
           workSetting,
           roleType,
@@ -312,7 +311,7 @@ export const JobDetailCreate = () => {
           templateName,
           templateTag,
           templateDescription,
-          jobDescription
+          jobDescription,
         }
       )
       .then((data) => {
@@ -648,9 +647,11 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      For the Company Overview, ensure it succinctly captures the mission and culture of the company in three sentences. 
-                      This summary should provide a clear and compelling introduction to what drives the company and its values, helping to 
-                      communicate its essence effectively.
+                    For the Company Overview, ensure it succinctly captures the
+                    mission and culture of the company in three sentences. This
+                    summary should provide a clear and compelling introduction
+                    to what drives the company and its values, helping to
+                    communicate its essence effectively.
                   </p>
                 </div>
               </div>
@@ -704,7 +705,10 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      The job summary should succinctly outline the expectations of this role in three sentences. Include details on the reporting manager's role to provide clarity on hierarchical structure and responsibilities.
+                    The job summary should succinctly outline the expectations
+                    of this role in three sentences. Include details on the
+                    reporting manager's role to provide clarity on hierarchical
+                    structure and responsibilities.
                   </p>
                 </div>
               </div>
@@ -758,7 +762,13 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      Outline detailed but concise core responsibilities, emphasizing unique organizational duties (e.g., social media expertise for event promotion). Highlight daily activities to give candidates a clear view of the role and company fit. Specify reporting structure and organizational impact to show the role's place and significance within the company. Keep it to 10 bullets to maintain clarity and focus.
+                    Outline detailed but concise core responsibilities,
+                    emphasizing unique organizational duties (e.g., social media
+                    expertise for event promotion). Highlight daily activities
+                    to give candidates a clear view of the role and company fit.
+                    Specify reporting structure and organizational impact to
+                    show the role's place and significance within the company.
+                    Keep it to 10 bullets to maintain clarity and focus.
                   </p>
                 </div>
               </div>
@@ -812,7 +822,8 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      Include benefits in 3-5 words each, such as 'Flexible work schedules' and 'Health Insurance', to attract top talent.
+                    Include benefits in 3-5 words each, such as 'Flexible work
+                    schedules' and 'Health Insurance', to attract top talent.
                   </p>
                 </div>
               </div>
@@ -867,7 +878,11 @@ export const JobDetailCreate = () => {
                       fontStyle: "italic",
                       marginTop: 10,
                     }}>
-                      Craft an effective EEO statement: Be specific about compliance with EEOC rules, mention relevant employment practices beyond hiring, highlight diversity and inclusion efforts, affirm merit-based hiring decisions, and direct to additional resources for more information.
+                    Craft an effective EEO statement: Be specific about
+                    compliance with EEOC rules, mention relevant employment
+                    practices beyond hiring, highlight diversity and inclusion
+                    efforts, affirm merit-based hiring decisions, and direct to
+                    additional resources for more information.
                   </p>
                 </div>
               </div>
@@ -877,34 +892,20 @@ export const JobDetailCreate = () => {
               <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
                 Role Requirements and Preferences
               </p>
-              <div className="grid grid-flow-row gap-2 mt-5">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Is it essential for the candidate to have experience in a
-                  specific industry?
-                </p>
-                <Autocomplete
-                  size="small"
-                  disablePortal
-                  options={yes_no.map((option) => option)}
-                  value={specificIndustryExperience || null}
-                  onChange={(e, newvalue) =>
-                    setSpecificIndustryExperience(newvalue)
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                />
-              </div>
               <div className="grid grid-flow-row gap-2 py-5">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  If so, could you specify which industry and why that
-                  experience is critical?
+                  Is industry-specific experience essential for candidates, and
+                  if so, which industry and why that experience is critical?
                 </p>
+
                 <TextField
                   size="small"
                   disablePortal
-                  value={specifyIndustryExp}
-                  onChange={(e) => setSpecifyIndustryExp(e.target.value)}
+                  multiline
+                  value={specificIndustryExperience}
+                  onChange={(e) =>
+                    setSpecificIndustryExperience(e.target.value)
+                  }
                   placeholder="type"
                 />
               </div>
@@ -993,7 +994,7 @@ export const JobDetailCreate = () => {
                 <div className="grid grid-flow-row gap-2 ">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Does this role offer visa sponsorship?
+                    What kind of visa are you looking for ?
                   </p>
                   <Autocomplete
                     size="small"
@@ -1050,190 +1051,206 @@ export const JobDetailCreate = () => {
                     )}
                   />
                 </div>
-              </div>
-              <div className="grid grid-flow-row gap-2 py-5">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Would you be open to candidate with different academic
-                  background but match the professional skills?
-                </p>
-                <Autocomplete
-                  size="small"
-                  disablePortal
-                  options={yes_no}
-                  value={differentAcademic || null}
-                  onChange={(e, newvalue) => setDifferentAcademic(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                />
-              </div>
-              {/* cerificate */}
-              <div className="grid grid-flow-row gap-2 mt-3">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Are there any specific certifications or licenses that
-                  candidates must hold?
-                </p>
-                {certifications.map((value, index) => {
-                  return (
-                    <>
-                      <div>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={certOpts.map((option) => option.label)}
-                          value={value.certificate || null}
-                          onChange={(e, value) =>
-                            handleChangeCertificate("certificate", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
-                        />
-                      </div>
-                      {certifications.length > 1 && (
-                        <div className=" flex justify-end">
-                          <Button
-                            variant="outlined"
-                            size="small"
-                            style={{
-                              color: "#EB5757",
-                              borderColor: "#E6E6E6",
-                              textTransform: "none",
-                            }}
-                            onClick={() => removeCertificate(index)}
-                            startIcon={
-                              <IoMdRemoveCircleOutline
-                                style={{ color: "#EB5757" }}
-                              />
-                            }>
-                            Remove
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  );
-                })}
-                <div className="py-3 flex justify-end">
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    style={{
-                      color: "#404040",
-                      borderColor: "#E6E6E6",
-                      textTransform: "none",
-                    }}
-                    onClick={addCertificate}
-                    startIcon={<FiPlus />}>
-                    Add
-                  </Button>
-                </div>
-              </div>
-              {/* tools */}
-              <div className="grid grid-flow-row gap-2 ">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Are there any particular tools or software applications
-                  candidates should be adept with?
-                </p>
-                {softwares.map((value, index) => {
-                  return (
-                    <>
-                      <div>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={tools.map((option) => option.label)}
-                          value={value.tools || null}
-                          onChange={(e, value) =>
-                            handleChangeToolsAndSoftware("tools", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
-                        />
-                      </div>
-                      {softwares.length > 1 && (
-                        <div className=" flex justify-end">
-                          <Button
-                            variant="outlined"
-                            size="small"
-                            style={{
-                              color: "#EB5757",
-                              borderColor: "#E6E6E6",
-                              textTransform: "none",
-                            }}
-                            onClick={() => removeToolsAndSoftware(index)}
-                            startIcon={
-                              <IoMdRemoveCircleOutline
-                                style={{ color: "#EB5757" }}
-                              />
-                            }>
-                            Remove
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  );
-                })}
-                <div className="pt-3 flex justify-end">
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    style={{
-                      color: "#404040",
-                      borderColor: "#E6E6E6",
-                      textTransform: "none",
-                    }}
-                    onClick={addToolsAndSoftware}
-                    startIcon={<FiPlus />}>
-                    Add
-                  </Button>
-                </div>
-              </div>
-              <div className="grid grid-flow-row gap-2">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Can you outline what you envision a successful candidate
-                  achieving in this role over the next three years?
-                </p>
-                <TextField
-                  size="small"
-                  placeholder="type"
-                  value={envision}
-                  onChange={(e) => setEnvision(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-flow-row gap-2 py-8">
-                <div className="pt-3 gap-4 flex">
+
+                <div className="grid grid-flow-row gap-2 py-5">
                   <p
                     style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                    Job Description
+                    Open to candidates with diverse academic backgrounds with
+                    required skills?
+                  </p>
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={yes_no}
+                    value={differentAcademic || null}
+                    onChange={(e, newvalue) => setDifferentAcademic(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+                </div>
+                <div className="grid grid-flow-row gap-2">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    What should a successful candidate achieve in this role
+                    within three years?
+                  </p>
+                  <TextField
+                    size="small"
+                    placeholder="type"
+                    value={envision}
+                    onChange={(e) => setEnvision(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="grid-cols-2 grid gap-8 mt-8">
+                {/* cerificate */}
+                <div className="grid grid-flow-row gap-2 h-fit">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Are there any specific certifications or licenses that
+                    candidates must hold?
+                  </p>
+                  {certifications.map((value, index) => {
+                    return (
+                      <>
+                        <div>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={certOpts.map((option) => option.label)}
+                            value={value.certificate || null}
+                            onChange={(e, value) =>
+                              handleChangeCertificate(
+                                "certificate",
+                                value,
+                                index
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
+                            )}
+                          />
+                        </div>
+                        {certifications.length > 1 && (
+                          <div className=" flex justify-end">
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              style={{
+                                color: "#EB5757",
+                                borderColor: "#E6E6E6",
+                                textTransform: "none",
+                              }}
+                              onClick={() => removeCertificate(index)}
+                              startIcon={
+                                <IoMdRemoveCircleOutline
+                                  style={{ color: "#EB5757" }}
+                                />
+                              }>
+                              Remove
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })}
+                  <div className="py-3 flex justify-end">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "#404040",
+                        borderColor: "#E6E6E6",
+                        textTransform: "none",
+                      }}
+                      onClick={addCertificate}
+                      startIcon={<FiPlus />}>
+                      Add
+                    </Button>
+                  </div>
+                </div>
+                {/* tools */}
+                <div className="grid grid-flow-row gap-2 h-fit">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    Are there any tools or software candidates should be
+                    proficient in?
+                  </p>
+                  {softwares.map((value, index) => {
+                    return (
+                      <>
+                        <div>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={tools.map((option) => option.label)}
+                            value={value.tools || null}
+                            onChange={(e, value) =>
+                              handleChangeToolsAndSoftware(
+                                "tools",
+                                value,
+                                index
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
+                            )}
+                          />
+                        </div>
+                        {softwares.length > 1 && (
+                          <div className=" flex justify-end">
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              style={{
+                                color: "#EB5757",
+                                borderColor: "#E6E6E6",
+                                textTransform: "none",
+                              }}
+                              onClick={() => removeToolsAndSoftware(index)}
+                              startIcon={
+                                <IoMdRemoveCircleOutline
+                                  style={{ color: "#EB5757" }}
+                                />
+                              }>
+                              Remove
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })}
+                  <div className="pt-3 flex justify-end">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      style={{
+                        color: "#404040",
+                        borderColor: "#E6E6E6",
+                        textTransform: "none",
+                      }}
+                      onClick={addToolsAndSoftware}
+                      startIcon={<FiPlus />}>
+                      Add
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-flow-row gap-2 pb-8">
+                <div className="pt-3 ">
+                  <p
+                    style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                    Generate screening question for this role
                   </p>
                   <Button
-                    variant="outlined"
                     size="small"
                     style={{
-                      color: "white",
-                      borderColor: "#008080",
+                      color: "#008080",
                       textTransform: "none",
-                      backgroundColor: "#008080",
+                      backgroundColor: "#EAF4F5",
+                      margin: 3,
                     }}
+                    startIcon={<AiNetworksvg COLOR={"#008080"} />}
                     onClick={getJobDescription}>
-                    Generate Job Description
+                    Generate JD
                   </Button>
                 </div>
 
                 <textarea
                   value={jobDescription}
-                  row={10}
+                  row={50}
                   placeholder="type"
                   onChange={(e) => setJobDescription(e.target.value)}
                   style={{
@@ -1241,6 +1258,7 @@ export const JobDetailCreate = () => {
                     borderColor: "#D0D5DD",
                     borderRadius: 8,
                     padding: 5,
+                    height: 200,
                   }}
                 />
               </div>
@@ -1256,11 +1274,11 @@ export const JobDetailCreate = () => {
                 back
               </Button>
               <Button
-                  onClick={savejobDetail}
-                  variant="outlined"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  Save
-                </Button>
+                onClick={savejobDetail}
+                variant="outlined"
+                style={{ color: "#008080" }}>
+                Save
+              </Button>
               <Button
                 onClick={() => {
                   setShowPopup(true);

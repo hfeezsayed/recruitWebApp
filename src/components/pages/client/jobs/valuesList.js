@@ -41,8 +41,7 @@ export const ValuesList = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -61,10 +60,7 @@ export const ValuesList = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAllValueTemplate?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -243,7 +239,7 @@ export const ValuesList = () => {
                     }}
                     variant="contained"
                     style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                    CONFIRM
+                    Choose Template
                   </Button>
                 </div>
               )}
