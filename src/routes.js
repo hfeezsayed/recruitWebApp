@@ -76,6 +76,10 @@ import { OutputofDigitalTalentProfile } from "./components/pages/candidate/HomeP
 import { ConfirmationScreen } from "./components/pages/candidate/DigitalTalentProfile/confirmationScreen";
 import { ProfileDashboard } from "./components/pages/client/dashboard/profile";
 import { ScreeningQuestions } from "./components/pages/client/jobs/screeningQuestions";
+import { Settings } from "./components/pages/client/settings/settings";
+import { ExternalHelp } from "./components/pages/client/externalHelp/externalHelp";
+import { DashBoard } from "./components/pages/client/dashboard/dashBoard";
+import { JobCandidateCombination } from "./components/pages/client/jobs/JobCandidateCombination";
 
 export const Routes = () => {
   return (
@@ -137,6 +141,7 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
+        <Route path="dashboard" element={<DashBoard />} />
         <Route path="profile" element={<ProfileDashboard />} />
         <Route path="job/allJobs" element={<AllJobs />} />
         <Route path="job/assignCandidates" element={<AssignCandidates />} />
@@ -228,6 +233,12 @@ export const Routes = () => {
         />
         <Route path="assessmentResult" element={<AsssessmentResult />} />
         <Route path="assignCandidate" element={<AssignCandidate />} />
+        <Route
+          path="jobCandidateCombination"
+          element={<JobCandidateCombination />}
+        />
+        <Route path="settings" element={<Settings />} />
+        <Route path="externalHelp" element={<ExternalHelp />} />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

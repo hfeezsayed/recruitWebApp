@@ -1,14 +1,50 @@
 import React, { useState } from "react";
+import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { CiEdit } from "react-icons/ci";
 import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { ScreeningQuestionsData } from "../../../dummy/Data";
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
-import { CiEdit } from "react-icons/ci";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const ScreeningQuestions = () => {
   const [questions, setQuestions] = useState(ScreeningQuestionsData);
   const [proceed, setproceed] = useState(false);
+
+  const [editedQuestionId, setEditedQuestionId] = useState(null);
+  const [editedText, setEditedText] = useState("");
+
+  const onSubmit = () => {
+    axiosInstance
+      .post(`/screeningQuestions`, { questions, proceed })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleEditClick = (id, text) => {
+    setEditedQuestionId(id);
+    setEditedText(text);
+  };
+
+  // Function to handle the change in the input field
+  const handleChange = (event) => {
+    setEditedText(event.target.value);
+  };
+
+  // Function to handle the save button click
+  const handleSaveClick = (id) => {
+    setQuestions(
+      questions.map((question) =>
+        question.id === id ? { ...question, question: editedText } : question
+      )
+    );
+    setEditedQuestionId(null);
+    setEditedText("");
+  };
 
   return (
     <div>
@@ -29,8 +65,8 @@ export const ScreeningQuestions = () => {
             <div>
               {questions?.map((data, index) => {
                 return (
-                  <div className="flex justify-between gap-6 py-4">
-                    <div className="flex gap-3 ">
+                  <div className="flex justify-between gap-6 py-4" key={index}>
+                    <div className="flex gap-3 w-full">
                       <p
                         style={{
                           color: "#3C3C43",
@@ -39,22 +75,53 @@ export const ScreeningQuestions = () => {
                         }}>
                         {index + 1}
                       </p>
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                        }}>
-                        {data}
-                      </p>
+                      {editedQuestionId === data?.id ? (
+                        <div className="w-full">
+                          <TextField
+                            fullWidth
+                            size="small"
+                            multiline
+                            value={editedText}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      ) : (
+                        <p
+                          style={{
+                            color: "#101828",
+                            fontSize: 16,
+                          }}>
+                          {data?.question}
+                        </p>
+                      )}
                     </div>
+
                     <div>
-                      <Button
-                        size="small"
-                        variant="text"
-                        style={{ color: "#1E90FF", textTransform: "none" }}
-                        endIcon={<CiEdit />}>
-                        Edit
-                      </Button>
+                      {editedQuestionId === data?.id ? (
+                        <Button
+                          size="small"
+                          style={{
+                            color: "#008080",
+                            textTransform: "none",
+                            backgroundColor: "#EAF4F5",
+                          }}
+                          onClick={() => {
+                            handleSaveClick(data?.id);
+                          }}>
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          size="small"
+                          variant="text"
+                          style={{ color: "#1E90FF", textTransform: "none" }}
+                          endIcon={<CiEdit />}
+                          onClick={() => {
+                            handleEditClick(data?.id, data?.question);
+                          }}>
+                          Edit
+                        </Button>
+                      )}
                     </div>
                   </div>
                 );
@@ -90,7 +157,8 @@ export const ScreeningQuestions = () => {
                 style={{
                   color: "#ffffff",
                   backgroundColor: "#008080",
-                }}>
+                }}
+                onClick={onSubmit}>
                 Save
               </Button>
             </div>
