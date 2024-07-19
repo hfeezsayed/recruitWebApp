@@ -3,14 +3,18 @@ import { LinkdeanSvg } from "../../assets/icon/linkdeansvg";
 import { FacebookSvg } from "../../assets/icon/facebooksvg";
 import { BallSvg } from "../../assets/icon/ballsvg";
 import logo from "../../assets/images/logo.png";
+import logoNew from "../../assets/images/xenrecruit.png";
 
 export const Footer = () => {
   return (
     <footer className="z-50 relative bg-black bottom-0">
       <div className="mx-20 py-5">
         <div className="flex gap-2 items-center mb-5">
-          <img src={logo} alt="logo" />
-          <p style={{ fontSize: 25, color: "#B3B3B3" }}>Xenhire</p>
+        <img
+            src={logoNew}
+            alt="logo"
+            style={{ width: 180, marginTop: "20px" }}
+          />
         </div>
         <p style={{ fontSize: 16, color: "#B3B3B3" }}>
           Learn more about our mission, vision, and values.
@@ -45,7 +49,7 @@ export const Footer = () => {
       <div className="flex mt-16 py-5 border-t justify-between mx-20 items-center">
         <div>
           <p style={{ color: "#B3B3B3", fontSize: 16 }}>
-            © 2024 Xenhire. All rights reserved.
+            © 2024 XenRecruit. All rights reserved.
           </p>
         </div>
         <div className="flex gap-6">

@@ -40,7 +40,7 @@ import { FiEdit } from "react-icons/fi";
 import { CiEdit, CiSearch } from "react-icons/ci";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { IoBagRemoveOutline, IoMenu, IoPeopleOutline } from "react-icons/io5";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useFetcher } from "react-router-dom";
 import { BsThreeDots, BsFillCameraFill } from "react-icons/bs";
 import { TiFolderOpen } from "react-icons/ti";
 import { IoIosCalendar, IoIosCloseCircleOutline } from "react-icons/io";
@@ -73,18 +73,18 @@ import Spinner from "../../../utils/spinner";
 import { PiUserFocus } from "react-icons/pi";
 
 export const CreateJob = () => {
-  const [userData, setUserData] = useState(createJobData);
+  const location = useLocation();
+  const [userData, setUserData] = useState(null);
+  const [state, setState] = useState(location.state);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
   const [jobId, setJobId] = useState(0);
-  const location = useLocation();
-  const { state } = location;
   const [accessDescription, setAccessDescription] = useState(true);
   const [title, setTitle] = useState(userName);
   const [showRecomandation, setShowRecomandation] = useState(false);
   const [candidateDetails, setCandidateDetails] = useState(
-    location.state?.selected || candistaeDetailsDataNew
+    state?.selected || candistaeDetailsDataNew
   );
   const [loading, setLoading] = useState(false);
   const [anchorjd, setAnchorjd] = useState();
@@ -105,15 +105,26 @@ export const CreateJob = () => {
   const [sourcing, setSourcing] = useState(false);
   const [onboarding, setOnboarding] = useState(false);
   const [serviceStaffing, setServiceStaffing] = useState(false);
+  const [jobIdentity, setJobIdentity] = useState(0);
 
   const [showPopup, setShowPopup] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
 
   useEffect(() => {
-    if (location.state?.showPopup) {
+    const jobId = localStorage.getItem("jobId");
+    if (jobId !== 0) {
+      setJobIdentity(jobId);
+    }
+    else{
+      setJobIdentity(0);
+    }
+  }, [jobIdentity]);
+
+  useEffect(() => {
+    if (state?.showPopup) {
       setShowPopup(true);
     }
-  }, [location.state]);
+  }, [state]);
 
   const [tasks, setTasks] = useState(kanvanTaskData);
 
@@ -135,15 +146,22 @@ export const CreateJob = () => {
     setAnchorkb(null);
   };
 
-  const saveJopTitle = () => {
+  const saveJobTitle = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const clientId = user.userId; 
+    setLoading(true);
     axiosInstance
-      .post(`/jobTitle`, { jobTitle })
+      .post(`/saveJobTitle`, { clientId, jobTitle })
       .then((response) => {
         console.log(response);
-
+        setUserData(response.data);
+        setState({ new: false, showPopup: false }); 
+        localStorage.setItem("jobId", response.data.id);
+        setLoading(false);
         // setPage(data?.pageNo || 1);
       })
       .catch((e) => {
+        setLoading(false);
         console.log(e);
       });
     closePopup();
@@ -190,24 +208,21 @@ export const CreateJob = () => {
   };
 
   // useEffect(() => {
-  //   if (location.state) {
-  //     console.log(location.state);
-  //     setJobId(location.state);
+  //   if (state) {
+  //     console.log(state);
+  //     setJobId(state);
   //   }
-  // }, [location.state]);
+  // }, [state]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    console.log(location.state);
-    if (location.state?.new) {
+    let jobId = localStorage.getItem("jobId");
+    console.log(jobId);
+    if ((state?.new || state === null) && jobId === 0) {
     } else {
-      let jobId = 0;
-      if (location.state) {
-        localStorage.setItem("jobId", location.state);
-        jobId = location.state;
-      } else {
-        jobId = localStorage.getItem("jobId");
-      }
+      if (state) {
+        jobId = state;
+      } 
       setLoading(true);
       axiosInstance
         .get(
@@ -280,16 +295,13 @@ export const CreateJob = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
-    if (location.state?.new) {
-      localStorage.setItem("jobId", 0);
+    let jobId = localStorage.getItem("jobId");
+    console.log(jobId);
+    if ((state?.new || state === null) && jobId === 0) {
     } else {
-      let jobId = 0;
-      if (location.state) {
-        localStorage.setItem("jobId", location.state);
-        jobId = location.state;
-      } else {
-        jobId = localStorage.getItem("jobId");
-      }
+      if (state) {
+        jobId = state;
+      } 
       axiosInstance
         .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
         .then((data) => {
@@ -409,54 +421,82 @@ export const CreateJob = () => {
     );
   };
   const handleJobDetails = (jobData) => {
-    if (jobData?.jobDetail === true) {
-      navigate("/job/jobDetailEdit", { state: { jobData: jobData } });
-    } else {
-      navigate("/job/jobDetailCreate");
+    console.log(userData);
+    if(userData === null){
+      setShowPopup(true); 
+    } 
+    else{
+      if (jobData?.jobDetail === true) {
+        navigate("/job/jobDetailEdit", { state: { jobData: jobData } });
+      } else {
+        navigate("/job/jobDetailCreate");
+      }
     }
   };
 
   const handleWorkValues = (jobData) => {
-    if (jobData?.workValues === true) {
-      navigate("/job/valuesEdit", { state: { jobData: jobData } });
-    } else {
-      navigate("/job/workValueTemplate");
+    console.log(userData);
+    if(userData === null){
+      setShowPopup(true); 
+    } 
+    else{
+      if (jobData?.workValues === true) {
+        navigate("/job/valuesEdit", { state: { jobData: jobData } });
+      } else {
+        navigate("/job/workValueTemplate");
+      }
     }
   };
 
   const closePopup = () => {
+    
     setShowPopup(false);
     setJobTitle("");
   };
 
   const handleJobPreferences = (jobData) => {
-    if (jobData?.preference === true) {
-      navigate("/job/preferenceEdit", { state: { jobData: jobData } });
-    } else {
-      navigate("/job/preferenceCreate");
+    if(userData === null){
+      setShowPopup(true); 
+    } 
+    else{
+      if (jobData?.preference === true) {
+        navigate("/job/preferenceEdit", { state: { jobData: jobData } });
+      } else {
+        navigate("/job/preferenceCreate");
+      }
     }
   };
 
   const handleTeam = (jobData) => {
-    if (jobData?.team === true) {
-      navigate("/job/teamEdit", { state: { jobData: jobData } });
-    } else {
-      navigate("/job/teamCreate");
+    if(userData === null){
+      setShowPopup(true); 
+    } 
+    else{
+      if (jobData?.team === true) {
+        navigate("/job/teamEdit", { state: { jobData: jobData } });
+      } else {
+        navigate("/job/teamCreate");
+      }
     }
   };
 
   const handleIcp = (jobData) => {
-    if (jobData?.icp === true) {
-      navigate("/job/icpResult", { state: { jobData: jobData } });
-    } else {
-      navigate("/job/icpTemplate");
+    if(userData === null){
+      setShowPopup(true); 
+    } 
+    else{
+      if (jobData?.icp === true) {
+        navigate("/job/icpResult", { state: { jobData: jobData } });
+      } else {
+        navigate("/job/icpTemplate");
+      }
     }
   };
 
   const handleStandard = () => {
     if (jobCompletion === 100) {
       navigate("/job/outputofJobDescription", {
-        state: { jobId: location.state, jdAccess: true },
+        state: { jobId: state, jdAccess: true },
       });
     }
   };
@@ -464,7 +504,7 @@ export const CreateJob = () => {
   const handleJobDescription = () => {
     if (jobCompletion === 100) {
       navigate("/job/outputofJobDescription", {
-        state: { jobId: location.state, teamAccess: true },
+        state: { jobId: state, teamAccess: true },
       });
     }
   };
@@ -472,7 +512,7 @@ export const CreateJob = () => {
   const handleIdentification = () => {
     if (jobCompletion === 100) {
       navigate("/job/outputofJobDescription", {
-        state: { jobId: location.state, fullAccess: true },
+        state: { jobId: state, fullAccess: true },
       });
     }
   };
@@ -840,7 +880,7 @@ export const CreateJob = () => {
                       }}
                       // onClick={() =>
                       //   navigate("/job/outputofJobDescription", {
-                      //     state: location.state,
+                      //     state: state,
                       //   })
                       // }
                     >
@@ -2655,7 +2695,7 @@ export const CreateJob = () => {
             </DialogContent>
             <DialogActions>
               <Button
-                onClick={saveJopTitle}
+                onClick={saveJobTitle}
                 variant="contained"
                 style={{
                   color: "#ffffff",
