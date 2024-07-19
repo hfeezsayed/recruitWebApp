@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const Settings = () => {
   const [jobCode, setJobCode] = useState();
@@ -43,6 +44,35 @@ export const Settings = () => {
   const teamLocationList = ["Hyderabad", "Noida", "Delhi", "Gurgaon", "Pune"];
   const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
   const softwareCandidatesList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
+
+  const onSubmitData = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    const jobId = localStorage.getItem("jobId");
+    axiosInstance
+      .post(`/saveSettingsData?clientId=${user.userId}&jobId=${jobId}`, {
+        jobCode,
+        jobFamily,
+        jobDepartment,
+        jobLocation,
+        defaultCurrency,
+        workSetting,
+        typeRole,
+        timingRole,
+        travel,
+        acadamicQualification,
+        teamSize,
+        teamLocation,
+        certifications,
+        softwareCandidates,
+        companyOverview,
+        EEO,
+        onboarding,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="flex">
@@ -324,6 +354,14 @@ export const Settings = () => {
               value={onboarding}
               onChange={(e) => setOnboarding(e.target.value)}
             />
+          </div>
+          <div className="flex justify-end mt-4 gap-4">
+            <Button
+              variant="contained"
+              onClick={onSubmitData}
+              sx={{ bgcolor: "#008080", color: "#ffffff" }}>
+              Save
+            </Button>
           </div>
         </div>
       </div>

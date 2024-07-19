@@ -17,6 +17,10 @@ import {
   TextField,
   ButtonGroup,
   InputAdornment,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Box from "@mui/material/Box";
@@ -39,7 +43,7 @@ import { IoBagRemoveOutline, IoMenu, IoPeopleOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BsThreeDots, BsFillCameraFill } from "react-icons/bs";
 import { TiFolderOpen } from "react-icons/ti";
-import { IoIosCalendar } from "react-icons/io";
+import { IoIosCalendar, IoIosCloseCircleOutline } from "react-icons/io";
 import { BiBell } from "react-icons/bi";
 import { IoEyeOutline } from "react-icons/io5";
 import {
@@ -102,6 +106,15 @@ export const CreateJob = () => {
   const [onboarding, setOnboarding] = useState(false);
   const [serviceStaffing, setServiceStaffing] = useState(false);
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [jobTitle, setJobTitle] = useState("");
+
+  useEffect(() => {
+    if (location.state?.showPopup) {
+      setShowPopup(true);
+    }
+  }, [location.state]);
+
   const [tasks, setTasks] = useState(kanvanTaskData);
 
   const handleJd = (event) => {
@@ -120,6 +133,20 @@ export const CreateJob = () => {
     setAnchorjd(null);
     setAnchorLd(null);
     setAnchorkb(null);
+  };
+
+  const saveJopTitle = () => {
+    axiosInstance
+      .post(`/jobTitle`, { jobTitle })
+      .then((response) => {
+        console.log(response);
+
+        // setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    closePopup();
   };
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -395,6 +422,11 @@ export const CreateJob = () => {
     } else {
       navigate("/job/workValueTemplate");
     }
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setJobTitle("");
   };
 
   const handleJobPreferences = (jobData) => {
@@ -2592,6 +2624,47 @@ export const CreateJob = () => {
               </div>
             </MenuItem>
           </Menu>
+
+          {/* popup */}
+          <Dialog open={showPopup} onClose={closePopup}>
+            <DialogTitle>Job Title</DialogTitle>
+            <IconButton
+              onClick={closePopup}
+              style={{ position: "absolute", top: 10, right: 10 }}>
+              <IoIosCloseCircleOutline />
+            </IconButton>
+            <Divider />
+            <DialogContent sx={{ minWidth: 450 }}>
+              <div className="grid grid-flow-row gap-2">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                  Job Title
+                </p>
+                <TextField
+                  size="small"
+                  disablePortal
+                  value={jobTitle}
+                  onChange={(e) => setJobTitle(e.target.value)}
+                  placeholder="type"
+                />
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={saveJopTitle}
+                variant="contained"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#008080",
+                }}>
+                SAVE
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
       <Footer />
