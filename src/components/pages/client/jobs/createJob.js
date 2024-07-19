@@ -64,7 +64,7 @@ import Spinner from "../../../utils/spinner";
 import { GoPlus } from "react-icons/go";
 
 export const CreateJob = () => {
-  const [userData, setUserData] = useState(createJobData);
+  const [userData, setUserData] = useState([]);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
     : userData.name;
@@ -84,7 +84,7 @@ export const CreateJob = () => {
   const ldOpen = Boolean(anchorLd);
   const [anchorkb, setAnchorkb] = useState();
   const kbOpen = Boolean(anchorkb);
-  const [jobCompletion, setJobCompletion] = useState(60);
+  const [jobCompletion, setJobCompletion] = useState(0);
   const [tableWidth, setTableWidth] = useState(1200);
   const [search, setSearch] = useState("");
   const [currentView, setCurrentView] = useState("Card");
