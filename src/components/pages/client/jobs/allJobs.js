@@ -572,7 +572,9 @@ export const AllJobs = () => {
                       <Button
                         size="small"
                         onClick={() =>
-                          navigate("/job/createJob", { state: { new: true } })
+                          navigate("/job/createJob", {
+                            state: { new: true, showPopup: true },
+                          })
                         }
                         style={{
                           color: "#008080",
