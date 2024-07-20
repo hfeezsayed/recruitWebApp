@@ -99,7 +99,11 @@ export const SideNav = () => {
       </div>
       <Drawer variant="permanent" open={open} className="z-0">
         <DrawerHeader sx={{ justifyContent: "center" }}>
-          <img src={logoNew} alt="logo" style={{ width: 180, marginTop: '20px' }} />
+          <img
+            src={logoNew}
+            alt="logo"
+            style={{ width: 180, marginTop: "20px" }}
+          />
         </DrawerHeader>
         <div>
           <ListItem disablePadding sx={{ display: "block" }}>
@@ -119,7 +123,7 @@ export const SideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/candidate");
+                navigate("/dashboard");
               }}>
               <ListItemIcon
                 sx={{
@@ -163,7 +167,7 @@ export const SideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/digitalTalentProfile")
+                navigate("/digitalTalentProfile");
                 setShowAcordian(!showAcordian);
               }}>
               <ListItemIcon
@@ -192,7 +196,6 @@ export const SideNav = () => {
                 sx={{ opacity: open ? 1 : 0 }}
               />
               {showAcordian ? (
-                
                 <IoIosArrowUp
                   style={{
                     color: currentState.includes("digitalTalentProfile")

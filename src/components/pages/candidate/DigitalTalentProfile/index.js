@@ -28,6 +28,8 @@ import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../utils/spinner";
+import { PieChart } from "@mui/x-charts";
+import { convertCompetencies } from "../../../utils/function";
 
 export const DigitalTalentProfile = () => {
   const [userData, setUserData] = useState(DigitalTalentProfileData);
@@ -88,6 +90,23 @@ export const DigitalTalentProfile = () => {
       });
   }, []);
 
+  const downloadResume = async () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    await axiosInstance
+      .get(`/downloadResume?candidateId=${user.userId}`, {
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        console.log(response.blob());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const showAssessmentResult = () => {
     if (userData.assessment === true) {
       navigate("/digitalTalentProfile/talentanalysisresult", {
@@ -109,12 +128,14 @@ export const DigitalTalentProfile = () => {
   };
 
   const handlePreferences = () => {
-    if(userData.assessment === true){
-      navigate("/digitalTalentProfile/preferenceform", { state: userData?.preferencesVersionId });
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/preferenceform", {
+        state: userData?.preferencesVersionId,
+      });
     } else {
       navigate("/digitalTalentProfile/preferenceform");
     }
-  }
+  };
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -128,18 +149,19 @@ export const DigitalTalentProfile = () => {
     }
   };
 
+  const profileCompetition = convertCompetencies(
+    userData?.prifileCompititionData[0]
+  );
+
   return (
     <div>
       <div className="flex">
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-          (
-            <Spinner/>
-          )
-          :
-          (
+          {loading === true ? (
+            <Spinner />
+          ) : (
             <div className="p-8">
               <div>
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
@@ -149,112 +171,256 @@ export const DigitalTalentProfile = () => {
                   Craft your personalized talent profile now and let your skills
                   shine globally.
                 </p>
-                <div className="py-4 flex gap-6">
-                  <div
-                    className="w-28 h-28 rounded-full "
-                    style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
-                    <img
-                      src={
-                        userData.image ||
-                        `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
-                      }
-                      alt="person"
-                      className="rounded-full"
-                    />
-                    <div
-                      className="relative -mt-8 justify-end flex h-9"
-                      style={{ backgroundColor: "#" }}>
-                      <IconButton
-                        style={{ padding: 6, backgroundColor: "#66B2B2" }}>
-                        <BsFillCameraFill
-                          style={{ color: "#ffffff", fontSize: 22 }}
-                        />
-                      </IconButton>
-                    </div>
-                  </div>
-                  <div className="mt-9">
-                    <p
-                      style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
-                      {userName}
-                    </p>
-                    <div className="flex gap-2 items-center pt-1">
-                      <MdMailOutline
-                        style={{
-                          color: "#475467",
-                          fontSize: 24,
-                        }}
-                      />
+                <Card
+                  sx={{
+                    boxShadow: 0,
+                    border: 1,
+                    borderColor: "#D3DFE7",
+                    borderRadius: 2,
+                    padding: 2,
+                    backgroundColor: "#FBFCFE",
+                    my: 2,
+                  }}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
                       <p
                         style={{
                           color: "#475467",
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: 500,
                         }}>
-                        {JSON.parse(localStorage.getItem("token"))?.email ||
-                          userData?.email}
+                        Candidate Summary
                       </p>
-                      {userData.resume && (
-                        <Button
-                          size="small"
-                          variant="text"
-                          style={{
-                            color: "#6941C6",
-                            textTransform: "none",
-                            backgroundColor: "#F9F5FF",
-                            borderRadius: 16,
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                          }}
-                          startIcon={<HiOutlineDownload />}>
-                          Resume
-                        </Button>
-                      )}
-                      {userData.linkedIn && (
-                        <Button
-                          size="small"
-                          variant="text"
-                          style={{
-                            color: "#3538CD",
-                            textTransform: "none",
-                            backgroundColor: "#EEF4FF",
-                            borderRadius: 16,
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                          }}
-                          startIcon={<MdOutlineArrowOutward />}>
-                          Linkedin
-                        </Button>
-                      )}
+                      <div className="py-4 flex gap-6">
+                        <div
+                          className="w-28 h-28 rounded-full "
+                          style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
+                          <img
+                            src={
+                              userData.image ||
+                              `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
+                            }
+                            alt="person"
+                            className="rounded-full"
+                          />
+                          <div
+                            className="relative -mt-8 justify-end flex h-9"
+                            style={{ backgroundColor: "#" }}>
+                            <IconButton
+                              style={{
+                                padding: 6,
+                                backgroundColor: "#66B2B2",
+                              }}>
+                              <BsFillCameraFill
+                                style={{ color: "#ffffff", fontSize: 22 }}
+                              />
+                            </IconButton>
+                          </div>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              color: "#101828",
+                              fontWeight: 600,
+                              fontSize: 24,
+                            }}>
+                            {userName}
+                          </p>
+                          <div className="flex gap-2 items-center">
+                            <MdMailOutline
+                              style={{
+                                color: "#475467",
+                                fontSize: 24,
+                              }}
+                            />
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 16,
+                              }}>
+                              {JSON.parse(localStorage.getItem("token"))
+                                ?.email || userData?.email}
+                            </p>
+                          </div>
+                          <div className="flex gap-3 mt-2">
+                            {userData?.resume && (
+                              <Button
+                                size="small"
+                                variant="text"
+                                onClick={() => downloadResume()}
+                                style={{
+                                  color: "#6941C6",
+                                  textTransform: "none",
+                                  backgroundColor: "#F9F5FF",
+                                  borderRadius: 16,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                }}
+                                startIcon={<HiOutlineDownload />}>
+                                Resume
+                              </Button>
+                            )}
+                            {userData?.linkedin && (
+                              <Button
+                                size="small"
+                                variant="text"
+                                onClick={() =>
+                                  window.open(userData.linkedIn, "_blank")
+                                }
+                                style={{
+                                  color: "#3538CD",
+                                  textTransform: "none",
+                                  backgroundColor: "#EEF4FF",
+                                  borderRadius: 16,
+                                  paddingLeft: 10,
+                                  paddingRight: 10,
+                                }}
+                                startIcon={<MdOutlineArrowOutward />}>
+                                Linkedin
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-full">
+                        <p style={{ color: "#101828", fontSize: 14 }}>
+                          Profile completion
+                        </p>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            position: "relative",
+                            width: "70%",
+                          }}>
+                          <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
+                            <BorderLinearProgress
+                              variant="determinate"
+                              value={userData?.personalInfo}
+                            />
+                          </Box>
+
+                          <Box
+                            sx={{
+                              minWidth: 35,
+                              position: "absolute",
+                              left: `${Math.round(
+                                userData?.personalInfo - 3
+                              )}%`,
+                              mt: 2,
+                            }}>
+                            <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center shadow-xl border border-[#D0D5DD]">
+                              <p
+                                style={{
+                                  color: "#101828",
+                                  fontSize: 11,
+                                  fontWeight: 600,
+                                }}>{`${Math.round(
+                                userData?.personalInfo
+                              )}%`}</p>
+                            </div>
+                          </Box>
+                        </Box>
+                      </div>
+                    </div>
+                    <div>
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          fontWeight: 500,
+                        }}>
+                        Profile Competition
+                      </p>
+                      <div className="flex py-2 items-center">
+                        <div className="flex justify-end">
+                          <PieChart
+                            series={profileCompetition}
+                            width={300}
+                            height={200}
+                            slotProps={{
+                              legend: {
+                                hidden: true,
+                              },
+                            }}
+                          />
+                        </div>
+                        <div className="-ml-20 w-full">
+                          <div className="flex justify-between w-full border-b-2 border-[#D4D4D4]">
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}>
+                              Status
+                            </p>
+                            <p
+                              style={{
+                                color: "#475467",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}>
+                              Percantage
+                            </p>
+                          </div>
+                          {profileCompetition?.map((row, index) => {
+                            return (
+                              <div
+                                className="flex w-full justify-between items-center py-2"
+                                key={index}>
+                                <div className="flex gap-2 items-center">
+                                  <div
+                                    style={{
+                                      backgroundColor: row?.data[0]?.color,
+                                      width: 12,
+                                      height: 12,
+                                      borderRadius: 100,
+                                    }}
+                                  />
+                                  <p
+                                    style={{
+                                      color: "#101828",
+                                      fontSize: 14,
+                                    }}>
+                                    {row?.data[0]?.label}
+                                  </p>
+                                </div>
+                                <p
+                                  style={{
+                                    color: "#101828",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                  }}>
+                                  {row?.data[0]?.value}%
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex w-full py-2">
-                  <div className="w-full">
-                    <p style={{ color: "#101828", fontSize: 14 }}>
-                      Profile completion
-                    </p>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Box sx={{ width: "50%", mr: 1 }}>
-                        <BorderLinearProgress
-                          variant="determinate"
-                          value={userData?.personalInfo ? 100 : 0}
-                        />
-                      </Box>
-                      <Box sx={{ minWidth: 35 }}>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary">{`${Math.round(
-                          userData?.personalInfo ? 100 : 0
-                        )}%`}</Typography>
-                      </Box>
-                    </Box>
-                  </div>
-                  <div className="w-64">
+                  <div className="flex w-full justify-end gap-4">
                     <Button
                       size="small"
                       variant="text"
                       style={{
-                        color: "#5E8EBD",
+                        color: "#5FAEDA",
                         textTransform: "none",
+                        textDecoration: "underline",
+                      }}
+                      onClick={() => {}}>
+                      Update DTP Description
+                    </Button>
+
+                    <Button
+                      size="small"
+                      variant="text"
+                      style={{
+                        color: "#008080",
+                        textTransform: "none",
+                        textDecoration: "underline",
                       }}
                       onClick={() => {
                         navigate("/OutputofDigitalTalentProfile");
@@ -262,9 +428,10 @@ export const DigitalTalentProfile = () => {
                       Access DTP Description
                     </Button>
                   </div>
-                </div>
+                </Card>
               </div>
-              <div className="py-10">
+              {/* card */}
+              {/* <div className="py-10">
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Complete all forms and assessments to begin
                 </p>
@@ -272,7 +439,6 @@ export const DigitalTalentProfile = () => {
                   Please fill out all the necessary forms and complete the
                   required assessments to get started
                 </p>
-                {/* card */}
                 <div className="grid grid-cols-2 gap-5 mt-5">
                   <Card sx={{ borderRadius: 5 }}>
                     <CardContent>
@@ -599,7 +765,7 @@ export const DigitalTalentProfile = () => {
                     </CardActions>
                   </Card>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

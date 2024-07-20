@@ -101,7 +101,6 @@ export const AllJobs = () => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
   };
 
   const handleJd = (event) => {
@@ -449,7 +448,7 @@ export const AllJobs = () => {
                   </div>
                 </div>
               ) : (
-                <div className="p-8 h-full">
+                <div className="p-8 h-full w-full">
                   <div>
                     <p
                       style={{

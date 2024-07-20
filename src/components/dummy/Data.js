@@ -399,6 +399,41 @@ export const DashBoardData = {
   authorisedClient: 7,
   clientAssessment: 14,
   selfAssessment: 11,
+  jobApllied: 14,
+  jobRejected: 10,
+  jobInterview: 3,
+  personalInfo: 20,
+  prifileCompititionData: [
+    {
+      pillar2: "Candidate Profile",
+      competencies: [
+        {
+          name: "Candidate Details",
+          rating: 1.8,
+          percentage: 70,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Preference",
+          rating: 1.8,
+          percentage: 70,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Value Assesment",
+          rating: 1.8,
+          percentage: 60,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Talent Spectrum Analysis",
+          rating: 3,
+          percentage: 90,
+          attribute: "Strong communication abilities",
+        },
+      ],
+    },
+  ],
 };
 
 export const DigitalTalentProfileData = {
@@ -406,6 +441,7 @@ export const DigitalTalentProfileData = {
   email: "Info@mathewjohhny.com.au",
   resume: true,
   linkedin: true,
+  personalInfo: 20,
   image:
     "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
   profileCompletd: 78,
@@ -416,6 +452,37 @@ export const DigitalTalentProfileData = {
   authorisedClient: 7,
   clientAssessment: 14,
   selfAssessment: 11,
+  prifileCompititionData: [
+    {
+      pillar2: "Candidate Profile",
+      competencies: [
+        {
+          name: "Candidate Details",
+          rating: 1.8,
+          percentage: 70,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Preference",
+          rating: 1.8,
+          percentage: 70,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Value Assesment",
+          rating: 1.8,
+          percentage: 60,
+          attribute: "Strong communication abilities",
+        },
+        {
+          name: "Talent Spectrum Analysis",
+          rating: 3,
+          percentage: 90,
+          attribute: "Strong communication abilities",
+        },
+      ],
+    },
+  ],
 };
 
 export const TalentProfileResultData = {
@@ -2781,12 +2848,33 @@ export const jobOverviewData = {
         "John’s values and working style align well with our company culture",
     },
   ],
-  interview: {
-    scheduledBy: " Nilesh garje",
-    mode: "Online",
-    date: "July 1, 2024",
-    link: "https://www.zoom.com/meetingchdijiso",
-  },
+  interview: [
+    {
+      createdBy: "Johnny Smith Mathew",
+      date: "2024-07-19",
+      rating: 3.5,
+    },
+    {
+      createdBy: "Alex Brown",
+      date: "2024-07-19",
+      rating: 4.5,
+    },
+    {
+      createdBy: "John Doe",
+      date: "2024-07-19",
+      rating: 2.9,
+    },
+    {
+      createdBy: "Lisa Taylor Gomez",
+      date: "2024-07-19",
+      rating: 3.0,
+    },
+    {
+      createdBy: "Amat nam",
+      date: "2024-07-19",
+      rating: 3.5,
+    },
+  ],
   overallReview: [],
   notes: [],
   attechments: [
@@ -2914,3 +3002,52 @@ export const jobAssessmentsResultsData = [
       "Demonstrated strong proficiency in Java and Python. Needs improvement in advanced algorithms.",
   },
 ];
+
+export const interviewFeedBackData = {
+  FormData: {
+    date: "2024-07-18",
+    recomndation: true,
+    recomndationWhy:
+      "John has demonstrated a strong understanding of the key responsibilities required for the role and has shown a high level of professionalism throughout the interview process. His past experience aligns well with our needs, and his enthusiasm for the position is evident.",
+    experiance: true,
+    experianceWhy:
+      "John has demonstrated a strong understanding of the key responsibilities required for the role and has shown a high level of professionalism throughout the interview process. His past experience aligns well with our needs, and his enthusiasm for the position is evident.",
+  },
+  individualScore: [
+    {
+      criateria: "Presentation Skills",
+      rating: 4,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Relevant Skill Set",
+      rating: 5,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Professionalism",
+      rating: 4,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Motivation",
+      rating: 3,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Communication Skills",
+      rating: 4,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Flexibility",
+      rating: 5,
+      comments: "John presented his ideas clearly and confidently",
+    },
+    {
+      criateria: "Culture Fit",
+      rating: 3,
+      comments: "John presented his ideas clearly and confidently",
+    },
+  ],
+};

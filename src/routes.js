@@ -7,7 +7,6 @@ import { ForgotPass } from "./components/pages/auth/forgotPass";
 import { ForgotOtp } from "./components/pages/auth/forgotOtp";
 import { NewPassword } from "./components/pages/auth/newPassword";
 import PrivateRoute from "./components/pages/auth/privateRoute";
-import { HomePage } from "./components/pages/candidate/HomePage";
 import { DigitalTalentProfile } from "./components/pages/candidate/DigitalTalentProfile";
 import { AnalysisAssessment } from "./components/pages/candidate/DigitalTalentProfile/analysisAssessment";
 import { PersonalInformation } from "./components/pages/candidate/DigitalTalentProfile/personalInformation";
@@ -80,6 +79,9 @@ import { Settings } from "./components/pages/client/settings/settings";
 import { ExternalHelp } from "./components/pages/client/externalHelp/externalHelp";
 import { DashBoard } from "./components/pages/client/dashboard/dashBoard";
 import { JobCandidateCombination } from "./components/pages/client/jobs/JobCandidateCombination";
+import { Candidate } from "./components/pages/candidate/HomePage/candidate";
+import { HomePage } from "./components/pages/candidate/HomePage/HomePage";
+import { JobPortal } from "./components/pages/candidate/job/jobProtal";
 
 export const Routes = () => {
   return (
@@ -97,7 +99,9 @@ export const Routes = () => {
         element={<TalentProfileResult />}
       />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
-        <Route path="candidate" element={<HomePage />} />
+        <Route path="candidate" element={<Candidate />} />
+        <Route path="dashboard" element={<HomePage />} />
+        <Route path="job/jobportal" element={<JobPortal />} />
         <Route
           path="outputofDigitalTalentProfile"
           element={<OutputofDigitalTalentProfile />}

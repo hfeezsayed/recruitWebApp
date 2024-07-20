@@ -31,7 +31,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../utils/spinner";
 
-export const HomePage = () => {
+export const Candidate = () => {
   const [userData, setUserData] = useState(DashBoardData);
   const [authorizedCount, setAuthorizedCount] = useState(0);
   const [clientCount, setClientCount] = useState(0);
@@ -108,7 +108,6 @@ export const HomePage = () => {
       });
   }, []);
 
-
   const showAssessmentResult = () => {
     if (userData.assessment === true) {
       navigate("/digitalTalentProfile/talentanalysisresult", {
@@ -130,30 +129,31 @@ export const HomePage = () => {
   };
 
   const handlePreferences = () => {
-    if(userData.assessment === true){
-      navigate("/digitalTalentProfile/preferenceform", { state: userData?.preferencesVersionId });
+    if (userData.assessment === true) {
+      navigate("/digitalTalentProfile/preferenceform", {
+        state: userData?.preferencesVersionId,
+      });
     } else {
       navigate("/digitalTalentProfile/preferenceform");
     }
-  }
+  };
 
-  const downloadResume = async() =>{
+  const downloadResume = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
-      .get(`/downloadResume?candidateId=${user.userId}`,{
+      .get(`/downloadResume?candidateId=${user.userId}`, {
         headers: {
-          'Content-Type': 'application/pdf',
+          "Content-Type": "application/pdf",
         },
-      }
-      )
+      })
       .then((response) => {
         console.log(response);
-        console.log( response.blob());
+        console.log(response.blob());
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   return (
     <div>
@@ -161,12 +161,9 @@ export const HomePage = () => {
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-          (
-            <Spinner/>
-          )
-          :
-          (
+          {loading === true ? (
+            <Spinner />
+          ) : (
             <div className="p-8">
               <div>
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
@@ -201,7 +198,11 @@ export const HomePage = () => {
                   </div>
                   <div className="mt-9">
                     <p
-                      style={{ color: "#101828", fontWeight: 600, fontSize: 24 }}>
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 24,
+                      }}>
                       {userName}
                     </p>
                     <div className="flex gap-2 items-center pt-1">
@@ -240,7 +241,9 @@ export const HomePage = () => {
                         <Button
                           size="small"
                           variant="text"
-                          onClick={() => window.open(userData.linkedIn, '_blank')}
+                          onClick={() =>
+                            window.open(userData.linkedIn, "_blank")
+                          }
                           style={{
                             color: "#3538CD",
                             textTransform: "none",
@@ -460,9 +463,7 @@ export const HomePage = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() =>
-                          handlePreferences()
-                        }>
+                        onClick={() => handlePreferences()}>
                         {userData?.preferences ? "Edit" : "Not taken"}
                       </Button>
                     </CardActions>
@@ -545,7 +546,9 @@ export const HomePage = () => {
                         }}
                         endIcon={<FaArrowRight />}
                         onClick={() => showValueAssessmentResult()}>
-                        {userData?.valueAssessment ? "view results" : "Not taken"}
+                        {userData?.valueAssessment
+                          ? "view results"
+                          : "Not taken"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -574,7 +577,9 @@ export const HomePage = () => {
                           <p
                             style={{
                               textAlign: "center",
-                              color: userData?.assessment ? "#58A20F" : "#101828",
+                              color: userData?.assessment
+                                ? "#58A20F"
+                                : "#101828",
                               fontWeight: 600,
                             }}>
                             Completed
@@ -630,7 +635,8 @@ export const HomePage = () => {
                 </div>
                 {/* Actions need to be taken */}
                 <div className="mt-5">
-                  <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
+                  <p
+                    style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                     Actions need to be taken
                   </p>
                   <p style={{ color: "#475467", fontSize: 16 }}>
