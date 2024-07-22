@@ -388,7 +388,7 @@ export const JobPortal = () => {
                             <Card sx={{ borderRadius: 3, px: 1 }}>
                               <CardContent>
                                 <div className="py-2">
-                                  <div className="flex gap-2 justify-between">
+                                  <div className="flex gap-2 justify-between items-center">
                                     <p
                                       style={{
                                         color: "#101828",
@@ -397,12 +397,12 @@ export const JobPortal = () => {
                                       }}>
                                       {row?.jobName}
                                     </p>
-                                    {row?.new ? (
+                                    {row?.newPost ? (
                                       <p
                                         style={{
                                           color: "#7D5AE2",
-                                          backgroundColor: "#7D5AE210",
-                                          fontSize: 16,
+                                          backgroundColor: "#7D5AE215",
+                                          fontSize: 12,
                                           fontWeight: 500,
                                           borderRadius: 3,
                                           paddingLeft: 8,
@@ -417,7 +417,7 @@ export const JobPortal = () => {
                                   </div>
                                   <p
                                     style={{
-                                      color: "#475467",
+                                      color: "#474D6A",
                                       fontSize: 12,
                                       fontWeight: 500,
                                     }}>

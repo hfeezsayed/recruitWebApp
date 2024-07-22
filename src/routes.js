@@ -82,6 +82,7 @@ import { JobCandidateCombination } from "./components/pages/client/jobs/JobCandi
 import { Candidate } from "./components/pages/candidate/HomePage/candidate";
 import { HomePage } from "./components/pages/candidate/HomePage/HomePage";
 import { JobPortal } from "./components/pages/candidate/job/jobProtal";
+import { JobDetails } from "./components/pages/candidate/job/jobDetails";
 
 export const Routes = () => {
   return (
@@ -102,6 +103,7 @@ export const Routes = () => {
         <Route path="candidate" element={<Candidate />} />
         <Route path="dashboard" element={<HomePage />} />
         <Route path="job/jobportal" element={<JobPortal />} />
+        <Route path="job/jobDetails" element={<JobDetails />} />
         <Route
           path="outputofDigitalTalentProfile"
           element={<OutputofDigitalTalentProfile />}
