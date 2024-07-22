@@ -74,7 +74,7 @@ import { PiUserFocus } from "react-icons/pi";
 
 export const CreateJob = () => {
   const location = useLocation();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(createJobData);
   const [state, setState] = useState(location.state);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -214,32 +214,32 @@ export const CreateJob = () => {
   //   }
   // }, [state]);
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    let jobId = localStorage.getItem("jobId");
-    console.log(jobId);
-    if ((state?.new || state === null) && jobId === 0) {
-    } else {
-      if (state) {
-        jobId = state;
-      } 
-      setLoading(true);
-      axiosInstance
-        .get(
-          `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`
-        )
-        .then((response) => {
-          console.log(response);
-          setCandidateDetails(response.data);
-          setLoading(false);
-          // setPage(data?.pageNo || 1);
-        })
-        .catch((e) => {
-          setLoading(false);
-          console.log(e);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   let jobId = localStorage.getItem("jobId");
+  //   console.log(jobId);
+  //   if ((state?.new || state === null) && jobId === 0) {
+  //   } else {
+  //     if (state) {
+  //       jobId = state;
+  //     } 
+  //     setLoading(true);
+  //     axiosInstance
+  //       .get(
+  //         `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`
+  //       )
+  //       .then((response) => {
+  //         console.log(response);
+  //         setCandidateDetails(response.data);
+  //         setLoading(false);
+  //         // setPage(data?.pageNo || 1);
+  //       })
+  //       .catch((e) => {
+  //         setLoading(false);
+  //         console.log(e);
+  //       });
+  //   }
+  // }, []);
 
   const handleDtpAccess = (row) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -292,60 +292,60 @@ export const CreateJob = () => {
       });
   };
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    console.log(state);
-    let jobId = localStorage.getItem("jobId");
-    console.log(jobId);
-    if ((state?.new || state === null) && jobId === 0) {
-    } else {
-      if (state) {
-        jobId = state;
-      } 
-      axiosInstance
-        .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
-        .then((data) => {
-          console.log(data);
-          setUserData(data?.data);
-          setScreeningQuestions(data?.data.screening);
-          setAssessments(data?.data?.assessment);
-          if (
-            data.data?.jobDetail &&
-            data.data?.workValues &&
-            data.data?.team &&
-            data.data?.icp
-          ) {
-            setAccessDescription(false);
-          }
-          if (data.data?.jobDetail) {
-            setJobCompletion(25);
-            setTitle(data.data?.title);
-          }
-          if (data.data?.jobDetail && data.data?.workValues) {
-            setJobCompletion(50);
-          }
-          if (
-            data.data?.jobDetail &&
-            data.data?.workValues &&
-            data.data?.team
-          ) {
-            setJobCompletion(75);
-          }
-          if (
-            data.data?.jobDetail &&
-            data.data?.workValues &&
-            data.data?.team &&
-            data.data?.icp
-          ) {
-            setJobCompletion(100);
-          }
-          localStorage.setItem("jobId", data.data.id);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   console.log(state);
+  //   let jobId = localStorage.getItem("jobId");
+  //   console.log(jobId);
+  //   if ((state?.new || state === null) && jobId === 0) {
+  //   } else {
+  //     if (state) {
+  //       jobId = state;
+  //     } 
+  //     axiosInstance
+  //       .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
+  //       .then((data) => {
+  //         console.log(data);
+  //         setUserData(data?.data);
+  //         setScreeningQuestions(data?.data.screening);
+  //         setAssessments(data?.data?.assessment);
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team &&
+  //           data.data?.icp
+  //         ) {
+  //           setAccessDescription(false);
+  //         }
+  //         if (data.data?.jobDetail) {
+  //           setJobCompletion(25);
+  //           setTitle(data.data?.title);
+  //         }
+  //         if (data.data?.jobDetail && data.data?.workValues) {
+  //           setJobCompletion(50);
+  //         }
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team
+  //         ) {
+  //           setJobCompletion(75);
+  //         }
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team &&
+  //           data.data?.icp
+  //         ) {
+  //           setJobCompletion(100);
+  //         }
+  //         localStorage.setItem("jobId", data.data.id);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   }
+  // }, []);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -2641,6 +2641,7 @@ export const CreateJob = () => {
               <div className="flex gap-2 items-center">
                 <FiEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
                 <p
+                  onClick={() => navigate("/jobCandidateCombination")}
                   style={{
                     color: "#5FAEDA",
                     fontSize: 8,

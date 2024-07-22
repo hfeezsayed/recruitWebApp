@@ -12,13 +12,13 @@ export const Settings = () => {
   const [defaultCurrency, setDefaultCurrency] = useState();
   const [workSetting, setWorkSetting] = useState();
   const [typeRole, setTypeRole] = useState();
-  const [timingRole, setTimingRole] = useState();
+  const [roleTiming, setRoleTiming] = useState();
   const [travel, setTravel] = useState();
   const [acadamicQualification, setAcadamincQualification] = useState();
   const [teamSize, setTeamSize] = useState();
   const [teamLocation, setTeamLocation] = useState();
   const [certifications, setCertifications] = useState();
-  const [softwareCandidates, setSoftwareCandidates] = useState();
+  const [softwares, setSoftwares] = useState();
   const [companyOverview, setCompanyOverview] = useState();
   const [EEO, setEEO] = useState();
   const [onboarding, setOnboarding] = useState();
@@ -37,19 +37,19 @@ export const Settings = () => {
   const currencyList = ["USD", "EUR", "GBP"];
   const workSettingList = ["On-Site", "Remote", "Hybrid"];
   const typeRoleList = ["Contract", "C2H", "Fulltime"];
-  const timingRoleList = ["Day Shift", "Night shift", "Flexible"];
+  const roleTimingList = ["Day Shift", "Night shift", "Flexible"];
   const travelList = ["No Travel", "Occasional", "Frequent"];
   const acadamicQualificationList = ["Bachelors", "Master", "PhD"];
   const teamSizeList = ["1-5", "5-10", "10-15", "15-20", "20-30", "30+"];
   const teamLocationList = ["Hyderabad", "Noida", "Delhi", "Gurgaon", "Pune"];
   const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
-  const softwareCandidatesList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
+  const softwaresList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
 
   const onSubmitData = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(`/saveSettingsData?clientId=${user.userId}&jobId=${jobId}`, {
+      .post(`/saveClientSettings?clientId=${user.userId}`, {
         jobCode,
         jobFamily,
         jobDepartment,
@@ -57,13 +57,13 @@ export const Settings = () => {
         defaultCurrency,
         workSetting,
         typeRole,
-        timingRole,
+        roleTiming,
         travel,
         acadamicQualification,
         teamSize,
         teamLocation,
         certifications,
-        softwareCandidates,
+        softwares,
         companyOverview,
         EEO,
         onboarding,
@@ -211,9 +211,9 @@ export const Settings = () => {
             <Autocomplete
               size="small"
               fullWidth
-              options={timingRoleList.map((option) => option)}
-              value={timingRole || null}
-              onChange={(e, value) => setTimingRole(value)}
+              options={roleTimingList.map((option) => option)}
+              value={roleTiming || null}
+              onChange={(e, value) => setRoleTiming(value)}
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
@@ -310,9 +310,9 @@ export const Settings = () => {
             <Autocomplete
               size="small"
               fullWidth
-              options={softwareCandidatesList.map((option) => option)}
-              value={softwareCandidates || null}
-              onChange={(e, value) => setSoftwareCandidates(value)}
+              options={softwaresList.map((option) => option)}
+              value={softwares || null}
+              onChange={(e, value) => setSoftwares(value)}
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
@@ -320,8 +320,7 @@ export const Settings = () => {
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-              Are there any tools or software candidates should be proficient
-              in?
+              Company Overview
             </p>
             <TextField
               fullWidth
