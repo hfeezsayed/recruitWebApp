@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -23,31 +23,30 @@ export const Settings = () => {
   const [EEO, setEEO] = useState();
   const [onboarding, setOnboarding] = useState();
 
-  const jobCodeList = ["JC001", "JCC002", "JC003"];
-  const jobFamilyList = ["Technology", "Designing", "Marketing", "Finance"];
-  const jobDepartmentList = ["Engineering", "Sales", "Human Resources"];
-  const jobLocationList = [
-    "New York",
-    "NY",
-    "San Francisco",
-    "CA",
-    "London",
-    "UK",
-  ];
-  const currencyList = ["USD", "EUR", "GBP"];
-  const workSettingList = ["On-Site", "Remote", "Hybrid"];
-  const typeRoleList = ["Contract", "C2H", "Fulltime"];
-  const roleTimingList = ["Day Shift", "Night shift", "Flexible"];
-  const travelList = ["No Travel", "Occasional", "Frequent"];
-  const acadamicQualificationList = ["Bachelors", "Master", "PhD"];
-  const teamSizeList = ["1-5", "5-10", "10-15", "15-20", "20-30", "30+"];
-  const teamLocationList = ["Hyderabad", "Noida", "Delhi", "Gurgaon", "Pune"];
-  const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
-  const softwaresList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
+  // const jobCodeList = ["JC001", "JCC002", "JC003"];
+  // const jobFamilyList = ["Technology", "Designing", "Marketing", "Finance"];
+  // const jobDepartmentList = ["Engineering", "Sales", "Human Resources"];
+  // const jobLocationList = [
+  //   "New York",
+  //   "NY",
+  //   "San Francisco",
+  //   "CA",
+  //   "London",
+  //   "UK",
+  // ];
+  // const currencyList = ["USD", "EUR", "GBP"];
+  // const workSettingList = ["On-Site", "Remote", "Hybrid"];
+  // const typeRoleList = ["Contract", "C2H", "Fulltime"];
+  // const roleTimingList = ["Day Shift", "Night shift", "Flexible"];
+  // const travelList = ["No Travel", "Occasional", "Frequent"];
+  // const acadamicQualificationList = ["Bachelors", "Master", "PhD"];
+  // const teamSizeList = ["1-5", "5-10", "10-15", "15-20", "20-30", "30+"];
+  // const teamLocationList = ["Hyderabad", "Noida", "Delhi", "Gurgaon", "Pune"];
+  // const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
+  // const softwaresList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
 
   const onSubmitData = () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(`/saveClientSettings?clientId=${user.userId}`, {
         jobCode,
@@ -93,7 +92,7 @@ export const Settings = () => {
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
               Job Code
             </p>
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={jobCodeList.map((option) => option)}
@@ -102,6 +101,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={jobCode}
+              onChange={(e) => setJobCode(e.target.value)}
             />
           </div>
           <div className="mt-5">
@@ -109,7 +115,7 @@ export const Settings = () => {
               Job Family
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={jobFamilyList.map((option) => option)}
@@ -118,6 +124,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={jobFamily}
+              onChange={(e) => setJobFamily(e.target.value)}
             />
           </div>
           <div className="mt-5">
@@ -125,7 +138,7 @@ export const Settings = () => {
               Job Department
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={jobDepartmentList.map((option) => option)}
@@ -134,6 +147,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={jobDepartment}
+              onChange={(e) => setJobDepartment(e.target.value)}
             />
           </div>
           <div className="mt-5">
@@ -141,7 +161,7 @@ export const Settings = () => {
               Job Location
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={jobLocationList.map((option) => option)}
@@ -150,14 +170,20 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={jobLocation}
+              onChange={(e) => setJobLocation(e.target.value)}
             />
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
               Default Currency
             </p>
-
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={currencyList.map((option) => option)}
@@ -166,6 +192,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            />{" "} */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={defaultCurrency}
+              onChange={(e) => setDefaultCurrency(e.target.value)}
             />
           </div>
           <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
@@ -176,7 +209,7 @@ export const Settings = () => {
               What is the work setting for the role?
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={workSettingList.map((option) => option)}
@@ -185,6 +218,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={workSetting}
+              onChange={(e) => setWorkSetting(e.target.value)}
             />
           </div>
           <div className="my-5">
@@ -192,7 +232,7 @@ export const Settings = () => {
               Type of role?
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={typeRoleList.map((option) => option)}
@@ -201,14 +241,20 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={typeRole}
+              onChange={(e) => setTypeRole(e.target.value)}
             />
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
               What are the timings for the role?
             </p>
-
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={roleTimingList.map((option) => option)}
@@ -217,14 +263,20 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            />{" "} */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={roleTiming}
+              onChange={(e) => setRoleTiming(e.target.value)}
             />
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
               How frequent does the role require to travel?
             </p>
-
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={travelList.map((option) => option)}
@@ -233,6 +285,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            />{" "} */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={travel}
+              onChange={(e) => setTravel(e.target.value)}
             />
           </div>
           <div className="my-5">
@@ -241,7 +300,7 @@ export const Settings = () => {
               potential candidates?   Default:  Bachelors/Masters/PhD
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={acadamicQualificationList.map((option) => option)}
@@ -250,14 +309,20 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={acadamicQualification}
+              onChange={(e) => setAcadamincQualification(e.target.value)}
             />
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
               What is the size of the team?
             </p>
-
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={teamSizeList.map((option) => option)}
@@ -266,6 +331,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            />{" "} */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={teamSize}
+              onChange={(e) => setTeamSize(e.target.value)}
             />
           </div>
           <div className="my-5">
@@ -273,7 +345,7 @@ export const Settings = () => {
               What is the location of the team where it works from?
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={teamLocationList.map((option) => option)}
@@ -282,6 +354,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={teamLocation}
+              onChange={(e) => setTeamLocation(e.target.value)}
             />
           </div>
           <div className="my-5">
@@ -290,7 +369,7 @@ export const Settings = () => {
               must hold?
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={certificationsList.map((option) => option)}
@@ -299,6 +378,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={certifications}
+              onChange={(e) => setCertifications(e.target.value)}
             />
           </div>
           <div className="my-5">
@@ -307,7 +393,7 @@ export const Settings = () => {
               in?
             </p>
 
-            <Autocomplete
+            {/* <Autocomplete
               size="small"
               fullWidth
               options={softwaresList.map((option) => option)}
@@ -316,6 +402,13 @@ export const Settings = () => {
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" required />
               )}
+            /> */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="type.."
+              value={softwares}
+              onChange={(e) => setSoftwares(e.target.value)}
             />
           </div>
           <div className="my-5">

@@ -114,8 +114,7 @@ export const CreateJob = () => {
     const jobId = localStorage.getItem("jobId");
     if (jobId !== 0) {
       setJobIdentity(jobId);
-    }
-    else{
+    } else {
       setJobIdentity(0);
     }
   }, [jobIdentity]);
@@ -148,14 +147,14 @@ export const CreateJob = () => {
 
   const saveJobTitle = () => {
     const user = JSON.parse(localStorage.getItem("token"));
-    const clientId = user.userId; 
+    const clientId = user.userId;
     setLoading(true);
     axiosInstance
       .post(`/saveJobTitle`, { clientId, jobTitle })
       .then((response) => {
         console.log(response);
         setUserData(response.data);
-        setState({ new: false, showPopup: false }); 
+        setState({ new: false, showPopup: false });
         localStorage.setItem("jobId", response.data.id);
         setLoading(false);
         // setPage(data?.pageNo || 1);
@@ -214,6 +213,7 @@ export const CreateJob = () => {
   //   }
   // }, [state]);
 
+<<<<<<< HEAD
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     let jobId = localStorage.getItem("jobId");
@@ -240,6 +240,34 @@ export const CreateJob = () => {
         });
     }
   }, []);
+=======
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   let jobId = localStorage.getItem("jobId");
+  //   console.log(jobId);
+  //   if ((state?.new || state === null) && jobId === 0) {
+  //   } else {
+  //     if (state) {
+  //       jobId = state;
+  //     }
+  //     setLoading(true);
+  //     axiosInstance
+  //       .get(
+  //         `/getAllJobCandidates?clientId=${user.userId}&jobId=${jobId}&pageNo=1&pageSize=10`
+  //       )
+  //       .then((response) => {
+  //         console.log(response);
+  //         setCandidateDetails(response.data);
+  //         setLoading(false);
+  //         // setPage(data?.pageNo || 1);
+  //       })
+  //       .catch((e) => {
+  //         setLoading(false);
+  //         console.log(e);
+  //       });
+  //   }
+  // }, []);
+>>>>>>> 2579b514928df24aa436fc93aa5b14a4ccbe7a7c
 
   const handleDtpAccess = (row) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -292,6 +320,7 @@ export const CreateJob = () => {
       });
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
@@ -346,6 +375,62 @@ export const CreateJob = () => {
         });
     }
   }, []);
+=======
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   console.log(state);
+  //   let jobId = localStorage.getItem("jobId");
+  //   console.log(jobId);
+  //   if ((state?.new || state === null) && jobId === 0) {
+  //   } else {
+  //     if (state) {
+  //       jobId = state;
+  //     }
+  //     axiosInstance
+  //       .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
+  //       .then((data) => {
+  //         console.log(data);
+  //         setUserData(data?.data);
+  //         setScreeningQuestions(data?.data.screening);
+  //         setAssessments(data?.data?.assessment);
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team &&
+  //           data.data?.icp
+  //         ) {
+  //           setAccessDescription(false);
+  //         }
+  //         if (data.data?.jobDetail) {
+  //           setJobCompletion(25);
+  //           setTitle(data.data?.title);
+  //         }
+  //         if (data.data?.jobDetail && data.data?.workValues) {
+  //           setJobCompletion(50);
+  //         }
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team
+  //         ) {
+  //           setJobCompletion(75);
+  //         }
+  //         if (
+  //           data.data?.jobDetail &&
+  //           data.data?.workValues &&
+  //           data.data?.team &&
+  //           data.data?.icp
+  //         ) {
+  //           setJobCompletion(100);
+  //         }
+  //         localStorage.setItem("jobId", data.data.id);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   }
+  // }, []);
+>>>>>>> 2579b514928df24aa436fc93aa5b14a4ccbe7a7c
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -357,31 +442,67 @@ export const CreateJob = () => {
       const [reorderedItem] = items.splice(source.index, 1);
       items.splice(destination.index, 0, reorderedItem);
 
-      setTasks((prev) => ({
-        ...prev,
+      const updatedTasks = {
+        ...tasks,
         [source.droppableId]: {
-          ...prev[source.droppableId],
+          ...tasks[source.droppableId],
           items,
         },
-      }));
+      };
+
+      // setTasks((prev) => ({
+      //   ...prev,
+      //   [source.droppableId]: {
+      //     ...prev[source.droppableId],
+      //     items,
+      //   },
+      // }));
+      setTasks(updatedTasks);
+      onTaskChange(updatedTasks);
     } else {
       const sourceItems = Array.from(tasks[source.droppableId].items);
       const [movedItem] = sourceItems.splice(source.index, 1);
       const destinationItems = Array.from(tasks[destination.droppableId].items);
       destinationItems.splice(destination.index, 0, movedItem);
 
-      setTasks((prev) => ({
-        ...prev,
+      const updatedTasks = {
+        ...tasks,
         [source.droppableId]: {
-          ...prev[source.droppableId],
+          ...tasks[source.droppableId],
           items: sourceItems,
         },
         [destination.droppableId]: {
-          ...prev[destination.droppableId],
+          ...tasks[destination.droppableId],
           items: destinationItems,
         },
-      }));
+      };
+
+      // setTasks((prev) => ({
+      //   ...prev,
+      //   [source.droppableId]: {
+      //     ...prev[source.droppableId],
+      //     items: sourceItems,
+      //   },
+      //   [destination.droppableId]: {
+      //     ...prev[destination.droppableId],
+      //     items: destinationItems,
+      //   },
+      // }));
+      setTasks(updatedTasks);
+      onTaskChange(updatedTasks);
     }
+  };
+
+  const onTaskChange = (task) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .post(`/taskChange`, { task })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const DtpStatus = (status) => {
@@ -422,10 +543,9 @@ export const CreateJob = () => {
   };
   const handleJobDetails = (jobData) => {
     console.log(userData);
-    if(userData === null){
-      setShowPopup(true); 
-    } 
-    else{
+    if (userData === null) {
+      setShowPopup(true);
+    } else {
       if (jobData?.jobDetail === true) {
         navigate("/job/jobDetailEdit", { state: { jobData: jobData } });
       } else {
@@ -436,10 +556,9 @@ export const CreateJob = () => {
 
   const handleWorkValues = (jobData) => {
     console.log(userData);
-    if(userData === null){
-      setShowPopup(true); 
-    } 
-    else{
+    if (userData === null) {
+      setShowPopup(true);
+    } else {
       if (jobData?.workValues === true) {
         navigate("/job/valuesEdit", { state: { jobData: jobData } });
       } else {
@@ -449,16 +568,14 @@ export const CreateJob = () => {
   };
 
   const closePopup = () => {
-    
     setShowPopup(false);
     setJobTitle("");
   };
 
   const handleJobPreferences = (jobData) => {
-    if(userData === null){
-      setShowPopup(true); 
-    } 
-    else{
+    if (userData === null) {
+      setShowPopup(true);
+    } else {
       if (jobData?.preference === true) {
         navigate("/job/preferenceEdit", { state: { jobData: jobData } });
       } else {
@@ -468,10 +585,9 @@ export const CreateJob = () => {
   };
 
   const handleTeam = (jobData) => {
-    if(userData === null){
-      setShowPopup(true); 
-    } 
-    else{
+    if (userData === null) {
+      setShowPopup(true);
+    } else {
       if (jobData?.team === true) {
         navigate("/job/teamEdit", { state: { jobData: jobData } });
       } else {
@@ -481,10 +597,9 @@ export const CreateJob = () => {
   };
 
   const handleIcp = (jobData) => {
-    if(userData === null){
-      setShowPopup(true); 
-    } 
-    else{
+    if (userData === null) {
+      setShowPopup(true);
+    } else {
       if (jobData?.icp === true) {
         navigate("/job/icpResult", { state: { jobData: jobData } });
       } else {
@@ -1140,132 +1255,134 @@ export const CreateJob = () => {
                       {userData?.icp ? "Edit" : "Start"}
                     </Button>
                   </div>
-                  {screeningQuestions && (
-                    <div className="w-36">
-                      <Gauge
-                        value={userData?.screening ? 100 : 0}
-                        startAngle={0}
-                        endAngle={360}
-                        innerRadius="80%"
-                        outerRadius="100%"
-                        height={80}
-                        width={80}
-                        sx={(theme) => ({
-                          [`& .${gaugeClasses.valueText}`]: {
-                            fontSize: 10,
-                            color: "#525252",
-                          },
-                          [`& .${gaugeClasses.valueArc}`]: {
-                            fill: "#70CF97",
-                          },
-                        })}
-                        text={({ value }) => `${value}%`}
-                      />
+
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.screening ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      Screening
+                    </p>
+                    <div className="flex justify-between">
                       <p
                         style={{
-                          color: "#101828",
-                          fontWeight: 600,
-                          fontSize: 18,
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
                         }}>
-                        Screening
+                        Step 5
                       </p>
-                      <div className="flex justify-between">
-                        <p
-                          style={{
-                            color: "#808191",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          Step 5
-                        </p>
-                        <p
-                          style={{
-                            color: "#808191",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          5-10 mins
-                        </p>
-                      </div>
-                      <Button
-                        size="small"
-                        style={{
-                          color: userData?.screening ? "#1E90FF" : "#FF9900",
-                          fontSize: 12,
-                          textTransform: "none",
-                        }}
-                        endIcon={
-                          userData?.screening ? <CiEdit /> : <FaArrowRight />
-                        }
-                        onClick={() => {
-                          navigate("/job/screeningQuestions");
-                        }}>
-                        {userData?.screening ? "Edit" : "Start"}
-                      </Button>
-                    </div>
-                  )}
-                  {assessments && (
-                    <div className="w-36">
-                      <Gauge
-                        value={userData?.assessment ? 100 : 0}
-                        startAngle={0}
-                        endAngle={360}
-                        innerRadius="80%"
-                        outerRadius="100%"
-                        height={80}
-                        width={80}
-                        sx={(theme) => ({
-                          [`& .${gaugeClasses.valueText}`]: {
-                            fontSize: 10,
-                            color: "#525252",
-                          },
-                          [`& .${gaugeClasses.valueArc}`]: {
-                            fill: "#70CF97",
-                          },
-                        })}
-                        text={({ value }) => `${value}%`}
-                      />
                       <p
                         style={{
-                          color: "#101828",
-                          fontWeight: 600,
-                          fontSize: 18,
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
                         }}>
-                        Assessments
+                        5-10 mins
                       </p>
-                      <div className="flex justify-between">
-                        <p
-                          style={{
-                            color: "#808191",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          Step 6
-                        </p>
-                        <p
-                          style={{
-                            color: "#808191",
-                            fontSize: 16,
-                            fontWeight: 500,
-                          }}>
-                          5-10 mins
-                        </p>
-                      </div>
-                      <Button
-                        size="small"
-                        style={{
-                          color: userData?.assessment ? "#1E90FF" : "#FF9900",
-                          fontSize: 12,
-                          textTransform: "none",
-                        }}
-                        endIcon={
-                          userData?.assessment ? <CiEdit /> : <FaArrowRight />
-                        }
-                        onClick={() => {}}>
-                        {userData?.assessment ? "Edit" : "Start"}
-                      </Button>
                     </div>
-                  )}
+                    <Button
+                      size="small"
+                      disabled={!screeningQuestions}
+                      style={{
+                        color: userData?.screening ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                        opacity: screeningQuestions ? 1.0 : 0.6,
+                      }}
+                      endIcon={
+                        userData?.screening ? <CiEdit /> : <FaArrowRight />
+                      }
+                      onClick={() => {
+                        navigate("/job/screeningQuestions");
+                      }}>
+                      {userData?.screening ? "Edit" : "Start"}
+                    </Button>
+                  </div>
+
+                  <div className="w-36">
+                    <Gauge
+                      value={userData?.assessment ? 100 : 0}
+                      startAngle={0}
+                      endAngle={360}
+                      innerRadius="80%"
+                      outerRadius="100%"
+                      height={80}
+                      width={80}
+                      sx={(theme) => ({
+                        [`& .${gaugeClasses.valueText}`]: {
+                          fontSize: 10,
+                          color: "#525252",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: "#70CF97",
+                        },
+                      })}
+                      text={({ value }) => `${value}%`}
+                    />
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        fontSize: 18,
+                      }}>
+                      Assessments
+                    </p>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Step 6
+                      </p>
+                      <p
+                        style={{
+                          color: "#808191",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        5-10 mins
+                      </p>
+                    </div>
+                    <Button
+                      size="small"
+                      disabled={!assessments}
+                      style={{
+                        color: userData?.assessment ? "#1E90FF" : "#FF9900",
+                        fontSize: 12,
+                        textTransform: "none",
+                        opacity: assessments ? 1.0 : 0.6,
+                      }}
+                      endIcon={
+                        userData?.assessment ? <CiEdit /> : <FaArrowRight />
+                      }
+                      onClick={() => {}}>
+                      {userData?.assessment ? "Edit" : "Start"}
+                    </Button>
+                  </div>
                 </div>
                 {/* card */}
                 {/* <div className="grid grid-cols-2 gap-5 mt-5">
