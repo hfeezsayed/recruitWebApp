@@ -307,31 +307,67 @@ export const AllJobs = () => {
       const [reorderedItem] = items.splice(source.index, 1);
       items.splice(destination.index, 0, reorderedItem);
 
-      setTasks((prev) => ({
-        ...prev,
+      const updatedTasks = {
+        ...tasks,
         [source.droppableId]: {
-          ...prev[source.droppableId],
+          ...tasks[source.droppableId],
           items,
         },
-      }));
+      };
+
+      // setTasks((prev) => ({
+      //   ...prev,
+      //   [source.droppableId]: {
+      //     ...prev[source.droppableId],
+      //     items,
+      //   },
+      // }));
+      setTasks(updatedTasks);
+      onTaskChange(updatedTasks);
     } else {
       const sourceItems = Array.from(tasks[source.droppableId].items);
       const [movedItem] = sourceItems.splice(source.index, 1);
       const destinationItems = Array.from(tasks[destination.droppableId].items);
       destinationItems.splice(destination.index, 0, movedItem);
 
-      setTasks((prev) => ({
-        ...prev,
+      const updatedTasks = {
+        ...tasks,
         [source.droppableId]: {
-          ...prev[source.droppableId],
+          ...tasks[source.droppableId],
           items: sourceItems,
         },
         [destination.droppableId]: {
-          ...prev[destination.droppableId],
+          ...tasks[destination.droppableId],
           items: destinationItems,
         },
-      }));
+      };
+
+      // setTasks((prev) => ({
+      //   ...prev,
+      //   [source.droppableId]: {
+      //     ...prev[source.droppableId],
+      //     items: sourceItems,
+      //   },
+      //   [destination.droppableId]: {
+      //     ...prev[destination.droppableId],
+      //     items: destinationItems,
+      //   },
+      // }));
+      setTasks(updatedTasks);
+      onTaskChange(updatedTasks);
     }
+  };
+
+  const onTaskChange = (task) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .post(`/taskChange`, { task })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const jobStatusColor = (status) => {
