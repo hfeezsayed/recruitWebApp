@@ -71,10 +71,11 @@ import {
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import Spinner from "../../../utils/spinner";
 import { PiUserFocus } from "react-icons/pi";
+import { CreateJobDataTokanBan } from "../../../utils/function";
 
 export const CreateJob = () => {
   const location = useLocation();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(createJobData);
   const [state, setState] = useState(location.state);
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -109,6 +110,7 @@ export const CreateJob = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
+  const [tasks, setTasks] = useState(CreateJobDataTokanBan(candidateDetails));
 
   useEffect(() => {
     const jobId = localStorage.getItem("jobId");
@@ -124,8 +126,6 @@ export const CreateJob = () => {
       setShowPopup(true);
     }
   }, [state]);
-
-  const [tasks, setTasks] = useState(kanvanTaskData);
 
   const handleJd = (event) => {
     setAnchorjd(event.currentTarget);
@@ -221,7 +221,7 @@ export const CreateJob = () => {
     } else {
       if (state) {
         jobId = state;
-      } 
+      }
       setLoading(true);
       axiosInstance
         .get(
@@ -332,7 +332,7 @@ export const CreateJob = () => {
     } else {
       if (state) {
         jobId = state;
-      } 
+      }
       axiosInstance
         .get(`/getJobDetails?clientId=${user.userId}&jobId=${jobId}`)
         .then((data) => {
@@ -442,6 +442,7 @@ export const CreateJob = () => {
 
     const { source, destination } = result;
 
+    // console.log(source, destination);
     if (source.droppableId === destination.droppableId) {
       const items = Array.from(tasks[source.droppableId].items);
       const [reorderedItem] = items.splice(source.index, 1);
@@ -463,7 +464,7 @@ export const CreateJob = () => {
       //   },
       // }));
       setTasks(updatedTasks);
-      onTaskChange(updatedTasks);
+      // onTaskChange(source.droppableId, destination.droppableId, movedItem);
     } else {
       const sourceItems = Array.from(tasks[source.droppableId].items);
       const [movedItem] = sourceItems.splice(source.index, 1);
@@ -494,14 +495,15 @@ export const CreateJob = () => {
       //   },
       // }));
       setTasks(updatedTasks);
-      onTaskChange(updatedTasks);
+      onTaskChange(source.droppableId, destination.droppableId, movedItem);
     }
   };
 
-  const onTaskChange = (task) => {
+  const onTaskChange = (source, destination, data) => {
+    console.log(source, destination, data);
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .post(`/taskChange`, { task })
+      .post(`/taskChange`, { source, destination, data })
       .then((response) => {
         console.log(response.data);
       })
@@ -526,7 +528,7 @@ export const CreateJob = () => {
       color = "#58A20F";
       bg = "#58A20F20";
     }
-    if (status === "Rejected") {
+    if (status === "Reject") {
       color = "#E05880";
       bg = "#E0588020";
     }
@@ -1970,7 +1972,7 @@ export const CreateJob = () => {
                                                       fontWeight: 500,
                                                       fontSize: 10,
                                                     }}>
-                                                    Job Id : {item.jonId}
+                                                    Job Id : {item.jobId}
                                                   </p>
                                                 </div>
                                                 <div className="flex justify-between items-center p-2">
@@ -2038,7 +2040,9 @@ export const CreateJob = () => {
                                                       fontSize: 10,
                                                     }}>
                                                     Application Sub-status:{" "}
-                                                    {item?.sub_Status}
+                                                    {
+                                                      item?.application_sub_status
+                                                    }
                                                   </p>
                                                 </div>
                                                 <div className="mx-2 border-b border-[#E2E8F0]" />
@@ -2054,7 +2058,7 @@ export const CreateJob = () => {
                                                         color: "#5FAEDA",
                                                         fontSize: 10,
                                                       }}>
-                                                      {item?.document}
+                                                      {item?.application_source}
                                                     </p>
                                                   </div>
                                                   <div className="flex gap-1">
@@ -2068,7 +2072,7 @@ export const CreateJob = () => {
                                                         color: "#800080",
                                                         fontSize: 10,
                                                       }}>
-                                                      {item?.date}
+                                                      {item?.requestDate}
                                                     </p>
                                                   </div>
                                                 </div>
@@ -2088,7 +2092,8 @@ export const CreateJob = () => {
                                                     <BorderLinearProgresskan
                                                       variant="determinate"
                                                       value={
-                                                        item.application_Status
+                                                        item.complated_status ||
+                                                        0
                                                       }
                                                       style={{ width: "100%" }}
                                                     />

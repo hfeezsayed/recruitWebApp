@@ -67,6 +67,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import { WorkflowOutlinesvg } from "../../../../assets/icon/workflowOutlinesvg";
+import { AllJobDataTokanBan } from "../../../utils/function";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ export const AllJobs = () => {
   const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
   const [filter, setFilter] = useState(false);
-  const [tasks, setTasks] = useState(allJobsKanBanData);
+  const [tasks, setTasks] = useState(AllJobDataTokanBan(data));
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
@@ -302,6 +303,7 @@ export const AllJobs = () => {
 
     const { source, destination } = result;
 
+    // console.log(source, destination);
     if (source.droppableId === destination.droppableId) {
       const items = Array.from(tasks[source.droppableId].items);
       const [reorderedItem] = items.splice(source.index, 1);
@@ -323,7 +325,7 @@ export const AllJobs = () => {
       //   },
       // }));
       setTasks(updatedTasks);
-      onTaskChange(updatedTasks);
+      // onTaskChange(source.droppableId, destination.droppableId, movedItem);
     } else {
       const sourceItems = Array.from(tasks[source.droppableId].items);
       const [movedItem] = sourceItems.splice(source.index, 1);
@@ -354,14 +356,15 @@ export const AllJobs = () => {
       //   },
       // }));
       setTasks(updatedTasks);
-      onTaskChange(updatedTasks);
+      onTaskChange(source.droppableId, destination.droppableId, movedItem);
     }
   };
 
-  const onTaskChange = (task) => {
+  const onTaskChange = (source, destination, data) => {
+    console.log(source, destination, data);
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .post(`/taskChange`, { task })
+      .post(`/taskChange`, { source, destination, data })
       .then((response) => {
         console.log(response.data);
       })
@@ -636,7 +639,7 @@ export const AllJobs = () => {
                     </p>
 
                     {currentView === "WorkFlow" && (
-                      <div>
+                      <div className="overflow-x-scroll w-[1210px]">
                         <DragDropContext onDragEnd={onDragEnd}>
                           <div
                             style={{
@@ -746,14 +749,14 @@ export const AllJobs = () => {
                                                       fontSize: 16,
                                                       fontWeight: 600,
                                                     }}>
-                                                    {item?.name}
+                                                    {item?.jobName}
                                                   </p>
                                                   <p
                                                     style={{
                                                       color: "#252C32",
                                                       fontSize: 10,
                                                     }}>
-                                                    {item?.role}
+                                                    {item?.companyName}
                                                   </p>
                                                 </div>
                                               </div>
@@ -775,14 +778,14 @@ export const AllJobs = () => {
                                                   color: "#787486",
                                                   fontSize: 10,
                                                 }}>
-                                                Created Date: {item?.date}
+                                                Created Date: {item?.created}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#787486",
                                                   fontSize: 10,
                                                 }}>
-                                                Job Type: {item?.jobType}
+                                                Job Type: {item?.typeOfHire[0]}
                                               </p>
                                               <p
                                                 style={{
@@ -790,7 +793,7 @@ export const AllJobs = () => {
                                                   fontSize: 10,
                                                 }}>
                                                 Application Sub-status:{" "}
-                                                {item?.sub_Status}
+                                                {item?.jobSubStatus}
                                               </p>
                                             </div>
                                             <div className="mx-2 border-b border-[#E2E8F0]" />
@@ -801,28 +804,28 @@ export const AllJobs = () => {
                                                   color: "#5FAEDA",
                                                   fontSize: 10,
                                                 }}>
-                                                Total: {item?.jobTotal}
+                                                Total: {item?.total}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#800080",
                                                   fontSize: 10,
                                                 }}>
-                                                New: {item?.jobNew}
+                                                New: {item?.new}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#FFA500",
                                                   fontSize: 10,
                                                 }}>
-                                                Active: {item?.jobActive}
+                                                Active: {item?.active}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#7FB27F",
                                                   fontSize: 10,
                                                 }}>
-                                                New: {item?.jobNew}
+                                                Hired: {item?.hired}
                                               </p>
                                             </div>
                                           </div>
