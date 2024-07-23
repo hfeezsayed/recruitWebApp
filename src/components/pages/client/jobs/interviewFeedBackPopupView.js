@@ -83,7 +83,7 @@ export const InterviewFeedBackPopupView = ({ setClose, open, data }) => {
                   Recommendation
                 </p>
                 <p style={{ color: "#101828", fontSize: 14 }}>
-                  {data?.FormData?.recomndation ? "Yes" : "No"}
+                  {data?.FormData?.recommendation ? "Yes" : "No"}
                 </p>
               </div>
               <div className="flex gap-3">
@@ -97,7 +97,7 @@ export const InterviewFeedBackPopupView = ({ setClose, open, data }) => {
                   Why?
                 </p>
                 <p style={{ color: "#101828", fontSize: 14 }}>
-                  {data?.FormData?.recomndationWhy}
+                  {data?.FormData?.recommendationWhy}
                 </p>
               </div>
             </div>

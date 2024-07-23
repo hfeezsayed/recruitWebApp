@@ -31,6 +31,9 @@ import {
 import { InterviewFeedBackPopupAdd } from "./interviewFeedBackPopupAdd";
 import { InterviewFeedBackPopupEdit } from "./interviewFeedBackPopupEdit";
 import { InterviewFeedBackPopupView } from "./interviewFeedBackPopupView";
+import { useEffect } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
+
 
 export const JobCandidateCombination = () => {
   const [value, setValue] = useState(0);
@@ -72,6 +75,22 @@ export const JobCandidateCombination = () => {
     // setInterviewPopupData();
     handleCloseAnchor();
   };
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+      axiosInstance
+        .get(
+          `/getJobCandidateInfo?clientId=${user.userId}&jobId=1&candidateId=1`
+        )
+        .then((response) => {
+          console.log(response);
+          setOverview(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  }, []);
 
   const ScreeningQuestions = () => {
     return (
@@ -720,7 +739,7 @@ export const JobCandidateCombination = () => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {overview?.interview?.map((row, index) => {
+                              {overview?.interviewFeedback?.map((row, index) => {
                                 return (
                                   <TableRow key={index}>
                                     <TableCell
@@ -737,7 +756,7 @@ export const JobCandidateCombination = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      {row?.date}
+                                      {row?.createdDate}
                                     </TableCell>
                                     <TableCell
                                       sx={{
@@ -745,7 +764,7 @@ export const JobCandidateCombination = () => {
                                         border: 1,
                                         borderColor: "#D0D5DD50",
                                       }}>
-                                      {row?.rating}
+                                      {row?.overallRating}
                                     </TableCell>
                                     <TableCell
                                       padding="none"
@@ -758,7 +777,7 @@ export const JobCandidateCombination = () => {
                                       <IconButton
                                         onClick={(e) => {
                                           handleSetActionAnchor(e);
-                                          // setInterviewPopupData(row);
+                                          setInterviewPopupData(row);
                                         }}>
                                         <BsThreeDotsVertical
                                           style={{ color: "#D9D9D9" }}

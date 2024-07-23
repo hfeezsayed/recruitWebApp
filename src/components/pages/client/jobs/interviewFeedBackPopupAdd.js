@@ -16,11 +16,12 @@ import { GoPlus } from "react-icons/go";
 import axiosInstance from "../../../utils/axiosInstance";
 
 export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
-  const [cratedBy, setCreatedBy] = useState("");
-  const [cratedDate, setCreatedDate] = useState();
+  const user = JSON.parse(localStorage.getItem("token"));
+  const [createdBy, setCreatedBy] = useState(user.username);
+  const [createdDate, setCreatedDate] = useState();
   const [overallRating, setOverallRating] = useState("");
-  const [recomndation, setRecomndation] = useState();
-  const [recomndationWhy, setRecomndationWhy] = useState("");
+  const [recommendation, setRecommendation] = useState();
+  const [recommendationWhy, setRecommendationWhy] = useState("");
   const [experience, setExperience] = useState();
   const [experienceWhy, setExperienceWhy] = useState("");
 
@@ -67,13 +68,14 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
     //   handleClosePopUp();
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
+    setCreatedBy(user.username);
     axiosInstance
-      .post(`/saveInterViewData=${user.userId}&jobId=${jobId}`, {
-        cratedBy,
-        cratedDate,
+      .post(`/saveInterviewFeedback?clientId=${user.userId}&jobId=1&candidateId=1`, {
+        createdBy,
+        createdDate,
         overallRating,
-        recomndation,
-        recomndationWhy,
+        recommendation,
+        recommendationWhy,
         experience,
         experienceWhy,
         criticalScroing,
@@ -89,8 +91,8 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
     setCreatedBy("");
     setCreatedDate();
     setOverallRating("");
-    setRecomndation();
-    setRecomndationWhy("");
+    setRecommendation();
+    setRecommendationWhy("");
     setExperience();
     setExperienceWhy("");
     setCriticalScoring([{ criteria: "", rating: "", comments: "" }]);
@@ -130,7 +132,8 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
                 size="small"
                 fullWidth
                 placeholder="type"
-                value={cratedBy}
+                disabled
+                value={user.username}
                 onChange={(e) => setCreatedBy(e.target.value)}
               />
             </div>
@@ -148,7 +151,7 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
                 size="small"
                 fullWidth
                 type="date"
-                value={cratedDate}
+                value={createdDate}
                 onChange={(e) => setCreatedDate(e.target.value)}
               />
             </div>
@@ -190,8 +193,8 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
                 size="small"
                 disablePortal
                 options={yes_no}
-                value={recomndation || null}
-                onChange={(e, newvalue) => setRecomndation(newvalue)}
+                value={recommendation || null}
+                onChange={(e, newvalue) => setRecommendation(newvalue)}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select" />
                 )}
@@ -211,8 +214,8 @@ export const InterviewFeedBackPopupAdd = ({ setClose, open }) => {
                 size="small"
                 fullWidth
                 placeholder="type"
-                value={recomndationWhy}
-                onChange={(e) => setRecomndationWhy(e.target.value)}
+                value={recommendationWhy}
+                onChange={(e) => setRecommendationWhy(e.target.value)}
               />
             </div>
           </div>

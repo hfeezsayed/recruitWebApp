@@ -16,17 +16,15 @@ import { GoPlus } from "react-icons/go";
 import axiosInstance from "../../../utils/axiosInstance";
 
 export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
-  const [cratedBy, setCreatedBy] = useState("");
-  const [cratedDate, setCreatedDate] = useState();
-  const [overallRating, setOverallRating] = useState("");
-  const [recomndation, setRecomndation] = useState();
-  const [recomndationWhy, setRecomndationWhy] = useState("");
-  const [experience, setExperience] = useState();
-  const [experienceWhy, setExperienceWhy] = useState("");
+  const [cratedBy, setCreatedBy] = useState(data?.createdBy);
+  const [cratedDate, setCreatedDate] = useState(data?.createdDate);
+  const [overallRating, setOverallRating] = useState(data?.overallRating);
+  const [recommendation, setRecommendation] = useState(data?.recommendation);
+  const [recommendationWhy, setRecommendationWhy] = useState(data?.recommendationWhy);
+  const [experience, setExperience] = useState(data?.experience);
+  const [experienceWhy, setExperienceWhy] = useState(data?.experienceWhy);
 
-  const [criticalScroing, setCriticalScoring] = useState([
-    { criteria: "", rating: "", comments: "" },
-  ]);
+  const [criticalScroing, setCriticalScoring] = useState(data?.criticalScroing);
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -72,8 +70,8 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
         cratedBy,
         cratedDate,
         overallRating,
-        recomndation,
-        recomndationWhy,
+        recommendation,
+        recommendationWhy,
         experience,
         experienceWhy,
         criticalScroing,
@@ -89,8 +87,8 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
     setCreatedBy("");
     setCreatedDate();
     setOverallRating("");
-    setRecomndation();
-    setRecomndationWhy("");
+    setRecommendation();
+    setRecommendationWhy("");
     setExperience();
     setExperienceWhy("");
     setCriticalScoring([{ criteria: "", rating: "", comments: "" }]);
@@ -100,8 +98,8 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
     setCreatedBy(data?.cratedBy);
     setCreatedDate(data?.cratedDate);
     setOverallRating(data?.overallRating);
-    setRecomndation(data?.recomndation);
-    setRecomndationWhy(data?.recomndationWhy);
+    setRecommendation(data?.recommendation);
+    setRecommendationWhy(data?.recommendationWhy);
     setExperience(data?.experience);
     setExperienceWhy(data?.experienceWhy);
     setCriticalScoring(data?.criticalScroing || []);
@@ -201,8 +199,8 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
                 size="small"
                 disablePortal
                 options={yes_no}
-                value={recomndation || null}
-                onChange={(e, newvalue) => setRecomndation(newvalue)}
+                value={recommendation || null}
+                onChange={(e, newvalue) => setRecommendation(newvalue)}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select" />
                 )}
@@ -222,8 +220,8 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
                 size="small"
                 fullWidth
                 placeholder="type"
-                value={recomndationWhy}
-                onChange={(e) => setRecomndationWhy(e.target.value)}
+                value={recommendationWhy}
+                onChange={(e) => setRecommendationWhy(e.target.value)}
               />
             </div>
           </div>
@@ -277,7 +275,7 @@ export const InterviewFeedBackPopupEdit = ({ setClose, open, data }) => {
           <p style={{ color: "#008080", fontSize: 18, fontWeight: 500 }}>
             Individual Criteria Scoring
           </p>
-          {criticalScroing.map((row, index) => {
+          {criticalScroing?.map((row, index) => {
             return (
               <Card
                 sx={{
