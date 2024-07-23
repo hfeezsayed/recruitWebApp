@@ -1403,7 +1403,7 @@ export const teamTemplateData = {
 
 export const AllJobsData = [
   {
-    id: 1,
+    id: "abc1",
     newPost: true,
     jobName: "Senior Software",
     location: "Heydrabad",
@@ -1421,7 +1421,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 2,
+    id: "abc2",
     newPost: false,
     jobName: " Software Engineer",
     location: "Heydrabad",
@@ -1439,7 +1439,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 3,
+    id: "abc3",
     newPost: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1457,7 +1457,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 4,
+    id: "abc4",
     newPost: false,
     jobName: "Senior  ",
     location: "Heydrabad",
@@ -1475,7 +1475,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 5,
+    id: "abc5",
     newPost: false,
     jobName: "Senior Software ",
     location: "Heydrabad",
@@ -1493,7 +1493,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 6,
+    id: "abc6",
     newPost: false,
     jobName: "Senior Software tata",
     location: "Heydrabad",
@@ -1511,7 +1511,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 7,
+    id: "abc7",
     newPost: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1529,7 +1529,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 8,
+    id: "abc8",
     newPost: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1547,7 +1547,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 9,
+    id: "abc9",
     newPost: false,
     jobName: "Senior Software nwe",
     location: "Heydrabad",
@@ -1565,7 +1565,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 10,
+    id: "abc10",
     newPost: false,
     jobName: "Senior Software Engineer",
     location: "Heydrabad",
@@ -1583,7 +1583,7 @@ export const AllJobsData = [
     hired: 0,
   },
   {
-    id: 11,
+    id: "abc11",
     newPost: false,
     jobName: "Senior  work",
     location: "Heydrabad",
@@ -1985,7 +1985,9 @@ export const candidateDetailsData = [
 
 export const candistaeDetailsDataNew = [
   {
+    id: "abc1",
     name: "John Mathew Doe",
+    role: "Senior Backend Developer",
     title: "Information Technology",
     timeStamp: "11/ 07/2024",
     requestDate: "Jan 25, 2024",
@@ -1998,9 +2000,13 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Recommended",
     application_source: "linkedin",
     jobId: 106,
+    profile_Status: 20,
+    complated_status: 60,
   },
   {
+    id: "abc2",
     name: "John Mathew Doe",
+    role: "Senior Backend Developer",
     title: "Chief Information Officer",
     timeStamp: "11/07/2024",
     requestDate: "January 25, 2024",
@@ -2013,9 +2019,13 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Recommended",
     application_source: "LinkedIn",
     jobId: 101,
+    profile_Status: 20,
+    complated_status: 60,
   },
   {
+    id: "abc3",
     name: "Emily Rodriguez",
+    role: "Senior Backend Developer",
     title: "Cybersecurity Analyst",
     timeStamp: "11/07/2024",
     requestDate: "February 3, 2024",
@@ -2028,12 +2038,16 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Not Recommended",
     application_source: "Company Website",
     jobId: 102,
+    profile_Status: 20,
+    complated_status: 60,
   },
   {
+    id: "abc4",
     name: "Michael Chen",
     title: "Network Engineer",
+    role: "Senior Backend Developer",
     timeStamp: "11/07/2024",
-    requestDate: "",
+    requestDate: "February 3, 2024",
     application_status: "Hired",
     application_sub_status: "HR Review",
     dtpStatus: "Approved",
@@ -2043,11 +2057,15 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Under Review",
     application_source: "Glassdor",
     jobId: 103,
+    profile_Status: 20,
+    complated_status: 60,
   },
   {
+    id: "abc5",
     name: "Sophia Lee",
     title: "Software Developer",
     timeStamp: "11/07/2024",
+    role: "Senior Backend Developer",
     requestDate: "March 10, 2024",
     application_status: "Completed",
     application_sub_status: "Onsite Interview",
@@ -2058,10 +2076,14 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Recommended",
     application_source: "Referral",
     jobId: 104,
+    profile_Status: 20,
+    complated_status: 60,
   },
   {
+    id: "abc6",
     name: "David Patel",
     title: "Data Scientist",
+    role: "Senior Backend Developer",
     timeStamp: "11/07/2024",
     requestDate: "April 5, 2024",
     application_status: "Rejected",
@@ -2073,6 +2095,8 @@ export const candistaeDetailsDataNew = [
     recommended_status: "Not Recommended",
     application_source: "Career Fair",
     jobId: 105,
+    profile_Status: 20,
+    complated_status: 60,
   },
 ];
 
