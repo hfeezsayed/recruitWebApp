@@ -6,6 +6,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { ScreeningQuestionsData } from "../../../dummy/Data";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useEffect } from "react";
 
 export const ScreeningQuestions = () => {
   const [questions, setQuestions] = useState(ScreeningQuestionsData);
@@ -13,10 +14,65 @@ export const ScreeningQuestions = () => {
 
   const [editedQuestionId, setEditedQuestionId] = useState(null);
   const [editedText, setEditedText] = useState("");
+  const [jd, setJd] = useState("");
+  
+  
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //     axiosInstance
+  //       .get(`/getJD?clientId=${user.userId}&jobId=1`)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         setJd(response.data)
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  // }, []);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+      axiosInstance
+        .get(`/getJobScreeningQuestions?clientId=${user.userId}&jobId=1`)
+        .then((response) => {
+          console.log(response.data);
+          if(response.data?.length === 0){
+            getQuestions();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  }, []);
+
+  const getQuestions = () => {
+      let job_title = "Tech Lead";
+      const user = JSON.parse(localStorage.getItem("token"));
+      axiosInstance
+        .get(`/getJD?clientId=${user.userId}&jobId=1`)
+        .then((response) => {
+          console.log(response.data);
+          job_title = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      axiosInstance
+        .post(`https://xenflexer.northcentralus.cloudapp.azure.com/api/questions/`, { job_title })
+        .then((response) => {
+          console.log(response.data);
+          setQuestions(response.data?.screening_questions)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  }
 
   const onSubmit = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .post(`/screeningQuestions`, { questions, proceed })
+      .post(`/saveJobScreeningQuestions?clientId=${user.userId}&jobId=1`, questions)
       .then((response) => {
         console.log(response);
       })
@@ -45,6 +101,8 @@ export const ScreeningQuestions = () => {
     setEditedQuestionId(null);
     setEditedText("");
   };
+
+
 
   return (
     <div>
@@ -91,7 +149,7 @@ export const ScreeningQuestions = () => {
                             color: "#101828",
                             fontSize: 16,
                           }}>
-                          {data?.question}
+                          {data.question}
                         </p>
                       )}
                     </div>

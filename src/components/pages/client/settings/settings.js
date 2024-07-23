@@ -3,6 +3,7 @@ import { Button, TextField } from "@mui/material";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useEffect } from "react";
 
 export const Settings = () => {
   const [jobCode, setJobCode] = useState();
@@ -20,8 +21,9 @@ export const Settings = () => {
   const [certifications, setCertifications] = useState();
   const [softwares, setSoftwares] = useState();
   const [companyOverview, setCompanyOverview] = useState();
-  const [EEO, setEEO] = useState();
+  const [eeo, setEeo] = useState();
   const [onboarding, setOnboarding] = useState();
+  const [id, setId] = useState(0);
 
   // const jobCodeList = ["JC001", "JCC002", "JC003"];
   // const jobFamilyList = ["Technology", "Designing", "Marketing", "Finance"];
@@ -45,10 +47,42 @@ export const Settings = () => {
   // const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
   // const softwaresList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
 
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+      axiosInstance
+        .get(`/getClientSettings?clientId=${user.userId}`)
+        .then((response) => {
+          console.log(response.data);
+          setJobCode(response.data?.jobCode);
+          setJobFamily(response.data?.jobFamily);
+          setJobDepartment(response.data?.jobDepartment);
+          setJobLocation(response.data?.jobLocation);
+          setDefaultCurrency(response.data?.defaultCurrency);
+          setWorkSetting(response.data?.workSetting);
+          setTypeRole(response.data?.typeRole);
+          setRoleTiming(response.data?.roleTiming);
+          setTravel(response.data?.travel);
+          setAcadamincQualification(response.data?.acadamicQualification);
+          setTeamSize(response.data?.teamSize);
+          setTeamLocation(response.data?.teamLocation);
+          setCertifications(response.data?.certifications);
+          setSoftwares(response.data?.softwares);
+          setCompanyOverview(response.data?.companyOverview);
+          setEeo(response.data?.eeo);
+          setOnboarding(response.data?.onboarding);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  }, []);
+
+
   const onSubmitData = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .post(`/saveClientSettings?clientId=${user.userId}`, {
+        id,
         jobCode,
         jobFamily,
         jobDepartment,
@@ -64,11 +98,12 @@ export const Settings = () => {
         certifications,
         softwares,
         companyOverview,
-        EEO,
+        eeo,
         onboarding,
       })
       .then((response) => {
         console.log(response.data);
+        setId(response.data?.id);
       })
       .catch((error) => console.log(error));
   };
@@ -425,14 +460,14 @@ export const Settings = () => {
           </div>
           <div className="my-5">
             <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-              Equal Employee Opportunity (EEO)
+              Equal Employee Opportunity (eeo)
             </p>
             <TextField
               fullWidth
               size="small"
               placeholder="type.."
-              value={EEO}
-              onChange={(e) => setEEO(e.target.value)}
+              value={eeo}
+              onChange={(e) => setEeo(e.target.value)}
             />
           </div>
           <div className="my-5">

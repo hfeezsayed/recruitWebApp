@@ -290,11 +290,16 @@ export const CreateJob = () => {
     }
   };
 
-  const handleScreeningQuestions = (value) => {
-    setScreeningQuestions(value);
+  const handleSwitch = (value, switchType) => {
+    if(switchType === "screening") setScreeningQuestions(value);
+    if(switchType === "assessment") setAssessments(value);
+    if(switchType === "sourcing") setSourcing(value);
+    if(switchType === "onboarding") setOnboarding(value);
+    if(switchType === "serviceStaffing") setServiceStaffing(value);
+    if(switchType === "publishFeature") setPublishFeature(value);
     axiosInstance
       .get(
-        `/updateScreeningQuestion?clientId=${userData.clientId}&jobId=${userData.id}&screening=${value}`
+        `/updateSwitch?clientId=${userData.clientId}&jobId=${userData.id}&value=${value}&switchType=${switchType}`
       )
       .then((response) => {
         console.log(response);
@@ -335,6 +340,10 @@ export const CreateJob = () => {
           setUserData(data?.data);
           setScreeningQuestions(data?.data.screening);
           setAssessments(data?.data?.assessment);
+          setSourcing(data?.data?.sourcingHelp);
+          setOnboarding(data?.data?.onboardingHelp);
+          setServiceStaffing(data?.data?.fullServiceStaffingHelp);
+          setPublishFeature(data?.data?.publishFeature);
           if (
             data.data?.jobDetail &&
             data.data?.workValues &&
@@ -806,10 +815,11 @@ export const CreateJob = () => {
                               },
                             },
                           }}
+                          checked={publishFeature}
                         />
                       }
                       value={publishFeature}
-                      onChange={(e) => setPublishFeature(e.target.checked)}
+                      onChange={(e) => handleSwitch(e.target.checked, "publishFeature")}
                       label={
                         <p style={{ color: "#475467", fontSize: 16 }}>
                           Publish Feature
@@ -844,7 +854,7 @@ export const CreateJob = () => {
                           }
                           value={screeningQuestions}
                           onChange={(e) =>
-                            handleScreeningQuestions(e.target.checked)
+                            handleSwitch(e.target.checked, "screening")
                           }
                           label={
                             <p style={{ color: "#3B25A9", fontSize: 16 }}>
@@ -869,7 +879,7 @@ export const CreateJob = () => {
                             />
                           }
                           value={assessments}
-                          onChange={(e) => handleAssessment(e.target.checked)}
+                          onChange={(e) => handleSwitch(e.target.checked, "assessment")}
                           label={
                             <p style={{ color: "#A92525", fontSize: 16 }}>
                               Assessments
@@ -899,10 +909,11 @@ export const CreateJob = () => {
                                   },
                                 },
                               }}
+                              checked={sourcing}
                             />
                           }
                           value={sourcing}
-                          onChange={(e) => setSourcing(e.target.checked)}
+                          onChange={(e) => handleSwitch(e.target.checked, "sourcing")}
                           label={
                             <p style={{ color: "#D9B020", fontSize: 16 }}>
                               Sourcing help
@@ -922,10 +933,11 @@ export const CreateJob = () => {
                                   },
                                 },
                               }}
+                              checked={onboarding}
                             />
                           }
                           value={onboarding}
-                          onChange={(e) => setOnboarding(e.target.checked)}
+                          onChange={(e) => handleSwitch(e.target.checked, "onboarding")}
                           label={
                             <p style={{ color: "#9BC53D", fontSize: 16 }}>
                               Onboarding help
@@ -945,10 +957,11 @@ export const CreateJob = () => {
                                   },
                                 },
                               }}
+                              checked={serviceStaffing}
                             />
                           }
                           value={serviceStaffing}
-                          onChange={(e) => setServiceStaffing(e.target.checked)}
+                          onChange={(e) => handleSwitch(e.target.checked, "serviceStaffing")}
                           label={
                             <p style={{ color: "#2C7DA0", fontSize: 16 }}>
                               Full-Service Staffing help
@@ -1302,18 +1315,18 @@ export const CreateJob = () => {
                       size="small"
                       disabled={!screeningQuestions}
                       style={{
-                        color: userData?.screening ? "#1E90FF" : "#FF9900",
+                        color: userData?.screeningQuestions ? "#1E90FF" : "#FF9900",
                         fontSize: 12,
                         textTransform: "none",
                         opacity: screeningQuestions ? 1.0 : 0.6,
                       }}
                       endIcon={
-                        userData?.screening ? <CiEdit /> : <FaArrowRight />
+                        userData?.screeningQuestions ? <CiEdit /> : <FaArrowRight />
                       }
                       onClick={() => {
                         navigate("/job/screeningQuestions");
                       }}>
-                      {userData?.screening ? "Edit" : "Start"}
+                      {userData?.screeningQuestions ? "Edit" : "Start"}
                     </Button>
                   </div>
 
