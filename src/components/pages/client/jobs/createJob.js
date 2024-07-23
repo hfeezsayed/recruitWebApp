@@ -213,7 +213,6 @@ export const CreateJob = () => {
   //   }
   // }, [state]);
 
-<<<<<<< HEAD
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     let jobId = localStorage.getItem("jobId");
@@ -240,7 +239,7 @@ export const CreateJob = () => {
         });
     }
   }, []);
-=======
+
   // useEffect(() => {
   //   const user = JSON.parse(localStorage.getItem("token"));
   //   let jobId = localStorage.getItem("jobId");
@@ -267,7 +266,6 @@ export const CreateJob = () => {
   //       });
   //   }
   // }, []);
->>>>>>> 2579b514928df24aa436fc93aa5b14a4ccbe7a7c
 
   const handleDtpAccess = (row) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -320,7 +318,6 @@ export const CreateJob = () => {
       });
   };
 
-<<<<<<< HEAD
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(state);
@@ -375,7 +372,7 @@ export const CreateJob = () => {
         });
     }
   }, []);
-=======
+
   // useEffect(() => {
   //   const user = JSON.parse(localStorage.getItem("token"));
   //   console.log(state);
@@ -430,7 +427,6 @@ export const CreateJob = () => {
   //       });
   //   }
   // }, []);
->>>>>>> 2579b514928df24aa436fc93aa5b14a4ccbe7a7c
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
