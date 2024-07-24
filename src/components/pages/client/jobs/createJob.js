@@ -1270,7 +1270,7 @@ export const CreateJob = () => {
 
                   <div className="w-36">
                     <Gauge
-                      value={userData?.screeningHelp ? 100 : 0}
+                      value={userData?.screeningQuestions ? 100 : 0}
                       startAngle={0}
                       endAngle={360}
                       innerRadius="80%"

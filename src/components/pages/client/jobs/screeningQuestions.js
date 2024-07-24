@@ -116,14 +116,25 @@ export const ScreeningQuestions = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Screening Questions
-              </p>
-              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                Please fill in the information as needed, or use the existing
-                template.
-              </p>
+            <div className="py-5 flex justify-between items-center">
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                  Screening Questions
+                </p>
+                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                  Please fill in the information as needed, or use the existing
+                  template.
+                </p>
+              </div>
+              { proceed === false && (
+              <div className="py-8 gap-4 flex justify-end">
+                <Button
+                  onClick={getQuestions}
+                  variant="outlined"
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  Regenerate 
+                </Button>
+              </div> )}
             </div>
             <div>
               {questions?.map((data, index) => {
