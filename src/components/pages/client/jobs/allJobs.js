@@ -88,7 +88,7 @@ export const AllJobs = () => {
   const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
   const [filter, setFilter] = useState(false);
-  const [tasks, setTasks] = useState(AllJobDataTokanBan(data));
+  const [tasks, setTasks] = useState([]);
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
@@ -247,6 +247,7 @@ export const AllJobs = () => {
       .then((response) => {
         console.log(response.data);
         setData(response?.data.data);
+        setTasks(AllJobDataTokanBan(response?.data.data));
         setFilterData(response?.data.data);
         setLoading(false);
         //setPage(data?.pageNo || 1);

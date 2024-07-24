@@ -110,7 +110,7 @@ export const CreateJob = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
-  const [tasks, setTasks] = useState(CreateJobDataTokanBan(candidateDetails));
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const jobId = localStorage.getItem("jobId");
@@ -230,6 +230,7 @@ export const CreateJob = () => {
         .then((response) => {
           console.log(response);
           setCandidateDetails(response.data);
+          setTasks(CreateJobDataTokanBan(response.data));
           setLoading(false);
           // setPage(data?.pageNo || 1);
         })
@@ -1269,7 +1270,7 @@ export const CreateJob = () => {
 
                   <div className="w-36">
                     <Gauge
-                      value={userData?.screening ? 100 : 0}
+                      value={userData?.screeningHelp ? 100 : 0}
                       startAngle={0}
                       endAngle={360}
                       innerRadius="80%"
@@ -1972,7 +1973,7 @@ export const CreateJob = () => {
                                                       fontWeight: 500,
                                                       fontSize: 10,
                                                     }}>
-                                                    Job Id : {item.jobId}
+                                                    Job Id : {userData.id}
                                                   </p>
                                                 </div>
                                                 <div className="flex justify-between items-center p-2">
@@ -1993,7 +1994,7 @@ export const CreateJob = () => {
                                                           fontSize: 16,
                                                           fontWeight: 600,
                                                         }}>
-                                                        {item?.name}
+                                                        {item?.username}
                                                       </p>
                                                       <p
                                                         style={{
@@ -2022,7 +2023,7 @@ export const CreateJob = () => {
                                                       color: "#ffffff",
                                                       fontSize: 10,
                                                     }}>
-                                                    {item.profile_Status}%
+                                                    {item.profileStatus}%
                                                   </p>
                                                 </div>
                                                 <div className="p-2 ">
@@ -2032,7 +2033,7 @@ export const CreateJob = () => {
                                                       fontSize: 10,
                                                     }}>
                                                     Created Timestamp:{" "}
-                                                    {item?.timeStamp}
+                                                    {item?.createdTime}
                                                   </p>
                                                   <p
                                                     style={{
@@ -2041,7 +2042,7 @@ export const CreateJob = () => {
                                                     }}>
                                                     Application Sub-status:{" "}
                                                     {
-                                                      item?.application_sub_status
+                                                      item?.applicationSubStatus
                                                     }
                                                   </p>
                                                 </div>
@@ -2058,7 +2059,8 @@ export const CreateJob = () => {
                                                         color: "#5FAEDA",
                                                         fontSize: 10,
                                                       }}>
-                                                      {item?.application_source}
+                                                        LinkedIn
+                                                      {/* {item?.application_source} */}
                                                     </p>
                                                   </div>
                                                   <div className="flex gap-1">
@@ -2072,7 +2074,7 @@ export const CreateJob = () => {
                                                         color: "#800080",
                                                         fontSize: 10,
                                                       }}>
-                                                      {item?.requestDate}
+                                                      {item?.createdTime}
                                                     </p>
                                                   </div>
                                                 </div>
@@ -2092,7 +2094,7 @@ export const CreateJob = () => {
                                                     <BorderLinearProgresskan
                                                       variant="determinate"
                                                       value={
-                                                        item.complated_status ||
+                                                        item.applicationStatus ||
                                                         0
                                                       }
                                                       style={{ width: "100%" }}
@@ -2313,7 +2315,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.requestedData}
+                                            {row.createdTime}
                                           </TableCell>
                                           <TableCell
                                             align="center"

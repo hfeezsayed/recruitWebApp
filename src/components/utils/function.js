@@ -149,9 +149,9 @@ export const AllJobDataTokanBan = (data) => {
   const result = {};
 
   data.forEach((post) => {
-    const status = post?.jobStatus.replace(/\s+/g, "_");
+    const status = post?.jobStatus?.replace(/\s+/g, "_");
     if (!result[status]) {
-      result[status] = { name: status.replace(/_/g, " "), items: [] };
+      result[status] = { name: status?.replace(/_/g, " "), items: [] };
     }
     result[status].items.push({
       ...post,
@@ -166,7 +166,7 @@ export const CreateJobDataTokanBan = (data) => {
   const result = {};
 
   data.forEach((post) => {
-    const status = post?.dtpStatus.replace(/\s+/g, "_");
+    const status = post?.applicationStatus.replace(/\s+/g, "_");
     if (!result[status]) {
       result[status] = { name: status.replace(/_/g, " "), items: [] };
     }
