@@ -110,7 +110,9 @@ export const CreateJob = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(
+    CreateJobDataTokanBan(candistaeDetailsDataNew)
+  );
 
   useEffect(() => {
     const jobId = localStorage.getItem("jobId");
@@ -292,12 +294,12 @@ export const CreateJob = () => {
   };
 
   const handleSwitch = (value, switchType) => {
-    if(switchType === "screening") setScreeningQuestions(value);
-    if(switchType === "assessment") setAssessments(value);
-    if(switchType === "sourcing") setSourcing(value);
-    if(switchType === "onboarding") setOnboarding(value);
-    if(switchType === "serviceStaffing") setServiceStaffing(value);
-    if(switchType === "publishFeature") setPublishFeature(value);
+    if (switchType === "screening") setScreeningQuestions(value);
+    if (switchType === "assessment") setAssessments(value);
+    if (switchType === "sourcing") setSourcing(value);
+    if (switchType === "onboarding") setOnboarding(value);
+    if (switchType === "serviceStaffing") setServiceStaffing(value);
+    if (switchType === "publishFeature") setPublishFeature(value);
     axiosInstance
       .get(
         `/updateSwitch?clientId=${userData.clientId}&jobId=${userData.id}&value=${value}&switchType=${switchType}`
@@ -529,7 +531,7 @@ export const CreateJob = () => {
       color = "#58A20F";
       bg = "#58A20F20";
     }
-    if (status === "Reject") {
+    if (status === "Rejected") {
       color = "#E05880";
       bg = "#E0588020";
     }
@@ -651,7 +653,7 @@ export const CreateJob = () => {
       color = "#5FAEDA";
     } else if (status === "Initiated") {
       color = "#FFA500";
-    } else if (status === "Reject") {
+    } else if (status === "Rejected") {
       color = "#E05880";
     } else if (status === "Not Recommended") {
       color = "#E05880";
@@ -822,7 +824,9 @@ export const CreateJob = () => {
                         />
                       }
                       value={publishFeature}
-                      onChange={(e) => handleSwitch(e.target.checked, "publishFeature")}
+                      onChange={(e) =>
+                        handleSwitch(e.target.checked, "publishFeature")
+                      }
                       label={
                         <p style={{ color: "#475467", fontSize: 16 }}>
                           Publish Feature
@@ -882,7 +886,9 @@ export const CreateJob = () => {
                             />
                           }
                           value={assessments}
-                          onChange={(e) => handleSwitch(e.target.checked, "assessment")}
+                          onChange={(e) =>
+                            handleSwitch(e.target.checked, "assessment")
+                          }
                           label={
                             <p style={{ color: "#A92525", fontSize: 16 }}>
                               Assessments
@@ -916,7 +922,9 @@ export const CreateJob = () => {
                             />
                           }
                           value={sourcing}
-                          onChange={(e) => handleSwitch(e.target.checked, "sourcing")}
+                          onChange={(e) =>
+                            handleSwitch(e.target.checked, "sourcing")
+                          }
                           label={
                             <p style={{ color: "#D9B020", fontSize: 16 }}>
                               Sourcing help
@@ -940,7 +948,9 @@ export const CreateJob = () => {
                             />
                           }
                           value={onboarding}
-                          onChange={(e) => handleSwitch(e.target.checked, "onboarding")}
+                          onChange={(e) =>
+                            handleSwitch(e.target.checked, "onboarding")
+                          }
                           label={
                             <p style={{ color: "#9BC53D", fontSize: 16 }}>
                               Onboarding help
@@ -964,7 +974,9 @@ export const CreateJob = () => {
                             />
                           }
                           value={serviceStaffing}
-                          onChange={(e) => handleSwitch(e.target.checked, "serviceStaffing")}
+                          onChange={(e) =>
+                            handleSwitch(e.target.checked, "serviceStaffing")
+                          }
                           label={
                             <p style={{ color: "#2C7DA0", fontSize: 16 }}>
                               Full-Service Staffing help
@@ -1318,13 +1330,19 @@ export const CreateJob = () => {
                       size="small"
                       disabled={!screeningQuestions}
                       style={{
-                        color: userData?.screeningQuestions ? "#1E90FF" : "#FF9900",
+                        color: userData?.screeningQuestions
+                          ? "#1E90FF"
+                          : "#FF9900",
                         fontSize: 12,
                         textTransform: "none",
                         opacity: screeningQuestions ? 1.0 : 0.6,
                       }}
                       endIcon={
-                        userData?.screeningQuestions ? <CiEdit /> : <FaArrowRight />
+                        userData?.screeningQuestions ? (
+                          <CiEdit />
+                        ) : (
+                          <FaArrowRight />
+                        )
                       }
                       onClick={() => {
                         navigate("/job/screeningQuestions");
@@ -1878,8 +1896,8 @@ export const CreateJob = () => {
                                         style={{
                                           margin: "0 8px",
                                           padding: "8px",
-                                          minWidth: "260px",
-                                          maxWidth: "360px",
+                                          minWidth: "280px",
+                                          maxWidth: "380px",
                                           backgroundColor:
                                             snapshot.isDraggingOver
                                               ? "lightblue"
@@ -2041,9 +2059,7 @@ export const CreateJob = () => {
                                                       fontSize: 10,
                                                     }}>
                                                     Application Sub-status:{" "}
-                                                    {
-                                                      item?.applicationSubStatus
-                                                    }
+                                                    {item?.applicationSubStatus}
                                                   </p>
                                                 </div>
                                                 <div className="mx-2 border-b border-[#E2E8F0]" />
@@ -2059,7 +2075,7 @@ export const CreateJob = () => {
                                                         color: "#5FAEDA",
                                                         fontSize: 10,
                                                       }}>
-                                                        LinkedIn
+                                                      LinkedIn
                                                       {/* {item?.application_source} */}
                                                     </p>
                                                   </div>

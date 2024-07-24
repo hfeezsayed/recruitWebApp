@@ -146,34 +146,42 @@ export const convertCompetencies = (competencyList) => {
 };
 
 export const AllJobDataTokanBan = (data) => {
-  const result = {};
+  const result = {
+    New_Requirement: { name: "New Requirement", items: [] },
+    Sourcing_Candidates: { name: "Sourcing Candidates", items: [] },
+    "Screening_&_Evaluation": { name: "Screening & Evaluation", items: [] },
+    Interviewing: { name: "Interviewing", items: [] },
+  };
 
   data.forEach((post) => {
-    const status = post?.jobStatus?.replace(/\s+/g, "_");
-    if (!result[status]) {
-      result[status] = { name: status?.replace(/_/g, " "), items: [] };
+    const status = post.jobStatus.replace(/\s+/g, "_");
+    if (result[status]) {
+      result[status].items.push({
+        ...post,
+        id: post.id.toString(),
+      });
     }
-    result[status].items.push({
-      ...post,
-      id: post.id.toString(),
-    });
   });
 
   return result;
 };
 
 export const CreateJobDataTokanBan = (data) => {
-  const result = {};
+  const result = {
+    Initiated: { name: "Initiated", items: [] },
+    In_Progress: { name: "In Progress", items: [] },
+    Approved: { name: "Approved", items: [] },
+    Rejected: { name: "Rejected", items: [] },
+  };
 
   data.forEach((post) => {
-    const status = post?.applicationStatus.replace(/\s+/g, "_");
-    if (!result[status]) {
-      result[status] = { name: status.replace(/_/g, " "), items: [] };
+    const status = post.dtpStatus.replace(/\s+/g, "_");
+    if (result[status]) {
+      result[status].items.push({
+        ...post,
+        id: post.id.toString(),
+      });
     }
-    result[status].items.push({
-      ...post,
-      id: post.id.toString(),
-    });
   });
 
   return result;
