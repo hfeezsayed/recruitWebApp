@@ -13,16 +13,22 @@ import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { setSourcingHelpListData } from "../../../dummy/Data";
+import { useEffect } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
+import Spinner from "../../../utils/spinner";
+
 
 export const ExternalHelp = () => {
   const [value, setValue] = useState(0);
   const [sourcingHelpList, setSourcingHelpList] = useState(
     setSourcingHelpListData
   );
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
 
   const checkStatusRound = (status) => {
     let color = "";
@@ -38,6 +44,7 @@ export const ExternalHelp = () => {
       color = "#E05880";
       backGround = "#E0588020";
     }
+    
     return (
       <div
         style={{
@@ -62,6 +69,40 @@ export const ExternalHelp = () => {
       </div>
     );
   };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+      axiosInstance
+        .get(`/getExternalStaffingJobs?clientId=${user.userId}`)
+        .then((response) => {
+          console.log(response.data);
+          setSourcingHelpList(response.data)
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setLoading(false);
+        });
+   }, []);
+
+
+  
+  const filterData = (dataList) => {
+    if(value === 0){
+      return dataList.filter(item =>
+        item.externalSource.toLowerCase().includes("sourcing".toLowerCase()))
+    }
+    if(value === 1){
+      return dataList.filter(item =>
+        item.externalSource.toLowerCase().includes("onboarding".toLowerCase()))
+    }
+    if(value === 2){
+      return dataList.filter(item =>
+        item.externalSource.toLowerCase().includes("externalService".toLowerCase()))
+    }
+  }
+
 
   const SourcingHelp = () => {
     return (
@@ -138,8 +179,11 @@ export const ExternalHelp = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
+            {loading === true ? (
+            <Spinner />
+          ) : (
             <TableBody>
-              {sourcingHelpList.map((row, index) => (
+              {filterData(sourcingHelpList).map((row, index) => (
                 <TableRow
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -167,6 +211,7 @@ export const ExternalHelp = () => {
                 </TableRow>
               ))}
             </TableBody>
+          )}
           </Table>
         </TableContainer>
       </div>
@@ -236,7 +281,10 @@ export const ExternalHelp = () => {
                   />
                 </Tabs>
               </Box>
+
               {value === 0 && <SourcingHelp />}
+              {value === 1 && <SourcingHelp />}
+              {value === 2 && <SourcingHelp />}
             </Box>
           </div>
         </div>

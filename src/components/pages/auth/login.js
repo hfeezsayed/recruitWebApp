@@ -23,7 +23,7 @@ export const Login = () => {
         navigate("/candidate");
       }
       if (isAuthenticated.role === "ROLE_CLIENT") {
-        navigate("/job/allJobs");
+        navigate("/client/dashboard");
       }
     }
   }, []);

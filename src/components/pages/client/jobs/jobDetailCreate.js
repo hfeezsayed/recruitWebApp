@@ -63,6 +63,7 @@ export const JobDetailCreate = () => {
   const [certifications, setCertifications] = useState([{ certificate: null }]);
   const [softwares, setSoftwares] = useState([{ tools: null }]);
   const [envision, setEnvision] = useState("");
+  const [settings, setSettings] = useState(null);
 
   // popup
   const [templateName, setTemplateName] = useState("");
@@ -131,6 +132,38 @@ export const JobDetailCreate = () => {
   ];
 
   const yes_no = ["Yes", "No"];
+  
+  const convertToOptions = (commaSeparatedString) => {
+    //console.log(commaSeparatedString);
+    if(commaSeparatedString !== undefined){
+      const options = [];
+      commaSeparatedString?.split(',').map(item => {
+       // console.log(item);
+        const trimmedItem = item.trim();
+        options.push({"label" : trimmedItem, "value" : trimmedItem});
+      });
+      return options;
+    }
+    else{
+      console.log("in the else");
+      return tools;
+    }
+  }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+      axiosInstance
+        .get(`/getClientSettings?clientId=${user.userId}`)
+        .then((response) => {
+          console.log(response.data);
+          setSettings(response.data)
+          setEeo(response.data?.eeo);
+          setCompanyInfo(response.data.companyOverview);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+   }, []);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -508,12 +541,15 @@ export const JobDetailCreate = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Code
                 </p>
-                <TextField
+                <Autocomplete
                   size="small"
                   disablePortal
+                  options={convertToOptions(settings?.jobCode).map((option) => option.label)}
                   value={jobCode || null}
-                  onChange={(e) => setJobCode(e.target.value)}
-                  placeholder="type"
+                  onChange={(e, newvalue) => setJobCode(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
                 />
               </div>
               <div className="grid grid-flow-row gap-2">
@@ -523,7 +559,7 @@ export const JobDetailCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={convertToOptions(settings?.jobFamily).map((option) => option.label)}
                   value={jobFamily || null}
                   onChange={(e, newvalue) => setJobFamily(newvalue)}
                   renderInput={(params) => (
@@ -538,7 +574,7 @@ export const JobDetailCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={convertToOptions(settings?.jobDepartment).map((option) => option.label)}
                   value={jobDepartment || null}
                   onChange={(e, newvalue) => setJobDepartment(newvalue)}
                   renderInput={(params) => (
@@ -553,7 +589,7 @@ export const JobDetailCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={convertToOptions(settings?.jobLocation).map((option) => option.label)}
                   value={jobLocation || null}
                   onChange={(e, newvalue) => setJobLocation(newvalue)}
                   renderInput={(params) => (
@@ -935,7 +971,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={workSettings.map((option) => option.label)}
+                    options={convertToOptions(settings?.workSetting).map((option) => option.label)}
                     value={workSetting || null}
                     onChange={(e, newvalue) => setWorkSetting(newvalue)}
                     renderInput={(params) => (
@@ -951,7 +987,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={roleTypes.map((option) => option.label)}
+                    options={convertToOptions(settings?.typeRole).map((option) => option.label)}
                     value={roleType || null}
                     onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
@@ -967,7 +1003,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={roleTimingOpts.map((option) => option.label)}
+                    options={convertToOptions(settings?.roleTiming).map((option) => option.label)}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -983,7 +1019,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={roleTravelOpts.map((option) => option.label)}
+                    options={convertToOptions(settings?.travel).map((option) => option.label)}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
@@ -1024,7 +1060,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={minQual.map((option) => option.label)}
+                    options={convertToOptions(settings?.acadamicQualification).map((option) => option.label)}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)
@@ -1091,7 +1127,7 @@ export const JobDetailCreate = () => {
                     Are there any specific certifications or licenses that
                     candidates must hold?
                   </p>
-                  {certifications.map((value, index) => {
+                  {convertToOptions(settings?.certifications).map((value, index) => {
                     return (
                       <>
                         <div>
@@ -1162,7 +1198,7 @@ export const JobDetailCreate = () => {
                     Are there any tools or software candidates should be
                     proficient in?
                   </p>
-                  {softwares.map((value, index) => {
+                  {convertToOptions(settings?.softwares).map((value, index) => {
                     return (
                       <>
                         <div>

@@ -2726,6 +2726,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "sourcing"
   },
   {
     jobId: 101,
@@ -2735,6 +2736,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "sourcing"
   },
   {
     jobId: 101,
@@ -2744,6 +2746,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "sourcing"
   },
   {
     jobId: 101,
@@ -2753,6 +2756,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "sourcing"
   },
   {
     jobId: 101,
@@ -2762,6 +2766,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "sourcing"
   },
   {
     jobId: 101,
@@ -2771,6 +2776,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "onboarding"
   },
   {
     jobId: 101,
@@ -2780,6 +2786,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "onboarding"
   },
   {
     jobId: 101,
@@ -2789,6 +2796,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "externalService"
   },
   {
     jobId: 101,
@@ -2798,6 +2806,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
+    externalSource: "externalService"
   },
 ];
 

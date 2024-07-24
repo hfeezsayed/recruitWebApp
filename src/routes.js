@@ -101,7 +101,7 @@ export const Routes = () => {
       />
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
         <Route path="candidate" element={<Candidate />} />
-        <Route path="dashboard" element={<HomePage />} />
+        <Route path="candidate/dashboard" element={<HomePage />} />
         <Route path="job/jobportal" element={<JobPortal />} />
         <Route path="job/jobDetails" element={<JobDetails />} />
         <Route
@@ -147,7 +147,7 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
-        <Route path="dashboard" element={<DashBoard />} />
+        <Route path="clinet/dashboard" element={<DashBoard />} />
         <Route path="profile" element={<ProfileDashboard />} />
         <Route path="job/allJobs" element={<AllJobs />} />
         <Route path="job/assignCandidates" element={<AssignCandidates />} />

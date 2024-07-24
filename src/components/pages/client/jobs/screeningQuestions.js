@@ -9,7 +9,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
 
 export const ScreeningQuestions = () => {
-  const [questions, setQuestions] = useState(ScreeningQuestionsData);
+  const [questions, setQuestions] = useState([]);
   const [proceed, setproceed] = useState(false);
 
   const [editedQuestionId, setEditedQuestionId] = useState(null);
@@ -36,8 +36,13 @@ export const ScreeningQuestions = () => {
         .get(`/getJobScreeningQuestions?clientId=${user.userId}&jobId=1`)
         .then((response) => {
           console.log(response.data);
-          if(response.data?.length === 0){
+
+          if(response.data?.proceed === false){
             getQuestions();
+          }
+          else{
+            setQuestions(response.data?.questions);
+            setproceed(response.data?.proceed);
           }
         })
         .catch((e) => {
@@ -72,7 +77,7 @@ export const ScreeningQuestions = () => {
   const onSubmit = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .post(`/saveJobScreeningQuestions?clientId=${user.userId}&jobId=1`, questions)
+      .post(`/saveJobScreeningQuestions?clientId=${user.userId}&jobId=1`, { questions, proceed})
       .then((response) => {
         console.log(response);
       })
@@ -196,6 +201,7 @@ export const ScreeningQuestions = () => {
                       color: "#4EAF51",
                     },
                   }}
+                  checked={proceed}
                 />
               }
               label={
