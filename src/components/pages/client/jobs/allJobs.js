@@ -88,7 +88,7 @@ export const AllJobs = () => {
   const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
   const [filter, setFilter] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(AllJobDataTokanBan(AllJobsData));
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);
@@ -657,8 +657,8 @@ export const AllJobs = () => {
                                     style={{
                                       margin: "0 8px",
                                       padding: "8px",
-                                      minWidth: "260px",
-                                      maxWidth: "360px",
+                                      minWidth: "280px",
+                                      maxWidth: "380px",
                                       backgroundColor: snapshot.isDraggingOver
                                         ? "lightblue"
                                         : "white",
