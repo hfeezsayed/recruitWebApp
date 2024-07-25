@@ -941,7 +941,7 @@ export const CreateJob = () => {
                           }
                           label={
                             <p style={{ color: "#D9B020", fontSize: 16 }}>
-                              Sourcing help
+                              Sourcing 
                             </p>
                           }
                         />
@@ -967,7 +967,7 @@ export const CreateJob = () => {
                           }
                           label={
                             <p style={{ color: "#9BC53D", fontSize: 16 }}>
-                              Onboarding help
+                              Onboarding 
                             </p>
                           }
                         />
@@ -993,7 +993,7 @@ export const CreateJob = () => {
                           }
                           label={
                             <p style={{ color: "#2C7DA0", fontSize: 16 }}>
-                              Full-Service Staffing help
+                              Full-Service Staffing 
                             </p>
                           }
                         />

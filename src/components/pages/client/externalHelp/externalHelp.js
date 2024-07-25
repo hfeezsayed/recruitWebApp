@@ -250,7 +250,7 @@ export const ExternalHelp = () => {
                     },
                   }}>
                   <Tab
-                    label="Sourcing Help"
+                    label="Sourcing"
                     id="1"
                     sx={{
                       color: "#475467",
@@ -260,7 +260,7 @@ export const ExternalHelp = () => {
                     }}
                   />
                   <Tab
-                    label="Onboarding Help"
+                    label="Onboarding"
                     id="2"
                     sx={{
                       color: "#475467",
@@ -270,7 +270,7 @@ export const ExternalHelp = () => {
                     }}
                   />
                   <Tab
-                    label="Full Service Staff Help"
+                    label="Full Service Staff"
                     id="3"
                     sx={{
                       color: "#475467",
