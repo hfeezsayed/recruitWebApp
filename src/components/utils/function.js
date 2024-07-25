@@ -151,6 +151,12 @@ export const AllJobDataTokanBan = (data) => {
     Sourcing_Candidates: { name: "Sourcing Candidates", items: [] },
     "Screening_&_Evaluation": { name: "Screening & Evaluation", items: [] },
     Interviewing: { name: "Interviewing", items: [] },
+    Offer_Processing: { name : "Offer Processing", items: []},
+    Placement_Confirmed: { name : "Placement Cofirmed", items : []},
+    Onboarding : { name : "Onboarding", items: []},
+    Closed_Successful: {name : "Closed Successful", items: []},
+    Closed_Onhold : {name : "Closed Position Onhold", items: []},
+    Closed_Unsuccessful : {name: "Closed UnSuccessful", items: []},
   };
 
   data.forEach((post) => {
@@ -172,10 +178,23 @@ export const CreateJobDataTokanBan = (data) => {
     In_Progress: { name: "In Progress", items: [] },
     Approved: { name: "Approved", items: [] },
     Rejected: { name: "Rejected", items: [] },
+    Sourced: { name: "Sourced", items: [] },
+    Contracted: { name: "Contracted", items: [] },
+    Screened: { name: "Screened", items: [] },
+    Shortlisted: { name: "Shortlisted", items: [] },
+    Hiring_Manager_Submission: { name: "Hiring Manager Submission", items: [] },
+    Hiring_Manager_Approved: { name: "Hiring Manager Approved", items: [] },
+    Hiring_Manager_Interview_Scheduled: { name: "Hiring Manager Interview Scheduled", items: [] },
+    Interviewing: { name: "Interviewing", items: [] },
+    Offer_Extended: { name: "Offer Extended", items: [] },
+    Offer_Accepted: { name: "Offer Accepted", items: [] },
+    Onboarding: { name: "Onboarding", items: [] },
+    Placed: { name: "Placed", items: [] },
+    "Closed-Not_Selected": { name: "Closed - Not Selected", items: [] },
   };
 
   data.forEach((post) => {
-    const status = post.dtpStatus.replace(/\s+/g, "_");
+    const status = post.applicationStatus.replace(/\s+/g, "_");
     if (result[status]) {
       result[status].items.push({
         ...post,

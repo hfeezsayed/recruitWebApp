@@ -60,35 +60,35 @@ export const DigitalTalentProfile = () => {
   const [personalInfo, setPersonalInfo] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    setLoading(true);
-    axiosInstance
-      .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data);
-        console.log(response.data.assessment === true);
-        if (
-          response.data.assessment &&
-          response.data.valueAssessment &&
-          response.data.preferenes &&
-          response.data.personalInfo
-        ) {
-          console.log("dtp = ", disableDTP);
-          setDisableDTP(false);
-        }
-        setLoading(false);
-        // setAssessment(response.data.assessment);
-        // setValueAssessment(response.data.valueAssessment);
-        // setPreferences(response.data.preferenes);
-        // setPersonalInfo(response.data.personalInfo);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   setLoading(true);
+  //   axiosInstance
+  //     .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setUserData(response.data);
+  //       console.log(response.data.assessment === true);
+  //       if (
+  //         response.data.assessment &&
+  //         response.data.valueAssessment &&
+  //         response.data.preferenes &&
+  //         response.data.personalInfo
+  //       ) {
+  //         console.log("dtp = ", disableDTP);
+  //         setDisableDTP(false);
+  //       }
+  //       setLoading(false);
+  //       // setAssessment(response.data.assessment);
+  //       // setValueAssessment(response.data.valueAssessment);
+  //       // setPreferences(response.data.preferenes);
+  //       // setPersonalInfo(response.data.personalInfo);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const downloadResume = async () => {
     const user = JSON.parse(localStorage.getItem("token"));

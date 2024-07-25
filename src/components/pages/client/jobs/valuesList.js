@@ -181,9 +181,9 @@ export const ValuesList = () => {
                                     textTransform: "none",
                                   }}
                                   onClick={() => {
-                                    // navigate("/job/valuesResult", {
-                                    //   state: row,
-                                    // });
+                                    navigate("/job/valuesResult", {
+                                      state: row,
+                                    });
                                     setShowPopup(true);
                                     // setViewData(row);
                                   }}>

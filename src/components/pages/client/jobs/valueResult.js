@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -25,7 +25,14 @@ import { workValueViewData } from "../../../dummy/Data";
 
 export const ValuesResult = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState(workValueViewData);
+
+
+  useEffect(() => {
+    console.log(location.state);
+    setData(location.state);
+  }, [location.state])
 
   return (
     <div>
@@ -43,24 +50,24 @@ export const ValuesResult = () => {
               </p>
             </div>
             <div>
-              <div className="py-5">
-                <RadarChart
-                  height={350}
-                  width={450}
-                  outerRadius="80%"
-                  data={data.data}>
-                  <PolarGrid />
-                  <Tooltip />
-                  <PolarAngleAxis dataKey="statement" />
-                  <PolarRadiusAxis />
-                  <Radar
-                    dataKey="rating"
-                    stroke="#008080"
-                    fill="#ffffff"
-                    fillOpacity={0}
-                  />
-                </RadarChart>
-              </div>
+            <div className="py-5">
+                    <RadarChart
+                      height={350}
+                      width={450}
+                      outerRadius="80%"
+                      data={data?.data}>
+                      <PolarGrid />
+                      <Tooltip />
+                      <PolarAngleAxis dataKey="value" />
+                      <PolarRadiusAxis />
+                      <Radar
+                        dataKey="rating"
+                        stroke="#008080"
+                        fill="#ffffff"
+                        fillOpacity={0}
+                      />
+                    </RadarChart>
+                  </div>
               <Box>
                         <TableContainer sx={{ minWidth: 500 }}>
                           <Table>

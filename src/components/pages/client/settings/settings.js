@@ -71,6 +71,7 @@ export const Settings = () => {
           setCompanyOverview(response.data?.companyOverview);
           setEeo(response.data?.eeo);
           setOnboarding(response.data?.onboarding);
+          setId(response.data?.id);
         })
         .catch((e) => {
           console.log(e);

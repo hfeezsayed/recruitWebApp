@@ -7,11 +7,12 @@ import { TopNav } from "../../../widgets/topNav";
 import { ScreeningQuestionsData } from "../../../dummy/Data";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
+import Spinner from "../../../utils/spinner";
 
 export const ScreeningQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [proceed, setproceed] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [editedQuestionId, setEditedQuestionId] = useState(null);
   const [editedText, setEditedText] = useState("");
   const [jd, setJd] = useState("");
@@ -32,13 +33,15 @@ export const ScreeningQuestions = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+      //setLoading(true);
       axiosInstance
         .get(`/getJobScreeningQuestions?clientId=${user.userId}&jobId=1`)
         .then((response) => {
           console.log(response.data);
 
-          if(response.data?.proceed === false){
+          if(response.data?.proceed === false && response.data?.questions.length === 0){
             getQuestions();
+            //setLoading(false);
           }
           else{
             setQuestions(response.data?.questions);
@@ -47,12 +50,14 @@ export const ScreeningQuestions = () => {
         })
         .catch((e) => {
           console.log(e);
+          //setLoading(false);
         });
   }, []);
 
   const getQuestions = () => {
       let job_title = "Tech Lead";
       const user = JSON.parse(localStorage.getItem("token"));
+      //setLoading(true);
       axiosInstance
         .get(`/getJD?clientId=${user.userId}&jobId=1`)
         .then((response) => {
@@ -61,16 +66,19 @@ export const ScreeningQuestions = () => {
         })
         .catch((e) => {
           console.log(e);
+          //setLoading(false);
         });
-
+      setLoading(true);
       axiosInstance
         .post(`https://xenflexer.northcentralus.cloudapp.azure.com/api/questions/`, { job_title })
         .then((response) => {
           console.log(response.data);
-          setQuestions(response.data?.screening_questions)
+          setQuestions(response.data?.screening_questions);
+          setLoading(false);
         })
         .catch((e) => {
           console.log(e);
+          setLoading(false);
         });
   }
 
@@ -115,6 +123,7 @@ export const ScreeningQuestions = () => {
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
+          {loading ? (<Spinner/>) : (
           <div className="p-8">
             <div className="py-5 flex justify-between items-center">
               <div>
@@ -238,6 +247,7 @@ export const ScreeningQuestions = () => {
               </Button>
             </div>
           </div>
+          )}
         </div>
       </div>
       <Footer />

@@ -363,9 +363,11 @@ export const AllJobs = () => {
 
   const onTaskChange = (source, destination, data) => {
     console.log(source, destination, data);
+    const jobId = data.id;
     const user = JSON.parse(localStorage.getItem("token"));
+    const status = destination;
     axiosInstance
-      .post(`/taskChange`, { source, destination, data })
+      .post(`/updateJobStatus?clientId=${user.userId}`, { jobId, status})
       .then((response) => {
         console.log(response.data);
       })
@@ -762,7 +764,7 @@ export const AllJobs = () => {
                                                 </div>
                                               </div>
                                               <div className="w-6 h-6 flex justify-center items-center border border-[#DDDDDD] rounded-md">
-                                                <IconButton onClick={handleKd}>
+                                                <IconButton onClick={(e) => { handleKd(e); setAnchorData(item);}}>
                                                   <BsThreeDots
                                                     style={{
                                                       color: "#6F6F6F",
@@ -779,7 +781,7 @@ export const AllJobs = () => {
                                                   color: "#787486",
                                                   fontSize: 10,
                                                 }}>
-                                                Created Date: {item?.created}
+                                                Created Date: {item?.createdDate}
                                               </p>
                                               <p
                                                 style={{
@@ -812,7 +814,7 @@ export const AllJobs = () => {
                                                   color: "#800080",
                                                   fontSize: 10,
                                                 }}>
-                                                New: {item?.new}
+                                                New: {item?.newly}
                                               </p>
                                               <p
                                                 style={{
@@ -860,7 +862,7 @@ export const AllJobs = () => {
                                         }}>
                                         {row?.jobName}
                                       </p>
-                                      {row?.new ? (
+                                      {row?.newJob ? (
                                         <p
                                           style={{
                                             color: "#7D5AE2",
@@ -1217,7 +1219,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row?.location}
+                                          {row?.jobDepartment}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1226,7 +1228,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row.created}
+                                          {row.createdDate}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1291,7 +1293,7 @@ export const AllJobs = () => {
                                             border: 1,
                                             borderColor: "#D0D5DD50",
                                           }}>
-                                          {row?.new}
+                                          {row?.newly}
                                         </TableCell>
                                         <TableCell
                                           sx={{
@@ -1617,7 +1619,7 @@ export const AllJobs = () => {
                           </p>
                         </div>
                       </MenuItem>
-                      <MenuItem onClick={() => {}}>
+                      <MenuItem onClick={handleJobEdit}>
                         <div className="flex gap-2 items-center">
                           <FiEdit style={{ color: "#5FAEDA", fontSize: 16 }} />
                           <p
@@ -1630,7 +1632,7 @@ export const AllJobs = () => {
                           </p>
                         </div>
                       </MenuItem>
-                      <MenuItem onClick={() => {}}>
+                      <MenuItem onClick={handleJobDelete}>
                         <div className="flex gap-2 items-center">
                           <RiDeleteBin5Line
                             style={{ color: "#E05880", fontSize: 16 }}
@@ -1646,7 +1648,7 @@ export const AllJobs = () => {
                         </div>
                       </MenuItem>
 
-                      <MenuItem onClick={() => {}}>
+                      <MenuItem onClick={handleJobClone}>
                         <div className="flex gap-2 items-center">
                           <HiOutlineDocumentDuplicate
                             style={{ color: "#58A20F", fontSize: 16 }}

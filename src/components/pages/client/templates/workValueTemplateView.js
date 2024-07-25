@@ -66,7 +66,7 @@ export const WorkValueTemplateView = () => {
                 <PolarGrid />
                 <Tooltip />
 
-                <PolarAngleAxis dataKey="name" />
+                <PolarAngleAxis dataKey="value" />
                 <PolarRadiusAxis />
                 <Radar
                   dataKey="rating"

@@ -35,9 +35,11 @@ import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
 import logoNew from "../../../../assets/images/xenrecruit.png";
+import { useLocation } from "react-router-dom";
 
 
 export const JobCandidateCombination = () => {
+  const location = useLocation();
   const [value, setValue] = useState(0);
 
   const [overview, setOverview] = useState(jobOverviewData);
@@ -78,6 +80,16 @@ export const JobCandidateCombination = () => {
     // setInterviewPopupData();
     handleCloseAnchor();
   };
+
+  useEffect(() => {
+    console.log(location.state);
+    if(location?.state === "screening") {
+      setValue(1);
+    }
+    if(location?.state === "assessment"){
+      setValue(2);
+    }
+  }, [location.state])
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));

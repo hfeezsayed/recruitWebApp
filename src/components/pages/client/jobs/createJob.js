@@ -312,19 +312,19 @@ export const CreateJob = () => {
       });
   };
 
-  const handleAssessment = (value) => {
-    setAssessments(value);
-    axiosInstance
-      .get(
-        `/updateAssessment?clientId=${userData.clientId}&jobId=${userData.id}&assessment=${value}`
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const handleAssessment = (value) => {
+  //   setAssessments(value);
+  //   axiosInstance
+  //     .get(
+  //       `/updateAssessment?clientId=${userData.clientId}&jobId=${userData.id}&assessment=${value}`
+  //     )
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -505,8 +505,10 @@ export const CreateJob = () => {
   const onTaskChange = (source, destination, data) => {
     console.log(source, destination, data);
     const user = JSON.parse(localStorage.getItem("token"));
+    const status = destination;
+    const jobId = data.id;
     axiosInstance
-      .post(`/taskChange`, { source, destination, data })
+      .post(`/updateCandidateStatus?clientId=${user.userId}`, { jobId, status })
       .then((response) => {
         console.log(response.data);
       })
@@ -576,6 +578,18 @@ export const CreateJob = () => {
       }
     }
   };
+
+  const handleJobScreening = () => {
+    navigate("/jobCandidateCombination", { state : "screening"});
+  }
+
+  const handleAssessment = () => {
+    navigate("/jobCandidateCombination", { state : "assessment"});
+  }
+
+  const handleNotify = () => {
+
+  }
 
   const closePopup = () => {
     setShowPopup(false);
@@ -2041,7 +2055,7 @@ export const CreateJob = () => {
                                                       color: "#ffffff",
                                                       fontSize: 10,
                                                     }}>
-                                                    {item.profileStatus}%
+                                                    {item.matchingScore}
                                                   </p>
                                                 </div>
                                                 <div className="p-2 ">
@@ -2075,7 +2089,7 @@ export const CreateJob = () => {
                                                         color: "#5FAEDA",
                                                         fontSize: 10,
                                                       }}>
-                                                      LinkedIn
+                                                      {item.applicationSource}
                                                       {/* {item?.application_source} */}
                                                     </p>
                                                   </div>
@@ -2090,7 +2104,7 @@ export const CreateJob = () => {
                                                         color: "#800080",
                                                         fontSize: 10,
                                                       }}>
-                                                      {item?.createdTime}
+                                                      {item?.alignmentDate}
                                                     </p>
                                                   </div>
                                                 </div>
@@ -2322,7 +2336,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {userData.title}
+                                            {userData.jobTitle}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2348,7 +2362,7 @@ export const CreateJob = () => {
                                                 color: "#28A745",
                                                 textTransform: "none",
                                               }}
-                                              onClick={() => {}}>
+                                              onClick={handleJobScreening}>
                                               View
                                             </Button>
                                           </TableCell>
@@ -2359,7 +2373,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {checkStatusRound("In Progress")}
+                                            {checkStatusRound(row.applicationStatus)}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2368,7 +2382,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            Phone Call
+                                            {row.applicationSubStatus}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2385,7 +2399,7 @@ export const CreateJob = () => {
                                                 textTransform: "none",
                                               }}
                                               onClick={() => {}}>
-                                              Resume.pdf
+                                              {row.resume}
                                             </Button>
                                           </TableCell>
                                           <TableCell
@@ -2403,7 +2417,7 @@ export const CreateJob = () => {
                                                 color: "#28A745",
                                                 textTransform: "none",
                                               }}
-                                              onClick={() => {}}>
+                                              onClick={handleAssessment}>
                                               View
                                             </Button>
                                           </TableCell>
@@ -2462,7 +2476,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {row.matchingScore}%
+                                            {row.matchingScore}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2480,7 +2494,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            1
+                                            {row.recommendationRank}
                                           </TableCell>
                                           <TableCell
                                             sx={{
@@ -2488,7 +2502,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {checkStatus("In Progress")}
+                                            {checkStatus(row.recommendationStatus)}
                                           </TableCell>
                                           <TableCell
                                             sx={{
@@ -2496,7 +2510,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            LinkedIn
+                                            {row.applicationSource}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2505,7 +2519,7 @@ export const CreateJob = () => {
                                               border: 1,
                                               borderColor: "#D0D5DD50",
                                             }}>
-                                            {userData.jobId}
+                                            {userData.id}
                                           </TableCell>
                                           <TableCell
                                             align="center"
@@ -2698,7 +2712,7 @@ export const CreateJob = () => {
               horizontal: "right",
             }}
             TransitionComponent={Fade}>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={() => {navigate("/jobcandidateCombination")}}>
               <div className="flex gap-2 items-center">
                 <FiEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
                 <p
@@ -2745,7 +2759,7 @@ export const CreateJob = () => {
               horizontal: "right",
             }}
             TransitionComponent={Fade}>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={handleJobScreening}>
               <div className="flex gap-2 items-center">
                 <FiEdit style={{ color: "#FF7F50", fontSize: 14 }} />
                 <p
@@ -2758,7 +2772,7 @@ export const CreateJob = () => {
                 </p>
               </div>
             </MenuItem>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={handleAssessment}>
               <div className="flex gap-2 items-center">
                 <HiOutlineDocumentDuplicate
                   style={{ color: "#E05880", fontSize: 14 }}
@@ -2773,7 +2787,7 @@ export const CreateJob = () => {
                 </p>
               </div>
             </MenuItem>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={handleNotify}>
               <div className="flex gap-2 items-center">
                 <BiBell style={{ color: "#66B2B2", fontSize: 14 }} />
                 <p
@@ -2799,7 +2813,7 @@ export const CreateJob = () => {
                 </p>
               </div>
             </MenuItem>
-            <MenuItem onClick={() => {}}>
+            <MenuItem onClick={() => navigate("/jobCandidateCombination")}>
               <div className="flex gap-2 items-center">
                 <IoEyeOutline style={{ color: "#58A20F", fontSize: 14 }} />
                 <p

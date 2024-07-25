@@ -21,7 +21,7 @@ import Spinner from "../../../utils/spinner";
 export const ExternalHelp = () => {
   const [value, setValue] = useState(0);
   const [sourcingHelpList, setSourcingHelpList] = useState(
-    setSourcingHelpListData
+    []
   );
   const [loading, setLoading] = useState(false);
 
@@ -91,15 +91,15 @@ export const ExternalHelp = () => {
   const filterData = (dataList) => {
     if(value === 0){
       return dataList.filter(item =>
-        item.externalSource.toLowerCase().includes("sourcing".toLowerCase()))
+        item.sourcing?.toLowerCase().includes("sourcing".toLowerCase()))
     }
     if(value === 1){
       return dataList.filter(item =>
-        item.externalSource.toLowerCase().includes("onboarding".toLowerCase()))
+        item.onboarding?.toLowerCase().includes("onboarding".toLowerCase()))
     }
     if(value === 2){
       return dataList.filter(item =>
-        item.externalSource.toLowerCase().includes("externalService".toLowerCase()))
+        item.externalService?.toLowerCase().includes("externalService".toLowerCase()))
     }
   }
 
