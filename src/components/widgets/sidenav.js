@@ -123,7 +123,7 @@ export const SideNav = () => {
                 },
               }}
               onClick={() => {
-                navigate("/dashboard");
+                navigate("/candidate/dashboard");
               }}>
               <ListItemIcon
                 sx={{

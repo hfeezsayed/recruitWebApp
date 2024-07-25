@@ -60,7 +60,7 @@ export const HomePage = () => {
       .get("/getCandidateDTPInfo?candidateId=" + user.userId)
       .then((response) => {
         console.log(response.data);
-        setUserData(response.data);
+        // setUserData(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -75,9 +75,9 @@ export const HomePage = () => {
     axiosInstance
       .get(`/getCandidateAssessmentCount?candidateId=${user.userId}`)
       .then((response) => {
-        setAuthorizedCount(response.data.authorizedCount);
-        setClientCount(response.data.clientCount);
-        setselfCount(response.data.selfCount);
+        // setAuthorizedCount(response.data.authorizedCount);
+        // setClientCount(response.data.clientCount);
+        // setselfCount(response.data.selfCount);
         setLoading(false);
       })
       .catch((error) => {

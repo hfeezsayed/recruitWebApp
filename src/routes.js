@@ -147,7 +147,7 @@ export const Routes = () => {
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
-        <Route path="clinet/dashboard" element={<DashBoard />} />
+        <Route path="client/dashboard" element={<DashBoard />} />
         <Route path="profile" element={<ProfileDashboard />} />
         <Route path="job/allJobs" element={<AllJobs />} />
         <Route path="job/assignCandidates" element={<AssignCandidates />} />

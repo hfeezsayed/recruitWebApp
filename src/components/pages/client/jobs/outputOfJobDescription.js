@@ -20,6 +20,7 @@ import {
   RadarChart,
   Tooltip,
 } from "recharts";
+import { FiDownload } from "react-icons/fi";
 import { TopNav } from "../../../widgets/topNav";
 import logo from "../../../../assets/images/logo.png";
 import { Footer } from "../../../widgets/footer";
@@ -35,8 +36,8 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
 import Spinner from "../../../utils/spinner";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export const OutputofJobDescription = () => {
   const spectrums = [
@@ -44,7 +45,7 @@ export const OutputofJobDescription = () => {
     "spectrum2",
     "spectrum3",
     "spectrum4",
-    "spectrum5"
+    "spectrum5",
   ];
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,10 +64,10 @@ export const OutputofJobDescription = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
     if (location.state) {
-      if(location.state.teamAccess){
+      if (location.state.teamAccess) {
         setFullAccess(false);
       }
-      if(location.state.jdAccess){
+      if (location.state.jdAccess) {
         setFullAccess(false);
         setTeamAccess(false);
       }
@@ -89,6 +90,7 @@ export const OutputofJobDescription = () => {
           console.log(e);
         });
     }
+    setLoading(false);
   }, []);
 
   const convertedEmtional = convertCompetencies(
@@ -108,10 +110,34 @@ export const OutputofJobDescription = () => {
   const handleDownload = async () => {
     const element = contentRef.current;
     const canvas = await html2canvas(element);
-    const imgData = canvas.toDataURL('image/png');
+    const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF();
-    pdf.addImage(imgData, 'PNG', 0, 0);
-    pdf.save('download.pdf');
+    pdf.addImage(imgData, "PNG", 0, 0);
+    pdf.save("download.pdf");
+  };
+
+  const DownloadPdf = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .get(`/getPdf=${user.userId}&jobId=${location.state.jobId}`)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const DownloadWord = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .get(`/getWord=${user.userId}&jobId=${location.state.jobId}`)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -124,18 +150,36 @@ export const OutputofJobDescription = () => {
             <Spinner />
           ) : (
             <div className="w-full min-h-screen p-4">
-              <div className="px-5">
-                <p
-                  style={{
-                    color: "#008080",
-                    fontSize: 22,
-                    fontWeight: 600,
-                  }}>
-                  Output of Job Description
-                </p>
-                <p style={{ color: "#475467", fontSize: 14 }}>
-                  Below is the information for the created job description.
-                </p>
+              <div className="px-5 flex justify-between items-center">
+                <div>
+                  <p
+                    style={{
+                      color: "#008080",
+                      fontSize: 22,
+                      fontWeight: 600,
+                    }}>
+                    Output of Job Description
+                  </p>
+                  <p style={{ color: "#475467", fontSize: 14 }}>
+                    Below is the information for the created job description.
+                  </p>
+                </div>
+                <div className="flex gap-10 items-center h-fit">
+                  <Button
+                    size="small"
+                    style={{ color: "#5E8EBD", textTransform: "none" }}
+                    endIcon={<FiDownload />}
+                    onClick={DownloadPdf}>
+                    Download Pdf
+                  </Button>
+                  <Button
+                    size="small"
+                    style={{ color: "#5E8EBD", textTransform: "none" }}
+                    endIcon={<FiDownload />}
+                    onClick={DownloadWord}>
+                    Download Word
+                  </Button>
+                </div>
               </div>
 
               {/*  Job Details */}
@@ -434,493 +478,397 @@ export const OutputofJobDescription = () => {
               </Card>
 
               {/*  Work Value  */}
-              {fullAccess && 
-              (<Card className="p-4 my-4">
-                <div>
-                  <p
-                    style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                    Work Value
-                  </p>
-                </div>
-                <div>
-                  <div className="py-5">
-                    <RadarChart
-                      height={350}
-                      width={450}
-                      outerRadius="80%"
-                      data={workValueData}>
-                      <PolarGrid />
-                      <Tooltip />
-                      <PolarAngleAxis dataKey="value" />
-                      <PolarRadiusAxis />
-                      <Radar
-                        dataKey="rating"
-                        stroke="#008080"
-                        fill="#ffffff"
-                        fillOpacity={0}
-                      />
-                    </RadarChart>
+              {fullAccess && (
+                <Card className="p-4 my-4">
+                  <div>
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontSize: 16,
+                        fontWeight: 500,
+                      }}>
+                      Work Value
+                    </p>
                   </div>
-                  <Box>
-                    <TableContainer sx={{ minWidth: 500 }}>
-                      <Table>
+                  <div>
+                    <div className="py-5">
+                      <RadarChart
+                        height={350}
+                        width={450}
+                        outerRadius="80%"
+                        data={workValueData}>
+                        <PolarGrid />
+                        <Tooltip />
+                        <PolarAngleAxis dataKey="value" />
+                        <PolarRadiusAxis />
+                        <Radar
+                          dataKey="rating"
+                          stroke="#008080"
+                          fill="#ffffff"
+                          fillOpacity={0}
+                        />
+                      </RadarChart>
+                    </div>
+                    <Box>
+                      <TableContainer sx={{ minWidth: 500 }}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  bgcolor: "#F8F9FA",
+                                  color: "#101828",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  width: 250,
+                                }}>
+                                Work Attribute
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  bgcolor: "#F8F9FA",
+                                  color: "#101828",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                Frequency Selected
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                Priority 4
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  backgroundColor: "#C2E0E8",
+                                }}>
+                                <div className="grid grid-cols-4 gap-y-2">
+                                  {workValueData?.map((data) => {
+                                    return Number(data?.rating) === 4 ? (
+                                      <p>{data.value}</p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                Priority 3
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  backgroundColor: "#F2EFC9",
+                                }}>
+                                <div className="grid grid-cols-4 gap-y-2">
+                                  {workValueData?.map((data) => {
+                                    return Number(data?.rating) === 3 ? (
+                                      <p>{data.value}</p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                Priority 2
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  backgroundColor: "#D1E6D5",
+                                }}>
+                                <div className="grid grid-cols-4 gap-y-2">
+                                  {workValueData?.map((data) => {
+                                    return Number(data?.rating) === 2 ? (
+                                      <p>{data.value}</p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                Priority 1
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  backgroundColor: "#ECCCB7",
+                                }}>
+                                <div className="grid grid-cols-4 gap-y-2">
+                                  {workValueData?.map((data) => {
+                                    return Number(data?.rating) === 1 ? (
+                                      <p>{data.value}</p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                No Priority
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#171717",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  backgroundColor: "#EDDAD3",
+                                }}>
+                                <div className="grid grid-cols-4 gap-y-2">
+                                  {workValueData?.map((data) => {
+                                    return Number(data?.rating) === 0 ? (
+                                      <p>{data.value}</p>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                  </div>
+                </Card>
+              )}
+              {/* Team Preference */}
+              {(fullAccess || teamAccess) && (
+                <Card className="p-4 my-4">
+                  <div>
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontSize: 16,
+                        fontWeight: 500,
+                      }}>
+                      Team Preference
+                    </p>
+                  </div>
+                  <div>
+                    <div className="grid grid-flow-row  py-1">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        What is the size of the team
+                      </p>
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        {teamPreference?.teamSize}
+                      </p>
+                    </div>
+                    <div className="grid grid-flow-row  py-1">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        What is the location of the team where it works from?
+                      </p>
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        {teamPreference?.teamLocation}
+                      </p>
+                    </div>
+                    <div className="grid grid-flow-row  py-1">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Does the role have to work cross functionally?
+                      </p>
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        {teamPreference?.workCrossFunality ? "Yes" : "No"}
+                      </p>
+                    </div>
+                    <div className="grid grid-flow-row  py-1">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        What problem/project is the team working on which the
+                        candidate will be joining?
+                      </p>
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        {teamPreference?.project}
+                      </p>
+                    </div>
+                    <div className="grid grid-flow-row  py-1">
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Could you describe the contributions of a particularly
+                        successful team member in a similar role and how they've
+                        impacted the team's success?
+                      </p>
+                      <p style={{ color: "#475467", fontSize: 16 }}>
+                        {teamPreference?.contributionsTeam}
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              )}
+              {/* ICP Analysis */}
+              {fullAccess && (
+                <Card className="p-4 my-4">
+                  <div>
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontSize: 16,
+                        fontWeight: 500,
+                      }}>
+                      ICP Analysis
+                    </p>
+                  </div>
+                  <div>
+                    {/* spectrum analysis */}
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 22,
+                        fontWeight: 600,
+                        marginTop: 10,
+                      }}>
+                      Spectrum Analysis
+                    </p>
+                    <div className="flex gap-5 py-5">
+                      {/* table */}
+                      <Table
+                        sx={{
+                          borderWidth: 1,
+                        }}>
                         <TableHead>
                           <TableRow>
                             <TableCell
                               sx={{
-                                bgcolor: "#F8F9FA",
                                 color: "#101828",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                width: 250,
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                                minWidth: 600,
                               }}>
-                              Work Attribute
+                              Talent Dimensions
                             </TableCell>
                             <TableCell
                               sx={{
-                                bgcolor: "#F8F9FA",
                                 color: "#101828",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
                               }}>
-                              Frequency Selected
+                              Attributes
                             </TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                              }}>
-                              Priority 4
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                backgroundColor: "#C2E0E8",
-                              }}>
-                              <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.map((data) => {
-                                  return Number(data?.rating) === 4 ? (
-                                    <p>{data.value}</p>
-                                  ) : null;
-                                })}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                              }}>
-                              Priority 3
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                backgroundColor: "#F2EFC9",
-                              }}>
-                              <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.map((data) => {
-                                  return Number(data?.rating) === 3 ? (
-                                    <p>{data.value}</p>
-                                  ) : null;
-                                })}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                              }}>
-                              Priority 2
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                backgroundColor: "#D1E6D5",
-                              }}>
-                              <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.map((data) => {
-                                  return Number(data?.rating) === 2 ? (
-                                    <p>{data.value}</p>
-                                  ) : null;
-                                })}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                              }}>
-                              Priority 1
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                backgroundColor: "#ECCCB7",
-                              }}>
-                              <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.map((data) => {
-                                  return Number(data?.rating) === 1 ? (
-                                    <p>{data.value}</p>
-                                  ) : null;
-                                })}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                              }}>
-                              No Priority
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#171717",
-                                border: 1,
-                                borderColor: "#D0D5DD50",
-                                backgroundColor: "#EDDAD3",
-                              }}>
-                              <div className="grid grid-cols-4 gap-y-2">
-                                {workValueData?.map((data) => {
-                                  return Number(data?.rating) === 0 ? (
-                                    <p>{data.value}</p>
-                                  ) : null;
-                                })}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Box>
-                </div>
-              </Card>
-              )}
-              {/* Team Preference */}
-              {(fullAccess || teamAccess) && 
-              (
-              <Card className="p-4 my-4">
-                <div>
-                  <p
-                    style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                    Team Preference
-                  </p>
-                </div>
-                <div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      What is the size of the team
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.teamSize}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      What is the location of the team where it works from?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.teamLocation}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Does the role have to work cross functionally?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.workCrossFunality ? "Yes" : "No"}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      What problem/project is the team working on which the
-                      candidate will be joining?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.project}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Could you describe the contributions of a particularly
-                      successful team member in a similar role and how they've
-                      impacted the team's success?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {teamPreference?.contributionsTeam}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-              )}
-              {/* ICP Analysis */}
-              { fullAccess &&
-              (
-              <Card className="p-4 my-4">
-                <div>
-                  <p
-                    style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                    ICP Analysis
-                  </p>
-                </div>
-                <div>
-                  {/* spectrum analysis */}
-                  <p
-                    style={{
-                      color: "#101828",
-                      fontSize: 22,
-                      fontWeight: 600,
-                      marginTop: 10,
-                    }}>
-                    Spectrum Analysis
-                  </p>
-                  <div className="flex gap-5 py-5">
-                    {/* table */}
-                    <Table
-                      sx={{
-                        borderWidth: 1,
-                      }}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                              minWidth: 600,
-                            }}>
-                            Talent Dimensions
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Attributes
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <Fragment>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#475467",
-                                fontSize: 14,
-                                fontWeight: 500,
-                                borderWidth: 1,
-                              }}
-                              rowSpan={behaviour?.length + 1}>
-                              {/* <div
-                              className="border rounded-lg p-4 w-full"
-                              style={{
-                                backgroundColor: "#ffffff",
-                                borderColor: "#D0D5DD",
-                              }}> */}
-                              <div className="flex justify-center">
-                                <ColorBodySvg />
-
-                                <div className="grid relative pt-5">
-                                  {pillars.map((row, index) => {
-                                    return (
-                                      <div className={`flex mt-10`} key={index}>
-                                        {/* <div className="flex text-center p-2"></div> */}
-                                        <div className="flex gap-3 items-center">
-                                          <p
-                                            style={{
-                                              color: "#475467",
-                                              fontSize: 33,
-                                            }}>
-                                            &#x2015;
-                                            <span style={{ fontSize: 30 }}>
-                                              &#x2022;
-                                            </span>
-                                          </p>
-                                          <p
-                                            style={{
-                                              color: "#101828",
-                                              fontSize: 20,
-                                              fontWeight: 500,
-                                            }}>
-                                            {row}
-                                          </p>
-                                          {/* <p style={{ color: "#475467", fontSize: 14 }}>
-                                {row?.description}
-                              </p> */}
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                              {/* </div> */}
-                            </TableCell>
-                          </TableRow>
-                        </Fragment>
-                        <Fragment>
-                          {behaviour?.map((row, index) => (
-                            <TableRow key={index}>
+                          <Fragment>
+                            <TableRow>
                               <TableCell
                                 sx={{
                                   color: "#475467",
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
-                                {row}
+                                }}
+                                rowSpan={behaviour?.length + 1}>
+                                {/* <div
+                              className="border rounded-lg p-4 w-full"
+                              style={{
+                                backgroundColor: "#ffffff",
+                                borderColor: "#D0D5DD",
+                              }}> */}
+                                <div className="flex justify-center">
+                                  <ColorBodySvg />
+
+                                  <div className="grid relative pt-5">
+                                    {pillars.map((row, index) => {
+                                      return (
+                                        <div
+                                          className={`flex mt-10`}
+                                          key={index}>
+                                          {/* <div className="flex text-center p-2"></div> */}
+                                          <div className="flex gap-3 items-center">
+                                            <p
+                                              style={{
+                                                color: "#475467",
+                                                fontSize: 33,
+                                              }}>
+                                              &#x2015;
+                                              <span style={{ fontSize: 30 }}>
+                                                &#x2022;
+                                              </span>
+                                            </p>
+                                            <p
+                                              style={{
+                                                color: "#101828",
+                                                fontSize: 20,
+                                                fontWeight: 500,
+                                              }}>
+                                              {row}
+                                            </p>
+                                            {/* <p style={{ color: "#475467", fontSize: 14 }}>
+                                {row?.description}
+                              </p> */}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                                {/* </div> */}
                               </TableCell>
                             </TableRow>
-                          ))}
-                        </Fragment>
-                      </TableBody>
-                    </Table>
-                  </div>
-                  {/* charts */}
-                  <p
-                    style={{
-                      color: "#101828",
-                      fontSize: 22,
-                      fontWeight: 600,
-                      marginTop: 10,
-                    }}>
-                    Pie Charts
-                  </p>
-                  {/* chart 1 table */}
-                  <div className="mt-5">
-                    <Table
-                      sx={{
-                        borderWidth: 1,
-                      }}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Emotional Flexibility
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Labels
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}
-                            align="center">
-                            Rating out of 5
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Attributes
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <Fragment>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#475467",
-                                fontSize: 14,
-                                fontWeight: 500,
-                                borderWidth: 1,
-                                width: 450,
-                              }}
-                              rowSpan={5}>
-                              <div className="flex justify-end">
-                                <PieChart
-                                  series={convertedEmtional}
-                                  width={300}
-                                  height={200}
-                                  slotProps={{
-                                    legend: {
-                                      hidden: true,
-                                    },
-                                  }}
-                                />
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        </Fragment>
-                        <Fragment>
-                          {convertedEmtional?.map((data, index) => {
-                            let row = data.data[0];
-                            return (
+                          </Fragment>
+                          <Fragment>
+                            {behaviour?.map((row, index) => (
                               <TableRow key={index}>
                                 <TableCell
                                   sx={{
@@ -929,326 +877,434 @@ export const OutputofJobDescription = () => {
                                     fontWeight: 500,
                                     borderWidth: 1,
                                   }}>
-                                  <div
-                                    className="flex"
-                                    style={{
-                                      borderLeftWidth: 3,
-                                      borderLeftColor: row.color,
-                                      borderRadius: 3,
-                                      paddingLeft: 5,
-                                    }}
-                                    key={index}>
-                                    <div className="col-span-2">
-                                      <p
-                                        style={{
-                                          color: "#475467",
-                                          fontSize: 16,
-                                        }}>
-                                        {row.label}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}
-                                  align="center">
-                                  {row.rating}
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}>
-                                  {row.attribute}
+                                  {row}
                                 </TableCell>
                               </TableRow>
-                            );
-                          })}
-                        </Fragment>
-                      </TableBody>
-                    </Table>
-                  </div>
-                  {/* chart 2 table */}
-                  <div className="mt-5">
-                    <Table
-                      sx={{
-                        borderWidth: 1,
+                            ))}
+                          </Fragment>
+                        </TableBody>
+                      </Table>
+                    </div>
+                    {/* charts */}
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 22,
+                        fontWeight: 600,
+                        marginTop: 10,
                       }}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Cognitive Agility
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Labels
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}
-                            align="center">
-                            Rating out of 5
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Attributes
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <Fragment>
+                      Pie Charts
+                    </p>
+                    {/* chart 1 table */}
+                    <div className="mt-5">
+                      <Table
+                        sx={{
+                          borderWidth: 1,
+                        }}>
+                        <TableHead>
                           <TableRow>
                             <TableCell
                               sx={{
-                                color: "#475467",
+                                color: "#101828",
                                 fontSize: 14,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 borderWidth: 1,
-                                width: 450,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Emotional Flexibility
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Labels
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
                               }}
-                              rowSpan={5}>
-                              <div className="flex justify-end">
-                                <PieChart
-                                  series={convertCognitive}
-                                  width={300}
-                                  height={200}
-                                  slotProps={{
-                                    legend: {
-                                      hidden: true,
-                                    },
-                                  }}
-                                />
-                              </div>
+                              align="center">
+                              Rating out of 5
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Attributes
                             </TableCell>
                           </TableRow>
-                        </Fragment>
-                        <Fragment>
-                          {convertCognitive?.map((data, index) => {
-                            let row = data.data[0];
-                            return (
-                              <TableRow key={index}>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}>
-                                  <div
-                                    className="flex"
-                                    style={{
-                                      borderLeftWidth: 3,
-                                      borderLeftColor: row.color,
-                                      borderRadius: 3,
-                                      paddingLeft: 5,
+                        </TableHead>
+                        <TableBody>
+                          <Fragment>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#475467",
+                                  fontSize: 14,
+                                  fontWeight: 500,
+                                  borderWidth: 1,
+                                  width: 450,
+                                }}
+                                rowSpan={5}>
+                                <div className="flex justify-end">
+                                  <PieChart
+                                    series={convertedEmtional}
+                                    width={300}
+                                    height={200}
+                                    slotProps={{
+                                      legend: {
+                                        hidden: true,
+                                      },
                                     }}
-                                    key={index}>
-                                    <div className="col-span-2">
-                                      <p
-                                        style={{
-                                          color: "#475467",
-                                          fontSize: 16,
-                                        }}>
-                                        {row.label}
-                                      </p>
+                                  />
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          </Fragment>
+                          <Fragment>
+                            {convertedEmtional?.map((data, index) => {
+                              let row = data.data[0];
+                              return (
+                                <TableRow key={index}>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    <div
+                                      className="flex"
+                                      style={{
+                                        borderLeftWidth: 3,
+                                        borderLeftColor: row.color,
+                                        borderRadius: 3,
+                                        paddingLeft: 5,
+                                      }}
+                                      key={index}>
+                                      <div className="col-span-2">
+                                        <p
+                                          style={{
+                                            color: "#475467",
+                                            fontSize: 16,
+                                          }}>
+                                          {row.label}
+                                        </p>
+                                      </div>
                                     </div>
-                                  </div>
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}
-                                  align="center">
-                                  {row.rating}
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}>
-                                  {row.attribute}
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
-                        </Fragment>
-                      </TableBody>
-                    </Table>
-                  </div>
-                  {/* chart 3 table */}
-                  <div className="mt-5">
-                    <Table
-                      sx={{
-                        borderWidth: 1,
-                      }}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Sociability Skills
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Labels
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}
-                            align="center">
-                            Rating out of 5
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#101828",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              borderWidth: 1,
-                              bgcolor: "#F8F9FA",
-                            }}>
-                            Attributes
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <Fragment>
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}
+                                    align="center">
+                                    {row.rating}
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    {row.attribute}
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
+                          </Fragment>
+                        </TableBody>
+                      </Table>
+                    </div>
+                    {/* chart 2 table */}
+                    <div className="mt-5">
+                      <Table
+                        sx={{
+                          borderWidth: 1,
+                        }}>
+                        <TableHead>
                           <TableRow>
                             <TableCell
                               sx={{
-                                color: "#475467",
+                                color: "#101828",
                                 fontSize: 14,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 borderWidth: 1,
-                                width: 450,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Cognitive Agility
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Labels
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
                               }}
-                              rowSpan={5}>
-                              <div className="flex justify-end">
-                                <PieChart
-                                  series={convertSociability}
-                                  width={300}
-                                  height={200}
-                                  slotProps={{
-                                    legend: {
-                                      hidden: true,
-                                    },
-                                  }}
-                                />
-                              </div>
+                              align="center">
+                              Rating out of 5
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Attributes
                             </TableCell>
                           </TableRow>
-                        </Fragment>
-                        <Fragment>
-                          {convertSociability?.map((data, index) => {
-                            let row = data.data[0];
-                            return (
-                              <TableRow key={index}>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}>
-                                  <div
-                                    className="flex"
-                                    style={{
-                                      borderLeftWidth: 3,
-                                      borderLeftColor: row.color,
-                                      borderRadius: 3,
-                                      paddingLeft: 5,
+                        </TableHead>
+                        <TableBody>
+                          <Fragment>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#475467",
+                                  fontSize: 14,
+                                  fontWeight: 500,
+                                  borderWidth: 1,
+                                  width: 450,
+                                }}
+                                rowSpan={5}>
+                                <div className="flex justify-end">
+                                  <PieChart
+                                    series={convertCognitive}
+                                    width={300}
+                                    height={200}
+                                    slotProps={{
+                                      legend: {
+                                        hidden: true,
+                                      },
                                     }}
-                                    key={index}>
-                                    <div className="col-span-2">
-                                      <p
-                                        style={{
-                                          color: "#475467",
-                                          fontSize: 16,
-                                        }}>
-                                        {row.label}
-                                      </p>
+                                  />
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          </Fragment>
+                          <Fragment>
+                            {convertCognitive?.map((data, index) => {
+                              let row = data.data[0];
+                              return (
+                                <TableRow key={index}>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    <div
+                                      className="flex"
+                                      style={{
+                                        borderLeftWidth: 3,
+                                        borderLeftColor: row.color,
+                                        borderRadius: 3,
+                                        paddingLeft: 5,
+                                      }}
+                                      key={index}>
+                                      <div className="col-span-2">
+                                        <p
+                                          style={{
+                                            color: "#475467",
+                                            fontSize: 16,
+                                          }}>
+                                          {row.label}
+                                        </p>
+                                      </div>
                                     </div>
-                                  </div>
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}
-                                  align="center">
-                                  {row.rating}
-                                </TableCell>
-                                <TableCell
-                                  sx={{
-                                    color: "#475467",
-                                    fontSize: 14,
-                                    fontWeight: 500,
-                                    borderWidth: 1,
-                                  }}>
-                                  {row.attribute}
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
-                        </Fragment>
-                      </TableBody>
-                    </Table>
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}
+                                    align="center">
+                                    {row.rating}
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    {row.attribute}
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
+                          </Fragment>
+                        </TableBody>
+                      </Table>
+                    </div>
+                    {/* chart 3 table */}
+                    <div className="mt-5">
+                      <Table
+                        sx={{
+                          borderWidth: 1,
+                        }}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Sociability Skills
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Labels
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}
+                              align="center">
+                              Rating out of 5
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                borderWidth: 1,
+                                bgcolor: "#F8F9FA",
+                              }}>
+                              Attributes
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <Fragment>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#475467",
+                                  fontSize: 14,
+                                  fontWeight: 500,
+                                  borderWidth: 1,
+                                  width: 450,
+                                }}
+                                rowSpan={5}>
+                                <div className="flex justify-end">
+                                  <PieChart
+                                    series={convertSociability}
+                                    width={300}
+                                    height={200}
+                                    slotProps={{
+                                      legend: {
+                                        hidden: true,
+                                      },
+                                    }}
+                                  />
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          </Fragment>
+                          <Fragment>
+                            {convertSociability?.map((data, index) => {
+                              let row = data.data[0];
+                              return (
+                                <TableRow key={index}>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    <div
+                                      className="flex"
+                                      style={{
+                                        borderLeftWidth: 3,
+                                        borderLeftColor: row.color,
+                                        borderRadius: 3,
+                                        paddingLeft: 5,
+                                      }}
+                                      key={index}>
+                                      <div className="col-span-2">
+                                        <p
+                                          style={{
+                                            color: "#475467",
+                                            fontSize: 16,
+                                          }}>
+                                          {row.label}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}
+                                    align="center">
+                                    {row.rating}
+                                  </TableCell>
+                                  <TableCell
+                                    sx={{
+                                      color: "#475467",
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      borderWidth: 1,
+                                    }}>
+                                    {row.attribute}
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
+                          </Fragment>
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
               )}
             </div>
           )}

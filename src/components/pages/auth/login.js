@@ -20,14 +20,13 @@ export const Login = () => {
         navigate("/admin");
       }
       if (isAuthenticated.role === "ROLE_CANDIDATE") {
-        navigate("/candidate");
+        navigate("/candidate/dashboard");
       }
       if (isAuthenticated.role === "ROLE_CLIENT") {
         navigate("/client/dashboard");
       }
     }
   }, []);
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -48,10 +47,10 @@ export const Login = () => {
           navigate("/admin");
         }
         if (role === "ROLE_CANDIDATE") {
-          navigate("/candidate");
+          navigate("/candidate/dashboard");
         }
         if (role === "ROLE_CLIENT") {
-          navigate("/job/allJobs");
+          navigate("/client/dashboard");
         }
       })
       .catch((error) => {

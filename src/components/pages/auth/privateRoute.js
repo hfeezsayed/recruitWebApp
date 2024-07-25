@@ -16,11 +16,9 @@ const PrivateRoute = ({ component: Component, requiredRole, ...rest }) => {
       if (role === "ROLE_ADMIN")
         return <Navigate replace to={`admin/unauthorized`} />;
       if (role === "ROLE_CANDIDATE")
-        return (
-          <Navigate replace to={`/digitalTalentProfile/personalinfromation`} />
-        );
+        return <Navigate replace to={`/candidate/dashboard`} />;
       if (role === "ROLE_CLIENT")
-        return <Navigate replace to={`/job/allJobs`} />;
+        return <Navigate replace to={`/client/dashboard`} />;
     }
   } else {
     return <Navigate replace to={`login`} />;
