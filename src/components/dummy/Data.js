@@ -2360,8 +2360,8 @@ export const candidatePersonalInfoData = {
   resume: "Ishita Sajwan’s UX/UI Resume",
   title: "Engeniring",
   mobileNumber: "91 8976890765",
-  linkdianLink: "https://www.linkedin.com/in/benjamin-grant-72381ujy3u.",
-  summry:
+  url: "https://www.linkedin.com/in/benjamin-grant-72381ujy3u.",
+  summary:
     "As a Software Engineer, you will play a pivotal role in the development and maintenance of cutting-edge web applications. Your primary responsibility will be to collaborate with cross-functional teams to design, develop, test, deploy, and maintain scalable and responsive web applications that meet the evolving needs of our users and stakeholders.",
   degree: "Bachelor of Science (B.S.)",
   filedOfStudy: "computer science",
@@ -2726,7 +2726,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "sourcing"
+    externalSource: "sourcing",
   },
   {
     jobId: 101,
@@ -2736,7 +2736,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "sourcing"
+    externalSource: "sourcing",
   },
   {
     jobId: 101,
@@ -2746,7 +2746,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "sourcing"
+    externalSource: "sourcing",
   },
   {
     jobId: 101,
@@ -2756,7 +2756,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "sourcing"
+    externalSource: "sourcing",
   },
   {
     jobId: 101,
@@ -2766,7 +2766,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "sourcing"
+    externalSource: "sourcing",
   },
   {
     jobId: 101,
@@ -2776,7 +2776,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "onboarding"
+    externalSource: "onboarding",
   },
   {
     jobId: 101,
@@ -2786,7 +2786,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "onboarding"
+    externalSource: "onboarding",
   },
   {
     jobId: 101,
@@ -2796,7 +2796,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "externalService"
+    externalSource: "externalService",
   },
   {
     jobId: 101,
@@ -2806,7 +2806,7 @@ export const setSourcingHelpListData = [
     location: "Remote",
     postedDate: "2024-07-01",
     declineDate: "2024-09-12",
-    externalSource: "externalService"
+    externalSource: "externalService",
   },
 ];
 
@@ -3084,4 +3084,13 @@ export const interviewFeedBackData = {
       comments: "John presented his ideas clearly and confidently",
     },
   ],
+};
+
+export const DummyUser = {
+  userId: 3,
+  username: "Ram",
+  email: "ram@xenspire.co",
+  accessToken:
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYW0iLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcxNzA0ODkwNywiZXhwIjoxNzE3MDU0OTA3fQ.3JDSFUgP7R1y9w8bTdX4Md_jTnXfab54MU4WFJdGUus",
+  role: "ROLE_CANDIDATE",
 };
