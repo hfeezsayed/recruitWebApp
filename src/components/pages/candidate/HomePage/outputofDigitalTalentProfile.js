@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import {
@@ -32,6 +33,7 @@ import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 import { SideNav } from "../../../widgets/sidenav";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
+import { FiDownload } from "react-icons/fi";
 
 export const OutputofDigitalTalentProfile = () => {
   const spectrums = [
@@ -39,14 +41,14 @@ export const OutputofDigitalTalentProfile = () => {
     "spectrum2",
     "spectrum3",
     "spectrum4",
-    "spectrum5"
+    "spectrum5",
   ];
   const [personalInfo, setPersonalInfio] = useState(candidatePersonalInfoData);
   const [preferenceForm, setPreferenceForm] = useState(
     candidatePreferenceFormData
   );
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
-  const [workValueData, setWorkValueData] = useState([]);
+  const [workValueData, setWorkValueData] = useState(workValueViewData.data);
   const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const [pillars, setPillars] = useState(spectrums);
   const [loading, setLoading] = useState(false);
@@ -89,6 +91,18 @@ export const OutputofDigitalTalentProfile = () => {
     icpAnalysisData?.cognitiveAgility[0]
   );
 
+  const DownloadPdf = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .get(`/getPdf=${user.userId}&jobId`)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
       <div className="flex ">
@@ -97,140 +111,156 @@ export const OutputofDigitalTalentProfile = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div className="px-5">
-              <p
-                style={{
-                  color: "#008080",
-                  fontSize: 22,
-                  fontWeight: 600,
-                }}>
-                Output of Digital Talent Profile
-              </p>
-              <p style={{ color: "#475467", fontSize: 14 }}>
-                Below is the information for the created job description.
-              </p>
+            <div className="flex justify-between px-5 items-center">
+              <div>
+                <p
+                  style={{
+                    color: "#008080",
+                    fontSize: 22,
+                    fontWeight: 600,
+                  }}>
+                  Output of Digital Talent Profile
+                </p>
+                <p style={{ color: "#475467", fontSize: 14 }}>
+                  Below is the information for the created job description.
+                </p>
+              </div>
+              <div className="w-fit">
+                <Button
+                  size="small"
+                  variant="text"
+                  style={{ color: "#5E8EBD", textTransform: "none" }}
+                  endIcon={<FiDownload />}
+                  onClick={DownloadPdf}>
+                  Download PDF
+                </Button>
+              </div>
             </div>
 
             {/* Candidate’s Personal Detail Information */}
             <Card className="p-4 my-4">
               <div>
-                <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
+                <p style={{ color: "#008080", fontSize: 18, fontWeight: 500 }}>
                   Candidate’s Personal Detail Information
                 </p>
               </div>
-              <div>
-                <div className="grid grid-flow-row  py-1">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 600 }}>
+              <div className="grid grid-cols-2 gap-5">
+                <div className="flex gap-5">
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
                     Resume
                   </p>
-                  <p style={{ color: "#101828", fontSize: 16 }}>
+                  <p style={{ color: "#101828", fontSize: 18 }}>
                     {personalInfo?.resume}
                   </p>
                 </div>
-                <div className="grid grid-flow-row  py-1">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 600 }}>
-                    Title
-                  </p>
-                  <p style={{ color: "#101828", fontSize: 16 }}>
-                    {personalInfo?.title}
-                  </p>
-                </div>
-                <div className="grid grid-flow-row  py-1">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 600 }}>
+                <div className="flex gap-5">
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
                     Mobile Number
                   </p>
-                  <p style={{ color: "#101828", fontSize: 16 }}>
+                  <p style={{ color: "#101828", fontSize: 18 }}>
                     {personalInfo?.mobileNumber}
                   </p>
                 </div>
-                <div className="grid grid-flow-row  py-1">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 600 }}>
+                <div className="flex gap-5">
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                    Title
+                  </p>
+                  <p style={{ color: "#101828", fontSize: 18 }}>
+                    {personalInfo?.title}
+                  </p>
+                </div>
+
+                <div className="flex gap-5">
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
                     LinkedIn Link
                   </p>
-                  <p style={{ color: "#101828", fontSize: 16 }}>
+                  <a
+                    style={{
+                      color: "#5E8EBD",
+                      fontSize: 18,
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    }}
+                    href="#">
                     {personalInfo?.url}
-                  </p>
+                  </a>
                 </div>
-                <div className="grid grid-flow-row  py-1">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 600 }}>
-                    Summary
-                  </p>
-                  <p style={{ color: "#101828", fontSize: 16 }}>
-                    {personalInfo?.summary}
-                  </p>
-                </div>
-                <div className="py-4">
-                  <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
-                    Education
-                  </p>
-                  <div className="grid grid-flow-row  py-1">
+              </div>
+              <div className="flex gap-5">
+                <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                  Summary
+                </p>
+                <p style={{ color: "#101828", fontSize: 18 }}>
+                  {personalInfo?.summary}
+                </p>
+              </div>
+              <div className="py-4">
+                <p style={{ color: "#008080", fontSize: 18, fontWeight: 500 }}>
+                  Education
+                </p>
+                <div className="grid grid-cols-2 gap-5">
+                  <div className="flex gap-5">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
+                        minWidth: 180,
                       }}>
                       Degree
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {personalInfo?.degree}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="flex gap-5">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
+                        minWidth: 180,
                       }}>
                       Field of study
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {personalInfo?.filedOfStudy}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="flex gap-5">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
+                        minWidth: 180,
                       }}>
                       Institutions
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {personalInfo?.institute}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="flex gap-5">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
+                        minWidth: 180,
                       }}>
                       City
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {personalInfo?.city}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="flex gap-5">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
+                        minWidth: 180,
                       }}>
                       State
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {personalInfo?.state}
                     </p>
                   </div>
@@ -240,244 +270,279 @@ export const OutputofDigitalTalentProfile = () => {
             {/* Candidate’s  Preference Form */}
             <Card className="p-4 my-4">
               <div>
-                <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
+                <p style={{ color: "#008080", fontSize: 18, fontWeight: 500 }}>
                   Candidate’s Preference Form
                 </p>
               </div>
               <div>
                 <div>
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{
+                      color: "#65BFBF",
+                      fontSize: 18,
+                      fontWeight: 500,
+                      paddingTop: 8,
+                    }}>
                     Academic Qualifications
                   </p>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="grid grid-flow-row  gap-1 py-1">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
                       }}>
                       What level of academic qualification have you attained?
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {preferenceForm?.academicQualification}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="grid grid-flow-row gap-1  py-1">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
                       }}>
                       What is your specialization?
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {preferenceForm?.specialization}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  <div className="grid grid-flow-row gap-1 py-1">
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
+                        color: "#475467",
+                        fontSize: 18,
                       }}>
                       Can you share your academic background and how it aligns
                       with this role?
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {preferenceForm?.academicBackground}
                     </p>
                   </div>
-                  <div className="grid grid-flow-row  py-1">
+                  {/* <div className="grid grid-flow-row  py-1">
                     <p
                       style={{
                         color: "#101828",
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: 600,
                       }}>
                       Do you possess any specific certifications or licenses?
                     </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
+                    <p style={{ color: "#101828", fontSize: 18 }}>
                       {preferenceForm?.specificCertifications}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Professional Experience
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      How many years of experience do you have
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.experiance}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Could you elaborate on your experience in [specific area
-                      relevant to the role]
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.specificRole}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Have you previously worked in a specific industry related
-                      to this role? If Yes then specify your role there.
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.specificIndustry}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Have you had experience with stakeholders for business
-                      goals?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.experienceStakeholders}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is your notice period in the current organization?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.noticePeriod}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Do you have team handling experience? (If yes, please
-                      select the team size)
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.teamHandling}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Please select the industry and specify the industry
-                      experience
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      Industry : {preferenceForm?.industryExperience?.industry}
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      Experience :{" "}
-                      {preferenceForm?.industryExperience.experience}
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        How many years of experience do you have
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.experiance}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Could you elaborate on your experience in [specific area
+                        relevant to the role?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.specificRole}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Have you previously worked in a specific industry
+                        related to this role? If Yes then specify your role
+                        there.
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.specificIndustry}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Have you had experience with stakeholders for business
+                        goals?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.experienceStakeholders}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is your notice period in the current organization?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.noticePeriod}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Do you have team handling experience? (If yes, please
+                        select the team size)
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.teamHandling}
+                      </p>
+                    </div>
+                    <div className="flex gap-5">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Please select the industry and specify the industry
+                        experience
+                      </p>
+                      <div>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          Industry :{" "}
+                          {preferenceForm?.industryExperience?.industry}
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          Experience :{" "}
+                          {preferenceForm?.industryExperience.experience}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Skills
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Primary Skills
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
                     {preferenceForm?.primarySkills?.map((row) => {
                       return (
-                        <div className="pb-3">
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Skill : {row?.skill}
+                        <div className="flex py-1 gap-5">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 180,
+                            }}>
+                            Primary Skills
                           </p>
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Experience : {row?.experiance}
-                          </p>
+
+                          <div className="pb-3">
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Skill :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.skill}
+                              </span>
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Experience :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.experiance}
+                              </span>
+                            </p>
+                          </div>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Secondary Skills
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
                     {preferenceForm?.secondarySkills?.map((row) => {
                       return (
-                        <div className="pb-3">
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Skill : {row?.skill}
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 180,
+                            }}>
+                            Secondary Skills
                           </p>
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Experience : {row?.experiance}
-                          </p>
+
+                          <div className="pb-3">
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Skill :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.skill}
+                              </span>
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Experience :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.experiance}
+                              </span>
+                            </p>
+                          </div>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Please add the tools or software application you have used
-                      in the past
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
                     {preferenceForm?.softwareApplication?.map((row) => {
                       return (
-                        <div className="pb-3">
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Tools : {row?.tool}
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 180,
+                            }}>
+                            Please add the tools or software application you
+                            have used in the past
                           </p>
-                          <p style={{ color: "#333333", fontSize: 16 }}>
-                            Experience : {row?.experiance}
-                          </p>
+
+                          <div className="pb-3">
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Tools :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.tool}
+                              </span>
+                            </p>
+                            <p style={{ color: "#475467", fontSize: 18 }}>
+                              Experience :{" "}
+                              <span style={{ color: "#101828" }}>
+                                {row?.experiance}
+                              </span>
+                            </p>
+                          </div>
                         </div>
                       );
                     })}
@@ -485,202 +550,218 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Work Experience
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Which work setting do you prefer in-office?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.workSetting}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is your preference on work shifts?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.workShift}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What are your preferred locations for the job?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.perfferdLocation}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Are you open to relocation if required for the job?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.openToRelocate}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      If your work requires you to travel, how comfortable are
-                      you to travel?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.requredToTravel}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is your preferred work schedule?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.workShedule}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Do you prefer working independently or as part of a small
-                      team, or as a part of a large team?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.workTeam}
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Which work setting do you prefer in-office?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.workSetting}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is your preference on work shifts?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.workShift}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What are your preferred locations for the job?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.perfferdLocation}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Are you open to relocation if required for the job?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.openToRelocate}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        If your work requires you to travel, how comfortable are
+                        you to travel?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.requredToTravel}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is your preferred work schedule?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.workShedule}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Do you prefer working independently or as part of a
+                        small team, or as a part of a large team?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.workTeam}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Compensation and Job Type
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What are the salary expectations?
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      Type Range: {preferenceForm?.salaryExpectations?.range}
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      Payment Frequency:{" "}
-                      {preferenceForm?.salaryExpectations?.payment}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is the type of job openings are you interested in ?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.typeOfJobopenings}
-                    </p>
+                  <div className="grid grid-cols-2 py-5">
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What are salary expectations:
+                      </p>
+                      <div>
+                        <p style={{ color: "#475467", fontSize: 18 }}>
+                          Type Range:{" "}
+                          <span style={{ color: "#101828" }}>
+                            {preferenceForm?.salaryExpectations?.range}
+                          </span>
+                        </p>
+                        <p style={{ color: "#475467", fontSize: 18 }}>
+                          Payment Frequency:{" "}
+                          <span style={{ color: "#101828" }}>
+                            {preferenceForm?.salaryExpectations?.payment}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-5  py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is the type of job openings are you interested in ?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.typeOfJobopenings}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Work Environment and Values
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is appealing to you at work?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.appealingWork}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What kind of work environment are you looking for?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.workEnvironment}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      Is the company outlook on environment important? Like
-                      sustainability initiatives, being carbon neutral etc.
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.environmentImportant}
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex gap-5  py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is appealing to you at work?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.appealingWork}
+                      </p>
+                    </div>
+                    <div className="flex gap-5  py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What kind of work environment are you looking for?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.workEnvironment}
+                      </p>
+                    </div>
+                    <div className="flex gap-5  py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        Is the company outlook on environment important? Like
+                        sustainability initiatives, being carbon neutral etc.
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.environmentImportant}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#101828", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Legal and Visa Status
                   </p>
-                  <div className="grid grid-flow-row  py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}>
-                      What is your current Visa or Work status?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 16 }}>
-                      {preferenceForm?.visaStatus}
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 180,
+                        }}>
+                        What is your current Visa or Work status?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.visaStatus}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -689,10 +770,10 @@ export const OutputofDigitalTalentProfile = () => {
             <Card className="p-4 my-4">
               <div>
                 <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                  Work Value
+                  Work Values Analysis Result
                 </p>
               </div>
-              <div>
+              <div className="flex gap-10">
                 <div className="py-5">
                   <RadarChart
                     height={350}
@@ -723,146 +804,48 @@ export const OutputofDigitalTalentProfile = () => {
                               border: 1,
                               borderColor: "#D0D5DD50",
                               width: 250,
+                              fontWeight: 500,
                             }}>
                             Work Attribute
                           </TableCell>
                           <TableCell
+                            align="center"
                             sx={{
                               bgcolor: "#F8F9FA",
                               color: "#101828",
                               border: 1,
                               borderColor: "#D0D5DD50",
+                              fontWeight: 500,
                             }}>
-                            Frequency Selected
+                            Ranking of the work attributes
                           </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}>
-                            Priority 4
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                              backgroundColor: "#C2E0E8",
-                            }}>
-                            <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.map((data) => {
-                                return Number(data?.rating) === 4 ? (
-                                  <p>{data.statement}</p>
-                                ) : null;
-                              })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}>
-                            Priority 3
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                              backgroundColor: "#F2EFC9",
-                            }}>
-                            <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.map((data) => {
-                                return Number(data?.rating) === 3 ? (
-                                  <p>{data.statement}</p>
-                                ) : null;
-                              })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}>
-                            Priority 2
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                              backgroundColor: "#D1E6D5",
-                            }}>
-                            <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.map((data) => {
-                                return Number(data?.rating) === 2 ? (
-                                  <p>{data.statement}</p>
-                                ) : null;
-                              })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}>
-                            Priority 1
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                              backgroundColor: "#ECCCB7",
-                            }}>
-                            <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.map((data) => {
-                                return Number(data?.rating) === 1 ? (
-                                  <p>{data.statement}</p>
-                                ) : null;
-                              })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}>
-                            No Priority
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#171717",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                              backgroundColor: "#EDDAD3",
-                            }}>
-                            <div className="grid grid-cols-4 gap-y-2">
-                              {workValueData?.map((data) => {
-                                return Number(data?.rating) === 0 ? (
-                                  <p>{data.statement}</p>
-                                ) : null;
-                              })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
+                        {workValueData.map((row, index) => {
+                          return (
+                            <TableRow key={index}>
+                              <TableCell
+                                sx={{
+                                  color: "#475467",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                }}>
+                                {row?.statement}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{
+                                  color: "#008080",
+                                  border: 1,
+                                  borderColor: "#D0D5DD50",
+                                  fontWeight: 500,
+                                }}>
+                                {row?.rating}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   </TableContainer>
@@ -873,7 +856,7 @@ export const OutputofDigitalTalentProfile = () => {
             <Card className="p-4 my-4">
               <div>
                 <p style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                  ICP Analysis
+                  Talent Spectrum Analysis Results Summary
                 </p>
               </div>
               <div>
@@ -946,18 +929,18 @@ export const OutputofDigitalTalentProfile = () => {
                                       <div className="flex gap-3 items-center">
                                         <p
                                           style={{
-                                            color: "#475467",
-                                            fontSize: 33,
+                                            color: "#D0D5DD",
+                                            fontSize: 32,
                                           }}>
                                           &#x2015;
-                                          <span style={{ fontSize: 30 }}>
+                                          <span style={{ fontSize: 22 }}>
                                             &#x2022;
                                           </span>
                                         </p>
                                         <p
                                           style={{
-                                            color: "#101828",
-                                            fontSize: 20,
+                                            color: "#000000",
+                                            fontSize: 16,
                                             fontWeight: 500,
                                           }}>
                                           {row}

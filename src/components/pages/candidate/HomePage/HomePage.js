@@ -364,7 +364,9 @@ export const HomePage = () => {
                         textTransform: "none",
                         textDecoration: "underline",
                       }}
-                      onClick={() => {}}>
+                      onClick={() => {
+                        navigate("/candidate");
+                      }}>
                       Update DTP Description
                     </Button>
 

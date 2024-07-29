@@ -116,8 +116,12 @@ export const SideNav = () => {
                 mb: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "/candidate" ? "#008080" : "#ffffff",
-                color: currentState === "/candidate" ? "#ffffff" : "#475467",
+                bgcolor: currentState.includes("/candidate")
+                  ? "#008080"
+                  : "#ffffff",
+                color: currentState.includes("/candidate")
+                  ? "#ffffff"
+                  : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
@@ -132,13 +136,17 @@ export const SideNav = () => {
                   justifyContent: "center",
                 }}>
                 <DashboardSvg
-                  COLOR={currentState === "/candidate" ? "#ffffff" : "#475467"}
+                  COLOR={
+                    currentState.includes("/candidate") ? "#ffffff" : "#475467"
+                  }
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Dashboard"}
                 primaryTypographyProps={{
-                  color: currentState === "/candidate" ? "#ffffff" : "#475467",
+                  color: currentState.includes("/candidate")
+                    ? "#ffffff"
+                    : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
