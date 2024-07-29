@@ -8,14 +8,32 @@ import { Footer } from "../../../widgets/footer";
 import { AssesmentSvg } from "../../../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../../../assets/icon/jobsvg";
+import { useEffect } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export const DashBoard = () => {
   const [userData, setuserData] = useState({
     companyName: "Comapany Name",
-    candidateCount: 7,
-    clientAssessments: 20,
-    jobCreated: 10,
+    candidatesCount: 7,
+    assessmentCount: 20,
+    jobCount: 10,
   });
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+      //setLoading(true);
+      axiosInstance
+        .get(`/getClientDashboardData?clientId=${user.userId}`)
+        .then((response) => {
+          console.log(response.data);
+          setuserData(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+          //setLoading(false);
+        });
+  }, []);
 
   return (
     <div>
@@ -103,7 +121,7 @@ export const DashBoard = () => {
                         fontSize: 30,
                         fontWeight: 600,
                       }}>
-                      {userData?.candidateCount || "00"}
+                      {userData?.candidatesCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
                       <p
@@ -154,7 +172,7 @@ export const DashBoard = () => {
                         fontSize: 30,
                         fontWeight: 600,
                       }}>
-                      {userData?.clientAssessments || "00"}
+                      {userData?.assessmentCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
                       <p
@@ -205,7 +223,7 @@ export const DashBoard = () => {
                         fontSize: 30,
                         fontWeight: 600,
                       }}>
-                      {userData?.jobCreated || "00"}
+                      {userData?.jobCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
                       <p
