@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import {
   Card,
   Box,
@@ -34,6 +34,9 @@ import { SideNav } from "../../../widgets/sidenav";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
 import { FiDownload } from "react-icons/fi";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import logoNew from "../../../../assets/images/xenrecruit.png";
 
 export const OutputofDigitalTalentProfile = () => {
   const spectrums = [
@@ -43,6 +46,7 @@ export const OutputofDigitalTalentProfile = () => {
     "spectrum4",
     "spectrum5",
   ];
+  const printRef = useRef();
   const [personalInfo, setPersonalInfio] = useState(candidatePersonalInfoData);
   const [preferenceForm, setPreferenceForm] = useState(
     candidatePreferenceFormData
@@ -52,6 +56,7 @@ export const OutputofDigitalTalentProfile = () => {
   const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const [pillars, setPillars] = useState(spectrums);
   const [loading, setLoading] = useState(false);
+  const [loadpdf, setloadpdf] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -91,16 +96,51 @@ export const OutputofDigitalTalentProfile = () => {
     icpAnalysisData?.cognitiveAgility[0]
   );
 
-  const DownloadPdf = () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance
-      .get(`/getPdf=${user.userId}&jobId`)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const DownloadPdf = async () => {
+    setloadpdf(true);
+    // const user = JSON.parse(localStorage.getItem("token"));
+    // axiosInstance
+    //   .get(`/getPdf=${user.userId}&jobId=${location.state.jobId}`)
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
+    setTimeout(() => {
+      setloadpdf(false);
+      generatePdf();
+    }, 0);
+  };
+
+  const generatePdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    // Calculate the required dimensions
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+
+    // Use A2 size (420mm x 594mm) or any other desired size
+    const pageWidth = imgWidth;
+    const pageHeight = imgHeight - 600;
+
+    // Initialize jsPDF with custom page size
+    const pdf = new jsPDF("p", "px", [pageWidth, pageHeight]);
+
+    // Calculate the scaling ratio to fit the height
+    const heightRatio = pageHeight / imgHeight;
+    const newImgHeight = pageHeight;
+    const newImgWidth = imgWidth * heightRatio;
+
+    // Center the image horizontally if needed
+    const xOffset = 70;
+    const yOffset = 0; // Top of the page
+
+    // pdf.addImage(imgData, "PNG", xOffset, yOffset, newImgWidth, newImgHeight);
+    pdf.addImage(imgData, "PNG", xOffset, yOffset, newImgWidth, newImgHeight);
+    pdf.save("Output_Of_DTP.pdf");
   };
 
   return (
@@ -110,7 +150,7 @@ export const OutputofDigitalTalentProfile = () => {
 
         <div className="w-full min-h-screen">
           <TopNav />
-          <div className="p-8">
+          <div className="p-8" ref={printRef}>
             <div className="flex justify-between px-5 items-center">
               <div>
                 <p
@@ -125,18 +165,23 @@ export const OutputofDigitalTalentProfile = () => {
                   Below is the information for the created job description.
                 </p>
               </div>
-              <div className="w-fit">
-                <Button
-                  size="small"
-                  variant="text"
-                  style={{ color: "#5E8EBD", textTransform: "none" }}
-                  endIcon={<FiDownload />}
-                  onClick={DownloadPdf}>
-                  Download PDF
-                </Button>
-              </div>
+              {loadpdf ? (
+                <>
+                  <img src={logoNew} alt="logo" style={{ width: 180 }} />
+                </>
+              ) : (
+                <div className="w-fit">
+                  <Button
+                    size="small"
+                    variant="text"
+                    style={{ color: "#5E8EBD", textTransform: "none" }}
+                    endIcon={<FiDownload />}
+                    onClick={DownloadPdf}>
+                    Download PDF
+                  </Button>
+                </div>
+              )}
             </div>
-
             {/* Candidate’s Personal Detail Information */}
             <Card className="p-4 my-4">
               <div>
@@ -146,7 +191,7 @@ export const OutputofDigitalTalentProfile = () => {
               </div>
               <div className="grid grid-cols-2 gap-5">
                 <div className="flex gap-5">
-                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 250 }}>
                     Resume
                   </p>
                   <p style={{ color: "#101828", fontSize: 18 }}>
@@ -154,7 +199,7 @@ export const OutputofDigitalTalentProfile = () => {
                   </p>
                 </div>
                 <div className="flex gap-5">
-                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 250 }}>
                     Mobile Number
                   </p>
                   <p style={{ color: "#101828", fontSize: 18 }}>
@@ -162,7 +207,7 @@ export const OutputofDigitalTalentProfile = () => {
                   </p>
                 </div>
                 <div className="flex gap-5">
-                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 250 }}>
                     Title
                   </p>
                   <p style={{ color: "#101828", fontSize: 18 }}>
@@ -171,7 +216,7 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
 
                 <div className="flex gap-5">
-                  <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                  <p style={{ color: "#475467", fontSize: 18, minWidth: 250 }}>
                     LinkedIn Link
                   </p>
                   <a
@@ -187,7 +232,7 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
               </div>
               <div className="flex gap-5">
-                <p style={{ color: "#475467", fontSize: 18, minWidth: 180 }}>
+                <p style={{ color: "#475467", fontSize: 18, minWidth: 250 }}>
                   Summary
                 </p>
                 <p style={{ color: "#101828", fontSize: 18 }}>
@@ -204,7 +249,7 @@ export const OutputofDigitalTalentProfile = () => {
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                        minWidth: 180,
+                        minWidth: 250,
                       }}>
                       Degree
                     </p>
@@ -217,7 +262,7 @@ export const OutputofDigitalTalentProfile = () => {
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                        minWidth: 180,
+                        minWidth: 250,
                       }}>
                       Field of study
                     </p>
@@ -230,7 +275,7 @@ export const OutputofDigitalTalentProfile = () => {
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                        minWidth: 180,
+                        minWidth: 250,
                       }}>
                       Institutions
                     </p>
@@ -243,7 +288,7 @@ export const OutputofDigitalTalentProfile = () => {
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                        minWidth: 180,
+                        minWidth: 250,
                       }}>
                       City
                     </p>
@@ -256,7 +301,7 @@ export const OutputofDigitalTalentProfile = () => {
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                        minWidth: 180,
+                        minWidth: 250,
                       }}>
                       State
                     </p>
@@ -285,35 +330,40 @@ export const OutputofDigitalTalentProfile = () => {
                     }}>
                     Academic Qualifications
                   </p>
-                  <div className="grid grid-flow-row  gap-1 py-1">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 18,
-                      }}>
-                      What level of academic qualification have you attained?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 18 }}>
-                      {preferenceForm?.academicQualification}
-                    </p>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 320,
+                        }}>
+                        What level of academic qualification have you attained?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.academicQualification}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 py-1">
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 18,
+                          width: 320,
+                        }}>
+                        What is your specialization?
+                      </p>
+                      <p style={{ color: "#101828", fontSize: 18 }}>
+                        {preferenceForm?.specialization}
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-flow-row gap-1  py-1">
+                  <div className="flex gap-5 py-1">
                     <p
                       style={{
                         color: "#475467",
                         fontSize: 18,
-                      }}>
-                      What is your specialization?
-                    </p>
-                    <p style={{ color: "#101828", fontSize: 18 }}>
-                      {preferenceForm?.specialization}
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row gap-1 py-1">
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 18,
+                        minWidth: 320,
                       }}>
                       Can you share your academic background and how it aligns
                       with this role?
@@ -347,7 +397,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         How many years of experience do you have
                       </p>
@@ -360,10 +410,10 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Could you elaborate on your experience in [specific area
-                        relevant to the role?
+                        relevant to the role]
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
                         {preferenceForm?.specificRole}
@@ -374,7 +424,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Have you previously worked in a specific industry
                         related to this role? If Yes then specify your role
@@ -389,7 +439,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Have you had experience with stakeholders for business
                         goals?
@@ -403,7 +453,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is your notice period in the current organization?
                       </p>
@@ -416,7 +466,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Do you have team handling experience? (If yes, please
                         select the team size)
@@ -430,7 +480,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Please select the industry and specify the industry
                         experience
@@ -461,7 +511,7 @@ export const OutputofDigitalTalentProfile = () => {
                             style={{
                               color: "#475467",
                               fontSize: 18,
-                              width: 180,
+                              width: 320,
                             }}>
                             Primary Skills
                           </p>
@@ -492,7 +542,7 @@ export const OutputofDigitalTalentProfile = () => {
                             style={{
                               color: "#475467",
                               fontSize: 18,
-                              width: 180,
+                              width: 320,
                             }}>
                             Secondary Skills
                           </p>
@@ -523,7 +573,7 @@ export const OutputofDigitalTalentProfile = () => {
                             style={{
                               color: "#475467",
                               fontSize: 18,
-                              width: 180,
+                              width: 320,
                             }}>
                             Please add the tools or software application you
                             have used in the past
@@ -559,7 +609,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Which work setting do you prefer in-office?
                       </p>
@@ -572,7 +622,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is your preference on work shifts?
                       </p>
@@ -585,7 +635,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What are your preferred locations for the job?
                       </p>
@@ -598,7 +648,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Are you open to relocation if required for the job?
                       </p>
@@ -611,7 +661,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         If your work requires you to travel, how comfortable are
                         you to travel?
@@ -625,7 +675,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is your preferred work schedule?
                       </p>
@@ -638,7 +688,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Do you prefer working independently or as part of a
                         small team, or as a part of a large team?
@@ -654,13 +704,13 @@ export const OutputofDigitalTalentProfile = () => {
                     style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
                     Compensation and Job Type
                   </p>
-                  <div className="grid grid-cols-2 py-5">
+                  <div className="grid grid-cols-2 py-5 gap-5">
                     <div className="flex gap-5 py-1">
                       <p
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What are salary expectations:
                       </p>
@@ -685,7 +735,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is the type of job openings are you interested in ?
                       </p>
@@ -706,7 +756,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is appealing to you at work?
                       </p>
@@ -719,7 +769,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What kind of work environment are you looking for?
                       </p>
@@ -732,7 +782,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         Is the company outlook on environment important? Like
                         sustainability initiatives, being carbon neutral etc.
@@ -754,7 +804,7 @@ export const OutputofDigitalTalentProfile = () => {
                         style={{
                           color: "#475467",
                           fontSize: 18,
-                          width: 180,
+                          width: 320,
                         }}>
                         What is your current Visa or Work status?
                       </p>
@@ -1396,10 +1446,10 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
               </div>
             </Card>
+            <Footer />
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

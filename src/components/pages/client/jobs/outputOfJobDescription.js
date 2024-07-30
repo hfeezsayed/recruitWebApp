@@ -38,6 +38,7 @@ import Spinner from "../../../utils/spinner";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import logoNew from "../../../../assets/images/xenrecruit.png";
 
 export const OutputofJobDescription = () => {
   const spectrums = [
@@ -47,10 +48,11 @@ export const OutputofJobDescription = () => {
     "spectrum4",
     "spectrum5",
   ];
+  const printRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
   const [jobDetailsData, setJobDetailsData] = useState(JobTemplateListViewData);
-  const [workValueData, setWorkValueData] = useState([]);
+  const [workValueData, setWorkValueData] = useState(workValueViewData.data);
   const [teamPreference, setTeamPreference] = useState(JobTemplateListViewData);
   const [icpAnalysisData, setIcpAnalysisData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
@@ -58,6 +60,7 @@ export const OutputofJobDescription = () => {
   const [loading, setLoading] = useState(false);
   const [fullAccess, setFullAccess] = useState(true);
   const [teamAccess, setTeamAccess] = useState(true);
+  const [loadpdf, setloadpdf] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -116,16 +119,51 @@ export const OutputofJobDescription = () => {
     pdf.save("download.pdf");
   };
 
-  const DownloadPdf = () => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance
-      .get(`/getPdf=${user.userId}&jobId=${location.state.jobId}`)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const DownloadPdf = async () => {
+    setloadpdf(true);
+    // const user = JSON.parse(localStorage.getItem("token"));
+    // axiosInstance
+    //   .get(`/getPdf=${user.userId}&jobId=${location.state.jobId}`)
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
+    setTimeout(() => {
+      setloadpdf(false);
+      generatePdf();
+    }, 0);
+  };
+
+  const generatePdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    // Calculate the required dimensions
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+
+    // Use A2 size (420mm x 594mm) or any other desired size
+    const pageWidth = imgWidth;
+    const pageHeight = imgHeight;
+
+    // Initialize jsPDF with custom page size
+    const pdf = new jsPDF("p", "px", [pageWidth, pageHeight]);
+
+    // Calculate the scaling ratio to fit the height
+    const heightRatio = pageHeight / imgHeight;
+    const newImgHeight = pageHeight;
+    const newImgWidth = imgWidth * heightRatio;
+
+    // Center the image horizontally if needed
+    const xOffset = pageWidth - newImgWidth;
+    const yOffset = 0; // Top of the page
+
+    // pdf.addImage(imgData, "PNG", xOffset, yOffset, newImgWidth, newImgHeight);
+    pdf.addImage(imgData, "PNG", xOffset, yOffset, newImgWidth, newImgHeight);
+    pdf.save("Output_Of_Job_Description.pdf");
   };
 
   const DownloadWord = () => {
@@ -149,834 +187,771 @@ export const OutputofJobDescription = () => {
           {loading === true ? (
             <Spinner />
           ) : (
-            <div className="w-full min-h-screen p-4">
-              <div className="px-5 flex justify-between items-center">
-                <div>
-                  <p
-                    style={{
-                      color: "#008080",
-                      fontSize: 22,
-                      fontWeight: 600,
-                    }}>
-                    Output of Job Description
-                  </p>
-                  <p style={{ color: "#475467", fontSize: 14 }}>
-                    Below is the information for the created job description.
-                  </p>
+            <>
+              <div className="w-full min-h-screen p-4" ref={printRef}>
+                <div className="px-5 flex justify-between items-center">
+                  <div>
+                    <p
+                      style={{
+                        color: "#008080",
+                        fontSize: 22,
+                        fontWeight: 600,
+                      }}>
+                      Output of Job Description
+                    </p>
+                    <p style={{ color: "#475467", fontSize: 14 }}>
+                      Below is the information for the created job description.
+                    </p>
+                  </div>
+                  {loadpdf ? (
+                    <>
+                      <img src={logoNew} alt="logo" style={{ width: 180 }} />
+                    </>
+                  ) : (
+                    <div className="flex gap-10 items-center h-fit">
+                      <Button
+                        size="small"
+                        style={{ color: "#5E8EBD", textTransform: "none" }}
+                        endIcon={<FiDownload />}
+                        onClick={DownloadPdf}>
+                        Download Pdf
+                      </Button>
+                      <Button
+                        size="small"
+                        style={{ color: "#5E8EBD", textTransform: "none" }}
+                        endIcon={<FiDownload />}
+                        onClick={DownloadWord}>
+                        Download Word
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                <div className="flex gap-10 items-center h-fit">
-                  <Button
-                    size="small"
-                    style={{ color: "#5E8EBD", textTransform: "none" }}
-                    endIcon={<FiDownload />}
-                    onClick={DownloadPdf}>
-                    Download Pdf
-                  </Button>
-                  <Button
-                    size="small"
-                    style={{ color: "#5E8EBD", textTransform: "none" }}
-                    endIcon={<FiDownload />}
-                    onClick={DownloadWord}>
-                    Download Word
-                  </Button>
-                </div>
-              </div>
 
-              {/*  Job Details */}
-              <Card className="p-4 my-4">
-                <div>
-                  <p
-                    style={{ color: "#008080", fontSize: 16, fontWeight: 500 }}>
-                    Job Details
-                  </p>
-                </div>
-                <div>
-                  <div className="flex gap-14 py-1">
+                {/*  Job Details */}
+                <Card className="p-4 my-4">
+                  <div>
                     <p
                       style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Job Title
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.jobTitle}
-                    </p>
-                  </div>
-                  <div className="flex gap-14 py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Job Code
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.jobCode}
-                    </p>
-                  </div>
-                  <div className="flex gap-14 py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Job Family
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.jobFamily}
-                    </p>
-                  </div>
-                  <div className="flex gap-14 py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Job Department
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.jobDepartment}
-                    </p>
-                  </div>
-                  <div className="flex gap-14 py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Job Location
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.jobLocation}
-                    </p>
-                  </div>
-                  <div className="flex gap-14 py-1">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        width: 250,
-                      }}>
-                      Salary Compensation
-                    </p>
-                    <p style={{ color: "#475467", fontSize: 16 }}>
-                      {jobDetailsData?.salary}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-flow-row  mt-5">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
+                        color: "#008080",
+                        fontSize: 18,
                         fontWeight: 500,
                       }}>
                       Job Description
                     </p>
+                  </div>
+                  <div>
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="flex gap-14 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
 
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        About us - info about the company
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.companyInfo}
-                      </p>
+                            width: 250,
+                          }}>
+                          Job Title
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.jobTitle}
+                        </p>
+                      </div>
+                      <div className="flex gap-5 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+
+                            width: 250,
+                          }}>
+                          Job Code
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.jobCode}
+                        </p>
+                      </div>
+                      <div className="flex gap-5 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+
+                            width: 250,
+                          }}>
+                          Job Family
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.jobFamily}
+                        </p>
+                      </div>
+                      <div className="flex gap-5 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+
+                            width: 250,
+                          }}>
+                          Job Department
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.jobDepartment}
+                        </p>
+                      </div>
+                      <div className="flex gap-5 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+                            width: 250,
+                          }}>
+                          Job Location
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.jobLocation}
+                        </p>
+                      </div>
+                      <div className="flex gap-5 py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+
+                            width: 250,
+                          }}>
+                          Salary Compensation
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.salary}
+                        </p>
+                      </div>
                     </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Position Summary
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.positionSummry}
-                      </p>
-                    </div>
-                    <div>
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Duties and Responsibility:
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.responsibilities}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Benefits and Compensation:
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.benefits}
-                      </p>
-                      {/* {jobDetailsData?.Compensation?.map((row) => {
+
+                    <div className="grid grid-flow-row  mt-5">
+                      <div className="grid grid-flow-row  py-1">
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Company Overview
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.aboutUs}
+                        </p>
+                      </div>
+                      <div className="grid grid-flow-row  py-1">
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Job Summary
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.positionSummry}
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Responsibilities
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.responsibilities}
+                        </p>
+                      </div>
+                      <div className="grid grid-flow-row  py-1">
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Benefits
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.benefits}
+                        </p>
+                        {/* {jobDetailsData?.Compensation?.map((row) => {
                       return (
                         <li style={{ color: "#333333", fontSize: 16 }}>{row}</li>
                       );
                     })} */}
+                      </div>
+                      <div className="grid grid-flow-row  py-1">
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Qualifications and Skills
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.qualification}
+                        </p>
+                      </div>
+                      <div className="grid grid-flow-row  py-1">
+                        <p
+                          style={{
+                            color: "#008080",
+                            fontSize: 18,
+                            fontWeight: 500,
+                          }}>
+                          Equal Employee Opportunity (EEO)
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {jobDetailsData?.equalEmployeeOpportunity}
+                        </p>
+                      </div>
                     </div>
-                    <div className="grid grid-flow-row  py-1">
+                    <div className="grid grid-flow-row  mt-5">
                       <p
                         style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
+                          color: "#008080",
+                          fontSize: 18,
+                          fontWeight: 500,
                         }}>
-                        Equal Employee Opportunity
+                        Role Requirements and Preferences
                       </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.equalEmployeeOpportunity}
-                      </p>
+                      <div className="grid grid-cols-2 gap-5">
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            Is it essential for the candidate to have experience
+                            in a specific industry?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.specificIndustryExperience}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            If so, could you specify which industry and why that
+                            experience is critical?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.specifyIndustryExp}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1 ">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            Would industry knowledge be valued even without
+                            direct experience?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.industryKnowledge ? "Yes" : "No"}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            What is the work setting for the role?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.workSetting}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            Type of role
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.roleType}
+                          </p>
+                        </div>
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            What are the timings for the role?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.roleTimings}
+                          </p>
+                        </div>
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            How frequent does the role require to travel?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.roleTravel}
+                          </p>
+                        </div>
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              minWidth: 320,
+                              maxWidth: 350,
+                            }}>
+                            Occassional What kind of visa are you looking for ?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {jobDetailsData?.visa}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="grid grid-flow-row  mt-5">
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Role Requirements and Preferences
-                    </p>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Is it essential for the candidate to have experience in
-                        a specific industry?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.specificIndustryExperience}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        If so, could you specify which industry and why that
-                        experience is critical?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.specifyIndustryExp}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1 ">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Would industry knowledge be valued even without direct
-                        experience?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.industryKnowledge ? "Yes" : "No"}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        What is the work setting for the role?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.workSetting}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Type of role
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.roleType}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        What are the timings for the role?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.roleTimings}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        How frequent does the role require to travel?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.roleTravel}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#333333",
-                          fontSize: 16,
-                          fontWeight: 600,
-                        }}>
-                        Occassional What kind of visa are you looking for ?
-                      </p>
-                      <p style={{ color: "#333333", fontSize: 16 }}>
-                        {jobDetailsData?.visa}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+                </Card>
 
-              {/*  Work Value  */}
-              {fullAccess && (
-                <Card className="p-4 my-4">
-                  <div>
-                    <p
-                      style={{
-                        color: "#008080",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Work Value
-                    </p>
-                  </div>
-                  <div>
-                    <div className="py-5">
-                      <RadarChart
-                        height={350}
-                        width={450}
-                        outerRadius="80%"
-                        data={workValueData}>
-                        <PolarGrid />
-                        <Tooltip />
-                        <PolarAngleAxis dataKey="value" />
-                        <PolarRadiusAxis />
-                        <Radar
-                          dataKey="rating"
-                          stroke="#008080"
-                          fill="#ffffff"
-                          fillOpacity={0}
-                        />
-                      </RadarChart>
+                {/*  Work Value  */}
+                {fullAccess && (
+                  <Card className="p-4 my-4">
+                    <div>
+                      <p
+                        style={{
+                          color: "#008080",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Work Value
+                      </p>
                     </div>
-                    <Box>
-                      <TableContainer sx={{ minWidth: 500 }}>
-                        <Table>
+                    <div className="flex gap-5 w-full items-center">
+                      <div className="py-5">
+                        <RadarChart
+                          height={350}
+                          width={450}
+                          outerRadius="80%"
+                          data={workValueData}>
+                          <PolarGrid />
+                          <Tooltip />
+                          <PolarAngleAxis dataKey="value" />
+                          <PolarRadiusAxis />
+                          <Radar
+                            dataKey="rating"
+                            stroke="#008080"
+                            fill="#ffffff"
+                            fillOpacity={0}
+                          />
+                        </RadarChart>
+                      </div>
+                      <Box>
+                        <TableContainer sx={{ minWidth: 500 }}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    width: 250,
+                                  }}>
+                                  Work Attribute
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Frequency Selected
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 4
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#C2E0E8",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {workValueData?.map((data) => {
+                                      return Number(data?.rating) === 4 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 3
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#F2EFC9",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {workValueData?.map((data) => {
+                                      return Number(data?.rating) === 3 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 2
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#D1E6D5",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {workValueData?.map((data) => {
+                                      return Number(data?.rating) === 2 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  Priority 1
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#ECCCB7",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {workValueData?.map((data) => {
+                                      return Number(data?.rating) === 1 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                  }}>
+                                  No Priority
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    color: "#171717",
+                                    border: 1,
+                                    borderColor: "#D0D5DD50",
+                                    backgroundColor: "#EDDAD3",
+                                  }}>
+                                  <div className="grid grid-cols-4 gap-y-2">
+                                    {workValueData?.map((data) => {
+                                      return Number(data?.rating) === 0 ? (
+                                        <p>{data.value}</p>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </Box>
+                    </div>
+                  </Card>
+                )}
+                {/* Team Preference */}
+                {(fullAccess || teamAccess) && (
+                  <Card className="p-4 my-4">
+                    <div>
+                      <p
+                        style={{
+                          color: "#008080",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        Team Preference
+                      </p>
+                    </div>
+                    <div>
+                      <div className="grid grid-cols-2 gap-5">
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 320,
+                            }}>
+                            What is the size of the team
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {teamPreference?.teamSize}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 320,
+                            }}>
+                            What is the location of the team where it works
+                            from?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {teamPreference?.teamLocation}
+                          </p>
+                        </div>
+                        <div className="flex gap-5  py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 320,
+                            }}>
+                            Does the role have to work cross functionally?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {teamPreference?.workCrossFunality ? "Yes" : "No"}
+                          </p>
+                        </div>
+                        <div className="flex gap-5 py-1">
+                          <p
+                            style={{
+                              color: "#475467",
+                              fontSize: 18,
+                              width: 320,
+                            }}>
+                            What problem/project is the team working on which
+                            the candidate will be joining?
+                          </p>
+                          <p style={{ color: "#101828", fontSize: 18 }}>
+                            {teamPreference?.teamWorking}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-5  py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+                            minWidth: 320,
+                            maxWidth: 350,
+                          }}>
+                          What problem/project is the team working on which the
+                          candidate will be joining?
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {teamPreference?.project}
+                        </p>
+                      </div>
+                      <div className="flex gap-5  py-1">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 18,
+                            minWidth: 320,
+                            maxWidth: 350,
+                          }}>
+                          Could you describe the contributions of a particularly
+                          successful team member in a similar role and how
+                          they've impacted the team's success?
+                        </p>
+                        <p style={{ color: "#101828", fontSize: 18 }}>
+                          {teamPreference?.contributionsTeam}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                )}
+                {/* ICP Analysis */}
+                {fullAccess && (
+                  <Card className="p-4 my-4">
+                    <div>
+                      <p
+                        style={{
+                          color: "#008080",
+                          fontSize: 16,
+                          fontWeight: 500,
+                        }}>
+                        ICP Analysis
+                      </p>
+                    </div>
+                    <div>
+                      {/* spectrum analysis */}
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 22,
+                          fontWeight: 600,
+                          marginTop: 10,
+                        }}>
+                        Spectrum Analysis
+                      </p>
+                      <div className="flex gap-5 py-5">
+                        {/* table */}
+                        <Table
+                          sx={{
+                            borderWidth: 1,
+                          }}>
                           <TableHead>
                             <TableRow>
                               <TableCell
                                 sx={{
-                                  bgcolor: "#F8F9FA",
                                   color: "#101828",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  width: 250,
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                  minWidth: 600,
                                 }}>
-                                Work Attribute
+                                Talent Dimensions
                               </TableCell>
                               <TableCell
                                 sx={{
-                                  bgcolor: "#F8F9FA",
                                   color: "#101828",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
                                 }}>
-                                Frequency Selected
+                                Attributes
                               </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                }}>
-                                Priority 4
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  backgroundColor: "#C2E0E8",
-                                }}>
-                                <div className="grid grid-cols-4 gap-y-2">
-                                  {workValueData?.map((data) => {
-                                    return Number(data?.rating) === 4 ? (
-                                      <p>{data.value}</p>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                }}>
-                                Priority 3
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  backgroundColor: "#F2EFC9",
-                                }}>
-                                <div className="grid grid-cols-4 gap-y-2">
-                                  {workValueData?.map((data) => {
-                                    return Number(data?.rating) === 3 ? (
-                                      <p>{data.value}</p>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                }}>
-                                Priority 2
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  backgroundColor: "#D1E6D5",
-                                }}>
-                                <div className="grid grid-cols-4 gap-y-2">
-                                  {workValueData?.map((data) => {
-                                    return Number(data?.rating) === 2 ? (
-                                      <p>{data.value}</p>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                }}>
-                                Priority 1
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  backgroundColor: "#ECCCB7",
-                                }}>
-                                <div className="grid grid-cols-4 gap-y-2">
-                                  {workValueData?.map((data) => {
-                                    return Number(data?.rating) === 1 ? (
-                                      <p>{data.value}</p>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                }}>
-                                No Priority
-                              </TableCell>
-                              <TableCell
-                                sx={{
-                                  color: "#171717",
-                                  border: 1,
-                                  borderColor: "#D0D5DD50",
-                                  backgroundColor: "#EDDAD3",
-                                }}>
-                                <div className="grid grid-cols-4 gap-y-2">
-                                  {workValueData?.map((data) => {
-                                    return Number(data?.rating) === 0 ? (
-                                      <p>{data.value}</p>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </Box>
-                  </div>
-                </Card>
-              )}
-              {/* Team Preference */}
-              {(fullAccess || teamAccess) && (
-                <Card className="p-4 my-4">
-                  <div>
-                    <p
-                      style={{
-                        color: "#008080",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Team Preference
-                    </p>
-                  </div>
-                  <div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        What is the size of the team
-                      </p>
-                      <p style={{ color: "#475467", fontSize: 16 }}>
-                        {teamPreference?.teamSize}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        What is the location of the team where it works from?
-                      </p>
-                      <p style={{ color: "#475467", fontSize: 16 }}>
-                        {teamPreference?.teamLocation}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        Does the role have to work cross functionally?
-                      </p>
-                      <p style={{ color: "#475467", fontSize: 16 }}>
-                        {teamPreference?.workCrossFunality ? "Yes" : "No"}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        What problem/project is the team working on which the
-                        candidate will be joining?
-                      </p>
-                      <p style={{ color: "#475467", fontSize: 16 }}>
-                        {teamPreference?.project}
-                      </p>
-                    </div>
-                    <div className="grid grid-flow-row  py-1">
-                      <p
-                        style={{
-                          color: "#101828",
-                          fontSize: 16,
-                          fontWeight: 500,
-                        }}>
-                        Could you describe the contributions of a particularly
-                        successful team member in a similar role and how they've
-                        impacted the team's success?
-                      </p>
-                      <p style={{ color: "#475467", fontSize: 16 }}>
-                        {teamPreference?.contributionsTeam}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              )}
-              {/* ICP Analysis */}
-              {fullAccess && (
-                <Card className="p-4 my-4">
-                  <div>
-                    <p
-                      style={{
-                        color: "#008080",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      ICP Analysis
-                    </p>
-                  </div>
-                  <div>
-                    {/* spectrum analysis */}
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 22,
-                        fontWeight: 600,
-                        marginTop: 10,
-                      }}>
-                      Spectrum Analysis
-                    </p>
-                    <div className="flex gap-5 py-5">
-                      {/* table */}
-                      <Table
-                        sx={{
-                          borderWidth: 1,
-                        }}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                                minWidth: 600,
-                              }}>
-                              Talent Dimensions
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Attributes
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <Fragment>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#475467",
-                                  fontSize: 14,
-                                  fontWeight: 500,
-                                  borderWidth: 1,
-                                }}
-                                rowSpan={behaviour?.length + 1}>
-                                {/* <div
-                              className="border rounded-lg p-4 w-full"
-                              style={{
-                                backgroundColor: "#ffffff",
-                                borderColor: "#D0D5DD",
-                              }}> */}
-                                <div className="flex justify-center">
-                                  <ColorBodySvg />
-
-                                  <div className="grid relative pt-5">
-                                    {pillars.map((row, index) => {
-                                      return (
-                                        <div
-                                          className={`flex mt-10`}
-                                          key={index}>
-                                          {/* <div className="flex text-center p-2"></div> */}
-                                          <div className="flex gap-3 items-center">
-                                            <p
-                                              style={{
-                                                color: "#475467",
-                                                fontSize: 33,
-                                              }}>
-                                              &#x2015;
-                                              <span style={{ fontSize: 30 }}>
-                                                &#x2022;
-                                              </span>
-                                            </p>
-                                            <p
-                                              style={{
-                                                color: "#101828",
-                                                fontSize: 20,
-                                                fontWeight: 500,
-                                              }}>
-                                              {row}
-                                            </p>
-                                            {/* <p style={{ color: "#475467", fontSize: 14 }}>
-                                {row?.description}
-                              </p> */}
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                                {/* </div> */}
-                              </TableCell>
-                            </TableRow>
-                          </Fragment>
-                          <Fragment>
-                            {behaviour?.map((row, index) => (
-                              <TableRow key={index}>
+                            <Fragment>
+                              <TableRow>
                                 <TableCell
                                   sx={{
                                     color: "#475467",
                                     fontSize: 14,
                                     fontWeight: 500,
                                     borderWidth: 1,
-                                  }}>
-                                  {row}
+                                  }}
+                                  rowSpan={behaviour?.length + 1}>
+                                  {/* <div
+                              className="border rounded-lg p-4 w-full"
+                              style={{
+                                backgroundColor: "#ffffff",
+                                borderColor: "#D0D5DD",
+                              }}> */}
+                                  <div className="flex justify-center">
+                                    <ColorBodySvg />
+
+                                    <div className="grid relative pt-5">
+                                      {pillars.map((row, index) => {
+                                        return (
+                                          <div
+                                            className={`flex mt-10`}
+                                            key={index}>
+                                            {/* <div className="flex text-center p-2"></div> */}
+                                            <div className="flex gap-3 items-center">
+                                              <p
+                                                style={{
+                                                  color: "#475467",
+                                                  fontSize: 33,
+                                                }}>
+                                                &#x2015;
+                                                <span style={{ fontSize: 30 }}>
+                                                  &#x2022;
+                                                </span>
+                                              </p>
+                                              <p
+                                                style={{
+                                                  color: "#101828",
+                                                  fontSize: 20,
+                                                  fontWeight: 500,
+                                                }}>
+                                                {row}
+                                              </p>
+                                              {/* <p style={{ color: "#475467", fontSize: 14 }}>
+                                {row?.description}
+                              </p> */}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                  {/* </div> */}
                                 </TableCell>
                               </TableRow>
-                            ))}
-                          </Fragment>
-                        </TableBody>
-                      </Table>
-                    </div>
-                    {/* charts */}
-                    <p
-                      style={{
-                        color: "#101828",
-                        fontSize: 22,
-                        fontWeight: 600,
-                        marginTop: 10,
-                      }}>
-                      Pie Charts
-                    </p>
-                    {/* chart 1 table */}
-                    <div className="mt-5">
-                      <Table
-                        sx={{
-                          borderWidth: 1,
-                        }}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Emotional Flexibility
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Labels
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}
-                              align="center">
-                              Rating out of 5
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Attributes
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <Fragment>
-                            <TableRow>
-                              <TableCell
-                                sx={{
-                                  color: "#475467",
-                                  fontSize: 14,
-                                  fontWeight: 500,
-                                  borderWidth: 1,
-                                  width: 450,
-                                }}
-                                rowSpan={5}>
-                                <div className="flex justify-end">
-                                  <PieChart
-                                    series={convertedEmtional}
-                                    width={300}
-                                    height={200}
-                                    slotProps={{
-                                      legend: {
-                                        hidden: true,
-                                      },
-                                    }}
-                                  />
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          </Fragment>
-                          <Fragment>
-                            {convertedEmtional?.map((data, index) => {
-                              let row = data.data[0];
-                              return (
+                            </Fragment>
+                            <Fragment>
+                              {behaviour?.map((row, index) => (
                                 <TableRow key={index}>
                                   <TableCell
                                     sx={{
@@ -985,332 +960,441 @@ export const OutputofJobDescription = () => {
                                       fontWeight: 500,
                                       borderWidth: 1,
                                     }}>
-                                    <div
-                                      className="flex"
-                                      style={{
-                                        borderLeftWidth: 3,
-                                        borderLeftColor: row.color,
-                                        borderRadius: 3,
-                                        paddingLeft: 5,
-                                      }}
-                                      key={index}>
-                                      <div className="col-span-2">
-                                        <p
-                                          style={{
-                                            color: "#475467",
-                                            fontSize: 16,
-                                          }}>
-                                          {row.label}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}
-                                    align="center">
-                                    {row.rating}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}>
-                                    {row.attribute}
+                                    {row}
                                   </TableCell>
                                 </TableRow>
-                              );
-                            })}
-                          </Fragment>
-                        </TableBody>
-                      </Table>
-                    </div>
-                    {/* chart 2 table */}
-                    <div className="mt-5">
-                      <Table
-                        sx={{
-                          borderWidth: 1,
+                              ))}
+                            </Fragment>
+                          </TableBody>
+                        </Table>
+                      </div>
+                      {/* charts */}
+                      <p
+                        style={{
+                          color: "#101828",
+                          fontSize: 22,
+                          fontWeight: 600,
+                          marginTop: 10,
                         }}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Cognitive Agility
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Labels
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}
-                              align="center">
-                              Rating out of 5
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Attributes
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <Fragment>
+                        Pie Charts
+                      </p>
+                      {/* chart 1 table */}
+                      <div className="mt-5">
+                        <Table
+                          sx={{
+                            borderWidth: 1,
+                          }}>
+                          <TableHead>
                             <TableRow>
                               <TableCell
                                 sx={{
-                                  color: "#475467",
+                                  color: "#101828",
                                   fontSize: 14,
-                                  fontWeight: 500,
+                                  fontWeight: 600,
                                   borderWidth: 1,
-                                  width: 450,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Emotional Flexibility
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Labels
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
                                 }}
-                                rowSpan={5}>
-                                <div className="flex justify-end">
-                                  <PieChart
-                                    series={convertCognitive}
-                                    width={300}
-                                    height={200}
-                                    slotProps={{
-                                      legend: {
-                                        hidden: true,
-                                      },
-                                    }}
-                                  />
-                                </div>
+                                align="center">
+                                Rating out of 5
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Attributes
                               </TableCell>
                             </TableRow>
-                          </Fragment>
-                          <Fragment>
-                            {convertCognitive?.map((data, index) => {
-                              let row = data.data[0];
-                              return (
-                                <TableRow key={index}>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}>
-                                    <div
-                                      className="flex"
-                                      style={{
-                                        borderLeftWidth: 3,
-                                        borderLeftColor: row.color,
-                                        borderRadius: 3,
-                                        paddingLeft: 5,
+                          </TableHead>
+                          <TableBody>
+                            <Fragment>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#475467",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    borderWidth: 1,
+                                    width: 450,
+                                  }}
+                                  rowSpan={5}>
+                                  <div className="flex justify-end">
+                                    <PieChart
+                                      series={convertedEmtional}
+                                      width={300}
+                                      height={200}
+                                      slotProps={{
+                                        legend: {
+                                          hidden: true,
+                                        },
                                       }}
-                                      key={index}>
-                                      <div className="col-span-2">
-                                        <p
-                                          style={{
-                                            color: "#475467",
-                                            fontSize: 16,
-                                          }}>
-                                          {row.label}
-                                        </p>
+                                    />
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            </Fragment>
+                            <Fragment>
+                              {convertedEmtional?.map((data, index) => {
+                                let row = data.data[0];
+                                return (
+                                  <TableRow key={index}>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      <div
+                                        className="flex"
+                                        style={{
+                                          borderLeftWidth: 3,
+                                          borderLeftColor: row.color,
+                                          borderRadius: 3,
+                                          paddingLeft: 5,
+                                        }}
+                                        key={index}>
+                                        <div className="col-span-2">
+                                          <p
+                                            style={{
+                                              color: "#475467",
+                                              fontSize: 16,
+                                            }}>
+                                            {row.label}
+                                          </p>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}
-                                    align="center">
-                                    {row.rating}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}>
-                                    {row.attribute}
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            })}
-                          </Fragment>
-                        </TableBody>
-                      </Table>
-                    </div>
-                    {/* chart 3 table */}
-                    <div className="mt-5">
-                      <Table
-                        sx={{
-                          borderWidth: 1,
-                        }}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Sociability Skills
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Labels
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}
-                              align="center">
-                              Rating out of 5
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                color: "#101828",
-                                fontSize: 14,
-                                fontWeight: 600,
-                                borderWidth: 1,
-                                bgcolor: "#F8F9FA",
-                              }}>
-                              Attributes
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <Fragment>
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}
+                                      align="center">
+                                      {row.rating}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      {row.attribute}
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                            </Fragment>
+                          </TableBody>
+                        </Table>
+                      </div>
+                      {/* chart 2 table */}
+                      <div className="mt-5">
+                        <Table
+                          sx={{
+                            borderWidth: 1,
+                          }}>
+                          <TableHead>
                             <TableRow>
                               <TableCell
                                 sx={{
-                                  color: "#475467",
+                                  color: "#101828",
                                   fontSize: 14,
-                                  fontWeight: 500,
+                                  fontWeight: 600,
                                   borderWidth: 1,
-                                  width: 450,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Cognitive Agility
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Labels
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
                                 }}
-                                rowSpan={5}>
-                                <div className="flex justify-end">
-                                  <PieChart
-                                    series={convertSociability}
-                                    width={300}
-                                    height={200}
-                                    slotProps={{
-                                      legend: {
-                                        hidden: true,
-                                      },
-                                    }}
-                                  />
-                                </div>
+                                align="center">
+                                Rating out of 5
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Attributes
                               </TableCell>
                             </TableRow>
-                          </Fragment>
-                          <Fragment>
-                            {convertSociability?.map((data, index) => {
-                              let row = data.data[0];
-                              return (
-                                <TableRow key={index}>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}>
-                                    <div
-                                      className="flex"
-                                      style={{
-                                        borderLeftWidth: 3,
-                                        borderLeftColor: row.color,
-                                        borderRadius: 3,
-                                        paddingLeft: 5,
+                          </TableHead>
+                          <TableBody>
+                            <Fragment>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#475467",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    borderWidth: 1,
+                                    width: 450,
+                                  }}
+                                  rowSpan={5}>
+                                  <div className="flex justify-end">
+                                    <PieChart
+                                      series={convertCognitive}
+                                      width={300}
+                                      height={200}
+                                      slotProps={{
+                                        legend: {
+                                          hidden: true,
+                                        },
                                       }}
-                                      key={index}>
-                                      <div className="col-span-2">
-                                        <p
-                                          style={{
-                                            color: "#475467",
-                                            fontSize: 16,
-                                          }}>
-                                          {row.label}
-                                        </p>
+                                    />
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            </Fragment>
+                            <Fragment>
+                              {convertCognitive?.map((data, index) => {
+                                let row = data.data[0];
+                                return (
+                                  <TableRow key={index}>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      <div
+                                        className="flex"
+                                        style={{
+                                          borderLeftWidth: 3,
+                                          borderLeftColor: row.color,
+                                          borderRadius: 3,
+                                          paddingLeft: 5,
+                                        }}
+                                        key={index}>
+                                        <div className="col-span-2">
+                                          <p
+                                            style={{
+                                              color: "#475467",
+                                              fontSize: 16,
+                                            }}>
+                                            {row.label}
+                                          </p>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}
-                                    align="center">
-                                    {row.rating}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                      fontSize: 14,
-                                      fontWeight: 500,
-                                      borderWidth: 1,
-                                    }}>
-                                    {row.attribute}
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            })}
-                          </Fragment>
-                        </TableBody>
-                      </Table>
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}
+                                      align="center">
+                                      {row.rating}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      {row.attribute}
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                            </Fragment>
+                          </TableBody>
+                        </Table>
+                      </div>
+                      {/* chart 3 table */}
+                      <div className="mt-5">
+                        <Table
+                          sx={{
+                            borderWidth: 1,
+                          }}>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Sociability Skills
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Labels
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}
+                                align="center">
+                                Rating out of 5
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  color: "#101828",
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                  borderWidth: 1,
+                                  bgcolor: "#F8F9FA",
+                                }}>
+                                Attributes
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            <Fragment>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    color: "#475467",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    borderWidth: 1,
+                                    width: 450,
+                                  }}
+                                  rowSpan={5}>
+                                  <div className="flex justify-end">
+                                    <PieChart
+                                      series={convertSociability}
+                                      width={300}
+                                      height={200}
+                                      slotProps={{
+                                        legend: {
+                                          hidden: true,
+                                        },
+                                      }}
+                                    />
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            </Fragment>
+                            <Fragment>
+                              {convertSociability?.map((data, index) => {
+                                let row = data.data[0];
+                                return (
+                                  <TableRow key={index}>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      <div
+                                        className="flex"
+                                        style={{
+                                          borderLeftWidth: 3,
+                                          borderLeftColor: row.color,
+                                          borderRadius: 3,
+                                          paddingLeft: 5,
+                                        }}
+                                        key={index}>
+                                        <div className="col-span-2">
+                                          <p
+                                            style={{
+                                              color: "#475467",
+                                              fontSize: 16,
+                                            }}>
+                                            {row.label}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}
+                                      align="center">
+                                      {row.rating}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        borderWidth: 1,
+                                      }}>
+                                      {row.attribute}
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                            </Fragment>
+                          </TableBody>
+                        </Table>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              )}
-            </div>
+                  </Card>
+                )}
+                <Footer />
+              </div>
+            </>
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
