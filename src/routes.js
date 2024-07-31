@@ -83,6 +83,7 @@ import { Candidate } from "./components/pages/candidate/HomePage/candidate";
 import { HomePage } from "./components/pages/candidate/HomePage/HomePage";
 import { JobPortal } from "./components/pages/candidate/job/jobProtal";
 import { JobDetails } from "./components/pages/candidate/job/jobDetails";
+import { ScreeningQuestionsResponse } from "./components/pages/candidate/job/ScreeningQuestionsResponse";
 
 export const Routes = () => {
   return (
@@ -104,6 +105,10 @@ export const Routes = () => {
         <Route path="candidate/dashboard" element={<HomePage />} />
         <Route path="job/jobportal" element={<JobPortal />} />
         <Route path="job/jobDetails" element={<JobDetails />} />
+        <Route
+          path="job/screeningQuestions"
+          element={<ScreeningQuestionsResponse />}
+        />
         <Route
           path="outputofDigitalTalentProfile"
           element={<OutputofDigitalTalentProfile />}

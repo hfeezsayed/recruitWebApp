@@ -441,6 +441,11 @@ export const SideNav = () => {
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
+                bgcolor: currentState.includes("job/") ? "#008080" : "#ffffff",
+                color: currentState.includes("job/") ? "#ffffff" : "#475467",
+              }}
+              onClick={() => {
+                navigate("/job/jobportal");
               }}>
               <ListItemIcon
                 sx={{
@@ -449,13 +454,13 @@ export const SideNav = () => {
                   justifyContent: "center",
                 }}>
                 <JobSvg
-                  COLOR={currentState === "/jobs" ? "#ffffff" : "#475467"}
+                  COLOR={currentState.includes("job/") ? "#ffffff" : "#475467"}
                 />
               </ListItemIcon>
               <ListItemText
-                primary={"Jobs"}
+                primary={"Job"}
                 primaryTypographyProps={{
-                  color: "#475467",
+                  color: currentState.includes("job/") ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
