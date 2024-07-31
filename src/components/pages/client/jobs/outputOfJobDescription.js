@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
 import {
   Button,
   Card,
@@ -20,9 +20,12 @@ import {
   RadarChart,
   Tooltip,
 } from "recharts";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 import { FiDownload } from "react-icons/fi";
 import { TopNav } from "../../../widgets/topNav";
-import logo from "../../../../assets/images/logo.png";
 import { Footer } from "../../../widgets/footer";
 import {
   BehaviouralAttributes,
@@ -33,12 +36,11 @@ import {
 import { convertCompetencies } from "../../../utils/function";
 import { ColorBodySvg } from "../../../../assets/icon/ColorBodySvg";
 import axiosInstance from "../../../utils/axiosInstance";
-import { useEffect } from "react";
 import Spinner from "../../../utils/spinner";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import logoNew from "../../../../assets/images/xenrecruit.png";
+import { Recruiter_JD_Pdf } from "../pdf/Recruiter_JD_Pdf";
+import { Standard_JD_Pdf } from "../pdf/Standard_JD_Pdf";
 
 export const OutputofJobDescription = () => {
   const spectrums = [
@@ -119,8 +121,29 @@ export const OutputofJobDescription = () => {
     pdf.save("download.pdf");
   };
 
+  const Download_Recruiter_Pdf = async () => {
+    const datass = {
+      data: JobTemplateListViewData,
+    };
+    const doc = <Recruiter_JD_Pdf {...datass} />;
+    const asPdf = pdf([]);
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, "Recruiter_JD.pdf");
+  };
+
+  const Download_Standard_Pdf = async () => {
+    const datass = {
+      data: JobTemplateListViewData,
+    };
+    const doc = <Standard_JD_Pdf {...datass} />;
+    const asPdf = pdf([]);
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, "Standard_JD.pdf");
+  };
+
   const DownloadPdf = async () => {
-    setloadpdf(true);
     // const user = JSON.parse(localStorage.getItem("token"));
     // axiosInstance
     //   .get(`/getPdf=${user.userId}&jobId=${location.state.jobId}`)
@@ -130,10 +153,17 @@ export const OutputofJobDescription = () => {
     //   .catch((e) => {
     //     console.log(e);
     //   });
-    setTimeout(() => {
-      setloadpdf(false);
-      generatePdf();
-    }, 0);
+    if (fullAccess) {
+      setloadpdf(true);
+      setTimeout(() => {
+        setloadpdf(false);
+        generatePdf();
+      }, 0);
+    } else if (teamAccess) {
+      Download_Recruiter_Pdf();
+    } else {
+      Download_Standard_Pdf();
+    }
   };
 
   const generatePdf = async () => {

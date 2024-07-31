@@ -58,7 +58,11 @@ import { BsBagDash, BsThreeDots } from "react-icons/bs";
 import { HiDotsVertical, HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { LuFiles } from "react-icons/lu";
 import { RiDeleteBin5Line, RiDeleteBin6Line } from "react-icons/ri";
-import { AllJobsData, allJobsKanBanData } from "../../../dummy/Data";
+import {
+  AllJobsData,
+  JobTemplateListViewData,
+  allJobsKanBanData,
+} from "../../../dummy/Data";
 import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
@@ -270,16 +274,6 @@ export const AllJobs = () => {
     },
   }));
 
-  const [hovered, setHovered] = useState(false);
-
-  const filterOpts = [
-    { label: "Closed", value: "Closed" },
-    { label: "Active", value: "Active" },
-    { label: "Past 90 Days", value: "Past 90 Days" },
-    { label: "Past 365 Days", value: "Past 365 Days" },
-    { label: "All", value: "All" },
-  ];
-
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
 
@@ -367,7 +361,7 @@ export const AllJobs = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const status = destination;
     axiosInstance
-      .post(`/updateJobStatus?clientId=${user.userId}`, { jobId, status})
+      .post(`/updateJobStatus?clientId=${user.userId}`, { jobId, status })
       .then((response) => {
         console.log(response.data);
       })
@@ -764,7 +758,11 @@ export const AllJobs = () => {
                                                 </div>
                                               </div>
                                               <div className="w-6 h-6 flex justify-center items-center border border-[#DDDDDD] rounded-md">
-                                                <IconButton onClick={(e) => { handleKd(e); setAnchorData(item);}}>
+                                                <IconButton
+                                                  onClick={(e) => {
+                                                    handleKd(e);
+                                                    setAnchorData(item);
+                                                  }}>
                                                   <BsThreeDots
                                                     style={{
                                                       color: "#6F6F6F",
@@ -781,7 +779,8 @@ export const AllJobs = () => {
                                                   color: "#787486",
                                                   fontSize: 10,
                                                 }}>
-                                                Created Date: {item?.createdDate}
+                                                Created Date:{" "}
+                                                {item?.createdDate}
                                               </p>
                                               <p
                                                 style={{
