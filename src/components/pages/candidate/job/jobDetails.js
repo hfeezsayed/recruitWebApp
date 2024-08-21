@@ -25,6 +25,7 @@ export const JobDetails = () => {
 
   useEffect(() => {
     if (location.state) {
+      console.log(location.state);
       setAllJobs(location.state?.jobs);
       setJobDetail(location.state?.row);
     }

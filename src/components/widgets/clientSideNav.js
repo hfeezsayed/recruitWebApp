@@ -396,14 +396,15 @@ export const ClientSideNav = ({ openTemplate }) => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "/candidates" ? "#008080" : "#ffffff",
-                color: currentState === "/candidates" ? "#ffffff" : "#475467",
+                bgcolor:
+                  currentState === "candidates" ? "#008080" : "#ffffff",
+                color: currentState === "candidates" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
-                // navigate("/candidates");
+                navigate("/clientAssignedCandidates");
               }}>
               <ListItemIcon
                 sx={{
@@ -411,14 +412,19 @@ export const ClientSideNav = ({ openTemplate }) => {
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
                 }}>
-                <AuthorizedSvg
-                  COLOR={currentState === "/candidates" ? "#ffffff" : "#475467"}
+                <AiOutlineQuestionCircle
+                  style={{
+                    color:
+                      currentState === "candidates" ? "#ffffff" : "#475467",
+                    fontSize: 22,
+                  }}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Candidates"}
                 primaryTypographyProps={{
-                  color: currentState === "/candidates" ? "#ffffff" : "#475467",
+                  color:
+                    currentState === "candidates" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}

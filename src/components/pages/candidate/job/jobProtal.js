@@ -57,7 +57,7 @@ export const JobPortal = () => {
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
   const [data, setData] = useState(AllJobsData);
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState(AllJobsData);
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -382,7 +382,7 @@ export const JobPortal = () => {
 
                   {currentView === "Card" && (
                     <div className="grid grid-cols-3 gap-5 py-3">
-                      {filterData?.map((row, index) => {
+                      {AllJobsData?.map((row, index) => {
                         return (
                           <div key={index}>
                             <Card sx={{ borderRadius: 3, px: 1 }}>
@@ -612,7 +612,7 @@ export const JobPortal = () => {
                                 </TableRow>
                               </TableHead>
                               <TableBody>
-                                {sortedRows?.map((row, index) => {
+                                {AllJobsData?.map((row, index) => {
                                   return (
                                     <TableRow key={index}>
                                       <TableCell

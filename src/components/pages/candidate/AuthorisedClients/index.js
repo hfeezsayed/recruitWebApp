@@ -165,6 +165,7 @@ export const AuthorisedClient = () => {
     setShowInfo(false);
   };
 
+
   return (
     <div>
       <div className="flex">
@@ -286,7 +287,7 @@ export const AuthorisedClient = () => {
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group">
                             <FormControlLabel
-                              value="aprrove"
+                              value="approve"
                               control={
                                 <Radio checked={row.authorized} size="small" onChange={(e) => handleAuthorize(row, e.target.checked)} sx={{ color: "#58A20F" }} />
                               }
@@ -296,7 +297,7 @@ export const AuthorisedClient = () => {
                                 borderRadius: 10,
                               }}
                               label={
-                                <p style={{ color: "#057903" }}>Aprrove</p>
+                                <p style={{ color: "#057903" }}>Approve</p>
                               }
                             />
                             <FormControlLabel
@@ -330,7 +331,7 @@ export const AuthorisedClient = () => {
                   Approved Requests
                 </p>{" "}
                 <p style={{ fontSize: 16, color: "#057903", fontWeight: 600 }}>
-                  20
+                  {authClientList.filter(item => item.authorized === true).length}
                 </p>
               </div>
               <div className="flex gap-4 mt-2">
@@ -338,7 +339,7 @@ export const AuthorisedClient = () => {
                   Declined Requests
                 </p>{" "}
                 <p style={{ fontSize: 16, color: "#E05880", fontWeight: 600 }}>
-                  14
+                  {authClientList.filter(item => item.declined === true).length}
                 </p>
               </div>
             </div>

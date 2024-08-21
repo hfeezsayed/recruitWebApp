@@ -128,6 +128,19 @@ export const Candidate = () => {
     }
   };
 
+
+  const handlePersonalInfo = () => {
+    console.log(userData.personalInfoId);
+    console.log("*****************************************************************");
+    if (userData.personalInfo === true) {
+      navigate("/digitalTalentProfile/personalinfromation", {
+        state: userData?.personalInfoId,
+      });
+    } else {
+      navigate("/digitalTalentProfile/personalinfromation");
+    }
+  };
+
   const handlePreferences = () => {
     if (userData.assessment === true) {
       navigate("/digitalTalentProfile/preferenceform", {
@@ -382,7 +395,7 @@ export const Candidate = () => {
                         }}
                         endIcon={<FaArrowRight />}
                         onClick={() =>
-                          navigate("/digitalTalentProfile/personalinfromation")
+                          handlePersonalInfo()
                         }>
                         {userData?.personalInfo ? "Edit" : "Not taken"}
                       </Button>
@@ -673,11 +686,13 @@ export const Candidate = () => {
                             }}>
                             Client request that are pending
                           </p>
+                          <Button onClick={() => navigate("/authorisedclients")}>
                           <IconButton>
                             <FaArrowRight
                               style={{ color: "#008080", fontSize: 18 }}
                             />
                           </IconButton>
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -710,11 +725,13 @@ export const Candidate = () => {
                             }}>
                             Client Assessments needs to be taken
                           </p>
+                          <Button onClick={() => navigate("/assesmentform", { state : 3})}>
                           <IconButton>
                             <FaArrowRight
                               style={{ color: "#008080", fontSize: 18 }}
                             />
                           </IconButton>
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -747,11 +764,13 @@ export const Candidate = () => {
                             }}>
                             Assessments needs to be taken
                           </p>
+                          <Button onClick={() => navigate("/assesmentform", { state : 2 })}>
                           <IconButton>
                             <FaArrowRight
                               style={{ color: "#008080", fontSize: 18 }}
                             />
                           </IconButton>
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>

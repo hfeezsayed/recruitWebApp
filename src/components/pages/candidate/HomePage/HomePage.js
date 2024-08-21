@@ -32,6 +32,7 @@ export const HomePage = () => {
   const [clientCount, setClientCount] = useState(0);
   const [selfCount, setselfCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [linkedIn, setLinkedIn] = useState("");
 
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -60,7 +61,9 @@ export const HomePage = () => {
       .get("/getCandidateDTPInfo?candidateId=" + user.userId)
       .then((response) => {
         console.log(response.data);
+        setLinkedIn(response.data?.linkedIn);
         // setUserData(response.data);
+        
         setLoading(false);
       })
       .catch((error) => {
@@ -214,12 +217,12 @@ export const HomePage = () => {
                                 Resume
                               </Button>
                             )}
-                            {userData?.linkedin && (
+                            {linkedIn && (
                               <Button
                                 size="small"
                                 variant="text"
                                 onClick={() =>
-                                  window.open(userData.linkedIn, "_blank")
+                                  window.open(linkedIn, "_blank")
                                 }
                                 style={{
                                   color: "#3538CD",
@@ -437,11 +440,13 @@ export const HomePage = () => {
                           }}>
                           Client request that are pending
                         </p>
+                        <Button onClick={() => navigate("/authorisedclients")}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -485,11 +490,13 @@ export const HomePage = () => {
                           }}>
                           Client Assessments needs to be taken
                         </p>
+                        <Button onClick={() => navigate("/assesmentform", { state : 3})}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -533,11 +540,13 @@ export const HomePage = () => {
                           }}>
                           Assessments needs to be taken
                         </p>
+                        <Button onClick={() => navigate("/assesmentform", { state : 2 })}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -594,11 +603,13 @@ export const HomePage = () => {
                           }}>
                           Total no. of job you have applied for
                         </p>
+                        <Button onClick={() => navigate("/job/jobportal")}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -642,11 +653,13 @@ export const HomePage = () => {
                           }}>
                           Total no. of job rejected
                         </p>
+                        <Button onClick={() => navigate("/job/jobportal")}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -691,11 +704,13 @@ export const HomePage = () => {
                           }}>
                           Total no. of job interview
                         </p>
+                        <Button onClick={() => navigate("/job/jobportal")}>
                         <IconButton>
                           <FaArrowRight
                             style={{ color: "#008080", fontSize: 18 }}
                           />
                         </IconButton>
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>

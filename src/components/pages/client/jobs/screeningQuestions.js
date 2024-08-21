@@ -39,8 +39,7 @@ export const ScreeningQuestions = () => {
         console.log(response.data);
 
         if (
-          response.data?.proceed === false &&
-          response.data?.questions.length === 0
+          response.data?.questions.length === 0 
         ) {
           getQuestions();
           //setLoading(false);

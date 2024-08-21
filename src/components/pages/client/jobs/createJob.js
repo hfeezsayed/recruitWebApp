@@ -109,6 +109,7 @@ export const CreateJob = () => {
   const [jobIdentity, setJobIdentity] = useState(0);
 
   const [showPopup, setShowPopup] = useState(false);
+  const [fsspopup, setFsspopup] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
   const [tasks, setTasks] = useState(
     CreateJobDataTokanBan(candistaeDetailsDataNew)
@@ -296,20 +297,34 @@ export const CreateJob = () => {
   const handleSwitch = (value, switchType) => {
     if (switchType === "screening") setScreeningQuestions(value);
     if (switchType === "assessment") setAssessments(value);
-    if (switchType === "sourcing") setSourcing(value);
-    if (switchType === "onboarding") setOnboarding(value);
-    if (switchType === "serviceStaffing") setServiceStaffing(value);
+    if (switchType === "sourcing" && serviceStaffing === false) setSourcing(value);
+    if (switchType === "onboarding" && serviceStaffing == false) setOnboarding(value);
+    if (switchType === "serviceStaffing" && value === true) {
+      setServiceStaffing(value);
+      setSourcing(false);
+      setOnboarding(false);
+    }
     if (switchType === "publishFeature") setPublishFeature(value);
-    axiosInstance
-      .get(
-        `/updateSwitch?clientId=${userData.clientId}&jobId=${userData.id}&value=${value}&switchType=${switchType}`
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if(switchType === "serviceStaffing" && value == false) {
+      
+    }
+    else if((switchType === "sourcing" && serviceStaffing === true) || (switchType === "onboarding" && serviceStaffing === true)){
+
+    }
+    else{
+      axiosInstance
+        .get(
+          `/updateSwitch?clientId=${userData.clientId}&jobId=${userData.id}&value=${value}&switchType=${switchType}`
+        )
+        .then((response) => {
+          console.log(response);
+          setFsspopup(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setFsspopup(false);
+        });
+    }
   };
 
   // const handleAssessment = (value) => {
@@ -593,6 +608,7 @@ export const CreateJob = () => {
 
   const closePopup = () => {
     setShowPopup(false);
+    setFsspopup(false);
     setJobTitle("");
   };
 
@@ -680,6 +696,13 @@ export const CreateJob = () => {
     return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
   };
 
+  const openFssConfirmation = (value) => {
+    console.log(value);
+    if(value === true) {
+      setFsspopup(true);
+    }
+  }
+
   const checkStatusRound = (status) => {
     let color = "";
     let backGround = "";
@@ -747,10 +770,10 @@ export const CreateJob = () => {
                         fontSize: 18,
                         fontWeight: 500,
                       }}>
-                      Company Name:{" "}
+                      Job Title:{" "}
                       <span style={{ color: "#101828" }}>
                         {" "}
-                        {userData?.companyName}
+                        {userData?.jobTitle}
                       </span>
                     </p>
                     <div className="w-full py-4">
@@ -989,7 +1012,7 @@ export const CreateJob = () => {
                           }
                           value={serviceStaffing}
                           onChange={(e) =>
-                            handleSwitch(e.target.checked, "serviceStaffing")
+                            openFssConfirmation(e.target.checked)
                           }
                           label={
                             <p style={{ color: "#2C7DA0", fontSize: 16 }}>
@@ -1367,7 +1390,7 @@ export const CreateJob = () => {
 
                   <div className="w-36">
                     <Gauge
-                      value={userData?.assessment ? 100 : 0}
+                      value={userData?.assessmentAssigned ? 100 : 0}
                       startAngle={0}
                       endAngle={360}
                       innerRadius="80%"
@@ -1415,7 +1438,7 @@ export const CreateJob = () => {
                       size="small"
                       disabled={!assessments}
                       style={{
-                        color: userData?.assessment ? "#1E90FF" : "#FF9900",
+                        color: userData?.assessmentAssigned ? "#1E90FF" : "#FF9900",
                         fontSize: 12,
                         textTransform: "none",
                         opacity: assessments ? 1.0 : 0.6,
@@ -1423,8 +1446,8 @@ export const CreateJob = () => {
                       endIcon={
                         userData?.assessment ? <CiEdit /> : <FaArrowRight />
                       }
-                      onClick={() => {}}>
-                      {userData?.assessment ? "Edit" : "Start"}
+                      onClick={() => navigate("/assessmentsList")}>
+                      {userData?.assessmentAssigned ? "Edit" : "Start"}
                     </Button>
                   </div>
                 </div>
@@ -1811,7 +1834,7 @@ export const CreateJob = () => {
                         </div>
                       </div>
                     ) : (
-                      <div>
+                      <div className="overflow-x-scroll w-[1210px]">
                         <div className="py-5 flex justify-between">
                           <div className="flex gap-8">
                             <Button
@@ -2827,6 +2850,48 @@ export const CreateJob = () => {
               </div>
             </MenuItem>
           </Menu>
+          
+          {/* full-staffing confirmation popup */}
+          
+          <Dialog open={fsspopup} onClose={closePopup}>
+            <DialogTitle>Confirm</DialogTitle>
+            <IconButton
+              onClick={closePopup}
+              style={{ position: "absolute", top: 10, right: 10 }}>
+              <IoIosCloseCircleOutline />
+            </IconButton>
+            <Divider />
+            <DialogContent sx={{ minWidth: 450 }}>
+              <div className="grid grid-flow-row gap-2">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                   "Do you want to switch to Full Staffing Service"
+                </p>
+              </div>
+            </DialogContent>
+            <DialogActions>
+             <Button
+                  onClick={closePopup}
+                  variant="outlined"
+                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                  cancel
+              </Button>
+
+              <Button
+                onClick={() => handleSwitch(true, "serviceStaffing")}
+                variant="contained"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#008080",
+                }}>
+                SAVE
+              </Button>
+            </DialogActions> 
+          </Dialog>
 
           {/* popup */}
           <Dialog open={showPopup} onClose={closePopup}>

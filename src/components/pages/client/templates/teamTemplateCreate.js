@@ -28,6 +28,8 @@ export const TeamTemplateCreate = () => {
   const [templateName, setTemplateName] = useState("");
   const [templateTag, setTemplateTag] = useState("");
   const [templateDescription, setTemplateDescription] = useState("");
+  const [workValues, setWorkValues] = useState("");
+  const [technicalSkills, setTechnicalSkills] = useState("");
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -41,7 +43,7 @@ export const TeamTemplateCreate = () => {
     { label: "Pulp Fiction", year: 1994 },
   ];
 
-  const yes_no = ["Yes", "No"];
+  //const yes_no = ["Yes", "No"];
 
   const handleSubmit = async () => {
     const domainRole = specifyDomain;
@@ -60,6 +62,8 @@ export const TeamTemplateCreate = () => {
         templateName,
         templateTag,
         templateDescription,
+        workValues,
+        technicalSkills
       })
       .then((data) => {
         console.log(data.data);
@@ -83,6 +87,11 @@ export const TeamTemplateCreate = () => {
     { label: "20-30", value: "20-30" },
     { label: "30+", value: "30+" },
   ];
+
+  const yes_no = [
+  { label: "Yes", value: "Yes" },
+  { label: "No", value: "No" },
+  ]
 
   return (
     <div>
@@ -140,7 +149,7 @@ export const TeamTemplateCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={yes_no}
+                  options={yes_no.map((option) => option.label)}
                   value={crossFunctionality || null}
                   onChange={(e, newvalue) => setCrossFunctionality(newvalue)}
                   renderInput={(params) => (
@@ -200,6 +209,36 @@ export const TeamTemplateCreate = () => {
                   borderRadius: 8,
                   padding: 5,
                 }}
+              />
+            </div>
+            <div className="grid grid-flow-row gap-2 py-5">
+              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                How important are Work Values to you? Is this talent dimension used in filtering candidates or not? (Note: by default, we use this as one of the talent dimensions in the overall score.)
+              </p>
+              <Autocomplete
+                size="small"
+                disablePortal
+                options={yes_no.map((option) => option.label)}
+                value={workValues || null}
+                onChange={(e, newvalue) => setWorkValues(newvalue)}
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select" />
+                )}
+              />
+            </div>
+            <div className="grid grid-flow-row gap-2 py-5">
+              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                Do you want to give extra weight to Technical Skills compared to other talent dimensions? (Note: By default, we assign corresponding weightages based on your response in the ICP Analysis.)
+              </p>
+              <Autocomplete
+                size="small"
+                disablePortal
+                options={yes_no.map((option) => option.label)}
+                value={technicalSkills || null}
+                onChange={(e, newvalue) => setTechnicalSkills(newvalue)}
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select" />
+                )}
               />
             </div>
             <div className="py-8 gap-8 flex justify-end">

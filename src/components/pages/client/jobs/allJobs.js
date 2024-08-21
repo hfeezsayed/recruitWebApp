@@ -1490,7 +1490,7 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          90Days
+                          Past 90 Days
                         </p>
                       </MenuItem>
                       <MenuItem
@@ -1503,7 +1503,7 @@ export const AllJobs = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          365Days
+                          Past 365 Days
                         </p>
                       </MenuItem>
                       <MenuItem

@@ -11,7 +11,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import logoNew from "../../assets/images/xenrecruit.png";
+import logoNew from "../../assets/images/xenThub.png";
 import { DashboardSvg } from "../../assets/icon/dashboardsvg";
 import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";

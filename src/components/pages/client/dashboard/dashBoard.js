@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton, Card } from "@mui/material";
+import { IconButton, Card, Button } from "@mui/material";
 import { IoCamera } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa6";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
@@ -10,8 +10,10 @@ import { AuthorizedSvg } from "../../../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../../../assets/icon/jobsvg";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 export const DashBoard = () => {
+  const navigate = useNavigate();
   const [userData, setuserData] = useState({
     companyName: "Comapany Name",
     candidatesCount: 7,
@@ -131,7 +133,9 @@ export const DashBoard = () => {
                         }}>
                         Candidates created in database
                       </p>
+                      <Button onClick={() => navigate("/clientAssignedCandidates")}>
                       <FaArrowRight style={{ color: "#008080" }} />
+                      </Button>
                     </div>
                   </div>
                 </Card>
@@ -182,7 +186,9 @@ export const DashBoard = () => {
                         }}>
                         Client Assessments created
                       </p>
+                      <Button onClick={() => navigate("/assessmentsList")}>
                       <FaArrowRight style={{ color: "#008080" }} />
+                      </Button>
                     </div>
                   </div>
                 </Card>
@@ -233,7 +239,9 @@ export const DashBoard = () => {
                         }}>
                         No. of jobs that have been created
                       </p>
+                      <Button onClick={() => navigate("/job/allJobs")}>
                       <FaArrowRight style={{ color: "#008080" }} />
+                      </Button>
                     </div>
                   </div>
                 </Card>
