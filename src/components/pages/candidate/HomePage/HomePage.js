@@ -93,13 +93,33 @@ export const HomePage = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
       .get(`/downloadResume?candidateId=${user.userId}`, {
-        headers: {
-          "Content-Type": "application/pdf",
-        },
+        responseType: 'blob'
       })
       .then((response) => {
-        console.log(response);
-        console.log(response.blob());
+        const disposition = response.headers['content-disposition'];
+        let filename = '';
+        console.log(response.headers);
+        if (disposition && disposition.includes('attachment')) {
+            console.log(disposition);
+            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = filenameRegex.exec(disposition);
+            console.log(matches)
+            if (matches != null && matches[1]) {
+                filename = matches[1].replace(/['"]/g, '');
+            }
+        }
+
+        // If filename is not found, you can use a default name
+        if (!filename) {
+            filename = 'resume';
+        }
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
       })
       .catch((error) => {
         console.log(error);

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backImage from "../../../assets/images/Background pattern decorative.png";
 import { useLocation } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const ForgotOtp = () => {
   //let email = "olivia@untitledui.com";
@@ -18,7 +19,7 @@ export const ForgotOtp = () => {
     console.log(otp);
     if (otp.length === 4) {
       navigation("/newpassword", { state : {email : email}});
-      axios
+      axiosInstance
         .post("/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));

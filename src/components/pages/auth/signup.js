@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import photo from "../../../assets/images/Image.png";
 import logo from "../../../assets/images/logo.png";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const SignUp = () => {
   const navigation = useNavigate();
@@ -16,11 +17,13 @@ export const SignUp = () => {
     e.preventDefault();
 
     console.log(name, email, password, conPassword);
-    navigation("/signupotp/"+email);
     const username = name;
-    axios
+    axiosInstance
       .post("/signup", { username, email, password })
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data)
+        navigation("/signupotp/"+email);
+      })
       .catch((e) => console.log(e));
   };
 

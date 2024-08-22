@@ -7,6 +7,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import axios from "axios";
 import backImage from "../../../assets/images/Background pattern decorative.png";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const NewPassword = () => {
   const navigation = useNavigate();
@@ -21,7 +22,7 @@ export const NewPassword = () => {
     console.log(password, confPassword);
     if (password.length > 7) {
       setChanged(true);
-      axios
+      axiosInstance
         .post("/updatePassword", { password, email})
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));

@@ -71,26 +71,26 @@ const getCompetencyObject = (competency, name) => {
     mappings.push(
       {
         name: "Candidate Details",
-        innerRadius: 100,
-        outerRadius: 90,
+        innerRadius: 55,
+        outerRadius: 45,
         color: "#9B88ED",
       },
       {
         name: "Preference",
-        innerRadius: 85,
-        outerRadius: 75,
+        innerRadius: 70,
+        outerRadius: 60,
         color: "#FB67CA",
       },
       {
         name: "Value Assesment",
-        innerRadius: 70,
-        outerRadius: 60,
+        innerRadius: 85,
+        outerRadius: 75,
         color: "#FFA84A",
       },
       {
         name: "Talent Spectrum Analysis",
-        innerRadius: 55,
-        outerRadius: 45,
+        innerRadius: 100,
+        outerRadius: 90,
         color: "#04BFDA",
       }
     );

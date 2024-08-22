@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backImage from "../../../assets/images/Background pattern decorative.png";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const SignupOtp = () => {
   const { email } = useParams();
@@ -19,7 +20,7 @@ export const SignupOtp = () => {
     console.log(otp);
     if (otp.length === 4) {
       setVerified(true);
-      axios
+      axiosInstance
         .post("/verifyOTP", { otp, email })
         .then((data) => console.log(data.data))
         .catch((e) => console.log(e));
@@ -28,7 +29,7 @@ export const SignupOtp = () => {
 
   const reSendOtp = () => {
     console.log("resenf otp");
-    axios
+    axiosInstance
       .post("localhost:3000/send", { email })
       .then((data) => console.log(data.data))
       .catch((e) => console.log(e));
