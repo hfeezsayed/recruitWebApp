@@ -1036,15 +1036,15 @@ export const CreateJob = () => {
                       }}>
                       Summary
                     </p>
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 500,
-                      }}>
-                      Please fill out all the necessary forms and complete the
-                      required assessments to get started
-                    </p>
+                    // <p
+                    //   style={{
+                    //     color: "#475467",
+                    //     fontSize: 16,
+                    //     fontWeight: 500,
+                    //   }}>
+                    //   Please fill out all the necessary forms and complete the
+                    //   required assessments to get started
+                    // </p>
                   </div>
                   <div>
                     <p
