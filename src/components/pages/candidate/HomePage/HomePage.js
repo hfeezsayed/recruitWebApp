@@ -411,10 +411,6 @@ export const HomePage = () => {
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Summary
                 </p>
-                // <p style={{ color: "#475467", fontSize: 16 }}>
-                //   Please review and complete the following actions that are
-                //   currently pending
-                // </p>
                 <div className="grid grid-cols-3 gap-5 mt-5">
                   <Card sx={{ borderRadius: 5 }}>
                     <CardContent>
