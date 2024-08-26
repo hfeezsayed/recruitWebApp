@@ -16,6 +16,8 @@ import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { qualifications, specializations, team, skills, skillLevel, PreferOffice, workShifts, locations, yes_No, travels, work_Comapny, schedules, appealings, currency, salary_Rate, envonments, job_Interests, experiences, visa_status, certifications, notice, industry, softwares, environments
 } from "../seedData";
+import CreatableSelect from 'react-select/creatable';
+
 
 export const PersonalInformation = () => {
   const navigate = useNavigate();
@@ -85,6 +87,16 @@ export const PersonalInformation = () => {
   const [workEnvironment, setWorkEnvironment] = useState();
   const [companyOutlook, setCompanyOutlook] = useState();
   const [visaStatus, setVisaStatus] = useState();
+  const [degree, setDegree] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [fieldOfStudy, setFieldOfStudy] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [certificates, setCertificates] = useState("");
+
+  const [options, setOptions] = useState([]);
+  // const [selectedOption, setSelectedOption] = useState(null);
+  const [degreeOptions, setDegreeOptions] = useState([]);
 
   // industry experiance
   const addIndustryExperience = () => {
@@ -98,15 +110,15 @@ export const PersonalInformation = () => {
   };
 
 
-  const options = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
-  ];
+  // const options = [
+  //   { label: "The Shawshank Redemption", year: 1994 },
+  //   { label: "The Godfather", year: 1972 },
+  //   { label: "The Godfather: Part II", year: 1974 },
+  //   { label: "The Dark Knight", year: 2008 },
+  //   { label: "12 Angry Men", year: 1957 },
+  //   { label: "Schindler's List", year: 1993 },
+  //   { label: "Pulp Fiction", year: 1994 },
+  // ];
 
   // education
   const addEducation = () => {
@@ -147,29 +159,17 @@ export const PersonalInformation = () => {
     width: 1,
   });
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   console.log(user);
-  //   axiosInstance
-  //     .get(`/getCandidatePersonalInfo?candidateId=${user.userId}`)
-  //     .then((response) => {
-  //       console.log(response.data.education.length);
-  //       setFullName(
-  //         response.data.fullName !== null ? response.data.fullName : ""
-  //       );
-  //       setSummary(response.data.summary !== null ? response.data.summary : "");
-  //       setTitle(response.data.title !== null ? response.data.title : "");
-  //       setUrl(response.data.url !== null ? response.data.url : "");
-  //       setContactNumber(
-  //         response.data.contactNumber != null ? response.data.contactNumber : ""
-  //       );
-  //       if (response.data.education.length > 0) {
-  //         setEducation(response.data.education);
-  //       }
-  //       setResume(response.data?.resume);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    console.log(user);
+    axiosInstance
+      .get(`/getPersonalInfoOptions?candidateId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setOptions(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
 
   const handleUploadResume = (file) => {
@@ -393,6 +393,8 @@ export const PersonalInformation = () => {
 
     // navigate("/valueassessmentform");
     const user = JSON.parse(localStorage.getItem("token"));
+    const educationList = convertToListOfObjects(education);
+    console.log(educationList);
     await axiosInstance
       .post(
         "/postCandidatePersonalInfo?candidateId="+user.userId,
@@ -403,7 +405,7 @@ export const PersonalInformation = () => {
           contactNumber,
           url,
           summary,
-          education,
+          educationList,
           workSetting,
           workShift,
           prefferedLocation,
@@ -439,10 +441,63 @@ export const PersonalInformation = () => {
       )
       .then((data) => 
         console.log(data),
-        //navigate("/digitalTalentProfile")
+       // navigate("/digitalTalentProfile")
     )
       .catch((e) => console.log(e));
   };
+
+
+  const convertToListOfObjects = (data) => {
+    data.map(item => {
+      return {
+        degree: item.degree.label,
+        fieldOfStudy: item.fieldOfStudy.label,
+        institution: item.institution.label,
+        certificate: item.certificate.label,
+        city : item.city,
+        state : item.state
+      };
+    })
+  }
+
+  const handleCreate = (optionType, inputValue) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance.post('/addPersonalInfoOption?candidateId='+user.userId, { name: inputValue, optionType: optionType }) // Replace with your API endpoint
+      .then(response => {
+        console.log(response.data);
+        setOptions(response.data);
+        console.log(optionType);
+        if(optionType === "degree") setDegree(inputValue);
+        if(optionType === "fieldOfStudy") setFieldOfStudy(inputValue);
+        if(optionType === "institution") setInstitution(inputValue);
+        if(optionType === "city") setCity(inputValue);
+        if(optionType === "state") setState(inputValue);
+        if(optionType === "certificates") setCertificates(inputValue);
+      })
+      .catch(error => {
+        console.error('Error adding the item:', error);
+      });
+  };
+
+
+  const getOptions = (optionType) => {
+      const filteredOptions = options.filter(option => option.optionType === optionType);
+      const convertedList = filteredOptions.map(item => ({
+        label: item.label,    // This will be displayed in the dropdown
+        value: item.label       // This will be the unique identifier
+      }));
+      return convertedList;
+  }
+
+  const setSelectedOption = (selectedOption, optionType) => {
+    console.log("selectedOption = " + selectedOption);
+    if(optionType === "degree") setDegree(selectedOption);
+    if(optionType === "fieldOfStudy") setFieldOfStudy(selectedOption);
+    if(optionType === "institution") setInstitution(selectedOption);
+    if(optionType === "city") setCity(selectedOption);
+    if(optionType === "state") setState(selectedOption);
+    if(optionType === "certificates") setCertificates(selectedOption);
+  }
 
   return (
     <div>
@@ -609,22 +664,13 @@ export const PersonalInformation = () => {
                           }}>
                           Degree
                         </p>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={options.map((option) => option.label)}
-                          value={value.degree || null}
-                          onChange={(e, value) =>
-                            handleChangeEducation("degree", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
+                        <CreatableSelect
+                          isClearable
+                          options={getOptions("degree")}
+                          value={value.degree}
+                          onChange={(selected) => handleChangeEducation("degree", selected, index)}
+                          onCreateOption={(selected) => handleCreate("degree", selected )}
+                          placeholder="Select or create an item"
                         />
                       </div>
                       <div className="grid grid-flow-row">
@@ -636,22 +682,13 @@ export const PersonalInformation = () => {
                           }}>
                           Field of Study
                         </p>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={options.map((option) => option.label)}
-                          value={value.fieldOfStudy || null}
-                          onChange={(e, value) =>
-                            handleChangeEducation("fieldOfStudy", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
+                        <CreatableSelect
+                          isClearable
+                          options={getOptions("fieldOfStudy")}
+                          value={value.fieldOfStudy}
+                          onChange={(selected) => handleChangeEducation("fieldOfStudy", selected, index)}
+                          onCreateOption={(selected) => handleCreate("fieldOfStudy", selected)}
+                          placeholder="Select or create an item"
                         />
                       </div>
                       <div className="grid grid-flow-row">
@@ -663,22 +700,13 @@ export const PersonalInformation = () => {
                           }}>
                           institution
                         </p>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={options.map((option) => option.label)}
-                          value={value.institution || null}
-                          onChange={(e, value) =>
-                            handleChangeEducation("institution", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
+                        <CreatableSelect
+                          isClearable
+                          options={getOptions("institution")}
+                          value={value.institution}
+                          onChange={(selected) => handleChangeEducation("institution", selected, index)}
+                          onCreateOption={(selected) => handleCreate("institution", selected)}
+                          placeholder="Select or create an item"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-5">
@@ -691,23 +719,14 @@ export const PersonalInformation = () => {
                             }}>
                             City
                           </p>
-                          <Autocomplete
-                            disablePortal
-                            size="small"
-                            fullWidth
-                            options={options.map((option) => option.label)}
-                            value={value.city || null}
-                            onChange={(e, value) =>
-                              handleChangeEducation("city", value, index)
-                            }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                placeholder="Select"
-                                required
-                              />
-                            )}
-                          />
+                          <CreatableSelect
+                          isClearable
+                          options={getOptions("city")}
+                          value={value.city}
+                          onChange={(selected) => handleChangeEducation("city", selected, index)}
+                          onCreateOption={(selected) => handleCreate("city", selected)}
+                          placeholder="Select or create an item"
+                        />
                         </div>
                         <div className="grid grid-flow-row">
                           <p
@@ -718,23 +737,14 @@ export const PersonalInformation = () => {
                             }}>
                             State
                           </p>
-                          <Autocomplete
-                            disablePortal
-                            size="small"
-                            fullWidth
-                            options={options.map((option) => option.label)}
-                            value={value.state || null}
-                            onChange={(e, value) =>
-                              handleChangeEducation("state", value, index)
-                            }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                placeholder="Select"
-                                required
-                              />
-                            )}
-                          />
+                          <CreatableSelect
+                          isClearable
+                          options={getOptions("state")}
+                          value={value.state}
+                          onChange={(selected) => handleChangeEducation("state", selected, index)}
+                          onCreateOption={(selected) => handleCreate("state", selected)}
+                          placeholder="Select or create an item"
+                        />
                         </div>
                       </div>
                     </div>
@@ -746,51 +756,15 @@ export const PersonalInformation = () => {
                             fontSize: 14,
                             fontWeight: 500,
                           }}>
-                          institution
-                        </p>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={options.map((option) => option.label)}
-                          value={value.institution || null}
-                          onChange={(e, value) =>
-                            handleChangeEducation("institution", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
-                        />
-                      </div>
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
                           Any Certificates
                         </p>
-                        <Autocomplete
-                          disablePortal
-                          size="small"
-                          fullWidth
-                          options={options.map((option) => option.label)}
-                          value={value.certificate || null}
-                          onChange={(e, value) =>
-                            handleChangeEducation("certificate", value, index)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select"
-                              required
-                            />
-                          )}
+                        <CreatableSelect
+                          isClearable
+                          options={getOptions("certificates")}
+                          value={value.certificate}
+                          onChange={(selected) => handleChangeEducation("certificate", selected, index)}
+                          onCreateOption={(selected) => handleCreate("certificate", selected)}
+                          placeholder="Select or create an item"
                         />
                       </div>
                     </div>

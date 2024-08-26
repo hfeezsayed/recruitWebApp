@@ -72,7 +72,7 @@ export const AnalysisAssessment = () => {
   const handleSubmitData = async () => {
     console.log(questionList);
     const user = JSON.parse(localStorage.getItem("token"));
-    navigate("/digitalTalentProfile/confirmationScreen");
+    //navigate("/digitalTalentProfile/confirmationScreen");
     axiosInstance
       .post(
         "/saveCandidateDTPAnalysis?candidateId=" + user.userId,
@@ -80,9 +80,9 @@ export const AnalysisAssessment = () => {
       )
       .then((response) => {
         console.log(response.data);
-        navigate("/digitalTalentProfile/talentanalysisresult", {
-          state: { version: response.data.versionNo },
-        });
+        // navigate("/digitalTalentProfile/talentanalysisresult", {
+        //   state: { version: response.data.versionNo },
+        // });
       })
       .catch((error) => console.log(error));
   };

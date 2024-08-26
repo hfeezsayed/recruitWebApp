@@ -21,6 +21,7 @@ import { TopNav } from "../../../widgets/topNav";
 import { useEffect } from "react";
 import axios from "axios";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
+import CreatableSelect from 'react-select/creatable';
 
 export const JobDetailEdit = () => {
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ export const JobDetailEdit = () => {
   const [minimumLevelQualification, setMinimumLevelQualification] = useState();
   const [requireRegulatory, setRequireRegulatory] = useState();
   const [differentAcademic, setDifferentAcademic] = useState();
-  const [certifications, setCertifications] = useState([{ certificate: null }]);
-  const [softwares, setSoftwares] = useState([{ tools: null }]);
+  const [certification, setCertification] = useState([]);
+  const [software, setSoftware] = useState([]);
   const [envision, setEnvision] = useState("");
 
   // popup
@@ -167,6 +168,8 @@ export const JobDetailEdit = () => {
 
   const getJobDescription = async () => {
     const title = jobTitle;
+    const softwares = software.map(option => option.value);
+    const certifications = certification.map(option => option.value);
     axios
       .post("https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/", {
         jobTitle,
@@ -230,6 +233,8 @@ export const JobDetailEdit = () => {
     setBenefits(benefit);
     setPositionSummary(jobSummary);
     setEqualEmployeeOpportunity(eeo);
+    const softwares = software.map(option => option.value);
+    const certifications = certification.map(option => option.value);
     axiosInstance
       .post(
         "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
@@ -277,6 +282,8 @@ export const JobDetailEdit = () => {
   const saveAsTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
+    const softwares = software.map(option => option.value);
+    const certifications = certification.map(option => option.value);
     axiosInstance
       .post(
         "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
@@ -354,8 +361,8 @@ export const JobDetailEdit = () => {
           setMinimumLevelQualification(response.data.minimumLevelQualification);
           setRequireRegulatory(response.data.requireRegulatory);
           setDifferentAcademic(response.data.differentAcademic);
-          setCertifications(response.data.certifications);
-          setSoftwares(response.data.softwares);
+          setCertification(formattedItems(response.data.certifications));
+          setSoftware(formattedItems(response.data.softwares));
           setEnvision(response.data.envision);
           setTemplateName(response.data.templateName);
           setTemplateTag(response.data.templateTag);
@@ -394,8 +401,8 @@ export const JobDetailEdit = () => {
     setMinimumLevelQualification(obj.minimumLevelQualification);
     setRequireRegulatory(obj.requireRegulatory);
     setDifferentAcademic(obj.differentAcademic);
-    setCertifications(obj.certifications);
-    setSoftwares(obj.softwares);
+    setCertification(formattedItems(obj.certifications));
+    setSoftware(formattedItems(obj.softwares));
     setEnvision(obj.envision);
     setTemplateName(obj.templateName);
     setTemplateTag(obj.templateTag);
@@ -410,39 +417,45 @@ export const JobDetailEdit = () => {
     setTemplateDescription("");
   };
 
-  // certificate
-  const addCertificate = () => {
-    setCertifications([...certifications, { certificate: null }]);
+  // // certificate
+  // const addCertificate = () => {
+  //   setCertifications([...certifications, { certificate: null }]);
+  // };
+
+  const formattedItems = (items) =>{
+    console.log(items);
+    const opts =  items.map(item => ({
+              value: item,
+              label: item
+            }))
+    console.log(opts);
+    return opts;
+  }
+
+  const handleChangeCertificate = (selected) => {
+    setCertification(selected);
   };
 
-  const handleChangeCertificate = (e, value, i) => {
-    let newFormValues = [...certifications];
-    newFormValues[i][e] = value;
-    setCertifications(newFormValues);
+  // const removeCertificate = (i) => {
+  //   let newFormValues = [...certifications];
+  //   newFormValues.splice(i, 1);
+  //   setCertifications(newFormValues);
+  // };
+
+  // // tools
+  // const addToolsAndSoftware = () => {
+  //   setSoftwares([...softwares, { tools: null }]);
+  // };
+
+  const handleChangeToolsAndSoftware = (selected) => {
+    setSoftware(selected);
   };
 
-  const removeCertificate = (i) => {
-    let newFormValues = [...certifications];
-    newFormValues.splice(i, 1);
-    setCertifications(newFormValues);
-  };
-
-  // tools
-  const addToolsAndSoftware = () => {
-    setSoftwares([...softwares, { tools: null }]);
-  };
-
-  const handleChangeToolsAndSoftware = (e, value, i) => {
-    let newFormValues = [...softwares];
-    newFormValues[i][e] = value;
-    setSoftwares(newFormValues);
-  };
-
-  const removeToolsAndSoftware = (i) => {
-    let newFormValues = [...softwares];
-    newFormValues.splice(i, 1);
-    setSoftwares(newFormValues);
-  };
+  // const removeToolsAndSoftware = (i) => {
+  //   let newFormValues = [...softwares];
+  //   newFormValues.splice(i, 1);
+  //   setSoftwares(newFormValues);
+  // };
 
   const [jobSummary, setJobSummary] = useState("");
   const [responsebility, setResponsibility] = useState("");
@@ -1160,69 +1173,22 @@ export const JobDetailEdit = () => {
                     Are there any specific certifications or licenses that
                     candidates must hold?
                   </p>
-                  {convertToOptions(settings?.certifications).map((value, index) => {
-                    return (
                       <>
                         <div>
-                          <Autocomplete
-                            disablePortal
-                            size="small"
-                            fullWidth
-                            options={certOpts.map((option) => option.label)}
-                            value={value.certificate || null}
-                            onChange={(e, value) =>
+                        <CreatableSelect
+                          isClearable
+                          isMulti
+                          options={certOpts}
+                          value={certification || null}
+                          onChange={(selected) =>
                               handleChangeCertificate(
-                                "certificate",
-                                value,
-                                index
+                               selected
                               )
                             }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                placeholder="Select"
-                                required
-                              />
-                            )}
-                          />
+                          placeholder="Select or create an item"
+                        />
                         </div>
-                        {certifications.length > 1 && (
-                          <div className=" flex justify-end">
-                            <Button
-                              variant="outlined"
-                              size="small"
-                              style={{
-                                color: "#EB5757",
-                                borderColor: "#E6E6E6",
-                                textTransform: "none",
-                              }}
-                              onClick={() => removeCertificate(index)}
-                              startIcon={
-                                <IoMdRemoveCircleOutline
-                                  style={{ color: "#EB5757" }}
-                                />
-                              }>
-                              Remove
-                            </Button>
-                          </div>
-                        )}
                       </>
-                    );
-                  })}
-                  <div className="py-3 flex justify-end">
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      style={{
-                        color: "#404040",
-                        borderColor: "#E6E6E6",
-                        textTransform: "none",
-                      }}
-                      onClick={addCertificate}
-                      startIcon={<FiPlus />}>
-                      Add
-                    </Button>
-                  </div>
                 </div>
                 {/* tools */}
                 <div className="grid grid-flow-row gap-2 h-fit">
@@ -1231,69 +1197,20 @@ export const JobDetailEdit = () => {
                     Are there any tools or software candidates should be
                     proficient in?
                   </p>
-                  {convertToOptions(settings?.softwares).map((value, index) => {
-                    return (
-                      <>
                         <div>
-                          <Autocomplete
-                            disablePortal
-                            size="small"
-                            fullWidth
-                            options={tools.map((option) => option.label)}
-                            value={value.tools || null}
-                            onChange={(e, value) =>
-                              handleChangeToolsAndSoftware(
-                                "tools",
-                                value,
-                                index
-                              )
-                            }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                placeholder="Select"
-                                required
-                              />
-                            )}
-                          />
+                            <CreatableSelect
+                              isClearable
+                              isMulti
+                              options={tools}
+                              value={software || null}
+                              onChange={(selected) =>
+                                  handleChangeToolsAndSoftware(
+                                  selected
+                                  )
+                                }
+                              placeholder="Select or create an item"
+                            />
                         </div>
-                        {softwares.length > 1 && (
-                          <div className=" flex justify-end">
-                            <Button
-                              variant="outlined"
-                              size="small"
-                              style={{
-                                color: "#EB5757",
-                                borderColor: "#E6E6E6",
-                                textTransform: "none",
-                              }}
-                              onClick={() => removeToolsAndSoftware(index)}
-                              startIcon={
-                                <IoMdRemoveCircleOutline
-                                  style={{ color: "#EB5757" }}
-                                />
-                              }>
-                              Remove
-                            </Button>
-                          </div>
-                        )}
-                      </>
-                    );
-                  })}
-                  <div className="pt-3 flex justify-end">
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      style={{
-                        color: "#404040",
-                        borderColor: "#E6E6E6",
-                        textTransform: "none",
-                      }}
-                      onClick={addToolsAndSoftware}
-                      startIcon={<FiPlus />}>
-                      Add
-                    </Button>
-                  </div>
                 </div>
               </div>
 

@@ -125,7 +125,7 @@ export const CreateJob = () => {
   }, [jobIdentity]);
 
   useEffect(() => {
-    if (state?.showPopup) {
+    if (state?.new) {
       setShowPopup(true);
     }
   }, [state]);
@@ -151,12 +151,14 @@ export const CreateJob = () => {
   const saveJobTitle = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const clientId = user.userId;
+    setShowPopup(false);
     setLoading(true);
     axiosInstance
       .post(`/saveJobTitle`, { clientId, jobTitle })
       .then((response) => {
         console.log(response);
         setUserData(response.data);
+        localStorage.setItem("jobId", response.data?.id);
         setState({ new: false, showPopup: false });
         localStorage.setItem("jobId", response.data.id);
         setLoading(false);
@@ -166,7 +168,6 @@ export const CreateJob = () => {
         setLoading(false);
         console.log(e);
       });
-    closePopup();
   };
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -220,7 +221,7 @@ export const CreateJob = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     let jobId = localStorage.getItem("jobId");
     console.log(jobId);
-    if ((state?.new || state === null) && jobId === 0) {
+    if (state?.new || state === null) {
     } else {
       if (state) {
         jobId = state;
@@ -346,7 +347,7 @@ export const CreateJob = () => {
     console.log(state);
     let jobId = localStorage.getItem("jobId");
     console.log(jobId);
-    if ((state?.new || state === null) && jobId === 0) {
+    if (state?.new || state === null) {
     } else {
       if (state) {
         jobId = state;
@@ -610,6 +611,7 @@ export const CreateJob = () => {
     setShowPopup(false);
     setFsspopup(false);
     setJobTitle("");
+    navigate("/job/allJobs")
   };
 
   const handleJobPreferences = (jobData) => {
@@ -2894,13 +2896,13 @@ export const CreateJob = () => {
           </Dialog>
 
           {/* popup */}
-          <Dialog open={showPopup} onClose={closePopup}>
+          <Dialog open={showPopup}>
             <DialogTitle>Job Title</DialogTitle>
-            <IconButton
+            {/* <IconButton
               onClick={closePopup}
               style={{ position: "absolute", top: 10, right: 10 }}>
               <IoIosCloseCircleOutline />
-            </IconButton>
+            </IconButton> */}
             <Divider />
             <DialogContent sx={{ minWidth: 450 }}>
               <div className="grid grid-flow-row gap-2">
@@ -2922,6 +2924,15 @@ export const CreateJob = () => {
               </div>
             </DialogContent>
             <DialogActions>
+            <Button
+                onClick={closePopup}
+                variant="contained"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#008080",
+                }}>
+                cancel
+              </Button>
               <Button
                 onClick={saveJobTitle}
                 variant="contained"

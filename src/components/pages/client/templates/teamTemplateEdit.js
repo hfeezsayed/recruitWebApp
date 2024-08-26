@@ -73,6 +73,8 @@ export const TeamTemplateEdit = () => {
             setSpecifyDomain(data.data.domainRole);
             setTeamWorkingDes(data.data.project);
             setDescribeContributions(data.data.contributions);
+            setWorkValues(data.data.workValues);
+            setTechnicalSkills(data.data.technicalSkills);
           })
           .catch((e) => {
             console.log(e);
@@ -84,6 +86,8 @@ export const TeamTemplateEdit = () => {
         setSpecifyDomain(location.state.domainRole);
         setTeamWorkingDes(location.state.project);
         setDescribeContributions(location.state.contributions);
+        setWorkValues(location.state.workValues);
+        setTechnicalSkills(location.state.technicalSkills);
       }
     }
   }, [location.state]);

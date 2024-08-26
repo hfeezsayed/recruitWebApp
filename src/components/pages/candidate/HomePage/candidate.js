@@ -141,7 +141,7 @@ export const Candidate = () => {
   };
 
   const handlePreferences = () => {
-    if (userData.assessment === true) {
+    if (userData.preferences === true) {
       navigate("/digitalTalentProfile/preferenceform", {
         state: userData?.preferencesVersionId,
       });

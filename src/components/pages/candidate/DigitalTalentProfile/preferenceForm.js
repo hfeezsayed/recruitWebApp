@@ -95,6 +95,7 @@ export const PreferenceForm = () => {
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
     let preferenceId = 0;
+    console.log(location.state);
     if(location.state) {
       preferenceId = location.state;
     }
