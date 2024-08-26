@@ -167,10 +167,6 @@ export const DigitalTalentProfile = () => {
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Talent Profile Summary
                 </p>
-                <p style={{ color: "#475467", fontSize: 16 }}>
-                  Craft your personalized talent profile now and let your skills
-                  shine globally.
-                </p>
                 <Card
                   sx={{
                     boxShadow: 0,
