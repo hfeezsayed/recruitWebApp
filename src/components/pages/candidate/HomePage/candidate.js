@@ -641,11 +641,7 @@ export const Candidate = () => {
                 <div className="mt-5">
                   <p
                     style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                    Actions need to be taken
-                  </p>
-                  <p style={{ color: "#475467", fontSize: 16 }}>
-                    Please review and complete the following actions that are
-                    currently pending
+                    Summary
                   </p>
                   <div className="grid grid-cols-3 gap-5 mt-5">
                     <Card sx={{ borderRadius: 5 }}>
