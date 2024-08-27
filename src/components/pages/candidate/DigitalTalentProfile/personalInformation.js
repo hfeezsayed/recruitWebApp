@@ -393,8 +393,7 @@ export const PersonalInformation = () => {
 
     // navigate("/valueassessmentform");
     const user = JSON.parse(localStorage.getItem("token"));
-    const educationList = convertToListOfObjects(education);
-    console.log(educationList);
+    const educationList = [];
     await axiosInstance
       .post(
         "/postCandidatePersonalInfo?candidateId="+user.userId,
@@ -445,20 +444,6 @@ export const PersonalInformation = () => {
     )
       .catch((e) => console.log(e));
   };
-
-
-  const convertToListOfObjects = (data) => {
-    data.map(item => {
-      return {
-        degree: item.degree.label,
-        fieldOfStudy: item.fieldOfStudy.label,
-        institution: item.institution.label,
-        certificate: item.certificate.label,
-        city : item.city,
-        state : item.state
-      };
-    })
-  }
 
   const handleCreate = (optionType, inputValue) => {
     const user = JSON.parse(localStorage.getItem("token"));
