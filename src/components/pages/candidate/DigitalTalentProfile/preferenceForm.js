@@ -282,7 +282,7 @@ export const PreferenceForm = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <SideNav openTemplate={true}/>
         <div className="w-full min-h-screen">
           <TopNav />
             <form className="p-8" onSubmit={onWorkPrefrenceSumnit}>

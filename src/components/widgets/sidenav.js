@@ -66,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const SideNav = ( openTemplate ) => {
+export const SideNav = ( {openTemplate} ) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
@@ -239,6 +239,7 @@ export const SideNav = ( openTemplate ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
+                  cursor: "pointer"
                 }}>
                 Candidate Details
               </p>
@@ -254,6 +255,7 @@ export const SideNav = ( openTemplate ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
+                  cursor: "pointer"
                 }}>
                 My Job Preferences
               </p>
@@ -271,6 +273,7 @@ export const SideNav = ( openTemplate ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
+                  cursor: "pointer"
                 }}>
                 Value Assessment
               </p>
@@ -288,6 +291,7 @@ export const SideNav = ( openTemplate ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
+                  cursor: "pointer"
                 }}>
                 Talent Spectrum Analysis
               </p>
