@@ -1250,7 +1250,7 @@ export const JobDetailEdit = () => {
               </div>
             </div>
             {/* button */}
-            <div className="py-8 gap-8 flex justify-end">
+            <div className="py-8 gap-4 flex justify-end">
               <Button
                 onClick={() => {
                   navigate(-1);
@@ -1260,12 +1260,18 @@ export const JobDetailEdit = () => {
                 back
               </Button>
               <Button
+                onClick={saveJobDetail}
+                variant="outlined"
+                style={{ color: "#008080" }}>
+                Save
+              </Button>
+              <Button
                 onClick={() => {
                   setShowPopup(true);
                 }}
                 variant="contained"
                 style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                SAVE
+                Save AS Template
               </Button>
             </div>
             {/* popup */}
@@ -1334,16 +1340,10 @@ export const JobDetailEdit = () => {
               </DialogContent>
               <DialogActions>
                 <Button
-                  onClick={saveJobDetail}
-                  variant="outlined"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  SAVE
-                </Button>
-                <Button
                   onClick={saveAsTemplate}
                   variant="contained"
                   style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  SAVE As Template
+                  SAVE
                 </Button>
               </DialogActions>
             </Dialog>
