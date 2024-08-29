@@ -80,8 +80,7 @@ export const IcpTemplate = () => {
               <div className="p-8">
                 <div>
                   <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                    Choose Ideal Candidate Persona Templates from the existing
-                    options
+                    Choose Ideal Candidate Persona Templates
                   </p>
                   <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                     Please choose ICP template from the available options.
