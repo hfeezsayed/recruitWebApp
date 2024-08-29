@@ -97,12 +97,6 @@ export const IcpResult = () => {
           : 
           (
             <div className="p-8">
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                Ideal Candidate Persona: Template 1
-              </p>
-              <p style={{ color: "#475467", fontSize: 14 }}>
-                Below are the result of Template 1
-              </p>
               {/* spectrum analysis */}
               <p
                 style={{
