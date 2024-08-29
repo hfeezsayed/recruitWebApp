@@ -64,7 +64,7 @@ export const TeamTemplate = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Team Templates from the existing options
+                Choose Team Templates
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please choose a team template from the available options.
