@@ -227,10 +227,10 @@ export const OutputofJobDescription = () => {
                         fontSize: 22,
                         fontWeight: 600,
                       }}>
-                      Output of Job Description
+                      Job Description
                     </p>
                     <p style={{ color: "#475467", fontSize: 14 }}>
-                      Below is the information for the created job description.
+                      Below is the description for the job created.
                     </p>
                   </div>
                   {loadpdf ? (
@@ -266,7 +266,7 @@ export const OutputofJobDescription = () => {
                         fontSize: 18,
                         fontWeight: 500,
                       }}>
-                      Job Description
+                      Job Details
                     </p>
                   </div>
                   <div>

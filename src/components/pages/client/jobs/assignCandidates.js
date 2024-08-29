@@ -189,7 +189,7 @@ export const AssignCandidates = () => {
           <TopNav />
           <div className="p-8">
             <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-              Choose an option for Adding or Assigning Candidates
+              Add or Assign Candidates
             </p>
             <p style={{ color: "#475467", fontSize: 14 }}>
               Please select from the available options.

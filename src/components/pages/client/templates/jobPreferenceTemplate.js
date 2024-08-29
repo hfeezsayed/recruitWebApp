@@ -66,7 +66,7 @@ export const JobPreferenceTemplate = () => {
           <div className="p-8">
             <div>
               <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                Choose Job Preference Templates from the existing options
+                Job Preference Templates
               </p>
               <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                 Please choose a job preference template from the available

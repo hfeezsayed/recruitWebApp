@@ -76,7 +76,7 @@ export const WorkValueTemplate = () => {
             <div className="p-8">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                  Choose Work Value Templates from the existing options
+                  Work Value Templates
                 </p>
                 <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
                   Please choose a work value template from the available
