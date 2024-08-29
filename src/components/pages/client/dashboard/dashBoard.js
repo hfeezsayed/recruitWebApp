@@ -48,10 +48,6 @@ export const DashBoard = () => {
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Home
               </p>
-              // <p style={{ color: "#475467", fontSize: 16 }}>
-              //   Connecting Talent with Opportunities for Growth and
-              //   Succes101828s
-              // </p>
             </div>
             <div className="flex gap-6 items-center py-5">
               <div className="w-28 h-28 border border-[#66B2B2] rounded-full">
@@ -81,10 +77,6 @@ export const DashBoard = () => {
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Summary
               </p>
-              // <p style={{ color: "#475467", fontSize: 16 }}>
-              //   Please review and complete the following actions that are
-              //   currently pending
-              // </p>
               <div className="flex justify-between gap-10 py-4">
                 <Card
                   sx={{

@@ -201,10 +201,6 @@ export const Candidate = () => {
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Talent Profile Summary
                 </p>
-                // <p style={{ color: "#475467", fontSize: 16 }}>
-                //   Craft your personalized talent profile now and let your skills
-                //   shine globally.
-                // </p>
                 <div className="py-4 flex gap-6">
                   <div
                     className="w-28 h-28 rounded-full "
@@ -332,10 +328,6 @@ export const Candidate = () => {
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Details
                 </p>
-                // <p style={{ color: "#475467", fontSize: 16 }}>
-                //   Please fill out all the necessary forms and complete the
-                //   required assessments to get started
-                // </p>
                 {/* card */}
                 <div className="grid grid-cols-2 gap-5 mt-5">
                   <Card sx={{ borderRadius: 5 }}>
@@ -394,11 +386,6 @@ export const Candidate = () => {
                               }}>
                               Candidate Details
                             </p>
-                            // <p style={{ color: "#475467", fontSize: 16 }}>
-                            //   This is the first step in creating your DTP.
-                            //   <br /> After completing this, you can proceed with
-                            //   the other forms.
-                            // </p>
                           </div>
                         </div>
                       </div>
@@ -476,11 +463,6 @@ export const Candidate = () => {
                               }}>
                               My Job Preferences
                             </p>
-                            // <p style={{ color: "#475467", fontSize: 16 }}>
-                            //   This is the first step in creating your DTP.
-                            //   <br /> After completing this, you can proceed with
-                            //   the other forms.
-                            // </p>
                           </div>
                         </div>
                       </div>
@@ -556,11 +538,6 @@ export const Candidate = () => {
                               }}>
                               Value Assessment
                             </p>
-                            // <p style={{ color: "#475467", fontSize: 16 }}>
-                            //   This is the first step in creating your DTP.
-                            //   <br /> After completing this, you can proceed with
-                            //   the other forms.
-                            // </p>
                           </div>
                         </div>
                       </div>
@@ -640,11 +617,6 @@ export const Candidate = () => {
                               }}>
                               Talent Spectrum Analysis
                             </p>
-                            // <p style={{ color: "#475467", fontSize: 16 }}>
-                            //   This is the first step in creating your DTP.
-                            //   <br /> After completing this, you can proceed with
-                            //   the other forms.
-                            // </p>
                           </div>
                         </div>
                       </div>
@@ -669,11 +641,7 @@ export const Candidate = () => {
                 <div className="mt-5">
                   <p
                     style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                    Actions need to be taken
-                  </p>
-                  <p style={{ color: "#475467", fontSize: 16 }}>
-                    Please review and complete the following actions that are
-                    currently pending
+                    Summary
                   </p>
                   <div className="grid grid-cols-3 gap-5 mt-5">
                     <Card sx={{ borderRadius: 5 }}>
