@@ -244,7 +244,7 @@ export const ClientSideNav = ({ openTemplate }) => {
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {showAcordian ? (
+              {!showAcordian ? (
                 <IoIosArrowUp
                   style={{
                     color: currentState.includes("templates")

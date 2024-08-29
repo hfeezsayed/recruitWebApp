@@ -241,9 +241,10 @@ export const PersonalInformation = () => {
         setContactNumber(
           response.data.contactNumber != null ? response.data.contactNumber : ""
         );
-        if (response.data.education.length > 0) {
-          setEducation(response.data.education);
+        if (response.data?.education && response.data?.education.length > 0) {
+          setEducation(response.data?.education);
         }
+        console.log(data);
         setResume(response.data?.resume);
         setWorkSetting(data.workSetting)
         setWorkShift(data.workShift)
@@ -502,7 +503,7 @@ export const PersonalInformation = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <SideNav openTemplate={true}/>
         <div className=" w-full min-h-screen ">
           <TopNav />
           {activeScreen == 1 && (

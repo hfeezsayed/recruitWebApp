@@ -399,9 +399,9 @@ export const DashBoardData = {
   authorisedClient: 7,
   clientAssessment: 14,
   selfAssessment: 11,
-  jobApllied: 14,
-  jobRejected: 10,
-  jobInterview: 3,
+  jobApllied: 0,
+  jobRejected: 0,
+  jobInterview: 0,
   personalInfo: 20,
   prifileCompititionData: [
     {

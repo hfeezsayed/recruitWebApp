@@ -77,7 +77,7 @@ export const AllJobs = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("Card");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(AllJobsData);
+  const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState();
@@ -92,7 +92,7 @@ export const AllJobs = () => {
   const [filterValue, setFilterValue] = useState("Active");
   const jdOpen = Boolean(anchorjd);
   const [filter, setFilter] = useState(false);
-  const [tasks, setTasks] = useState(AllJobDataTokanBan(AllJobsData));
+  const [tasks, setTasks] = useState(AllJobDataTokanBan([]));
 
   const [anchorFilter, setAnchorFilter] = React.useState(null);
   const openFilter = Boolean(anchorFilter);

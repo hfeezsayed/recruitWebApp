@@ -758,10 +758,6 @@ export const CreateJob = () => {
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
                   Dashboard
                 </p>
-                // <p style={{ color: "#475467", fontSize: 16 }}>
-                //   Complete all the steps to generate a job offer for the
-                //   candidate.
-                // </p>
                 <Card
                   sx={{ borderRadius: 4, padding: 2 }}
                   className="grid grid-cols-2 gap-8 border border-[#D3DFE7] mt-5 bg-[#FBFCFE]">
@@ -1038,15 +1034,6 @@ export const CreateJob = () => {
                       }}>
                       Summary
                     </p>
-                    // <p
-                    //   style={{
-                    //     color: "#475467",
-                    //     fontSize: 16,
-                    //     fontWeight: 500,
-                    //   }}>
-                    //   Please fill out all the necessary forms and complete the
-                    //   required assessments to get started
-                    // </p>
                   </div>
                   <div>
                     <p
@@ -1083,7 +1070,7 @@ export const CreateJob = () => {
                       outerRadius="100%"
                       height={80}
                       width={80}
-                      sx={(theme) => ({
+                      sx={() => ({
                         [`& .${gaugeClasses.valueText}`]: {
                           fontSize: 10,
                           color: "#525252",
@@ -1797,15 +1784,6 @@ export const CreateJob = () => {
                           }}>
                           Candidate Details
                         </p>
-
-                        // <p
-                        //   style={{
-                        //     color: "#475467",
-                        //     fontSize: 14,
-                        //     fontWeight: 400,
-                        //   }}>
-                        //   Below are the details for the candidates
-                        // </p>
                       </div>
                       <Button
                         size="small"
