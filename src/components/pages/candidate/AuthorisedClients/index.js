@@ -74,10 +74,10 @@ export const AuthorisedClient = () => {
 
 
   const handleAuthorize = (row, value) => {
-    if(row.dtpData === false) {
-      const confirmed = window.confirm(`please complete you DTP to do this action`);
-    }
-    else{
+    // if(row.dtpData === false) {
+    //   const confirmed = window.confirm(`please complete you DTP to do this action`);
+    // }
+    // else{
       const confirmed = window.confirm(`Are you sure you want to authorize to access the dtp for this client ${row.clientName}?`);
       if(confirmed){
           if(value === true) {
@@ -109,7 +109,7 @@ export const AuthorisedClient = () => {
             });
           handleClose();
       }
-    }
+    //}
   };
 
 
