@@ -31,7 +31,7 @@ export const ValueAssessmentResult = () => {
   useEffect( () => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
-    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo="+version,
+    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo=-1",
     )
     .then(response => {
         setAssessmentData(response.data);

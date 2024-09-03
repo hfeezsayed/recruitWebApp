@@ -99,7 +99,7 @@ export const PreferenceForm = () => {
     if(location.state) {
       preferenceId = location.state;
     }
-    axiosInstance.get(`/getCandidatePreferences?candidateId=${user.userId}&preferenceId=${location.state}`,
+    axiosInstance.get(`/getCandidatePreferences?candidateId=${user.userId}&preferenceId=-1`,
 
     )
     .then(response => {

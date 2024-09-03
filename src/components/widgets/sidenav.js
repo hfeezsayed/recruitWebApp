@@ -263,7 +263,7 @@ export const SideNav = ( {openTemplate} ) => {
             <div
               className="pl-16 py-2"
               onClick={() =>
-                navigate("/digitalTalentProfile/valueassessmentform")
+                navigate("/digitalTalentProfile/valueassessmentresult")
               }>
               <p
                 style={{
@@ -281,7 +281,7 @@ export const SideNav = ( {openTemplate} ) => {
             <div
               className="pl-16 py-2"
               onClick={() =>
-                navigate("/digitalTalentProfile/analysisassessmentform")
+                navigate("/digitalTalentProfile/valueassessmentresult")
               }>
               <p
                 style={{

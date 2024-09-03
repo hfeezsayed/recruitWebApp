@@ -31,6 +31,7 @@ export const JobDetails = () => {
     }
   }, [location.state]);
 
+
   const handleCLickJob = (id) => {
     axiosInstance
       .get("localhost:3000")
@@ -184,7 +185,7 @@ export const JobDetails = () => {
                         }}>
                         Client :{" "}
                         <span style={{ color: "#101828" }}>
-                          {row?.hiringManager}
+                          {row?.companyName}
                         </span>
                       </p>
                       <p
@@ -194,7 +195,7 @@ export const JobDetails = () => {
                           fontWeight: 500,
                         }}>
                         Created Date :{" "}
-                        <span style={{ color: "#101828" }}>{row?.created}</span>
+                        <span style={{ color: "#101828" }}>{row?.createdDate}</span>
                       </p>
                     </div>
                   </div>
@@ -221,7 +222,7 @@ export const JobDetails = () => {
                         }}>
                         Client :{" "}
                         <span style={{ color: "#101828" }}>
-                          {jobDetail?.hiringManager}
+                          {jobDetail?.companyName}
                         </span>
                       </p>
                     </div>
@@ -313,7 +314,7 @@ export const JobDetails = () => {
                         color: "#475467",
                         fontSize: 14,
                       }}>
-                      {jobDetail?.description}
+                      {jobDetail?.jobDescription}
                     </p>
                   </div>
                   <div className="py-5">
@@ -323,9 +324,16 @@ export const JobDetails = () => {
                         fontSize: 18,
                         fontWeight: 500,
                       }}>
-                      Your Responsibility:
+                      Responsibilities:
                     </p>
-                    {jobDetail?.responsibility.map((data, index) => {
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 14,
+                      }}>
+                      {jobDetail?.responsibility}
+                    </p>
+                    {/* {jobDetail?.responsibility.map((data, index) => {
                       return (
                         <li
                           style={{
@@ -336,7 +344,7 @@ export const JobDetails = () => {
                           {data}
                         </li>
                       );
-                    })}
+                    })} */}
                   </div>
                   <div className="py-5">
                     <p
@@ -345,20 +353,15 @@ export const JobDetails = () => {
                         fontSize: 18,
                         fontWeight: 500,
                       }}>
-                      Front End Developer Requirements:
+                      Requirements:
                     </p>
-                    {jobDetail?.requirements.map((data, index) => {
-                      return (
-                        <li
-                          style={{
-                            color: "#475467",
-                            fontSize: 14,
-                          }}
-                          key={index}>
-                          {data}
-                        </li>
-                      );
-                    })}
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 14,
+                      }}>
+                      {jobDetail?.requirement}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

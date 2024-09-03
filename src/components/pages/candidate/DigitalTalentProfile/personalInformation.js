@@ -226,7 +226,7 @@ export const PersonalInformation = () => {
     if(location.state) {
       preferenceId = location.state;
     }
-    axiosInstance.get(`/getCandidatePersonalInfo?candidateId=${user.userId}&personalInfoId=${location.state}`,
+    axiosInstance.get(`/getCandidatePersonalInfo?candidateId=${user.userId}&personalInfoId=-1`,
 
     )
     .then(response => {

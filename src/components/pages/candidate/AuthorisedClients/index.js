@@ -74,34 +74,42 @@ export const AuthorisedClient = () => {
 
 
   const handleAuthorize = (row, value) => {
-    if(value === true) {
-      setAuthClientList((prevItems) =>
-        prevItems.map((item) =>
-          item.clientId === row.clientId ? { ...item, declined: false } : item
-        )
-      );
-    } 
-    setAuthClientList((prevItems) =>
-      prevItems.map((item) =>
-        item.clientId === row.clientId ? { ...item, authorized: value } : item
-      )
-    );
-    const clientId = row.clientId;
-    const authorized = value;
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance
-      .post("/authorizeClient?candidateId="+user.userId, {
-          clientId,
-          authorized
-      },
-      )
-      .then((data) => {
-        console.log(data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    handleClose();
+    if(row.dtpData === false) {
+      const confirmed = window.confirm(`please complete you DTP to do this action`);
+    }
+    else{
+      const confirmed = window.confirm(`Are you sure you want to authorize to access the dtp for this client ${row.clientName}?`);
+      if(confirmed){
+          if(value === true) {
+            setAuthClientList((prevItems) =>
+              prevItems.map((item) =>
+                item.clientId === row.clientId ? { ...item, declined: false } : item
+              )
+            );
+          } 
+          setAuthClientList((prevItems) =>
+            prevItems.map((item) =>
+              item.clientId === row.clientId ? { ...item, authorized: value } : item
+            )
+          );
+          const clientId = row.clientId;
+          const authorized = value;
+          const user = JSON.parse(localStorage.getItem("token"));
+          axiosInstance
+            .post("/authorizeClient?candidateId="+user.userId, {
+                clientId,
+                authorized
+            },
+            )
+            .then((data) => {
+              console.log(data.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          handleClose();
+      }
+    }
   };
 
 
@@ -166,6 +174,138 @@ export const AuthorisedClient = () => {
   };
 
 
+  const filterAuthorizedorDeclined = () => {
+    const filteredOptions =  authClientList.filter(item => (item.authorized === true || item.declined === true));
+
+    return filteredOptions;
+  }
+
+  const filterNotAuthorizedorDeclined = () => {
+    const filteredOptions =  authClientList.filter(item => (item.authorized === false && item.declined === false));
+
+    return filteredOptions;
+  }
+
+
+  const AuthorizedOrDeclinedClients = () => {
+    return (
+      <div>
+      <div className="mb-2">
+            <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
+              Authorised Clients
+            </p>
+      </div>
+      <div>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650, border: 1, borderColor: "#D0D5DD" }}
+              aria-label="simple table"
+              stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#101828",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}>
+                    Client Name
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#101828",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}>
+                    Manager Name
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#101828",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}>
+                    Email
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#101828",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}>
+                    Date Authorised
+                  </TableCell>
+                  <TableCell>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filterAuthorizedorDeclined().map((row, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ color: "#475467", fontSize: 14 }}>
+                      {row.clientName}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row.managerName}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row.email}
+                    </TableCell>
+                    <TableCell sx={{ color: "#F4BC06", fontSize: 14 }}>
+                      {row.date}
+                    </TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group">
+                        <FormControlLabel
+                          value="approve"
+                          control={
+                            <Radio checked={row.authorized} size="small" />
+                          }
+                          sx={{
+                            backgroundColor: "#F4FAF1",
+                            pr: 2,
+                            borderRadius: 10,
+                          }}
+                          label={
+                            <p style={{ color: "#057903" }}>Approve</p>
+                          }
+                        />
+                        <FormControlLabel
+                          value="decline"
+                          control={
+                            <Radio checked={row.declined} size="small"  />
+                          }
+                          sx={{
+                            backgroundColor: "#FCEEEE",
+                            pr: 2,
+                            borderRadius: 10,
+                          }}
+                          label={
+                            <p style={{ color: "#E05880" }}>Decline</p>
+                          }
+                        />
+                      </RadioGroup>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+      </div>
+      </div>
+    )
+  }
+
+
   return (
     <div>
       <div className="flex">
@@ -174,7 +314,7 @@ export const AuthorisedClient = () => {
           <TopNav />
           <div className="p-8">
             <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
-              Authorised Clients
+              Authorise Clients
             </p>
             <div className="py-5 flex justify-between items-center">
               <TextField
@@ -260,7 +400,7 @@ export const AuthorisedClient = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {authClientList.map((row, index) => (
+                    {filterNotAuthorizedorDeclined().map((row, index) => (
                       <TableRow
                         key={index}
                         sx={{
@@ -322,7 +462,7 @@ export const AuthorisedClient = () => {
                 </Table>
               </TableContainer>
             </div>
-            <div className="pt-8">
+            <div className="pt-8 mb-10">
               <p style={{ fontSize: 20, color: "#101828", fontWeight: 600 }}>
                 Requests approved for Authorised Clients
               </p>
@@ -343,6 +483,7 @@ export const AuthorisedClient = () => {
                 </p>
               </div>
             </div>
+            <AuthorizedOrDeclinedClients/>
           </div>
 
           {/* dialoge */}
