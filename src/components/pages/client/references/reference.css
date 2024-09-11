@@ -1,0 +1,24 @@
+/* candidate lsit page css*/
+.candidate-reference-list .css-1imuhet-MuiDrawer-docked {
+  width: 242px;
+}
+
+.refernce-status .reference-text p {
+  color: #475467;
+  font-size: 16px;
+}
+
+.candidate-list-data table tr th {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* form filled by candidate page css */
+.candidate-request-reference .candidate-info-form h2 {
+  font-size: 1.3rem;
+}
+
+.candidate-info-form .add-btn {
+  color: #404040;
+  border: 1px solid #e6e6e6;
+}

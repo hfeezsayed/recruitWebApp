@@ -86,6 +86,8 @@ import { JobDetails } from "./components/pages/candidate/job/jobDetails";
 import { CandidatesList } from "./components/pages/client/candidates/candidatesList";
 import { ScreeningQuestionsResponse } from "./components/pages/candidate/job/ScreeningQuestionsResponse";
 import { CreateCandidate } from "./components/pages/client/candidates/createCandidate";
+import CandidateList from "./components/pages/client/references/CandidateList";
+import FormFilledByCandidate from "./components/pages/client/references/FormFilledByCandidate";
 
 export const Routes = () => {
   return (
@@ -167,7 +169,10 @@ export const Routes = () => {
         <Route path="job/jobDetailCreate" element={<JobDetailCreate />} />
         <Route path="job/jobDetailEdit" element={<JobDetailEdit />} />
         <Route path="job/valuesList" element={<ValuesList />} />
-        <Route path="job/workValueTemplate"element={<JobWorkValueTemplate />}/>
+        <Route
+          path="job/workValueTemplate"
+          element={<JobWorkValueTemplate />}
+        />
         <Route path="job/valuesCreate" element={<ValuesCreate />} />
         <Route path="job/valuesEdit" element={<ValuesEdit />} />
         <Route path="job/valuesResult" element={<ValuesResult />} />
@@ -183,35 +188,79 @@ export const Routes = () => {
         <Route path="job/icpEdit" element={<IcpEdit />} />
         <Route path="job/icpResult" element={<IcpResult />} />
         <Route path="job/conformationScreen" element={<ConformationScreen />} />
-        <Route path="job/outputofJobDescription" element={<OutputofJobDescription />}/>
+        <Route
+          path="job/outputofJobDescription"
+          element={<OutputofJobDescription />}
+        />
         <Route path="job/screeningQuestions" element={<ScreeningQuestions />} />
         <Route path="templates/jobTemplate" element={<JobTemplate />} />
         <Route path="templates/jobTemplateEdit" element={<JobTemplateEdit />} />
-        <Route path="templates/jobTemplateCreate" element={<JobTemplateCreate />}/>
-        <Route path="templates/workValueTemplate" element={<WorkValueTemplate />}/>
-        <Route path="templates/workValueTemplateEdit" element={<WorkValueTemplateEdit />}/>
-        <Route path="templates/workValueTemplateCreate" element={<WorkValueTemplateCreate />}/>
-        <Route path="templates/workValueTemplateView" element={<WorkValueTemplateView />}/>
+        <Route
+          path="templates/jobTemplateCreate"
+          element={<JobTemplateCreate />}
+        />
+        <Route
+          path="templates/workValueTemplate"
+          element={<WorkValueTemplate />}
+        />
+        <Route
+          path="templates/workValueTemplateEdit"
+          element={<WorkValueTemplateEdit />}
+        />
+        <Route
+          path="templates/workValueTemplateCreate"
+          element={<WorkValueTemplateCreate />}
+        />
+        <Route
+          path="templates/workValueTemplateView"
+          element={<WorkValueTemplateView />}
+        />
         <Route path="templates/teamTemplate" element={<TeamTemplate />} />
-        <Route path="templates/teamTemplateEdit" element={<TeamTemplateEdit />}/>
-        <Route path="templates/teamTemplateCreate" element={<TeamTemplateCreate />}/>
-        <Route path="templates/jobPreferenceTemplate" element={<JobPreferenceTemplate />}/>
-        <Route path="templates/jobPreferenceTemplateEdit" element={<JobPreferenceTemplateEdit />}/>
-        <Route path="templates/jobPreferenceTemplateCreate" element={<JobPreferenceTemplateCreate />}/>
+        <Route
+          path="templates/teamTemplateEdit"
+          element={<TeamTemplateEdit />}
+        />
+        <Route
+          path="templates/teamTemplateCreate"
+          element={<TeamTemplateCreate />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplate"
+          element={<JobPreferenceTemplate />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplateEdit"
+          element={<JobPreferenceTemplateEdit />}
+        />
+        <Route
+          path="templates/jobPreferenceTemplateCreate"
+          element={<JobPreferenceTemplateCreate />}
+        />
         <Route path="templates/icp" element={<IcpTemplate />} />
         <Route path="templates/icpResult" element={<IcpTemplateResult />} />
         <Route path="templates/icpEdit" element={<IcpTemplateEdit />} />
         <Route path="allAssessmentBatches" element={<AllAssessmentBatches />} />
         <Route path="assessmentsList" element={<AssessmentListView />} />
         <Route path="selectAssesment" element={<SelectAssessment />} />
-        <Route path="assessmentBatchDetails" element={<AssesmentBatchDetails />}/>
+        <Route
+          path="assessmentBatchDetails"
+          element={<AssesmentBatchDetails />}
+        />
         <Route path="assessmentResult" element={<AsssessmentResult />} />
         <Route path="assignCandidate" element={<AssignCandidate />} />
-        <Route path="jobCandidateCombination" element={<JobCandidateCombination />}/>
+        <Route
+          path="jobCandidateCombination"
+          element={<JobCandidateCombination />}
+        />
         <Route path="settings" element={<Settings />} />
         <Route path="externalHelp" element={<ExternalHelp />} />
-        <Route path="clientAssignedCandidates" element={<CandidatesList/>} />
-        <Route path="createCandidate" element={<CreateCandidate/>}/>
+        <Route path="clientAssignedCandidates" element={<CandidatesList />} />
+        <Route path="references/candidatelist" element={<CandidateList />} />
+        <Route
+          path="references/requestReferences"
+          element={<FormFilledByCandidate />}
+        />
+        <Route path="createCandidate" element={<CreateCandidate />} />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

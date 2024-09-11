@@ -83,7 +83,7 @@ export const DashBoard = () => {
                     borderRadius: 4,
                     padding: 1,
 
-                    minWidth: "350px",
+                    minWidth: "310px",
                   }}>
                   <div className="p-4 gap-2 flex items-center">
                     <div
@@ -136,7 +136,7 @@ export const DashBoard = () => {
                     borderRadius: 4,
                     padding: 1,
 
-                    minWidth: "350px",
+                    minWidth: "310px",
                   }}>
                   <div className="p-4 gap-2 flex items-center">
                     <div
@@ -189,7 +189,7 @@ export const DashBoard = () => {
                     borderRadius: 4,
                     padding: 1,
 
-                    minWidth: "350px",
+                    minWidth: "310px",
                   }}>
                   <div className="p-4 gap-2 flex items-center">
                     <div

@@ -92,7 +92,8 @@ export const ClientSideNav = ({ openTemplate }) => {
           marginLeft: open ? 242 : 53,
           backgroundColor: "#A3A3A3",
           opacity: 0.6,
-        }}>
+        }}
+      >
         <IconButton onClick={handleDrawer}>
           {open ? (
             <FaAngleLeft style={{ color: "#ffffff", fontSize: 20 }} />
@@ -130,13 +131,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/client/dashboard");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <DashboardSvg
                   COLOR={
                     currentState === "/client/dashboard" ? "#ffffff" : "#475467"
@@ -175,13 +178,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/job/allJobs");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <JobSvg
                   COLOR={currentState.includes("job/") ? "#ffffff" : "#475467"}
                 />
@@ -220,13 +225,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               onClick={() => {
                 // navigate("/templates");
                 setShowAcordian(!showAcordian);
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <TemplateSvg
                   COLOR={
                     currentState.includes("templates") ? "#ffffff" : "#475467"
@@ -267,7 +274,8 @@ export const ClientSideNav = ({ openTemplate }) => {
           <Collapse in={showAcordian} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/templates/jobTemplate")}>
+              onClick={() => navigate("/templates/jobTemplate")}
+            >
               <p
                 style={{
                   color: currentState.includes("jobTemplate")
@@ -276,13 +284,15 @@ export const ClientSideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Job Templates
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/templates/workValueTemplate")}>
+              onClick={() => navigate("/templates/workValueTemplate")}
+            >
               <p
                 style={{
                   color: currentState.includes("workValueTemplate")
@@ -291,13 +301,15 @@ export const ClientSideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Value Templates
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/templates/teamTemplate")}>
+              onClick={() => navigate("/templates/teamTemplate")}
+            >
               <p
                 style={{
                   color: currentState.includes("teamTemplate")
@@ -306,7 +318,8 @@ export const ClientSideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Team Templates
               </p>
             </div>
@@ -327,14 +340,16 @@ export const ClientSideNav = ({ openTemplate }) => {
             </div> */}
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/templates/icp")}>
+              onClick={() => navigate("/templates/icp")}
+            >
               <p
                 style={{
                   color: currentState.includes("/icp") ? "#008080" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Ideal Candidate Persona
               </p>
             </div>
@@ -361,13 +376,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/assessmentsList");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AssesmentSvg
                   COLOR={
                     currentState.includes("assesment") ? "#ffffff" : "#475467"
@@ -396,8 +413,7 @@ export const ClientSideNav = ({ openTemplate }) => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor:
-                  currentState === "candidates" ? "#008080" : "#ffffff",
+                bgcolor: currentState === "candidates" ? "#008080" : "#ffffff",
                 color: currentState === "candidates" ? "#ffffff" : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
@@ -405,13 +421,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/clientAssignedCandidates");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AiOutlineQuestionCircle
                   style={{
                     color:
@@ -423,8 +441,7 @@ export const ClientSideNav = ({ openTemplate }) => {
               <ListItemText
                 primary={"Candidates"}
                 primaryTypographyProps={{
-                  color:
-                    currentState === "candidates" ? "#ffffff" : "#475467",
+                  color: currentState === "candidates" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -432,6 +449,53 @@ export const ClientSideNav = ({ openTemplate }) => {
               />
             </ListItemButton>
           </ListItem>
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor: currentState === "references" ? "#008080" : "#ffffff",
+                color: currentState === "references" ? "#ffffff" : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                navigate("/references/candidatelist");
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AiOutlineQuestionCircle
+                  style={{
+                    color:
+                      currentState === "references" ? "#ffffff" : "#475467",
+                    fontSize: 22,
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"References"}
+                primaryTypographyProps={{
+                  color: currentState === "references" ? "#ffffff" : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -450,13 +514,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/externalHelp");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AiOutlineQuestionCircle
                   style={{
                     color:
@@ -494,13 +560,15 @@ export const ClientSideNav = ({ openTemplate }) => {
               }}
               onClick={() => {
                 navigate("/settings");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <LuSettings
                   style={{
                     color: currentState === "/settings" ? "#ffffff" : "#475467",

@@ -51,7 +51,9 @@ export const CandidatesList = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
     axiosInstance
-      .get(`/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .get(
+        `/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
+      )
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -67,13 +69,13 @@ export const CandidatesList = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav/>
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           {loading === true ? (
             <Spinner />
           ) : (
-            <div className="p-8">
+            <div className="p-10">
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
                   Assign Candidate List
@@ -100,9 +102,8 @@ export const CandidatesList = () => {
                       backgroundColor: "#EAF4F5",
                       textTransform: "none",
                     }}
-                    onClick={() =>
-                      navigate("/createCandidate")
-                    }>
+                    onClick={() => navigate("/createCandidate")}
+                  >
                     Add Candidate
                   </Button>
                 </div>
@@ -114,23 +115,28 @@ export const CandidatesList = () => {
                           <TableRow>
                             <TableCell
                               align="center"
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Candidate Name
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Email Address
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Phone Number
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               LinkedIn Id
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Resume
                             </TableCell>
                             {/* <TableCell
@@ -169,7 +175,8 @@ export const CandidatesList = () => {
                                         "/templates/workValueTemplateView",
                                         { state: row }
                                       )
-                                    }>
+                                    }
+                                  >
                                     {row.resume}
                                   </Button>
                                 </TableCell>
