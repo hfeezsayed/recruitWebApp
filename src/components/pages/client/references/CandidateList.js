@@ -194,6 +194,9 @@ const CandidateList = () => {
                             </TableCell>
                             <TableCell
                               sx={{ color: "#66b2b2", cursor: "pointer" }}
+                              onClick={() =>
+                                navigate("/references/requestReferences")
+                              }
                             >
                               {candidate.action}
                             </TableCell>

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 //Top and Side navbar
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
