@@ -21,5 +21,13 @@ code {
 }
 
 .smallTextGray {
-  color: #475467;
+  color: #475467 !important;
+}
+
+.disable-bg {
+  background-color: #f8f9fa;
+}
+
+.bg-light-gray {
+  background-color: #f8f9fa;
 }

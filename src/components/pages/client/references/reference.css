@@ -22,3 +22,109 @@
   color: #404040;
   border: 1px solid #e6e6e6;
 }
+
+/* form filled by reference css */
+.select-the-right-options .select-form .MuiOutlinedInput-input {
+  border: 1px solid #d0d5dd;
+  padding: 10px 14px;
+}
+
+.select-the-right-options .select-form .MuiOutlinedInput-notchedOutline {
+  border: none !important ;
+}
+
+.select-the-right-options .css-1agwao2-MuiFormControl-root {
+  margin: 0;
+}
+
+/* Rating Questions css */
+.questions-block .table {
+  width: 92%;
+  border: 1px solid #ccc;
+}
+
+.questions-block table thead tr th,
+.questions-block table tbody tr td {
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  padding: 16px;
+  background-color: #f8f9fa;
+}
+
+.questions-block table tbody tr td {
+  background-color: #fff;
+  padding: 5px 16px;
+  font-size: 14px;
+  color: #475467;
+}
+
+.questions-block
+  table
+  .css-j204z7-MuiFormControlLabel-root
+  .MuiFormControlLabel-label {
+  font-size: 14px;
+  color: #475467;
+}
+
+.questions-block table .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+  color: #475467;
+}
+
+.questions-block .table-list .css-sghohy-MuiButtonBase-root-MuiButton-root {
+  margin-top: 76px;
+  margin-bottom: 60px;
+  float: right;
+}
+
+/* Breadcrumbs CSS */
+.breadcrumb .breadcrumb-links li a {
+  color: #008080;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.breadcrumb .breadcrumb-links .css-1wuw8dw-MuiBreadcrumbs-separator {
+  display: none;
+}
+
+.breadcrumb .breadcrumb-links span {
+  padding: 8px;
+  padding-bottom: 0;
+  display: inline-block;
+  font-size: 13px;
+  color: #d0d5dd;
+}
+
+/* Priority-ranking */
+
+.priority-ranking .body-content p {
+  padding: 6px 20px;
+  border: 1px solid #d0d5dd;
+  color: #475467;
+}
+
+.rating .priority-ranking .body-content p:first-child,
+.rating .priority-ranking .body-content p:last-child,
+.priority-ranking .body-content p:first-child,
+.priority-ranking .body-content p:last-child {
+  border: none;
+  padding: 4px 0px;
+}
+
+.thumb-green {
+  color: #58a20f;
+}
+.thumb-pink {
+  color: #e05880;
+}
+
+.priority-ranking .body-content .thumb-pink,
+.priority-ranking .body-content .thumb-green {
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+.rating .priority-ranking .body-content p {
+  padding: 16px 20px;
+}

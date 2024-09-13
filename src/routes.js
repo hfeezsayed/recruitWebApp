@@ -88,6 +88,10 @@ import { ScreeningQuestionsResponse } from "./components/pages/candidate/job/Scr
 import { CreateCandidate } from "./components/pages/client/candidates/createCandidate";
 import CandidateList from "./components/pages/client/references/CandidateList";
 import FormFilledByCandidate from "./components/pages/client/references/FormFilledByCandidate";
+import RatingQuestions from "./components/pages/client/references/RatingQuestions";
+import FormFilledByReferences from "./components/pages/client/references/FormFilledByReference";
+import PriorityRanking from "./components/pages/client/references/PriorityRanking";
+import Rating from "./components/pages/client/references/Rating";
 
 export const Routes = () => {
   return (
@@ -260,6 +264,19 @@ export const Routes = () => {
           path="references/requestReferences"
           element={<FormFilledByCandidate />}
         />
+        <Route
+          path="references/filledbyreferences"
+          element={<FormFilledByReferences />}
+        />
+        <Route
+          path="references/ratingQuestions"
+          element={<RatingQuestions />}
+        />
+        <Route
+          path="references/priorityRanking"
+          element={<PriorityRanking />}
+        />
+        <Route path="references/rating" element={<Rating />} />
         <Route path="createCandidate" element={<CreateCandidate />} />
         <Route path="*" element={<Error404 />} />
       </Route>
