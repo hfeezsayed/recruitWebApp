@@ -1,0 +1,52 @@
+/* Job Create Modal css start */
+.modal-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 728px;
+  background-color: white;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.modal-view .modal-body .input-box p {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #344054;
+}
+
+.modal-view .modal-body .input-box .form-control {
+  width: 313px;
+  height: 50px;
+  padding: 8px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+}
+
+.modal-view .select-box {
+  position: relative;
+}
+
+.modal-view .select-box .down-arrow {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 25px;
+  color: #667085;
+}
+
+.white-blank {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 33px;
+  right: 4px;
+  background-color: #fff;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.modal-view .modal-body .input-box .w-full-100 {
+  width: 100% !important;
+}

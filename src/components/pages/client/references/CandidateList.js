@@ -30,16 +30,18 @@ const CandidateList = () => {
     <div className="candidate-reference-list flex">
       <ClientSideNav />
       <div className="w-full min-h-screen">
-        <TopNav />
+        <div className="px-4">
+          <TopNav />
+        </div>
         <div className="p-8 w-full h-full">
-          <h2 className="text-2xl pt-4 font-bold main-black">
+          <h2 className="text-2xl pt-4 px-4 font-bold main-black">
             Candidate list to share thier references
           </h2>
-          <p className="text-sm pt-3 smallTextGray">
+          <p className="text-sm pt-3 smallTextGray px-4 ">
             Choose the Candidate for sent their references
           </p>
           <div className="reference-search-block">
-            <div className="flex py-8 justify-between">
+            <div className="flex py-8 justify-between pl-4">
               <TextField
                 size="small"
                 value=""
@@ -72,7 +74,7 @@ const CandidateList = () => {
               </Button>
             </div>
           </div>
-          <div className="refernce-status">
+          <div className="refernce-status px-4">
             <h4 className="font-bold text-lg main-black pb-2">
               Reference Status
             </h4>
@@ -92,7 +94,7 @@ const CandidateList = () => {
             </div>
           </div>
 
-          <div className="candidate-list-data py-8">
+          <div className="candidate-list-data py-8 ">
             <Box sx={{ width: "100%" }}>
               <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer sx={{ maxHeight: 500 }}>

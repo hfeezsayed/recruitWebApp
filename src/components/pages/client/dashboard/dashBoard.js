@@ -21,20 +21,19 @@ export const DashBoard = () => {
     jobCount: 10,
   });
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-      //setLoading(true);
-      axiosInstance
-        .get(`/getClientDashboardData?clientId=${user.userId}`)
-        .then((response) => {
-          console.log(response.data);
-          setuserData(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-          //setLoading(false);
-        });
+    //setLoading(true);
+    axiosInstance
+      .get(`/getClientDashboardData?clientId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setuserData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        //setLoading(false);
+      });
   }, []);
 
   return (
@@ -44,7 +43,7 @@ export const DashBoard = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div>
+            <div onClick={() => navigate("/dashboardPanel")}>
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Home
               </p>
@@ -62,7 +61,8 @@ export const DashBoard = () => {
                 />
                 <div className="relative -mt-8 justify-end flex h-8">
                   <IconButton
-                    style={{ padding: 5, backgroundColor: "#66B2B2" }}>
+                    style={{ padding: 5, backgroundColor: "#66B2B2" }}
+                  >
                     <IoCamera style={{ color: "#ffffff", fontSize: 22 }} />
                   </IconButton>
                 </div>
@@ -84,7 +84,8 @@ export const DashBoard = () => {
                     padding: 1,
 
                     minWidth: "310px",
-                  }}>
+                  }}
+                >
                   <div className="p-4 gap-2 flex items-center">
                     <div
                       style={{
@@ -95,7 +96,8 @@ export const DashBoard = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                      }}>
+                      }}
+                    >
                       <AuthorizedSvg COLOR="#F78F54" />
                     </div>
                     <p
@@ -103,7 +105,8 @@ export const DashBoard = () => {
                         color: "#475467",
                         fontSize: 16,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Candidates Count
                     </p>
                   </div>
@@ -114,7 +117,8 @@ export const DashBoard = () => {
                         color: "#1D1F2C",
                         fontSize: 30,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       {userData?.candidatesCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
@@ -122,11 +126,14 @@ export const DashBoard = () => {
                         style={{
                           color: "#475467",
                           fontSize: 14,
-                        }}>
+                        }}
+                      >
                         Candidates created in database
                       </p>
-                      <Button onClick={() => navigate("/clientAssignedCandidates")}>
-                      <FaArrowRight style={{ color: "#008080" }} />
+                      <Button
+                        onClick={() => navigate("/clientAssignedCandidates")}
+                      >
+                        <FaArrowRight style={{ color: "#008080" }} />
                       </Button>
                     </div>
                   </div>
@@ -137,7 +144,8 @@ export const DashBoard = () => {
                     padding: 1,
 
                     minWidth: "310px",
-                  }}>
+                  }}
+                >
                   <div className="p-4 gap-2 flex items-center">
                     <div
                       style={{
@@ -148,7 +156,8 @@ export const DashBoard = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                      }}>
+                      }}
+                    >
                       <AssesmentSvg COLOR="#A1CBB3" />
                     </div>
                     <p
@@ -156,7 +165,8 @@ export const DashBoard = () => {
                         color: "#475467",
                         fontSize: 16,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Client Assessments
                     </p>
                   </div>
@@ -167,7 +177,8 @@ export const DashBoard = () => {
                         color: "#1D1F2C",
                         fontSize: 30,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       {userData?.assessmentCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
@@ -175,11 +186,12 @@ export const DashBoard = () => {
                         style={{
                           color: "#475467",
                           fontSize: 14,
-                        }}>
+                        }}
+                      >
                         Client Assessments created
                       </p>
                       <Button onClick={() => navigate("/assessmentsList")}>
-                      <FaArrowRight style={{ color: "#008080" }} />
+                        <FaArrowRight style={{ color: "#008080" }} />
                       </Button>
                     </div>
                   </div>
@@ -190,7 +202,8 @@ export const DashBoard = () => {
                     padding: 1,
 
                     minWidth: "310px",
-                  }}>
+                  }}
+                >
                   <div className="p-4 gap-2 flex items-center">
                     <div
                       style={{
@@ -201,7 +214,8 @@ export const DashBoard = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                      }}>
+                      }}
+                    >
                       <JobSvg COLOR="#6A0DAD" />
                     </div>
                     <p
@@ -209,7 +223,8 @@ export const DashBoard = () => {
                         color: "#475467",
                         fontSize: 16,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Job Created
                     </p>
                   </div>
@@ -220,7 +235,8 @@ export const DashBoard = () => {
                         color: "#1D1F2C",
                         fontSize: 30,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       {userData?.jobCount || "00"}
                     </p>
                     <div className="flex justify-between items-center">
@@ -228,11 +244,12 @@ export const DashBoard = () => {
                         style={{
                           color: "#475467",
                           fontSize: 14,
-                        }}>
+                        }}
+                      >
                         No. of jobs that have been created
                       </p>
                       <Button onClick={() => navigate("/job/allJobs")}>
-                      <FaArrowRight style={{ color: "#008080" }} />
+                        <FaArrowRight style={{ color: "#008080" }} />
                       </Button>
                     </div>
                   </div>

@@ -1,0 +1,145 @@
+/* Cards CSS start */
+
+.dashboard-overview .cards .css-185gdzj-MuiCardHeader-root {
+  padding: 0;
+  padding-bottom: 21px;
+  margin: 20px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.dashboard-overview .cards .css-10rie1s-MuiPaper-root-MuiCard-root {
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  box-shadow: -2px 3px 4px 0px #e5e5e5;
+}
+
+.dashboard-overview .cards .css-10rie1s-MuiPaper-root-MuiCard-root:hover {
+  box-shadow: 0 0 15px #017f7f4f;
+  transition: 0.5s;
+  transform: scale(0.9);
+}
+
+.dashboard-overview .cards .css-r9amtk-MuiAvatar-root {
+  width: 37px;
+  height: 37px;
+  border: 1px solid #fef5f0;
+}
+
+.dashboard-overview .cards .css-et1ao3-MuiTypography-root {
+  font-size: 16px;
+  font-weight: 600;
+  color: #475467;
+  padding-top: 4px;
+}
+
+.dashboard-overview .cards .css-1ssile9-MuiCardHeader-avatar {
+  margin-right: 5px;
+}
+
+.dashboard-overview .cards .body-content h2 {
+  color: #1d1f2c;
+  padding: 15px 20px;
+}
+
+.dashboard-overview .cards .css-dnrpxu-MuiCardActions-root {
+  padding: 0px 20px;
+  padding-bottom: 20px;
+  margin-top: -5px;
+}
+
+.dashboard-overview .cards .css-kpm0tx-MuiButtonBase-root-MuiButton-root {
+  padding: 0;
+  min-width: 0;
+}
+
+/* Cards CSS End */
+
+/* floating button css start */
+.floating-btn {
+  position: relative;
+  margin: 3rem 0px;
+  float: right;
+}
+.floating-btn .add-btn {
+  font-size: 3rem;
+  cursor: pointer;
+  color: #008080;
+  float: right;
+  background-color: #fff;
+}
+
+.floating-btn .createIcon,
+.floating-btn .userIcon {
+  font-size: 16px;
+  color: #008080;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.floating-btn .toggle-block .user-btn,
+.floating-btn .toggle-block .create-btn {
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  padding: 10px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.floating-btn .toggle-block .user-btn {
+  position: absolute;
+  top: -35px;
+  right: 68px;
+}
+
+.floating-btn .toggle-block .create-btn {
+  position: absolute;
+  top: 20px;
+  right: 90px;
+}
+
+/* // floating button animation */
+@-webkit-keyframes SHOW-BOX {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes SHOW-BOX {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes SHOW-BOX {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes SHOW-BOX {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.show-box {
+  -webkit-animation: SHOW-BOX 2s ease;
+  -moz-animation: SHOW-BOX 2s ease;
+  -o-animation: SHOW-BOX 2s ease;
+  animation: SHOW-BOX 2s ease;
+}

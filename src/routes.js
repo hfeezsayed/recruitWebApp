@@ -92,6 +92,8 @@ import RatingQuestions from "./components/pages/client/references/RatingQuestion
 import FormFilledByReferences from "./components/pages/client/references/FormFilledByReference";
 import PriorityRanking from "./components/pages/client/references/PriorityRanking";
 import Rating from "./components/pages/client/references/Rating";
+import { AdminDashBoard } from "./components/pages/client/dashboard/AdminPanel/AdminPanel";
+import ClientManagementSec from "./components/pages/client/Clients/ClientManagement/ClientManagementSec";
 
 export const Routes = () => {
   return (
@@ -277,7 +279,13 @@ export const Routes = () => {
           element={<PriorityRanking />}
         />
         <Route path="references/rating" element={<Rating />} />
+        <Route path="dashboardPanel" element={<AdminDashBoard />} />
         <Route path="createCandidate" element={<CreateCandidate />} />
+        <Route
+          path="client/clientManagementSection"
+          element={<ClientManagementSec />}
+        />
+
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

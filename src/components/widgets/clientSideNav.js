@@ -82,7 +82,6 @@ export const ClientSideNav = ({ openTemplate }) => {
   };
 
   const currentState = location.pathname;
-
   return (
     <>
       <div
@@ -153,6 +152,51 @@ export const ClientSideNav = ({ openTemplate }) => {
                     currentState === "/client/dashboard"
                       ? "#ffffff"
                       : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor: currentState === "clients" ? "#008080" : "#ffffff",
+                color: currentState === "clients" ? "#ffffff" : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                navigate("/client/clientManagementSection");
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AiOutlineQuestionCircle
+                  style={{
+                    color: currentState === "clientss" ? "#ffffff" : "#475467",
+                    fontSize: 22,
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Clients"}
+                primaryTypographyProps={{
+                  color: currentState === "clients" ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
