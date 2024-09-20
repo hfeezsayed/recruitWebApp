@@ -77,7 +77,10 @@ export const CandidatesList = () => {
           ) : (
             <div className="p-10">
               <div>
-                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                <p
+                  style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}
+                  onClick={() => navigate("/candidates/applicant")}
+                >
                   Assign Candidate List
                 </p>
                 <div className="py-5 flex justify-between items-center">

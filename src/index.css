@@ -31,3 +31,10 @@ code {
 .bg-light-gray {
   background-color: #f8f9fa;
 }
+
+.three-dots {
+  color: #d9d9d9;
+  font-size: 20px;
+  margin: 0 auto;
+  cursor: pointer;
+}

@@ -405,7 +405,8 @@ export const AllJobs = () => {
           padding: "4px 8px",
           borderRadius: 20,
           backgroundColor: bg,
-        }}>
+        }}
+      >
         <p style={{ color: color, fontSize: 14 }}>{status}</p>
       </div>
     );
@@ -431,7 +432,8 @@ export const AllJobs = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 700,
-                      }}>
+                      }}
+                    >
                       All Jobs
                     </p>
                     <Button
@@ -443,7 +445,8 @@ export const AllJobs = () => {
                       }}
                       onClick={() => {
                         navigate("/job/createJob", { state: { new: true } });
-                      }}>
+                      }}
+                    >
                       Add the first job to initiate the list
                     </Button>
                     <p
@@ -451,7 +454,8 @@ export const AllJobs = () => {
                         color: "#475467",
                         fontSize: 14,
                         fontWeight: 400,
-                      }}>
+                      }}
+                    >
                       Start the process by selecting an option: use an existing
                       job template or create a new one job template.
                     </p>
@@ -465,7 +469,8 @@ export const AllJobs = () => {
                           fontSize: 20,
                           fontWeight: 500,
                           marginTop: 25,
-                        }}>
+                        }}
+                      >
                         Jobs Summary
                       </p>
                       <Button
@@ -477,7 +482,8 @@ export const AllJobs = () => {
                         }}
                         onClick={() => {
                           navigate("/job/createJob", { state: { new: true } });
-                        }}>
+                        }}
+                      >
                         Add the first job to initiate the list
                       </Button>
                     </div>
@@ -491,7 +497,8 @@ export const AllJobs = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 700,
-                      }}>
+                      }}
+                    >
                       Jobs Summary
                     </p>
                   </div>
@@ -499,7 +506,8 @@ export const AllJobs = () => {
                     <div className="flex gap-5">
                       <ButtonGroup
                         style={{ color: "#008080" }}
-                        aria-label="Medium-sized button group">
+                        aria-label="Medium-sized button group"
+                      >
                         <Button
                           style={{
                             backgroundColor: "#F8F9FA",
@@ -521,7 +529,8 @@ export const AllJobs = () => {
                               }
                             />
                           }
-                          onClick={() => setCurrentView("WorkFlow")}>
+                          onClick={() => setCurrentView("WorkFlow")}
+                        >
                           Workflow View
                         </Button>
                         <Button
@@ -535,7 +544,8 @@ export const AllJobs = () => {
                             fontWeight: 500,
                           }}
                           startIcon={<HiOutlineSquares2X2 />}
-                          onClick={() => setCurrentView("Card")}>
+                          onClick={() => setCurrentView("Card")}
+                        >
                           Board View
                         </Button>
                         <Button
@@ -549,7 +559,8 @@ export const AllJobs = () => {
                             fontWeight: 500,
                           }}
                           startIcon={<IoMenu />}
-                          onClick={() => setCurrentView("List")}>
+                          onClick={() => setCurrentView("List")}
+                        >
                           List View
                         </Button>
                       </ButtonGroup>
@@ -601,7 +612,8 @@ export const AllJobs = () => {
                           width: 94,
                           height: 38,
                         }}
-                        startIcon={<IoFilter style={{ color: "#252525" }} />}>
+                        startIcon={<IoFilter style={{ color: "#252525" }} />}
+                      >
                         Filter
                       </Button>
                       <Button
@@ -620,7 +632,8 @@ export const AllJobs = () => {
                           borderRadius: 8,
                           width: 120,
                           height: 38,
-                        }}>
+                        }}
+                      >
                         Create New Job
                       </Button>
                     </div>
@@ -631,19 +644,21 @@ export const AllJobs = () => {
                         color: "#475467",
                         fontSize: 20,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       All Jobs
                     </p>
 
                     {currentView === "WorkFlow" && (
-                      <div className="overflow-x-scroll w-[1210px]">
+                      <div className="overflow-x-scroll w-[1020px]">
                         <DragDropContext onDragEnd={onDragEnd}>
                           <div
                             style={{
                               display: "flex",
                               width: "100%",
                               justifyContent: "space-between",
-                            }}>
+                            }}
+                          >
                             {Object.entries(tasks).map(([key, column]) => (
                               <Droppable droppableId={key} key={key}>
                                 {(provided, snapshot) => (
@@ -658,7 +673,8 @@ export const AllJobs = () => {
                                       backgroundColor: snapshot.isDraggingOver
                                         ? "lightblue"
                                         : "white",
-                                    }}>
+                                    }}
+                                  >
                                     <div
                                       style={{
                                         display: "flex",
@@ -666,14 +682,16 @@ export const AllJobs = () => {
                                         borderBottomWidth: 2,
                                         paddingBottom: 2,
                                         borderColor: "#00808070",
-                                      }}>
+                                      }}
+                                    >
                                       <div className="flex gap-2">
                                         <p
                                           style={{
                                             color: "#1E293B",
                                             fontSize: 14,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           {column?.name}
                                         </p>
                                         <div className="flex items-center justify-center h-6 w-8 border border-[#E2E8F0] bg-[#FFB58020]">
@@ -682,7 +700,8 @@ export const AllJobs = () => {
                                               color: "#94A3B8",
                                               fontSize: 14,
                                               fontWeight: 500,
-                                            }}>
+                                            }}
+                                          >
                                             {column?.items?.length}
                                           </p>
                                         </div>
@@ -710,7 +729,8 @@ export const AllJobs = () => {
                                       <Draggable
                                         key={item.id}
                                         draggableId={item.id}
-                                        index={index}>
+                                        index={index}
+                                      >
                                         {(provided, snapshot) => (
                                           <div
                                             ref={provided.innerRef}
@@ -727,7 +747,8 @@ export const AllJobs = () => {
                                               borderRadius: 8,
                                               marginTop: 10,
                                               ...provided.draggableProps.style,
-                                            }}>
+                                            }}
+                                          >
                                             <div className="flex justify-between items-center p-2">
                                               <div className="flex gap-2 items-center">
                                                 <img
@@ -745,14 +766,16 @@ export const AllJobs = () => {
                                                       color: "#1E293B",
                                                       fontSize: 16,
                                                       fontWeight: 600,
-                                                    }}>
+                                                    }}
+                                                  >
                                                     {item?.jobName}
                                                   </p>
                                                   <p
                                                     style={{
                                                       color: "#252C32",
                                                       fontSize: 10,
-                                                    }}>
+                                                    }}
+                                                  >
                                                     {item?.companyName}
                                                   </p>
                                                 </div>
@@ -762,7 +785,8 @@ export const AllJobs = () => {
                                                   onClick={(e) => {
                                                     handleKd(e);
                                                     setAnchorData(item);
-                                                  }}>
+                                                  }}
+                                                >
                                                   <BsThreeDots
                                                     style={{
                                                       color: "#6F6F6F",
@@ -778,7 +802,8 @@ export const AllJobs = () => {
                                                 style={{
                                                   color: "#787486",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Created Date:{" "}
                                                 {item?.createdDate}
                                               </p>
@@ -786,14 +811,16 @@ export const AllJobs = () => {
                                                 style={{
                                                   color: "#787486",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Job Type: {item?.typeOfHire[0]}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#787486",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Application Sub-status:{" "}
                                                 {item?.jobSubStatus}
                                               </p>
@@ -805,28 +832,32 @@ export const AllJobs = () => {
                                                 style={{
                                                   color: "#5FAEDA",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Total: {item?.total}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#800080",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 New: {item?.newly}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#FFA500",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Active: {item?.active}
                                               </p>
                                               <p
                                                 style={{
                                                   color: "#7FB27F",
                                                   fontSize: 10,
-                                                }}>
+                                                }}
+                                              >
                                                 Hired: {item?.hired}
                                               </p>
                                             </div>
@@ -858,7 +889,8 @@ export const AllJobs = () => {
                                           color: "#101828",
                                           fontSize: 16,
                                           fontWeight: 500,
-                                        }}>
+                                        }}
+                                      >
                                         {row?.jobName}
                                       </p>
                                       {row?.newJob ? (
@@ -872,7 +904,8 @@ export const AllJobs = () => {
                                             paddingLeft: 8,
                                             paddingRight: 8,
                                             paddingBottom: 4,
-                                          }}>
+                                          }}
+                                        >
                                           New post
                                         </p>
                                       ) : (
@@ -884,7 +917,8 @@ export const AllJobs = () => {
                                         onClick={(e) => {
                                           handleClick(e);
                                           setAnchorData(row);
-                                        }}>
+                                        }}
+                                      >
                                         <HiDotsVertical
                                           style={{ color: "#D9D9D9" }}
                                         />
@@ -900,7 +934,8 @@ export const AllJobs = () => {
                                         style={{
                                           color: "#47546770",
                                           fontSize: 14,
-                                        }}>
+                                        }}
+                                      >
                                         {row?.location}
                                       </p>
                                     </div>
@@ -921,7 +956,8 @@ export const AllJobs = () => {
                                             row?.typeOfHire?.length
                                               ? 0
                                               : 2,
-                                        }}>
+                                        }}
+                                      >
                                         {row.compensation}
                                       </p>
                                       {/* );
@@ -941,7 +977,8 @@ export const AllJobs = () => {
                                         style={{
                                           color: "#475467",
                                           fontSize: 14,
-                                        }}>
+                                        }}
+                                      >
                                         {row?.companyName}
                                       </p>
                                       <p
@@ -949,7 +986,8 @@ export const AllJobs = () => {
                                           color: "#47546770",
                                           fontSize: 12,
                                           fontWeight: 500,
-                                        }}>
+                                        }}
+                                      >
                                         Hiring Manger :{" "}
                                         <span style={{ color: "#101828" }}>
                                           {row?.hiringManager}
@@ -968,7 +1006,8 @@ export const AllJobs = () => {
                                             color: "#121212",
                                             fontSize: 12,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           Job Progress
                                         </p>
                                         <p
@@ -976,7 +1015,8 @@ export const AllJobs = () => {
                                             color: "#121212",
                                             fontSize: 12,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           {row?.jobProgress} %
                                         </p>
                                       </div>
@@ -1002,7 +1042,8 @@ export const AllJobs = () => {
                                             textDecoration: "underline",
                                             padding: 0,
                                           }}
-                                          endIcon={<MdOutlineArrowOutward />}>
+                                          endIcon={<MdOutlineArrowOutward />}
+                                        >
                                           Complete Job
                                         </Button>
                                       </div>
@@ -1015,7 +1056,8 @@ export const AllJobs = () => {
                                             color: "#121212",
                                             fontSize: 12,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           Job Progress
                                         </p>
                                         <p
@@ -1023,7 +1065,8 @@ export const AllJobs = () => {
                                             color: "#121212",
                                             fontSize: 12,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           {row?.jobProgress} %
                                         </p>
                                       </div>
@@ -1049,7 +1092,8 @@ export const AllJobs = () => {
                                             textDecoration: "underline",
                                             padding: 0,
                                           }}
-                                          endIcon={<MdOutlineArrowOutward />}>
+                                          endIcon={<MdOutlineArrowOutward />}
+                                        >
                                           More Details
                                         </Button>
                                       </div>
@@ -1064,7 +1108,7 @@ export const AllJobs = () => {
                     )}
 
                     {currentView === "List" && (
-                      <div className="py-3">
+                      <div className="py-3 w-[1020px]">
                         <Box sx={{ width: "100%" }}>
                           <Paper sx={{ width: "100%", mb: 2 }}>
                             <TableContainer sx={{ maxHeight: 500 }}>
@@ -1077,7 +1121,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       <TableSortLabel
                                         active={orderBy === "jobName"}
                                         direction={
@@ -1085,7 +1130,8 @@ export const AllJobs = () => {
                                         }
                                         onClick={() =>
                                           handleRequestSort("jobName")
-                                        }>
+                                        }
+                                      >
                                         Job Name
                                       </TableSortLabel>
                                     </TableCell>
@@ -1095,7 +1141,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Department
                                     </TableCell>
                                     <TableCell
@@ -1104,7 +1151,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Created
                                     </TableCell>
                                     <TableCell
@@ -1113,7 +1161,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Job Type
                                     </TableCell>
                                     <TableCell
@@ -1122,7 +1171,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Job Status
                                     </TableCell>
                                     <TableCell
@@ -1131,7 +1181,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Job Sub - Status
                                     </TableCell>
                                     <TableCell
@@ -1140,7 +1191,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Total
                                     </TableCell>
                                     <TableCell
@@ -1149,7 +1201,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       New
                                     </TableCell>
                                     <TableCell
@@ -1158,7 +1211,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Active
                                     </TableCell>
                                     <TableCell
@@ -1167,7 +1221,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Hired
                                     </TableCell>
                                     <TableCell
@@ -1176,7 +1231,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Job Description
                                     </TableCell>
                                     <TableCell
@@ -1185,7 +1241,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Download Pdf
                                     </TableCell>
                                     <TableCell
@@ -1195,7 +1252,8 @@ export const AllJobs = () => {
                                         color: "#101828",
                                         border: 1,
                                         borderColor: "#D0D5DD50",
-                                      }}>
+                                      }}
+                                    >
                                       Actions
                                     </TableCell>
                                   </TableRow>
@@ -1209,7 +1267,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.jobName}
                                         </TableCell>
                                         <TableCell
@@ -1217,7 +1276,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.jobDepartment}
                                         </TableCell>
                                         <TableCell
@@ -1226,7 +1286,8 @@ export const AllJobs = () => {
                                             padding: 0,
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row.createdDate}
                                         </TableCell>
                                         <TableCell
@@ -1236,7 +1297,8 @@ export const AllJobs = () => {
                                             borderColor: "#D0D5DD50",
                                             display: "flex",
                                             gap: 2,
-                                          }}>
+                                          }}
+                                        >
                                           {row?.typeOfHire?.map((time) => {
                                             return (
                                               <p
@@ -1256,7 +1318,8 @@ export const AllJobs = () => {
                                                       ? "#F1F7FF"
                                                       : "#FBF1FF",
                                                 }}
-                                                key={time}>
+                                                key={time}
+                                              >
                                                 {time}
                                               </p>
                                             );
@@ -1267,7 +1330,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {jobStatusColor(row?.jobStatus)}
                                         </TableCell>
                                         <TableCell
@@ -1275,7 +1339,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.jobSubStatus}
                                         </TableCell>
                                         <TableCell
@@ -1283,7 +1348,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.total}
                                         </TableCell>
                                         <TableCell
@@ -1291,7 +1357,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.newly}
                                         </TableCell>
                                         <TableCell
@@ -1299,7 +1366,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.active}
                                         </TableCell>
                                         <TableCell
@@ -1307,7 +1375,8 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           {row?.hired}
                                         </TableCell>
                                         <TableCell
@@ -1317,12 +1386,14 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           <IconButton
                                             onClick={(e) => {
                                               handleJd(e);
                                               setAnchorData(row);
-                                            }}>
+                                            }}
+                                          >
                                             <HiDotsVertical
                                               style={{ color: "#D9D9D9" }}
                                             />
@@ -1335,14 +1406,16 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           <Button
                                             style={{
                                               color: "#5FAEDA",
                                               fontSize: 14,
                                               textTransform: "none",
                                             }}
-                                            onClick={() => {}}>
+                                            onClick={() => {}}
+                                          >
                                             Download
                                           </Button>
                                         </TableCell>
@@ -1353,12 +1426,14 @@ export const AllJobs = () => {
                                             color: "#475467",
                                             border: 1,
                                             borderColor: "#D0D5DD50",
-                                          }}>
+                                          }}
+                                        >
                                           <IconButton
                                             onClick={(e) => {
                                               handleClick(e);
                                               setAnchorData(row);
-                                            }}>
+                                            }}
+                                          >
                                             <HiDotsVertical
                                               style={{ color: "#D9D9D9" }}
                                             />
@@ -1392,7 +1467,8 @@ export const AllJobs = () => {
                         vertical: "top",
                         horizontal: "right",
                       }}
-                      TransitionComponent={Fade}>
+                      TransitionComponent={Fade}
+                    >
                       <MenuItem onClick={handleJobEdit}>
                         <div className="flex gap-1 items-center">
                           <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
@@ -1401,7 +1477,8 @@ export const AllJobs = () => {
                               color: "#5FAEDA",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Edit
                           </p>
                         </div>
@@ -1416,7 +1493,8 @@ export const AllJobs = () => {
                               color: "#E05880",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Delete
                           </p>
                         </div>
@@ -1429,7 +1507,8 @@ export const AllJobs = () => {
                               color: "#58A20F",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Clone
                           </p>
                         </div>
@@ -1453,69 +1532,80 @@ export const AllJobs = () => {
                         vertical: "top",
                         horizontal: "right",
                       }}
-                      TransitionComponent={Fade}>
+                      TransitionComponent={Fade}
+                    >
                       <MenuItem
                         onClick={() => {
                           handleFilter("Active");
-                        }}>
+                        }}
+                      >
                         <p
                           style={{
                             color: "#171717",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Active
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleFilter("Closed");
-                        }}>
+                        }}
+                      >
                         <p
                           style={{
                             color: "#171717",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Closed
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleFilter("90Days");
-                        }}>
+                        }}
+                      >
                         <p
                           style={{
                             color: "#171717",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Past 90 Days
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleFilter("365Days");
-                        }}>
+                        }}
+                      >
                         <p
                           style={{
                             color: "#171717",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Past 365 Days
                         </p>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleFilter("All");
-                        }}>
+                        }}
+                      >
                         <p
                           style={{
                             color: "#171717",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           All
                         </p>
                       </MenuItem>
@@ -1538,7 +1628,8 @@ export const AllJobs = () => {
                         vertical: "top",
                         horizontal: "right",
                       }}
-                      TransitionComponent={Fade}>
+                      TransitionComponent={Fade}
+                    >
                       <MenuItem onClick={handleStandard}>
                         <div className="flex gap-1 items-center">
                           <IoBagRemoveOutline
@@ -1549,7 +1640,8 @@ export const AllJobs = () => {
                               color: "#5FAEDA",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job Description (Standard)
                           </p>
                         </div>
@@ -1564,7 +1656,8 @@ export const AllJobs = () => {
                               color: "#58A20F",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job Description (Recruiter)
                           </p>
                         </div>
@@ -1579,7 +1672,8 @@ export const AllJobs = () => {
                               color: "#FF6347",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job Identification
                           </p>
                         </div>
@@ -1602,7 +1696,8 @@ export const AllJobs = () => {
                         vertical: "top",
                         horizontal: "right",
                       }}
-                      TransitionComponent={Fade}>
+                      TransitionComponent={Fade}
+                    >
                       <MenuItem onClick={() => {}}>
                         <div className="flex gap-2 items-center">
                           <BsBagDash
@@ -1613,7 +1708,8 @@ export const AllJobs = () => {
                               color: "#FFA412",
                               fontSize: 12,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job
                           </p>
                         </div>
@@ -1626,7 +1722,8 @@ export const AllJobs = () => {
                               color: "#5FAEDA",
                               fontSize: 12,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Edit
                           </p>
                         </div>
@@ -1641,7 +1738,8 @@ export const AllJobs = () => {
                               color: "#E05880",
                               fontSize: 12,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Delete
                           </p>
                         </div>
@@ -1657,7 +1755,8 @@ export const AllJobs = () => {
                               color: "#58A20F",
                               fontSize: 12,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Clone
                           </p>
                         </div>
@@ -1669,7 +1768,8 @@ export const AllJobs = () => {
                       <DialogTitle>Confirm Clone</DialogTitle>
                       <IconButton
                         onClick={closePopup}
-                        style={{ position: "absolute", top: 10, right: 10 }}>
+                        style={{ position: "absolute", top: 10, right: 10 }}
+                      >
                         <IoIosCloseCircleOutline />
                       </IconButton>
                       <Divider />
@@ -1680,7 +1780,8 @@ export const AllJobs = () => {
                               color: "#344054",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Do you want to clone the Job `{anchorData?.jobName}`
                           </p>
                         </div>
@@ -1689,7 +1790,8 @@ export const AllJobs = () => {
                         <Button
                           onClick={closePopup}
                           variant="outlined"
-                          style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                          style={{ color: "#475467", borderColor: "#D0D5DD" }}
+                        >
                           cancel
                         </Button>
                         <Button
@@ -1698,7 +1800,8 @@ export const AllJobs = () => {
                           style={{
                             color: "#ffffff",
                             backgroundColor: "#008080",
-                          }}>
+                          }}
+                        >
                           clone
                         </Button>
                       </DialogActions>
@@ -1709,7 +1812,8 @@ export const AllJobs = () => {
                       <DialogTitle>Confirm Clone</DialogTitle>
                       <IconButton
                         onClick={closePopup}
-                        style={{ position: "absolute", top: 10, right: 10 }}>
+                        style={{ position: "absolute", top: 10, right: 10 }}
+                      >
                         <IoIosCloseCircleOutline />
                       </IconButton>
                       <Divider />
@@ -1720,7 +1824,8 @@ export const AllJobs = () => {
                               color: "#344054",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Do you want to clone the Job `{anchorData?.jobName}`
                           </p>
                         </div>
@@ -1729,13 +1834,15 @@ export const AllJobs = () => {
                         <Button
                           onClick={closePopup}
                           variant="outlined"
-                          style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                          style={{ color: "#475467", borderColor: "#D0D5DD" }}
+                        >
                           cancel
                         </Button>
                         <Button
                           onClick={handleJobDelete}
                           variant="contained"
-                          style={{ color: "#ffffff", backgroundColor: "red" }}>
+                          style={{ color: "#ffffff", backgroundColor: "red" }}
+                        >
                           delete
                         </Button>
                       </DialogActions>

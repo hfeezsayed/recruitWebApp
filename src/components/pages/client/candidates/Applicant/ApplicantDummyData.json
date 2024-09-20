@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "applicantName": "Niharika Singh Sharma",
+    "jobTitle": "Front-end Developer",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#dbeff5",
+    "txtColor": "#008CBA",
+    "status": "New"
+  },
+  {
+    "id": 2,
+    "applicantName": "Finton Rodrigues",
+    "jobTitle": "Fullstack Developer",
+    "email": "fintonrod@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#fff2db",
+    "txtColor": "#FFA500",
+    "status": "Under Review"
+  },
+  {
+    "id": 3,
+    "applicantName": "Shalini Sharma",
+    "jobTitle": "Fullstack Developer",
+    "email": "shalinisharma@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#fff9db",
+    "txtColor": "#FFD700",
+    "status": "Interview Scheduled"
+  },
+  {
+    "id": 4,
+    "applicantName": "Jhon Doe",
+    "jobTitle": "Assistant Engineer",
+    "email": "jhonedoe@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Hired"
+  },
+  {
+    "id": 5,
+    "applicantName": "Ahmed Patel",
+    "jobTitle": "Data Entry",
+    "email": "ahmedpatel@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#ffeff1",
+    "txtColor": "#FE8D9E",
+    "status": "Rejected"
+  },
+  {
+    "id": 6,
+    "applicantName": "Ruchi Pande",
+    "jobTitle": "Devops Engineer",
+    "email": "ruchipandey@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#e8e9ea",
+    "txtColor": "#6C757D",
+    "status": "Closed"
+  },
+  {
+    "id": 7,
+    "applicantName": "Niharika Singh Sharma",
+    "jobTitle": "Front-end Developer",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#dbeff5",
+    "txtColor": "#008CBA",
+    "status": "New"
+  },
+  {
+    "id": 8,
+    "applicantName": "Finton Rodrigues",
+    "jobTitle": "Fullstack Developer",
+    "email": "fintonrod@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#fff2db",
+    "txtColor": "#FFA500",
+    "status": "Under Review"
+  },
+  {
+    "id": 9,
+    "applicantName": "Ahmed Patel",
+    "jobTitle": "Data Entry",
+    "email": "ahmedpatel@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#ffeff1",
+    "txtColor": "#FE8D9E",
+    "status": "Rejected"
+  },
+  {
+    "id": 10,
+    "applicantName": "Ruchi Pande",
+    "jobTitle": "Devops Engineer",
+    "email": "ruchipandey@gmail.com",
+    "phone": "7890677797",
+    "bgColor": "#e8e9ea",
+    "txtColor": "#6C757D",
+    "status": "Closed"
+  }
+]

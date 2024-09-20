@@ -94,7 +94,7 @@ const CandidateList = () => {
             </div>
           </div>
 
-          <div className="candidate-list-data py-8 ">
+          <div className="candidate-list-data p-8 px-4">
             <Box sx={{ width: "100%" }}>
               <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer sx={{ maxHeight: 500 }}>

@@ -1,0 +1,61 @@
+.client-management-sec
+  .client-body-section
+  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+  padding: 0;
+  text-align: center;
+  color: #d0d5dd;
+}
+
+.client-management-sec
+  .client-body-section
+  .css-j204z7-MuiFormControlLabel-root {
+  margin: 0;
+}
+
+.client-management-sec .client-body-section table thead th {
+  border: 1px solid #e0e0e0;
+  padding: 14px 16px;
+  font-weight: 600;
+}
+
+.client-management-sec .client-body-section table tbody td {
+  padding: 14px 16px;
+}
+
+.client-management-sec
+  .client-body-section
+  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: #66b2b2;
+}
+/* .client-management-sec .client-body-section .action-type .ellipsis-popup {
+  position: absolute;
+  top: -35px;
+  left: -90px;
+  background: #fff;
+  width: 123px;
+  height: 86px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 9999;
+} */
+
+.client-management-sec .client-body-section .action-type .editIcon,
+.deleteIcon {
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.client-management-sec .client-body-section .action-type .editIcon {
+  color: #5faeda;
+}
+
+.client-management-sec .client-body-section .action-type .deleteIcon {
+  color: #e05880;
+}
+
+.client-management-sec .client-body-section .status {
+  padding: 2px 18px;
+  border-radius: 16px;
+}

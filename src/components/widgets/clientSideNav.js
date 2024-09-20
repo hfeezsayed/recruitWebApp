@@ -76,6 +76,9 @@ export const ClientSideNav = ({ openTemplate }) => {
   const [showAcordian, setShowAcordian] = React.useState(
     openTemplate ? true : false
   );
+  const [showAcordianAssessment, setShowAcordianAssessment] = React.useState(
+    openTemplate ? true : false
+  );
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -399,6 +402,7 @@ export const ClientSideNav = ({ openTemplate }) => {
             </div>
           </Collapse>
 
+          {/* Assessment */}
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -419,7 +423,8 @@ export const ClientSideNav = ({ openTemplate }) => {
                 },
               }}
               onClick={() => {
-                navigate("/assessmentsList");
+                setShowAcordianAssessment(!showAcordianAssessment);
+                // navigate("/assessmentsList");
               }}
             >
               <ListItemIcon
@@ -446,8 +451,85 @@ export const ClientSideNav = ({ openTemplate }) => {
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
+              {!showAcordianAssessment ? (
+                <IoIosArrowUp
+                  style={{
+                    color: currentState.includes("templates")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
+              ) : (
+                <IoIosArrowDown
+                  style={{
+                    color: currentState.includes("templates")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
+              )}
             </ListItemButton>
           </ListItem>
+          {/* collapse */}
+          <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
+            <div
+              className="pl-16 py-2"
+              // onClick={() => navigate("/assessments/all-assessments")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("all-assessments")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                All- Assessment
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() =>
+                navigate("/assessment/selfAssessments/rating-aggregate")
+              }
+            >
+              <p
+                style={{
+                  color: currentState.includes("self-assessments")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Self- Assessments
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              // onClick={() => navigate("/assessments/clients-assessments")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("clients-assessments")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Clients- Assessments
+              </p>
+            </div>
+          </Collapse>
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{

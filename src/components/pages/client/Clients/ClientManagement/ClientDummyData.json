@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#fff2db",
+    "txtColor": "#FFA500",
+    "status": "Inactive"
+  },
+  {
+    "id": 2,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  },
+  {
+    "id": 3,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  },
+  {
+    "id": 4,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  },
+  {
+    "id": 5,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#fbe8ed",
+    "txtColor": "#E05880",
+    "status": "Suspended"
+  },
+  {
+    "id": 6,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#fff2db",
+    "txtColor": "#FFA500",
+    "status": "Inactive"
+  },
+  {
+    "id": 7,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#fbe8ed",
+    "txtColor": "#E05880",
+    "status": "Suspended"
+  },
+  {
+    "id": 8,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#fff2db",
+    "txtColor": "#FFA500",
+    "status": "Inactive"
+  },
+  {
+    "id": 9,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  },
+  {
+    "id": 10,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  },
+  {
+    "id": 11,
+    "CName": "Niharika Singh Sharma",
+    "email": "niharikasinghsharma.09@gmail.com",
+    "phone": "7890677797",
+    "jobPost": "5",
+    "bgColor": "#e8f2dd",
+    "txtColor": "#58A20F",
+    "status": "Active"
+  }
+]

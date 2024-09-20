@@ -3,6 +3,16 @@
   width: 230px;
 }
 
+.candidate-list-data tbody tr th,
+.candidate-list-data tbody tr td {
+  padding: 11px;
+}
+
+.candidate-list-data thead tr th .css-j204z7-MuiFormControlLabel-root,
+.candidate-list-data tbody tr td .css-j204z7-MuiFormControlLabel-root {
+  margin: 0;
+}
+
 .refernce-status .reference-text p {
   color: #475467;
   font-size: 16px;
@@ -11,6 +21,7 @@
 .candidate-list-data table tr th {
   font-size: 12px;
   font-weight: 700;
+  padding: 11px;
 }
 
 /* form filled by candidate page css */

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ClientManagementSec.css";
+import "./Applicant.css";
 import { ClientSideNav } from "../../../../widgets/clientSideNav";
 import { TopNav } from "../../../../widgets/topNav";
 //MUI
@@ -8,9 +8,9 @@ import {
   InputAdornment,
   TextField,
   Pagination,
-  Fade,
   Menu,
   MenuItem,
+  Fade,
 } from "@mui/material";
 import { IoSearchOutline, IoFilter } from "react-icons/io5";
 import Box from "@mui/material/Box";
@@ -27,10 +27,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 //Dummy JSON Data
-import Data from "./ClientDummyData.json";
+import applicantData from "./ApplicantDummyData.json";
 
-const ClientManagementSec = () => {
+const Applicant = () => {
   //ecllipse action menu popup code start
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -44,7 +45,7 @@ const ClientManagementSec = () => {
     setAnchorEl(event.currentTarget);
   };
   const handleJobEdit = () => {};
-  // const veiwProfileHandle = () => {};
+  const veiwProfileHandle = () => {};
   //ecllipse action menu popup code end
 
   return (
@@ -52,10 +53,10 @@ const ClientManagementSec = () => {
       <ClientSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
         <TopNav />
-        <div className="client-management-sec pb-28">
-          <div className="client-header-section pt-8 px-8">
+        <div className="applicant-block pb-28">
+          <div className="applicant-header-section pt-8 px-8">
             <h2 className="text-2xl pt-4 font-bold main-black">
-              Client Management Section
+              Applicant Tracking Section
             </h2>
             <p className="text-sm pt-3 smallTextGray">
               Listed below are the details regarding each candidate.
@@ -63,6 +64,7 @@ const ClientManagementSec = () => {
             <div className="form-block pt-8">
               <div className="flex justify-between">
                 <TextField
+                  type="text"
                   size="small"
                   value=""
                   placeholder="Search..."
@@ -95,7 +97,7 @@ const ClientManagementSec = () => {
               </div>
             </div>
           </div>
-          <div className="client-body-section px-8 mt-12">
+          <div className="applicant-body-section px-8 mt-12">
             <Box sx={{ width: "100%" }}>
               <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer sx={{ maxHeight: 500 }}>
@@ -112,7 +114,13 @@ const ClientManagementSec = () => {
                           align="left"
                           sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                         >
-                          Client Name
+                          Applicant Name
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
+                          Job Title
                         </TableCell>
                         <TableCell
                           align="left"
@@ -121,16 +129,10 @@ const ClientManagementSec = () => {
                           Email Address
                         </TableCell>
                         <TableCell
-                          align="left"
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
-                        >
-                          Phone Number
-                        </TableCell>
-                        <TableCell
                           align="center"
                           sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                         >
-                          Job Posted
+                          Phone Number
                         </TableCell>
                         <TableCell
                           align="center"
@@ -147,25 +149,25 @@ const ClientManagementSec = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Data.map((row, index) => {
+                      {applicantData.map((applicant, index) => {
                         return (
                           <TableRow key={index}>
                             <TableCell sx={{ color: "#475467" }}>
                               <FormControlLabel control={<Checkbox />} />
                             </TableCell>
                             <TableCell sx={{ color: "#475467" }}>
-                              {row.CName}
+                              {applicant.applicantName}
                             </TableCell>
                             <TableCell sx={{ color: "#475467" }}>
-                              {row.email}
+                              {applicant.jobTitle}
                             </TableCell>
                             <TableCell sx={{ color: "#475467" }}>
-                              {row.phone}
+                              {applicant.email}
                             </TableCell>
                             <TableCell
                               sx={{ color: "#475467", textAlign: "center" }}
                             >
-                              {row.jobPost}
+                              {applicant.phone}
                             </TableCell>
                             <TableCell
                               sx={{ color: "#475467", textAlign: "center" }}
@@ -173,22 +175,23 @@ const ClientManagementSec = () => {
                               <div
                                 className="status"
                                 style={{
-                                  backgroundColor: `${row.bgColor}`,
-                                  color: `${row.txtColor}`,
+                                  backgroundColor: `${applicant.bgColor}`,
+                                  color: `${applicant.txtColor}`,
+                                  textAlign: "center",
                                 }}
                               >
-                                {row.status}
+                                {applicant.status}
                               </div>
                             </TableCell>
                             <TableCell
                               sx={{ color: "#475467" }}
-                              className="action-type relative"
+                              className="action-type"
                             >
-                              <div className="flex gap-3 justify-center cursor-pointer">
+                              <div className="flex justify-center cursor-pointer">
                                 <BsThreeDotsVertical
                                   onClick={(e) => {
                                     handleClick(e);
-                                    setAnchorData(row);
+                                    setAnchorData(applicant);
                                   }}
                                 />
                               </div>
@@ -202,7 +205,7 @@ const ClientManagementSec = () => {
               </Paper>
               <div className="flex justify-between items-center">
                 <p style={{ color: "#475467", fontSize: 14 }}>
-                  Showing 11 results found
+                  Showing 10 results found
                 </p>
                 <Pagination
                   count="1"
@@ -234,6 +237,26 @@ const ClientManagementSec = () => {
               }}
               TransitionComponent={Fade}
             >
+              <MenuItem onClick={veiwProfileHandle}>
+                <div className="flex gap-2 items-center">
+                  <MdOutlineRemoveRedEye
+                    style={{
+                      color: "#58A20F",
+                      fontSize: 14,
+                    }}
+                  />
+                  <p
+                    style={{
+                      color: "#58A20F",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
+                  >
+                    View Profile
+                  </p>
+                </div>
+              </MenuItem>
+
               <MenuItem onClick={handleJobEdit}>
                 <div className="flex gap-2 items-center">
                   <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
@@ -272,4 +295,4 @@ const ClientManagementSec = () => {
   );
 };
 
-export default ClientManagementSec;
+export default Applicant;

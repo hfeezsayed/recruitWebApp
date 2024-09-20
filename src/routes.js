@@ -94,6 +94,7 @@ import PriorityRanking from "./components/pages/client/references/PriorityRankin
 import Rating from "./components/pages/client/references/Rating";
 import { AdminDashBoard } from "./components/pages/client/dashboard/AdminPanel/AdminPanel";
 import ClientManagementSec from "./components/pages/client/Clients/ClientManagement/ClientManagementSec";
+import Applicant from "./components/pages/client/candidates/Applicant/Applicant";
 
 export const Routes = () => {
   return (
@@ -285,6 +286,7 @@ export const Routes = () => {
           path="client/clientManagementSection"
           element={<ClientManagementSec />}
         />
+        <Route path="candidates/applicant" element={<Applicant />} />
 
         <Route path="*" element={<Error404 />} />
       </Route>
