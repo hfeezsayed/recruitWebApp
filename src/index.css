@@ -38,3 +38,16 @@ code {
   margin: 0 auto;
   cursor: pointer;
 }
+
+.change-profile-img {
+  color: white;
+  background-color: #4aa4a5;
+  padding: 3px 6px;
+  font-size: 14px;
+  height: 28px;
+  border-radius: 6px;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  cursor: pointer;
+}

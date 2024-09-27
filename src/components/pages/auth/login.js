@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import photo from "../../../assets/images/Image.png";
 import logo from "../../../assets/images/logo.png";
 import axiosInstance from "../../utils/axiosInstance";
+//notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -31,37 +34,48 @@ export const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const username = email;
-    await axiosInstance
-      .post("/login", {
-        username,
-        password,
-      })
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("token", JSON.stringify(response?.data));
+    if (username && password) {
+      await axiosInstance
+        .post("/login", {
+          username,
+          password,
+        })
+        .then((response) => {
+          console.log(response);
+          localStorage.setItem("token", JSON.stringify(response?.data));
 
-        // role = response.data.role;
-        const role = JSON.parse(localStorage.getItem("token")).role;
-        console.log("role = ", role);
-        if (role === "ROLE_ADMIN") {
-          navigate("/admin");
-        }
-        if (role === "ROLE_CANDIDATE") {
-          navigate("/candidate/dashboard");
-        }
-        if (role === "ROLE_CLIENT") {
-          navigate("/client/dashboard");
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-    // navigate("/candidate");
-    // navigate("/assesmentBatchDetails");
+          // role = response.data.role;
+          const role = JSON.parse(localStorage.getItem("token")).role;
+          console.log("role = ", role);
+          if (role === "ROLE_ADMIN") {
+            navigate("/admin");
+          }
+          if (role === "ROLE_CANDIDATE") {
+            navigate("/candidate/dashboard");
+          }
+          if (role === "ROLE_CLIENT") {
+            navigate("/client/dashboard");
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast.error("Credentials not match");
+        });
+      // navigate("/candidate");
+      // navigate("/assesmentBatchDetails");
+    }
+    if (!username || username.length === 0) {
+      toast.error("Email cannot be empty");
+    }
+    if (!password || password.length === 0) {
+      toast.error("Password cannot be empty");
+    }
   };
 
   return (
     <div className="flex">
+      {/* notification alert */}
+      <ToastContainer />
       <div className="h-screen flex items-center min-w-fit">
         <img src={photo} alt="background" style={{ height: "96%" }} />
       </div>
@@ -76,7 +90,8 @@ export const Login = () => {
               fontWeight: 600,
               fontSize: 30,
               paddingBottom: 5,
-            }}>
+            }}
+          >
             Welcome back
           </p>
           <p style={{ color: "#475467", fontSize: 16 }}>
@@ -123,7 +138,8 @@ export const Login = () => {
             />
             <a
               style={{ color: "#008080", fontWeight: 600, fontSize: 16 }}
-              href="forgotpassword">
+              href="forgotpassword"
+            >
               Forgot password
             </a>
           </div>
@@ -135,7 +151,8 @@ export const Login = () => {
               color: "#ffffff",
               textTransform: "none",
             }}
-            onClick={onSubmit}>
+            onClick={onSubmit}
+          >
             Sign in
           </Button>
           <p className="my-5">
@@ -146,7 +163,8 @@ export const Login = () => {
                 fontWeight: 600,
                 fontSize: 16,
               }}
-              href="signup">
+              href="signup"
+            >
               Sign up
             </a>
           </p>

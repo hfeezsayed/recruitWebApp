@@ -5,6 +5,8 @@ import axios from "axios";
 import photo from "../../../assets/images/Image.png";
 import logo from "../../../assets/images/logo.png";
 import axiosInstance from "../../utils/axiosInstance";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SignUp = () => {
   const navigation = useNavigate();
@@ -15,20 +17,44 @@ export const SignUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     console.log(name, email, password, conPassword);
     const username = name;
     axiosInstance
       .post("/signup", { username, email, password })
       .then((data) => {
-        console.log(data.data)
-        navigation("/signupotp/"+email);
+        console.log(data.data);
+        navigation("/signupotp/" + email);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+      });
+    if (!username || username.length === 0) {
+      toast.error("Name is required");
+    }
+    if (!password || password.length === 0) {
+      toast.error("Password is required");
+    }
+    if (!conPassword || conPassword.length === 0) {
+      toast.error("Confirm Password is required");
+    }
+    if (!email || email.length === 0) {
+      toast.error("Email is required");
+    }
+    if (email && !/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Use the correct email");
+    }
+    if (password && password.length <= 8) {
+      toast.error("Password must be at least 8 characters.");
+    }
+    if (password !== conPassword) {
+      toast.error("Password does not match");
+    }
   };
 
   return (
     <div className="flex">
+      {/* notification alert */}
+      <ToastContainer />
       <div className="h-screen flex items-center min-w-fit">
         <img src={photo} alt="background" style={{ height: "96%" }} />
       </div>
@@ -47,7 +73,8 @@ export const SignUp = () => {
                 fontWeight: 600,
                 fontSize: 30,
                 paddingBottom: 5,
-              }}>
+              }}
+            >
               Sign up
             </p>
             <p style={{ color: "#475467", fontSize: 16 }}>
@@ -119,7 +146,8 @@ export const SignUp = () => {
                 color: "#ffffff",
                 textTransform: "none",
               }}
-              onClick={onSubmit}>
+              onClick={onSubmit}
+            >
               Get started
             </Button>
             <p className="my-5 text-center">
@@ -130,7 +158,8 @@ export const SignUp = () => {
                   fontWeight: 600,
                   fontSize: 16,
                 }}
-                href="login">
+                href="login"
+              >
                 Log In
               </a>
             </p>

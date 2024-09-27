@@ -1,0 +1,83 @@
+.jobs-flow .card {
+  width: 260px;
+  background: #f8f9fa;
+  padding: 15px 10px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.jobs-flow .card .inner-card {
+  width: 240px;
+  background-color: #fff;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.jobs-flow .card .inner-card .css-1ssile9-MuiCardHeader-avatar {
+  margin-right: 4px;
+}
+
+.jobs-flow .card .inner-card .css-185gdzj-MuiCardHeader-root {
+  padding: 11px 10px;
+  padding-bottom: 0;
+}
+.jobs-flow .card .inner-card .css-et1ao3-MuiTypography-root {
+  font-weight: 600;
+}
+
+.jobs-flow .card .inner-card .css-83ijpv-MuiTypography-root {
+  font-size: 10px;
+}
+
+.jobs-flow .card .inner-card .body-content p {
+  font-size: 10px;
+  color: #787486;
+  margin-bottom: 5px;
+}
+
+.jobs-flow .card .three-dots,
+.jobs-flow .card .plus-icon {
+  color: #94a3b8;
+}
+
+.jobs-flow .card .number-block {
+  border: 1px solid #e2e8f0;
+  padding: 0px 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-left: 5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.jobs-flow .card hr {
+  border: 1px solid #4aa4a5;
+}
+
+.jobs-flow .card .inner-card .body-content hr {
+  border: 0.5px solid #e2e8f0;
+}
+
+.jobs-flow .card .inner-card .css-bhp9pd-MuiPaper-root-MuiCard-root {
+  border-radius: 6px;
+}
+
+.jobs-flow .card .css-46bh2p-MuiCardContent-root:last-child {
+  padding-bottom: 0px;
+}
+
+.jobs-flow .card .inner-card .body-content .card-footer p:nth-child(1) {
+  color: #5faeda;
+}
+.jobs-flow .card .inner-card .body-content .card-footer p:nth-child(2) {
+  color: #800080;
+}
+.jobs-flow .card .inner-card .body-content .card-footer p:nth-child(3) {
+  color: #ffa500;
+}
+.jobs-flow .card .inner-card .body-content .card-footer p:nth-child(4) {
+  color: #7fb27f;
+}
+
+.jobs-flow .card .card-header:nth-child(3) {
+  display: none !important;
+}

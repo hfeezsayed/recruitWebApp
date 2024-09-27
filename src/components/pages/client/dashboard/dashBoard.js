@@ -43,7 +43,7 @@ export const DashBoard = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <div onClick={() => navigate("/dashboardPanel")}>
+            <div>
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Home
               </p>

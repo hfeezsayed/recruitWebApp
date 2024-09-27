@@ -92,9 +92,13 @@ import RatingQuestions from "./components/pages/client/references/RatingQuestion
 import FormFilledByReferences from "./components/pages/client/references/FormFilledByReference";
 import PriorityRanking from "./components/pages/client/references/PriorityRanking";
 import Rating from "./components/pages/client/references/Rating";
-import { AdminDashBoard } from "./components/pages/client/dashboard/AdminPanel/AdminPanel";
-import ClientManagementSec from "./components/pages/client/Clients/ClientManagement/ClientManagementSec";
-import Applicant from "./components/pages/client/candidates/Applicant/Applicant";
+import { AdminDashBoard } from "./components/pages/client/jobsAdmin/AdminPanel/AdminPanel";
+import ClientManagementSec from "./components/pages/client/jobsAdmin/ClientManagement/ClientManagementSec";
+import Applicant from "./components/pages/client/jobsAdmin/Applicant/Applicant";
+import RatingAggregate from "./components/pages/client/assessments/SelfAssessments/RatingAggregate/RatingAggregate";
+import RatingStyle from "./components/pages/client/assessments/SelfAssessments/RatingStyle/RatingStyle";
+import RatingAggregateDimensions from "./components/pages/client/assessments/SelfAssessments/RatingAggregateDimensions/RatingAggregateDimensions";
+import Jobs from "./components/pages/client/jobsAdmin/Jobs/Jobs";
 
 export const Routes = () => {
   return (
@@ -283,10 +287,24 @@ export const Routes = () => {
         <Route path="dashboardPanel" element={<AdminDashBoard />} />
         <Route path="createCandidate" element={<CreateCandidate />} />
         <Route
-          path="client/clientManagementSection"
+          path="client/jobs-admin/clientManagementSection"
           element={<ClientManagementSec />}
         />
-        <Route path="candidates/applicant" element={<Applicant />} />
+        <Route path="client/jobs-admin/applicant" element={<Applicant />} />
+
+        <Route
+          path="assessment/selfAssessments/rating-aggregate"
+          element={<RatingAggregate />}
+        />
+        <Route
+          path="assessment/selfAssessments/rating-style"
+          element={<RatingStyle />}
+        />
+        <Route
+          path="assessment/selfAssessments/rating-aggregate-dimensions"
+          element={<RatingAggregateDimensions />}
+        />
+        <Route path="jobs-admin/jobs" element={<Jobs />} />
 
         <Route path="*" element={<Error404 />} />
       </Route>

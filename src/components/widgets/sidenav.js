@@ -66,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const SideNav = ( {openTemplate} ) => {
+export const SideNav = ({ openTemplate }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
@@ -90,7 +90,8 @@ export const SideNav = ( {openTemplate} ) => {
           marginLeft: open ? 242 : 53,
           backgroundColor: "#A3A3A3",
           opacity: 0.6,
-        }}>
+        }}
+      >
         <IconButton onClick={handleDrawer}>
           {open ? (
             <FaAngleLeft style={{ color: "#ffffff", fontSize: 20 }} />
@@ -130,13 +131,15 @@ export const SideNav = ( {openTemplate} ) => {
               }}
               onClick={() => {
                 navigate("/candidate/dashboard");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <DashboardSvg
                   COLOR={
                     currentState.includes("/candidate") ? "#ffffff" : "#475467"
@@ -179,13 +182,15 @@ export const SideNav = ( {openTemplate} ) => {
               onClick={() => {
                 navigate("/digitalTalentProfile");
                 setShowAcordian(!showAcordian);
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AssesmentSvg
                   COLOR={
                     currentState.includes("digitalTalentProfile")
@@ -230,7 +235,8 @@ export const SideNav = ( {openTemplate} ) => {
               className="pl-16 py-2"
               onClick={() =>
                 navigate("/digitalTalentProfile/personalinfromation")
-              }>
+              }
+            >
               <p
                 style={{
                   color: currentState.includes("personalinfromation")
@@ -239,14 +245,16 @@ export const SideNav = ( {openTemplate} ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer"
-                }}>
+                  cursor: "pointer",
+                }}
+              >
                 Candidate Details
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/digitalTalentProfile/preferenceform")}>
+              onClick={() => navigate("/digitalTalentProfile/preferenceform")}
+            >
               <p
                 style={{
                   color: currentState.includes("preferenceform")
@@ -255,8 +263,9 @@ export const SideNav = ( {openTemplate} ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer"
-                }}>
+                  cursor: "pointer",
+                }}
+              >
                 My Job Preferences
               </p>
             </div>
@@ -264,7 +273,8 @@ export const SideNav = ( {openTemplate} ) => {
               className="pl-16 py-2"
               onClick={() =>
                 navigate("/digitalTalentProfile/valueassessmentresult")
-              }>
+              }
+            >
               <p
                 style={{
                   color: currentState.includes("valueassessmentform")
@@ -273,8 +283,9 @@ export const SideNav = ( {openTemplate} ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer"
-                }}>
+                  cursor: "pointer",
+                }}
+              >
                 Value Assessment
               </p>
             </div>
@@ -282,7 +293,8 @@ export const SideNav = ( {openTemplate} ) => {
               className="pl-16 py-2"
               onClick={() =>
                 navigate("/digitalTalentProfile/valueassessmentresult")
-              }>
+              }
+            >
               <p
                 style={{
                   color: currentState.includes("analysisassessmentform")
@@ -291,8 +303,9 @@ export const SideNav = ( {openTemplate} ) => {
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer"
-                }}>
+                  cursor: "pointer",
+                }}
+              >
                 Talent Spectrum Analysis
               </p>
             </div>
@@ -317,13 +330,15 @@ export const SideNav = ( {openTemplate} ) => {
               }}
               onClick={() => {
                 setShowAssesment(!showAssesment);
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AssesmentSvg
                   COLOR={
                     currentState === "/assesmentform" ? "#ffffff" : "#475467"
@@ -406,13 +421,15 @@ export const SideNav = ( {openTemplate} ) => {
               }}
               onClick={() => {
                 navigate("/authorisedclients");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <AuthorizedSvg
                   COLOR={
                     currentState === "/authorisedclients"
@@ -452,13 +469,15 @@ export const SideNav = ( {openTemplate} ) => {
               }}
               onClick={() => {
                 navigate("/job/jobportal");
-              }}>
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                }}>
+                }}
+              >
                 <JobSvg
                   COLOR={currentState.includes("job/") ? "#ffffff" : "#475467"}
                 />

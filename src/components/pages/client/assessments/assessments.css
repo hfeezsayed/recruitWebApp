@@ -1,0 +1,41 @@
+.tableData table tr th {
+  border: 1px solid #d0d0d0;
+  width: 25%;
+  padding: 25px;
+}
+
+.tableData table .firstTd,
+.tableData table .secondTd {
+  border: none;
+  vertical-align: top;
+  padding: 0;
+}
+
+.tableData table .firstTd table tr td {
+  min-width: 100%;
+  height: 216px;
+}
+
+.tableData table .firstTd table tr td .img-fluid {
+  width: 165px;
+  height: 165px;
+  margin: auto;
+}
+
+.tableData table .secondTd table tr td {
+  padding: 25px;
+}
+
+.score-line {
+  display: inline-block;
+  width: 6px;
+  height: 20px;
+  vertical-align: top;
+  margin-right: 7px;
+}
+
+/* rating-style-table */
+.rating-style-table .tableData table tr th,
+.tableData table .secondTd table tr td {
+  padding: 25px 10px;
+}

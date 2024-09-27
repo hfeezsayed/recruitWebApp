@@ -4,6 +4,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Settings = () => {
   const [jobCode, setJobCode] = useState();
@@ -24,6 +25,8 @@ export const Settings = () => {
   const [eeo, setEeo] = useState();
   const [onboarding, setOnboarding] = useState();
   const [id, setId] = useState(0);
+
+  const navigate = useNavigate();
 
   // const jobCodeList = ["JC001", "JCC002", "JC003"];
   // const jobFamilyList = ["Technology", "Designing", "Marketing", "Finance"];
@@ -47,37 +50,35 @@ export const Settings = () => {
   // const certificationsList = ["Six Sigma Green belt", "PMP", "Scrum Master"];
   // const softwaresList = ["Azure DevOps", "SAP", "ABAP", "ERP", "AWS"];
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-      axiosInstance
-        .get(`/getClientSettings?clientId=${user.userId}`)
-        .then((response) => {
-          console.log(response.data);
-          setJobCode(response.data?.jobCode);
-          setJobFamily(response.data?.jobFamily);
-          setJobDepartment(response.data?.jobDepartment);
-          setJobLocation(response.data?.jobLocation);
-          setDefaultCurrency(response.data?.defaultCurrency);
-          setWorkSetting(response.data?.workSetting);
-          setTypeRole(response.data?.typeRole);
-          setRoleTiming(response.data?.roleTiming);
-          setTravel(response.data?.travel);
-          setAcadamincQualification(response.data?.acadamicQualification);
-          setTeamSize(response.data?.teamSize);
-          setTeamLocation(response.data?.teamLocation);
-          setCertifications(response.data?.certifications);
-          setSoftwares(response.data?.softwares);
-          setCompanyOverview(response.data?.companyOverview);
-          setEeo(response.data?.eeo);
-          setOnboarding(response.data?.onboarding);
-          setId(response.data?.id);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    axiosInstance
+      .get(`/getClientSettings?clientId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setJobCode(response.data?.jobCode);
+        setJobFamily(response.data?.jobFamily);
+        setJobDepartment(response.data?.jobDepartment);
+        setJobLocation(response.data?.jobLocation);
+        setDefaultCurrency(response.data?.defaultCurrency);
+        setWorkSetting(response.data?.workSetting);
+        setTypeRole(response.data?.typeRole);
+        setRoleTiming(response.data?.roleTiming);
+        setTravel(response.data?.travel);
+        setAcadamincQualification(response.data?.acadamicQualification);
+        setTeamSize(response.data?.teamSize);
+        setTeamLocation(response.data?.teamLocation);
+        setCertifications(response.data?.certifications);
+        setSoftwares(response.data?.softwares);
+        setCompanyOverview(response.data?.companyOverview);
+        setEeo(response.data?.eeo);
+        setOnboarding(response.data?.onboarding);
+        setId(response.data?.id);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
-
 
   const onSubmitData = () => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -105,6 +106,7 @@ export const Settings = () => {
       .then((response) => {
         console.log(response.data);
         setId(response.data?.id);
+        navigate("/dashboard");
       })
       .catch((error) => console.log(error));
   };
@@ -487,7 +489,8 @@ export const Settings = () => {
             <Button
               variant="contained"
               onClick={onSubmitData}
-              sx={{ bgcolor: "#008080", color: "#ffffff" }}>
+              sx={{ bgcolor: "#008080", color: "#ffffff" }}
+            >
               Save
             </Button>
           </div>

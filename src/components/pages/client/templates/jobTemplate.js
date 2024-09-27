@@ -96,7 +96,8 @@ export const JobTemplate = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/templates/jobTemplateCreate")}>
+                  onClick={() => navigate("/templates/jobTemplateCreate")}
+                >
                   Create New Template
                 </Button>
               </div>
@@ -108,28 +109,34 @@ export const JobTemplate = () => {
                         <TableRow>
                           <TableCell
                             align="center"
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Serial Number
                           </TableCell>
                           <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Template Name
                           </TableCell>
                           <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Template Tag
                           </TableCell>
                           <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Template Description
                           </TableCell>
                           <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Created By
                           </TableCell>
                           <TableCell
                             align="center"
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Actions
                           </TableCell>
                         </TableRow>
@@ -154,7 +161,8 @@ export const JobTemplate = () => {
                               <TableCell
                                 padding="none"
                                 align="center"
-                                sx={{ color: "#475467" }}>
+                                sx={{ color: "#475467" }}
+                              >
                                 <Button
                                   size="small"
                                   variant="text"
@@ -162,7 +170,8 @@ export const JobTemplate = () => {
                                     color: "#5E8EBD",
                                     textTransform: "none",
                                   }}
-                                  onClick={() => handleEdit(row)}>
+                                  onClick={() => handleEdit(row)}
+                                >
                                   Edit
                                 </Button>
                               </TableCell>

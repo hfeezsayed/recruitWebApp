@@ -14,10 +14,33 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
-import { qualifications, specializations, team, skills, skillLevel, PreferOffice, workShifts, locations, yes_No, travels, work_Comapny, schedules, appealings, currency, salary_Rate, envonments, job_Interests, experiences, visa_status, certifications, notice, industry, softwares, environments
+import {
+  qualifications,
+  specializations,
+  team,
+  skills,
+  skillLevel,
+  PreferOffice,
+  workShifts,
+  locations,
+  yes_No,
+  travels,
+  work_Comapny,
+  schedules,
+  appealings,
+  currency,
+  salary_Rate,
+  envonments,
+  job_Interests,
+  experiences,
+  visa_status,
+  certifications,
+  notice,
+  industry,
+  softwares,
+  environments,
 } from "../seedData";
-import CreatableSelect from 'react-select/creatable';
-
+import CreatableSelect from "react-select/creatable";
 
 export const PersonalInformation = () => {
   const navigate = useNavigate();
@@ -109,7 +132,6 @@ export const PersonalInformation = () => {
     ]);
   };
 
-
   // const options = [
   //   { label: "The Shawshank Redemption", year: 1994 },
   //   { label: "The Godfather", year: 1972 },
@@ -131,6 +153,7 @@ export const PersonalInformation = () => {
         certificate: null,
         city: null,
         state: null,
+        prefferedLocation: null,
       },
     ]);
   };
@@ -171,23 +194,19 @@ export const PersonalInformation = () => {
       .catch((e) => console.log(e));
   }, []);
 
-
   const handleUploadResume = (file) => {
     const user = JSON.parse(localStorage.getItem("token"));
     const formData = new FormData();
     formData.append("file", file);
     axiosInstance
-          .post(
-            `/uploadCandidateResume?candidateId=${user.userId}`,
-             formData,
-          )
-          .then((response) => {
-            navigate("/assessmentsList")  
-          })
-          .catch(error => {
-            console.log(error);
-          })
-  }
+      .post(`/uploadCandidateResume?candidateId=${user.userId}`, formData)
+      .then((response) => {
+        navigate("/assessmentsList");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const onPersonalInfoSubmit = async (e) => {
     e.preventDefault();
@@ -218,71 +237,74 @@ export const PersonalInformation = () => {
     //   .catch((e) => console.log(e));
   };
 
-
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     let preferenceId = 0;
     console.log(location.state);
-    if(location.state) {
+    if (location.state) {
       preferenceId = location.state;
     }
-    axiosInstance.get(`/getCandidatePersonalInfo?candidateId=${user.userId}&personalInfoId=-1`,
-
-    )
-    .then(response => {
-      const data = response.data;
-      if(response.data){
-        setFullName(
-          response.data.fullName !== null ? response.data.fullName : ""
-        );
-        setSummary(response.data.summary !== null ? response.data.summary : "");
-        setTitle(response.data.title !== null ? response.data.title : "");
-        setUrl(response.data.url !== null ? response.data.url : "");
-        setContactNumber(
-          response.data.contactNumber != null ? response.data.contactNumber : ""
-        );
-        if (response.data?.education && response.data?.education.length > 0) {
-          setEducation(response.data?.education);
+    axiosInstance
+      .get(
+        `/getCandidatePersonalInfo?candidateId=${user.userId}&personalInfoId=-1`
+      )
+      .then((response) => {
+        const data = response.data;
+        if (response.data) {
+          setFullName(
+            response.data.fullName !== null ? response.data.fullName : ""
+          );
+          setSummary(
+            response.data.summary !== null ? response.data.summary : ""
+          );
+          setTitle(response.data.title !== null ? response.data.title : "");
+          setUrl(response.data.url !== null ? response.data.url : "");
+          setContactNumber(
+            response.data.contactNumber != null
+              ? response.data.contactNumber
+              : ""
+          );
+          if (response.data?.education && response.data?.education.length > 0) {
+            setEducation(response.data?.education);
+          }
+          console.log(data);
+          setResume(response.data?.resume);
+          setWorkSetting(data.workSetting);
+          setWorkShift(data.workShift);
+          setPrefferedLocation(data.prefferedLocation);
+          setOpenToRelocate(data.openToRelocate);
+          setRequiredForTravel(data.requiredForTravel);
+          setWorkSchedule(data.workSchedule);
+          setWorkIndepandently(data.workIndepandently);
+          setexpectedSalary(data.expectedSalary);
+          setExpectedRange(data.expectedRange);
+          setTypeOfJobOpening(data.typeOfJobOpening);
+          setAppealingWork(data.appealingWork);
+          setWorkEnvironment(data.workEnvironment);
+          setCompanyOutlook(data.companyOutlook);
+          setVisaStatus(data.visaStatus);
+          setAcademicQualification(data.academicQualification);
+          setSpecialization(data.specialization);
+          setAcademicBackground(data.academicBackGround);
+          setSpecificLicense(data.specificLicense);
+          setYearOfExperience(data.yearsOfExperience);
+          setExperienceRole(data.experienceRole);
+          setWorkInIndustry(data.workInIndustry);
+          setWorkRole(data.workRole);
+          setExperienceStachHolder(data.experienceStackHolder);
+          setNoticePeriod(data.noticePeriod);
+          setTeamHandling(data.teamHandling);
+          setTeamSize(data.teamSize);
+          setIndustryExperience(data.indusrtyExperience);
+          setPrimarySkill(data.primarySkills);
+          setSecoundrySkill(data.secoundrySkills);
+          setSoftwareApplication(data.softwareApplication);
         }
-        console.log(data);
-        setResume(response.data?.resume);
-        setWorkSetting(data.workSetting)
-        setWorkShift(data.workShift)
-        setPrefferedLocation(data.prefferedLocation)
-        setOpenToRelocate(data.openToRelocate)
-        setRequiredForTravel(data.requiredForTravel)
-        setWorkSchedule(data.workSchedule)
-        setWorkIndepandently(data.workIndepandently)
-        setexpectedSalary(data.expectedSalary)
-        setExpectedRange(data.expectedRange)
-        setTypeOfJobOpening(data.typeOfJobOpening)
-        setAppealingWork(data.appealingWork)
-        setWorkEnvironment(data.workEnvironment)
-        setCompanyOutlook(data.companyOutlook)
-        setVisaStatus(data.visaStatus)
-        setAcademicQualification(data.academicQualification)
-        setSpecialization(data.specialization)
-        setAcademicBackground(data.academicBackGround)
-        setSpecificLicense(data.specificLicense)
-        setYearOfExperience(data.yearsOfExperience)
-        setExperienceRole(data.experienceRole)
-        setWorkInIndustry(data.workInIndustry)
-        setWorkRole(data.workRole)
-        setExperienceStachHolder(data.experienceStackHolder)
-        setNoticePeriod(data.noticePeriod)
-        setTeamHandling(data.teamHandling)
-        setTeamSize(data.teamSize)
-        setIndustryExperience(data.indusrtyExperience)
-        setPrimarySkill(data.primarySkills)
-        setSecoundrySkill(data.secoundrySkills)
-        setSoftwareApplication(data.softwareApplication)
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-}, []);
-
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleChangeIndustryExperience = (e, value, i) => {
     console.log(value, i, e);
@@ -396,416 +418,475 @@ export const PersonalInformation = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const educationList = [];
     await axiosInstance
-      .post(
-        "/postCandidatePersonalInfo?candidateId="+user.userId,
-        {
-          file,
-          fullName,
-          title,
-          contactNumber,
-          url,
-          summary,
-          educationList,
-          workSetting,
-          workShift,
-          prefferedLocation,
-          openToRelocate,
-          requiredForTravel,
-          workSchedule,
-          workIndepandently,
-          expectedSalary,
-          expectedRange,
-          typeOfJobOpening,
-          appealingWork,
-          workEnvironment,
-          companyOutlook,
-          visaStatus,
-          academicQualification,
-          specialization,
-          academicBackGround,
-          specificLicense,
-          yearsOfExperience,
-          experienceRole,
-          workInIndustry,
-          workRole,
-          experienceStackHolder,
-          noticePeriod,
-          teamHandling,
-          teamSize,
-          indusrtyExperience,
-          primarySkills,
-          secoundrySkills,
-          softwareApplication
-        },
-        
-      )
-      .then((data) => 
-        console.log(data),
-       // navigate("/digitalTalentProfile")
-    )
+      .post("/postCandidatePersonalInfo?candidateId=" + user.userId, {
+        file,
+        fullName,
+        title,
+        contactNumber,
+        url,
+        summary,
+        educationList,
+        workSetting,
+        workShift,
+        prefferedLocation,
+        openToRelocate,
+        requiredForTravel,
+        workSchedule,
+        workIndepandently,
+        expectedSalary,
+        expectedRange,
+        typeOfJobOpening,
+        appealingWork,
+        workEnvironment,
+        companyOutlook,
+        visaStatus,
+        academicQualification,
+        specialization,
+        academicBackGround,
+        specificLicense,
+        yearsOfExperience,
+        experienceRole,
+        workInIndustry,
+        workRole,
+        experienceStackHolder,
+        noticePeriod,
+        teamHandling,
+        teamSize,
+        indusrtyExperience,
+        primarySkills,
+        secoundrySkills,
+        softwareApplication,
+      })
+      .then((data) => {
+        console.log(data);
+        navigate("/candidate/dashboard");
+      })
       .catch((e) => console.log(e));
   };
 
   const handleCreate = (optionType, inputValue) => {
     const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance.post('/addPersonalInfoOption?candidateId='+user.userId, { name: inputValue, optionType: optionType }) // Replace with your API endpoint
-      .then(response => {
+    axiosInstance
+      .post("/addPersonalInfoOption?candidateId=" + user.userId, {
+        name: inputValue,
+        optionType: optionType,
+      }) // Replace with your API endpoint
+      .then((response) => {
         console.log(response.data);
         setOptions(response.data);
         console.log(optionType);
-        if(optionType === "degree") setDegree(inputValue);
-        if(optionType === "fieldOfStudy") setFieldOfStudy(inputValue);
-        if(optionType === "institution") setInstitution(inputValue);
-        if(optionType === "city") setCity(inputValue);
-        if(optionType === "state") setState(inputValue);
-        if(optionType === "certificates") setCertificates(inputValue);
+        if (optionType === "degree") setDegree(inputValue);
+        if (optionType === "fieldOfStudy") setFieldOfStudy(inputValue);
+        if (optionType === "institution") setInstitution(inputValue);
+        if (optionType === "city") setCity(inputValue);
+        if (optionType === "state") setState(inputValue);
+        if (optionType === "certificates") setCertificates(inputValue);
+        if (optionType === "prefferedLocation")
+          setPrefferedLocation(inputValue);
       })
-      .catch(error => {
-        console.error('Error adding the item:', error);
+      .catch((error) => {
+        console.error("Error adding the item:", error);
       });
   };
 
-
   const getOptions = (optionType) => {
-      const filteredOptions = options.filter(option => option.optionType === optionType);
-      const convertedList = filteredOptions.map(item => ({
-        label: item.label,    // This will be displayed in the dropdown
-        value: item.label       // This will be the unique identifier
-      }));
-      return convertedList;
-  }
+    const filteredOptions = options.filter(
+      (option) => option.optionType === optionType
+    );
+    const convertedList = filteredOptions.map((item) => ({
+      label: item.label, // This will be displayed in the dropdown
+      value: item.label, // This will be the unique identifier
+    }));
+    return convertedList;
+  };
 
   const setSelectedOption = (selectedOption, optionType) => {
     console.log("selectedOption = " + selectedOption);
-    if(optionType === "degree") setDegree(selectedOption);
-    if(optionType === "fieldOfStudy") setFieldOfStudy(selectedOption);
-    if(optionType === "institution") setInstitution(selectedOption);
-    if(optionType === "city") setCity(selectedOption);
-    if(optionType === "state") setState(selectedOption);
-    if(optionType === "certificates") setCertificates(selectedOption);
-  }
+    if (optionType === "degree") setDegree(selectedOption);
+    if (optionType === "fieldOfStudy") setFieldOfStudy(selectedOption);
+    if (optionType === "institution") setInstitution(selectedOption);
+    if (optionType === "city") setCity(selectedOption);
+    if (optionType === "state") setState(selectedOption);
+    if (optionType === "certificates") setCertificates(selectedOption);
+  };
 
   return (
     <div>
       <div className="flex">
-        <SideNav openTemplate={true}/>
+        <SideNav openTemplate={true} />
         <div className=" w-full min-h-screen ">
           <TopNav />
           {activeScreen == 1 && (
-          <form className="p-8" onSubmit={onPersonalInfoSubmit}>
-            {/* file upload */}
-            <div>
-              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                Candidate Details
-              </p>
-              <div className=" py-5">
-                <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
-                  Upload Resume
+            <form className="p-8" onSubmit={onPersonalInfoSubmit}>
+              {/* file upload */}
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                  Candidate Details
                 </p>
-                <div className="flex gap-3 items-center">
+                <div className=" py-5">
+                  <p
+                    style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}
+                  >
+                    Upload Resume
+                  </p>
+                  <div className="flex gap-3 items-center">
+                    <Button
+                      component="label"
+                      variant="text"
+                      size="small"
+                      style={{
+                        color: "#404040",
+                        marginTop: 10,
+                        borderRadius: 8,
+                      }}
+                      startIcon={
+                        resume ? (
+                          <img
+                            src={pdf}
+                            alt="plf icon"
+                            style={{ width: 45, height: 45 }}
+                          />
+                        ) : (
+                          <FiUpload
+                            style={{
+                              color: "#2C2466",
+                              fontWeight: 800,
+                              fontSize: 30,
+                            }}
+                          />
+                        )
+                      }
+                    >
+                      {resume ? (
+                        <p className=" font-semibold text-slate-800">
+                          {resume}
+                        </p>
+                      ) : (
+                        <p>
+                          Attach, Dropbox, or enter manually
+                          <br />
+                          File type: pdf, doc, docx, txt,rtf (Less than 25 MB)
+                        </p>
+                      )}
+                      <VisuallyHiddenInput
+                        type="file"
+                        accept="image/jpeg,image/png,application/pdf"
+                        onChange={(e) => handleUploadResume(e.target.files[0])}
+                      />
+                    </Button>
+                    {file?.name && (
+                      <IconButton
+                        onClick={() => {
+                          setFile(null);
+                        }}
+                      >
+                        <IoMdClose />
+                      </IconButton>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {/* input fileds */}
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5">
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
+                    Candidate Full Name
+                  </p>
+                  <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    placeholder="Enter Full Name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
+                    Title
+                  </p>
+                  <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    placeholder="Senior Software Developer"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
+                    Mobile Number
+                  </p>
+                  <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    placeholder="Senior Mobile Number"
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-flow-row">
+                  <p
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
+                    LinkedIn Profile
+                  </p>
+                  <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    placeholder="https://www.example.com"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row pt-5 pb-8">
+                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                  Summary.
+                </p>
+                <TextField
+                  required
+                  multiline
+                  rows={2}
+                  fullWidth
+                  size="small"
+                  variant="outlined"
+                  placeholder="Type"
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                />
+              </div>
+              {/* education */}
+              <div>
+                <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+                  Education
+                </p>
+                {education.map((value, index) => {
+                  return (
+                    <div key={index}>
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Degree
+                          </p>
+                          <CreatableSelect
+                            isClearable
+                            options={getOptions("degree")}
+                            value={value.degree}
+                            onChange={(selected) =>
+                              handleChangeEducation("degree", selected, index)
+                            }
+                            onCreateOption={(selected) =>
+                              handleCreate("degree", selected)
+                            }
+                            placeholder="Select or create an item"
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Field of Study
+                          </p>
+                          <CreatableSelect
+                            isClearable
+                            options={getOptions("fieldOfStudy")}
+                            value={value.fieldOfStudy}
+                            onChange={(selected) =>
+                              handleChangeEducation(
+                                "fieldOfStudy",
+                                selected,
+                                index
+                              )
+                            }
+                            onCreateOption={(selected) =>
+                              handleCreate("fieldOfStudy", selected)
+                            }
+                            placeholder="Select or create an item"
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            institution
+                          </p>
+                          <CreatableSelect
+                            isClearable
+                            options={getOptions("institution")}
+                            value={value.institution}
+                            onChange={(selected) =>
+                              handleChangeEducation(
+                                "institution",
+                                selected,
+                                index
+                              )
+                            }
+                            onCreateOption={(selected) =>
+                              handleCreate("institution", selected)
+                            }
+                            placeholder="Select or create an item"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-5">
+                          <div className="grid grid-flow-row">
+                            <p
+                              style={{
+                                color: "#344054",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              City
+                            </p>
+                            <CreatableSelect
+                              isClearable
+                              options={getOptions("city")}
+                              value={value.city}
+                              onChange={(selected) =>
+                                handleChangeEducation("city", selected, index)
+                              }
+                              onCreateOption={(selected) =>
+                                handleCreate("city", selected)
+                              }
+                              placeholder="Select or create an item"
+                            />
+                          </div>
+                          <div className="grid grid-flow-row">
+                            <p
+                              style={{
+                                color: "#344054",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              State
+                            </p>
+                            <CreatableSelect
+                              isClearable
+                              options={getOptions("state")}
+                              value={value.state}
+                              onChange={(selected) =>
+                                handleChangeEducation("state", selected, index)
+                              }
+                              onCreateOption={(selected) =>
+                                handleCreate("state", selected)
+                              }
+                              placeholder="Select or create an item"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Any Certificates
+                          </p>
+                          <CreatableSelect
+                            isClearable
+                            options={getOptions("certificate")}
+                            value={value.certificate}
+                            onChange={(selected) =>
+                              handleChangeEducation(
+                                "certificate",
+                                selected,
+                                index
+                              )
+                            }
+                            onCreateOption={(selected) =>
+                              handleCreate("certificate", selected)
+                            }
+                            placeholder="Select or create an item"
+                          />
+                        </div>
+                      </div>
+                      {education.length > 1 && (
+                        <div className="pt-3 flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            style={{
+                              color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
+                            }}
+                            onClick={() => removeEducation(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{ color: "#EB5757" }}
+                              />
+                            }
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                <div className="py-3 flex justify-end">
                   <Button
-                    component="label"
-                    variant="text"
+                    variant="outlined"
                     size="small"
                     style={{
                       color: "#404040",
-                      marginTop: 10,
-                      borderRadius: 8,
+                      borderColor: "#E6E6E6",
+                      textTransform: "none",
                     }}
-                    startIcon={
-                      resume ? (
-                        <img
-                          src={pdf}
-                          alt="plf icon"
-                          style={{ width: 45, height: 45 }}
-                        />
-                      ) : (
-                        <FiUpload
-                          style={{
-                            color: "#2C2466",
-                            fontWeight: 800,
-                            fontSize: 30,
-                          }}
-                        />
-                      )
-                    }>
-                    {resume ? (
-                      <p className=" font-semibold text-slate-800">
-                        {resume}
-                      </p>
-                    ) : (
-                      <p>
-                        Attach, Dropbox, or enter manually
-                        <br />
-                        File type: pdf, doc, docx, txt,rtf (Less than 25 MB)
-                      </p>
-                    )}
-                    <VisuallyHiddenInput
-                      type="file"
-                      accept="image/jpeg,image/png,application/pdf"
-                      onChange={(e) => handleUploadResume(e.target.files[0])}
-                    />
+                    onClick={addEducation}
+                    startIcon={<FiPlus />}
+                  >
+                    Add New
                   </Button>
-                  {file?.name && (
-                    <IconButton
-                      onClick={() => {
-                        setFile(null);
-                      }}>
-                      <IoMdClose />
-                    </IconButton>
-                  )}
                 </div>
               </div>
-            </div>
-            {/* input fileds */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-5">
-              <div className="grid grid-flow-row">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Candidate Full Name
-                </p>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  variant="outlined"
-                  placeholder="Enter Full Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-flow-row">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Title
-                </p>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  variant="outlined"
-                  placeholder="Senior Software Developer"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-flow-row">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Mobile Number
-                </p>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  variant="outlined"
-                  placeholder="Senior Mobile Number"
-                  value={contactNumber}
-                  onChange={(e) => setContactNumber(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-flow-row">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  LinkedIn Profile
-                </p>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  variant="outlined"
-                  placeholder="https://www.example.com"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="grid grid-flow-row pt-5 pb-8">
-              <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Summary.
-              </p>
-              <TextField
-                required
-                multiline
-                rows={2}
-                fullWidth
-                size="small"
-                variant="outlined"
-                placeholder="Type"
-                value={summary}
-                onChange={(e) => setSummary(e.target.value)}
-              />
-            </div>
-            {/* education */}
-            <div>
-              <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
-                Education
-              </p>
-              {education.map((value, index) => {
-                return (
-                  <div key={index}>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          Degree
-                        </p>
-                        <CreatableSelect
-                          isClearable
-                          options={getOptions("degree")}
-                          value={value.degree}
-                          onChange={(selected) => handleChangeEducation("degree", selected, index)}
-                          onCreateOption={(selected) => handleCreate("degree", selected )}
-                          placeholder="Select or create an item"
-                        />
-                      </div>
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          Field of Study
-                        </p>
-                        <CreatableSelect
-                          isClearable
-                          options={getOptions("fieldOfStudy")}
-                          value={value.fieldOfStudy}
-                          onChange={(selected) => handleChangeEducation("fieldOfStudy", selected, index)}
-                          onCreateOption={(selected) => handleCreate("fieldOfStudy", selected)}
-                          placeholder="Select or create an item"
-                        />
-                      </div>
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          institution
-                        </p>
-                        <CreatableSelect
-                          isClearable
-                          options={getOptions("institution")}
-                          value={value.institution}
-                          onChange={(selected) => handleChangeEducation("institution", selected, index)}
-                          onCreateOption={(selected) => handleCreate("institution", selected)}
-                          placeholder="Select or create an item"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-5">
-                        <div className="grid grid-flow-row">
-                          <p
-                            style={{
-                              color: "#344054",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}>
-                            City
-                          </p>
-                          <CreatableSelect
-                          isClearable
-                          options={getOptions("city")}
-                          value={value.city}
-                          onChange={(selected) => handleChangeEducation("city", selected, index)}
-                          onCreateOption={(selected) => handleCreate("city", selected)}
-                          placeholder="Select or create an item"
-                        />
-                        </div>
-                        <div className="grid grid-flow-row">
-                          <p
-                            style={{
-                              color: "#344054",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}>
-                            State
-                          </p>
-                          <CreatableSelect
-                          isClearable
-                          options={getOptions("state")}
-                          value={value.state}
-                          onChange={(selected) => handleChangeEducation("state", selected, index)}
-                          onCreateOption={(selected) => handleCreate("state", selected)}
-                          placeholder="Select or create an item"
-                        />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}>
-                          Any Certificates
-                        </p>
-                        <CreatableSelect
-                          isClearable
-                          options={getOptions("certificates")}
-                          value={value.certificate}
-                          onChange={(selected) => handleChangeEducation("certificate", selected, index)}
-                          onCreateOption={(selected) => handleCreate("certificate", selected)}
-                          placeholder="Select or create an item"
-                        />
-                      </div>
-                    </div>
-                    {education.length > 1 && (
-                      <div className="pt-3 flex justify-end">
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          style={{
-                            color: "#EB5757",
-                            borderColor: "#E6E6E6",
-                            textTransform: "none",
-                          }}
-                          onClick={() => removeEducation(index)}
-                          startIcon={
-                            <IoMdRemoveCircleOutline
-                              style={{ color: "#EB5757" }}
-                            />
-                          }>
-                          Remove
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-
-              <div className="py-3 flex justify-end">
+              {/* buttons */}
+              <div className="flex justify-end py-8 gap-5">
                 <Button
-                  variant="outlined"
-                  size="small"
-                  style={{
-                    color: "#404040",
-                    borderColor: "#E6E6E6",
-                    textTransform: "none",
-                  }}
-                  onClick={addEducation}
-                  startIcon={<FiPlus />}>
-                  Add New
+                  variant="contained"
+                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  type="submit"
+                >
+                  Next
                 </Button>
               </div>
-            </div>
-            {/* buttons */}
-            <div className="flex justify-end py-8 gap-5">
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                type="submit">
-                Next
-              </Button>
-            </div>
-          </form>
+            </form>
           )}
-          {activeScreen === 2 && 
-          (
+          {activeScreen === 2 && (
             <form className="p-8" onSubmit={onPrefrenceSubmit}>
               <div>
                 <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
@@ -817,7 +898,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Academic Qualifications
                 </p>
                 <div className="grid grid-cols-2 gap-8 mt-5">
@@ -827,7 +909,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What level of academic qualification have you attained?
                     </p>
                     <Autocomplete
@@ -848,7 +931,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is your specialization?
                     </p>
                     <Autocomplete
@@ -870,7 +954,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Can you share your academic background and how it aligns
                     with this role?
                   </p>
@@ -896,7 +981,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Do you possess any specific certifications or licenses?
                   </p>
                   <Autocomplete
@@ -920,7 +1006,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Profesional Experience
                 </p>
                 <div className="grid grid-cols-2 gap-8 mt-5">
@@ -930,7 +1017,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       How many years of experience do you have?
                     </p>
                     <TextField
@@ -949,7 +1037,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Could you elaborate on your experience in [specific area
                       relevant to the role]
                     </p>
@@ -963,7 +1052,7 @@ export const PersonalInformation = () => {
                       placeholder="Type"
                       value={experienceRole}
                       onChange={(e) => setExperienceRole(e.target.value)}
-                  />
+                    />
                   </div>
                 </div>
                 <div className="mt-5">
@@ -972,7 +1061,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Have you previously worked in a specific industry related to
                     this role? If Yes then specify your role there.
                   </p>
@@ -995,7 +1085,7 @@ export const PersonalInformation = () => {
                       placeholder="Type"
                       value={workRole}
                       onChange={(e) => setWorkRole(e.target.value)}
-                  />
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-8 mt-5">
@@ -1005,7 +1095,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Have you had experience with stakeholders for business
                       goals?
                     </p>
@@ -1027,7 +1118,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is your notice period in the current organization?
                     </p>
                     <Autocomplete
@@ -1049,7 +1141,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Do you have team handling experience? (If yes, please select
                     the team size)
                   </p>
@@ -1085,7 +1178,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Please select the industry and specify the industry
                     experience
                   </p>
@@ -1093,7 +1187,7 @@ export const PersonalInformation = () => {
                     return (
                       <>
                         <div className="grid grid-cols-2 gap-8 mt-5">
-                        <Autocomplete
+                          <Autocomplete
                             disablePortal
                             size="small"
                             fullWidth
@@ -1151,7 +1245,8 @@ export const PersonalInformation = () => {
                                 <IoMdRemoveCircleOutline
                                   style={{ color: "#EB5757" }}
                                 />
-                              }>
+                              }
+                            >
                               Remove
                             </Button>
                           </div>
@@ -1169,7 +1264,8 @@ export const PersonalInformation = () => {
                         textTransform: "none",
                       }}
                       onClick={addIndustryExperience}
-                      startIcon={<FiPlus />}>
+                      startIcon={<FiPlus />}
+                    >
                       Add
                     </Button>
                   </div>
@@ -1184,7 +1280,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Skills
                 </p>
                 <p
@@ -1193,7 +1290,8 @@ export const PersonalInformation = () => {
                     fontSize: 16,
                     fontWeight: 500,
                     marginTop: 5,
-                  }}>
+                  }}
+                >
                   Mention the skills along with your status against it:
                 </p>
                 {/* primary skill */}
@@ -1203,7 +1301,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Primary Skills
                   </p>
                   {primarySkills.map((value, index) => {
@@ -1216,7 +1315,8 @@ export const PersonalInformation = () => {
                                 color: "#344054",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Skills {index + 1}
                             </p>
                             <Autocomplete
@@ -1243,7 +1343,8 @@ export const PersonalInformation = () => {
                                 color: "#344054",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Expertise
                             </p>
                             <Autocomplete
@@ -1284,7 +1385,8 @@ export const PersonalInformation = () => {
                                 <IoMdRemoveCircleOutline
                                   style={{ color: "#EB5757" }}
                                 />
-                              }>
+                              }
+                            >
                               Remove
                             </Button>
                           </div>
@@ -1302,7 +1404,8 @@ export const PersonalInformation = () => {
                         textTransform: "none",
                       }}
                       onClick={addPrimarySkill}
-                      startIcon={<FiPlus />}>
+                      startIcon={<FiPlus />}
+                    >
                       Add
                     </Button>
                   </div>
@@ -1314,7 +1417,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Secoundry Skills
                   </p>
                   {secoundrySkills.map((value, index) => {
@@ -1327,7 +1431,8 @@ export const PersonalInformation = () => {
                                 color: "#344054",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Skills {index + 1}
                             </p>
                             <Autocomplete
@@ -1358,7 +1463,8 @@ export const PersonalInformation = () => {
                                 color: "#344054",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Expertise
                             </p>
                             <Autocomplete
@@ -1399,7 +1505,8 @@ export const PersonalInformation = () => {
                                 <IoMdRemoveCircleOutline
                                   style={{ color: "#EB5757" }}
                                 />
-                              }>
+                              }
+                            >
                               Remove
                             </Button>
                           </div>
@@ -1417,7 +1524,8 @@ export const PersonalInformation = () => {
                         textTransform: "none",
                       }}
                       onClick={addSecoundrySkill}
-                      startIcon={<FiPlus />}>
+                      startIcon={<FiPlus />}
+                    >
                       Add
                     </Button>
                   </div>
@@ -1472,7 +1580,8 @@ export const PersonalInformation = () => {
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                  type="submit">
+                  type="submit"
+                >
                   NEXT
                 </Button>
               </div>
@@ -1490,7 +1599,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Work Preference
                 </p>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
@@ -1500,7 +1610,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Which work setting do you prefer in-office?
                     </p>
                     <Autocomplete
@@ -1521,7 +1632,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is your preference on work shifts?
                     </p>
                     <Autocomplete
@@ -1542,10 +1654,21 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What are your preferred locations for the job?
                     </p>
-                    <Autocomplete
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("prefferedLocation")}
+                      value={prefferedLocation}
+                      onChange={(e) => setPrefferedLocation(e)}
+                      onCreateOption={(selected) =>
+                        handleCreate("prefferedLocation", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                    {/* <Autocomplete
                       disablePortal
                       size="small"
                       fullWidth
@@ -1555,7 +1678,7 @@ export const PersonalInformation = () => {
                       renderInput={(params) => (
                         <TextField {...params} placeholder="Select" required />
                       )}
-                    />
+                    /> */}
                   </div>
                   <div className="grid grid-flow-row">
                     <p
@@ -1563,7 +1686,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Are you open to relocation if required for the job?
                     </p>
                     <Autocomplete
@@ -1584,7 +1708,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       If your work requires you to travel, how comfortable are
                       you to travel?
                     </p>
@@ -1606,7 +1731,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is your preferred work schedule?
                     </p>
                     <Autocomplete
@@ -1628,7 +1754,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Do you prefer working independently or as part of a small
                     team, or as a part of a large team?
                   </p>
@@ -1653,7 +1780,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Compensation and Job Type
                 </p>
                 <div className="grid grid-flow-row  mt-5">
@@ -1662,7 +1790,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     What are the salary expectations?
                   </p>
                   <div className="grid grid-cols-3 gap-8">
@@ -1705,7 +1834,8 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     What is the expected compensation range?
                   </p>
                   <div className="grid grid-cols-3 gap-8">
@@ -1750,7 +1880,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is the type of job openings are you interested in ?
                     </p>
                     <Autocomplete
@@ -1776,7 +1907,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Work Environment and Values
                 </p>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
@@ -1786,7 +1918,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What is appealing to you at work?
                     </p>
                     <Autocomplete
@@ -1807,7 +1940,8 @@ export const PersonalInformation = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       What kind of work environment are you looking for?
                     </p>
                     <Autocomplete
@@ -1829,23 +1963,24 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     Is the company outlook on environment important? Like
                     sustainability initiatives, being carbon neutral etc.
                   </p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={yes_No.map((option) => option.label)}
-                    value={companyOutlook || null}
-                    onChange={(e, value) => setCompanyOutlook(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
-                </div>
+                    <Autocomplete
+                      disablePortal
+                      size="small"
+                      fullWidth
+                      options={yes_No.map((option) => option.label)}
+                      value={companyOutlook || null}
+                      onChange={(e, value) => setCompanyOutlook(value)}
+                      renderInput={(params) => (
+                        <TextField {...params} placeholder="Select" required />
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
               {/* legal and visa status */}
@@ -1856,7 +1991,8 @@ export const PersonalInformation = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Legal and Visa Status
                 </p>
                 <div className="grid grid-flow-row mt-5">
@@ -1865,21 +2001,22 @@ export const PersonalInformation = () => {
                       color: "#344054",
                       fontSize: 14,
                       fontWeight: 500,
-                    }}>
+                    }}
+                  >
                     What is your current Visa or Work status?
                   </p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={visa_status.map((option) => option.label)}
-                    value={visaStatus || null}
-                    onChange={(e, value) => setVisaStatus(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
+                    <Autocomplete
+                      disablePortal
+                      size="small"
+                      fullWidth
+                      options={visa_status.map((option) => option.label)}
+                      value={visaStatus || null}
+                      onChange={(e, value) => setVisaStatus(value)}
+                      renderInput={(params) => (
+                        <TextField {...params} placeholder="Select" required />
+                      )}
+                    />
                   </div>
                 </div>
               </div>
@@ -1888,14 +2025,16 @@ export const PersonalInformation = () => {
                 <Button
                   variant="outlined"
                   style={{ borderColor: "#787879", color: "#787879" }}
-                  onClick={() => setActiveScreen(1)}>
+                  onClick={() => setActiveScreen(1)}
+                >
                   Back
                 </Button>
 
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}
-                  type="submit">
+                  type="submit"
+                >
                   Submit
                 </Button>
               </div>

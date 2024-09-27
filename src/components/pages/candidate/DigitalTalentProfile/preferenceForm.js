@@ -7,10 +7,33 @@ import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
-import { qualifications, specializations, team, skills, skillLevel, PreferOffice, workShifts, locations, yes_No, travels, work_Comapny, schedules, appealings, currency, salary_Rate, envonments, job_Interests, experiences, visa_status, certifications, notice, industry, softwares, environments
- } from "../seedData";
+import {
+  qualifications,
+  specializations,
+  team,
+  skills,
+  skillLevel,
+  PreferOffice,
+  workShifts,
+  locations,
+  yes_No,
+  travels,
+  work_Comapny,
+  schedules,
+  appealings,
+  currency,
+  salary_Rate,
+  envonments,
+  job_Interests,
+  experiences,
+  visa_status,
+  certifications,
+  notice,
+  industry,
+  softwares,
+  environments,
+} from "../seedData";
 import { useEffect } from "react";
-
 
 export const PreferenceForm = () => {
   const navigate = useNavigate();
@@ -76,10 +99,10 @@ export const PreferenceForm = () => {
   ];
 
   const factors = [
-    { label: "Money", value : "Money" },
-    { label: "Work", value : "Work" },
-    { label: "Atonomy", value : "Atonomy" },
-  ]
+    { label: "Money", value: "Money" },
+    { label: "Work", value: "Work" },
+    { label: "Atonomy", value: "Atonomy" },
+  ];
 
   // industry experiance
   const addIndustryExperience = () => {
@@ -92,57 +115,57 @@ export const PreferenceForm = () => {
     ]);
   };
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     let preferenceId = 0;
     console.log(location.state);
-    if(location.state) {
+    if (location.state) {
       preferenceId = location.state;
     }
-    axiosInstance.get(`/getCandidatePreferences?candidateId=${user.userId}&preferenceId=-1`,
-
-    )
-    .then(response => {
-      const data = response.data;
-      if(response.data){
-        setImportantFactor(data.importantFactor);
-        setWorkSetting(data.workSetting)
-        setWorkShift(data.workShift)
-        setPrefferedLocation(data.prefferedLocation)
-        setOpenToRelocate(data.openToRelocate)
-        setRequiredForTravel(data.requiredForTravel)
-        setWorkSchedule(data.workSchedule)
-        setWorkIndepandently(data.workIndepandently)
-        setexpectedSalary(data.expectedSalary)
-        setExpectedRange(data.expectedRange)
-        setTypeOfJobOpening(data.typeOfJobOpening)
-        setAppealingWork(data.appealingWork)
-        setWorkEnvironment(data.workEnvironment)
-        setCompanyOutlook(data.companyOutlook)
-        setVisaStatus(data.visaStatus)
-        setAcademicQualification(data.academicQualification)
-        setSpecialization(data.specialization)
-        setAcademicBackground(data.academicBackGround)
-        setSpecificLicense(data.specificLicense)
-        setYearOfExperience(data.yearsOfExperience)
-        setExperienceRole(data.experienceRole)
-        setWorkInIndustry(data.workInIndustry)
-        setWorkRole(data.workRole)
-        setExperienceStachHolder(data.experienceStackHolder)
-        setNoticePeriod(data.noticePeriod)
-        setTeamHandling(data.teamHandling)
-        setTeamSize(data.teamSize)
-        setIndustryExperience(data.indusrtyExperience)
-        setPrimarySkill(data.primarySkills)
-        setSecoundrySkill(data.secoundrySkills)
-        setSoftwareApplication(data.softwareApplication)
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-}, []);
-
+    axiosInstance
+      .get(
+        `/getCandidatePreferences?candidateId=${user.userId}&preferenceId=-1`
+      )
+      .then((response) => {
+        const data = response.data;
+        if (response.data) {
+          setImportantFactor(data.importantFactor);
+          setWorkSetting(data.workSetting);
+          setWorkShift(data.workShift);
+          setPrefferedLocation(data.prefferedLocation);
+          setOpenToRelocate(data.openToRelocate);
+          setRequiredForTravel(data.requiredForTravel);
+          setWorkSchedule(data.workSchedule);
+          setWorkIndepandently(data.workIndepandently);
+          setexpectedSalary(data.expectedSalary);
+          setExpectedRange(data.expectedRange);
+          setTypeOfJobOpening(data.typeOfJobOpening);
+          setAppealingWork(data.appealingWork);
+          setWorkEnvironment(data.workEnvironment);
+          setCompanyOutlook(data.companyOutlook);
+          setVisaStatus(data.visaStatus);
+          setAcademicQualification(data.academicQualification);
+          setSpecialization(data.specialization);
+          setAcademicBackground(data.academicBackGround);
+          setSpecificLicense(data.specificLicense);
+          setYearOfExperience(data.yearsOfExperience);
+          setExperienceRole(data.experienceRole);
+          setWorkInIndustry(data.workInIndustry);
+          setWorkRole(data.workRole);
+          setExperienceStachHolder(data.experienceStackHolder);
+          setNoticePeriod(data.noticePeriod);
+          setTeamHandling(data.teamHandling);
+          setTeamSize(data.teamSize);
+          setIndustryExperience(data.indusrtyExperience);
+          setPrimarySkill(data.primarySkills);
+          setSecoundrySkill(data.secoundrySkills);
+          setSoftwareApplication(data.softwareApplication);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleChangeIndustryExperience = (e, value, i) => {
     console.log(value, i, e);
@@ -255,334 +278,347 @@ export const PreferenceForm = () => {
     // navigate("/valueassessmentform");
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
-      .post(
-        "/saveCandidateForm?candidateId="+user.userId,
-        {
-          workSetting,
-          workShift,
-          prefferedLocation,
-          openToRelocate,
-          requiredForTravel,
-          workSchedule,
-          workIndepandently,
-          expectedSalary,
-          appealingWork,
-          workEnvironment,
-          importantFactor
-        },
-        
-      )
-      .then((data) => 
-        console.log(data),
-        navigate("/digitalTalentProfile")
-    )
+      .post("/saveCandidateForm?candidateId=" + user.userId, {
+        workSetting,
+        workShift,
+        prefferedLocation,
+        openToRelocate,
+        requiredForTravel,
+        workSchedule,
+        workIndepandently,
+        expectedSalary,
+        appealingWork,
+        workEnvironment,
+        importantFactor,
+      })
+      .then((data) => console.log(data), navigate("/digitalTalentProfile"))
       .catch((e) => console.log(e));
   };
 
   return (
     <div>
       <div className="flex">
-        <SideNav openTemplate={true}/>
+        <SideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
-            <form className="p-8" onSubmit={onWorkPrefrenceSumnit}>
+          <form className="p-8" onSubmit={onWorkPrefrenceSumnit}>
+            <div className="grid grid-flow-row mt-5">
+              <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                My Job Preferences
+              </p>
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}
+              >
+                Work Environment Preference
+              </p>
               <div className="grid grid-flow-row mt-5">
-                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-                  My Job Preferences
-                </p>
                 <p
                   style={{
-                    color: "#475467",
-                    fontSize: 20,
+                    color: "#344054",
+                    fontSize: 14,
                     fontWeight: 500,
-                    marginTop: 10,
-                  }}>
-                  Work Environment Preference
+                  }}
+                >
+                  Which work setting do you prefer in-office?
                 </p>
-                  <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      Which work setting do you prefer in-office?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={PreferOffice.map((option) => option.label)}
-                      value={workSetting || null}
-                      onChange={(e, value) => setWorkSetting(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                  </div>
-                  <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      What is your preference on work shifts?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={workShifts.map((option) => option.label)}
-                      value={workShift || null}
-                      onChange={(e, value) => setWorkShift(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                  </div>
-                  <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      What is your preferred work schedule?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={schedules.map((option) => option.label)}
-                      value={workSchedule || null}
-                      onChange={(e, value) => setWorkSchedule(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                  </div>
-              </div>
-              <div className="mt-8">
-                <p
-                  style={{
-                    color: "#475467",
-                    fontSize: 20,
-                    fontWeight: 500,
-                    marginTop: 10,
-                  }}>
-                  Location preference
-                </p>
-                <div className="grid grid-flow-row mt-5">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}>
-                    Are you open to relocation if required the job?
-                  </p>
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={yes_No.map((option) => option.label)}
-                    value={openToRelocate || null}
-                    onChange={(e, value) => setOpenToRelocate(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={PreferOffice.map((option) => option.label)}
+                  value={workSetting || null}
+                  onChange={(e, value) => setWorkSetting(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
               </div>
               <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      What are your preferred locations for the job?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={locations.map((option) => option.label)}
-                      value={prefferedLocation || null}
-                      onChange={(e, value) => setPrefferedLocation(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                </div>
-                <div className="grid grid-flow-row mt-5">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}>
-                    If your work requires you to travel, how comfortable are
-                    you to travel?
-                  </p>
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={travels.map((option) => option.label)}
-                    value={requiredForTravel || null}
-                    onChange={(e, value) => setRequiredForTravel(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
-                </div>
-              </div>
-              <div className="mt-8">
                 <p
                   style={{
-                    color: "#475467",
-                    fontSize: 20,
+                    color: "#344054",
+                    fontSize: 14,
                     fontWeight: 500,
-                    marginTop: 10,
-                  }}>
-                  Expectations
+                  }}
+                >
+                  What is your preference on work shifts?
                 </p>
-                <div className="grid grid-flow-row mt-5">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}>
-                    Do you prefer working independently or as part of a small
-                    team, or as a part of a large team?
-                  </p>
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={work_Comapny.map((option) => option.label)}
-                    value={workIndepandently || null}
-                    onChange={(e, value) => setWorkIndepandently(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
-                </div>
-                <div className="grid grid-flow-row mt-5">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}>
-                    what is the most important factor that motivates you to change jobs in your current situation?
-                  </p>
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={factors.map((option) => option.label)}
-                    value={importantFactor || null}
-                    onChange={(e, value) => setImportantFactor(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
-                </div>
-          <div className="grid grid-flow-row  mt-5">
-            <p
-              style={{
-                color: "#344054",
-                fontSize: 14,
-                fontWeight: 500,
-              }}>
-              What are the salary expectations?
-            </p>
-            <div className="grid grid-cols-3 gap-8">
-              <TextField
-                required
-                type="number"
-                fullWidth
-                placeholder="Type Range"
-                size="small"
-                value={expectedSalary.range}
-                onChange={(e) =>
-                  setexpectedSalary({
-                    ...expectedSalary,
-                    range: e.target.value,
-                  })
-                }
-              />
-              <Autocomplete
-                disablePortal
-                size="small"
-                fullWidth
-                options={currency.map((option) => option.label)}
-                value={expectedSalary.currency || null}
-                onChange={(e, value) =>
-                  setexpectedSalary({
-                    ...expectedSalary,
-                    currency: value,
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Select" required />
-                )}
-              />
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={workShifts.map((option) => option.label)}
+                  value={workShift || null}
+                  onChange={(e, value) => setWorkShift(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  What is your preferred work schedule?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={schedules.map((option) => option.label)}
+                  value={workSchedule || null}
+                  onChange={(e, value) => setWorkSchedule(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
             </div>
-          </div>
-                  <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      What is appealing to you at work?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={appealings.map((option) => option.label)}
-                      value={appealingWork || null}
-                      onChange={(e, value) => setAppealingWork(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                  </div>
-                  <div className="grid grid-flow-row mt-5">
-                    <p
-                      style={{
-                        color: "#344054",
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}>
-                      What kind of work environment are you looking for?
-                    </p>
-                    <Autocomplete
-                      disablePortal
-                      size="small"
-                      fullWidth
-                      options={environments.map((option) => option.label)}
-                      value={workEnvironment || null}
-                      onChange={(e, value) => setWorkEnvironment(value)}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" required />
-                      )}
-                    />
-                  </div>
-                  <Button
-                    variant="contained"
-                    style={{ backgroundColor: "#008080", color: "#ffffff", marginTop:"25px" }}
-                    type="submit">
-                    Save
-                  </Button>
+            <div className="mt-8">
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}
+              >
+                Location preference
+              </p>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  Are you open to relocation if required the job?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={yes_No.map((option) => option.label)}
+                  value={openToRelocate || null}
+                  onChange={(e, value) => setOpenToRelocate(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
               </div>
-            </form>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  What are your preferred locations for the job?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={locations.map((option) => option.label)}
+                  value={prefferedLocation || null}
+                  onChange={(e, value) => setPrefferedLocation(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  If your work requires you to travel, how comfortable are you
+                  to travel?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={travels.map((option) => option.label)}
+                  value={requiredForTravel || null}
+                  onChange={(e, value) => setRequiredForTravel(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+            </div>
+            <div className="mt-8">
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 20,
+                  fontWeight: 500,
+                  marginTop: 10,
+                }}
+              >
+                Expectations
+              </p>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  Do you prefer working independently or as part of a small
+                  team, or as a part of a large team?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={work_Comapny.map((option) => option.label)}
+                  value={workIndepandently || null}
+                  onChange={(e, value) => setWorkIndepandently(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  what is the most important factor that motivates you to change
+                  jobs in your current situation?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={factors.map((option) => option.label)}
+                  value={importantFactor || null}
+                  onChange={(e, value) => setImportantFactor(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row  mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  What are the salary expectations?
+                </p>
+                <div className="grid grid-cols-3 gap-8">
+                  <TextField
+                    required
+                    type="number"
+                    fullWidth
+                    placeholder="Type Range"
+                    size="small"
+                    value={expectedSalary.range}
+                    onChange={(e) =>
+                      setexpectedSalary({
+                        ...expectedSalary,
+                        range: e.target.value,
+                      })
+                    }
+                  />
+                  <Autocomplete
+                    disablePortal
+                    size="small"
+                    fullWidth
+                    options={currency.map((option) => option.label)}
+                    value={expectedSalary.currency || null}
+                    onChange={(e, value) =>
+                      setexpectedSalary({
+                        ...expectedSalary,
+                        currency: value,
+                      })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" required />
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  What is appealing to you at work?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={appealings.map((option) => option.label)}
+                  value={appealingWork || null}
+                  onChange={(e, value) => setAppealingWork(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <div className="grid grid-flow-row mt-5">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  What kind of work environment are you looking for?
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={environments.map((option) => option.label)}
+                  value={workEnvironment || null}
+                  onChange={(e, value) => setWorkEnvironment(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+              </div>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "#008080",
+                  color: "#ffffff",
+                  marginTop: "25px",
+                }}
+                type="submit"
+              >
+                Save
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
       <Footer />

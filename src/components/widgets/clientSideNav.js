@@ -80,6 +80,10 @@ export const ClientSideNav = ({ openTemplate }) => {
     openTemplate ? true : false
   );
 
+  const [showAcordianJobsAdmin, setShowAcordianJobsAdmin] = React.useState(
+    openTemplate ? true : false
+  );
+
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -109,10 +113,10 @@ export const ClientSideNav = ({ openTemplate }) => {
           <img
             src={logoNew}
             alt="logo"
-            style={{ width: 180, marginTop: "20px" }}
+            style={{ width: 180, marginTop: "50px" }}
           />
         </DrawerHeader>
-        <div>
+        <div className="pt-8 pb-8">
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -163,6 +167,155 @@ export const ClientSideNav = ({ openTemplate }) => {
             </ListItemButton>
           </ListItem>
 
+          {/* JOBS ADMIN CODE START */}
+
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor: currentState.includes("jobsadmin")
+                  ? "#008080"
+                  : "#ffffff",
+                color: currentState.includes("jobsadmin")
+                  ? "#ffffff"
+                  : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                setShowAcordianJobsAdmin(!showAcordianJobsAdmin);
+                // navigate("/dashboardPanel");
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AssesmentSvg
+                  COLOR={
+                    currentState.includes("jobsadmin") ? "#ffffff" : "#475467"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Jobs Admin"}
+                primaryTypographyProps={{
+                  color: currentState.includes("jobsadmin")
+                    ? "#ffffff"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+              {!showAcordianJobsAdmin ? (
+                <IoIosArrowUp
+                  style={{
+                    color: currentState.includes("jobsadmin")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
+              ) : (
+                <IoIosArrowDown
+                  style={{
+                    color: currentState.includes("jobsadmin")
+                      ? "#ffffff"
+                      : "#475467",
+                  }}
+                />
+              )}
+            </ListItemButton>
+          </ListItem>
+          {/* collapse */}
+          <Collapse in={showAcordianJobsAdmin} timeout="auto" unmountOnExit>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/dashboardPanel")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("Dashboard")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Dashboard
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() =>
+                navigate("/client/jobs-admin/clientManagementSection")
+              }
+            >
+              <p
+                style={{
+                  color: currentState.includes("client-management")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Client Management
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              // onClick={() => navigate("/jobs-admin/jobs")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("job-istings")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Jobs
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/client/jobs-admin/applicant")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("applicant")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                  cursor: "pointer",
+                }}
+              >
+                Applicant
+              </p>
+            </div>
+          </Collapse>
+
+          {/* JOBS ADMIN CODE END */}
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -178,9 +331,9 @@ export const ClientSideNav = ({ openTemplate }) => {
                   bgcolor: "#d5d5d5",
                 },
               }}
-              onClick={() => {
-                navigate("/client/clientManagementSection");
-              }}
+              // onClick={() => {
+              //   navigate("/client/clientManagementSection");
+              // }}
             >
               <ListItemIcon
                 sx={{
@@ -474,7 +627,11 @@ export const ClientSideNav = ({ openTemplate }) => {
           <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              // onClick={() => navigate("/assessments/all-assessments")}
+              // onClick={() =>
+              //   navigate(
+              //     "/assessment/selfAssessments/rating-aggregate-dimensions"
+              //   )
+              // }
             >
               <p
                 style={{
@@ -512,7 +669,9 @@ export const ClientSideNav = ({ openTemplate }) => {
             </div>
             <div
               className="pl-16 py-2"
-              // onClick={() => navigate("/assessments/clients-assessments")}
+              onClick={() =>
+                navigate("/assessment/selfAssessments/rating-style")
+              }
             >
               <p
                 style={{

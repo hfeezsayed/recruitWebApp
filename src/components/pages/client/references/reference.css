@@ -34,6 +34,38 @@
   border: 1px solid #e6e6e6;
 }
 
+.candidate-info-form .remove-btn:hover,
+.candidate-info-form .remove-btn {
+  border: 1px solid red;
+  color: red;
+}
+
+.candidate-request-reference
+  .candidate-info-form
+  .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input,
+.candidate-request-reference
+  .candidate-info-form
+  .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
+.candidate-request-reference
+  .candidate-info-form
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 24px;
+  padding: 13px 14px;
+}
+
+.candidate-request-reference .candidate-info-form .PhoneInput {
+  padding: 13px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+}
+
+.candidate-request-reference
+  .candidate-info-form
+  .PhoneInput
+  .PhoneInputInput:focus-visible {
+  outline: none;
+}
+
 /* form filled by reference css */
 .select-the-right-options .select-form .MuiOutlinedInput-input {
   border: 1px solid #d0d5dd;
@@ -138,4 +170,12 @@
 
 .rating .priority-ranking .body-content p {
   padding: 16px 20px;
+}
+
+.default-datePicker .date-control {
+  width: 100%;
+  height: 50px;
+  padding: 13px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

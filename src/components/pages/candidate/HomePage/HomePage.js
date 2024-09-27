@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -63,7 +64,7 @@ export const HomePage = () => {
         console.log(response.data);
         setLinkedIn(response.data?.linkedIn);
         // setUserData(response.data);
-        
+
         setLoading(false);
       })
       .catch((error) => {
@@ -93,30 +94,30 @@ export const HomePage = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
       .get(`/downloadResume?candidateId=${user.userId}`, {
-        responseType: 'blob'
+        responseType: "blob",
       })
       .then((response) => {
-        const disposition = response.headers['content-disposition'];
-        let filename = '';
+        const disposition = response.headers["content-disposition"];
+        let filename = "";
         console.log(response.headers);
-        if (disposition && disposition.includes('attachment')) {
-            console.log(disposition);
-            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = filenameRegex.exec(disposition);
-            console.log(matches)
-            if (matches != null && matches[1]) {
-                filename = matches[1].replace(/['"]/g, '');
-            }
+        if (disposition && disposition.includes("attachment")) {
+          console.log(disposition);
+          const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = filenameRegex.exec(disposition);
+          console.log(matches);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, "");
+          }
         }
 
         // If filename is not found, you can use a default name
         if (!filename) {
-            filename = 'resume';
+          filename = "resume";
         }
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', filename);
+        link.setAttribute("download", filename);
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
@@ -129,6 +130,18 @@ export const HomePage = () => {
   const profileCompetition = convertCompetencies(
     userData?.prifileCompititionData[0]
   );
+
+  //upload profile image
+  // function handleUploadPicChange(event) {
+  //   setUserData(event.target.files[0]);
+  // }
+
+  // function handleImageUploadSubmit(event) {
+  // event.preventDefault();
+  // const formData = new FormData();
+  // formData.append("file", userData);
+  // formData.append("fileName", userData.name);
+  // }
 
   return (
     <div>
@@ -153,7 +166,8 @@ export const HomePage = () => {
                     padding: 2,
                     backgroundColor: "#FBFCFE",
                     my: 2,
-                  }}>
+                  }}
+                >
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p
@@ -161,33 +175,49 @@ export const HomePage = () => {
                           color: "#475467",
                           fontSize: 18,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Candidate Summary
                       </p>
                       <div className="py-4 flex gap-6">
                         <div
                           className="w-28 h-28 rounded-full "
-                          style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
+                          style={{ borderWidth: 2, borderColor: "#66B2B2" }}
+                        >
                           <img
-                            src={
-                              userData.image ||
-                              `https://eu.ui-avatars.com/api/?name=${userName}&size=250`
-                            }
+                            src={userData.image}
                             alt="person"
                             className="rounded-full"
+                            id="profile-pic"
                           />
                           <div
                             className="relative -mt-8 justify-end flex h-9"
-                            style={{ backgroundColor: "#" }}>
+                            style={{ backgroundColor: "#" }}
+                          >
                             <IconButton
                               style={{
                                 padding: 6,
                                 backgroundColor: "#66B2B2",
-                              }}>
+                              }}
+                              // onClick={handleImageUploadSubmit}
+                            >
                               <BsFillCameraFill
                                 style={{ color: "#ffffff", fontSize: 22 }}
                               />
                             </IconButton>
+                            {/* <label
+                              for="input-file"
+                              className="change-profile-img"
+                            >
+                              Upload
+                            </label> */}
+                            {/* <input
+                              type="file"
+                              for="input-file"
+                              accept="image/jpeg, image/png, image/jpg"
+                              onChange={handleUploadPicChange}
+                              // style={{ display: "none" }}
+                            /> */}
                           </div>
                         </div>
                         <div>
@@ -196,7 +226,8 @@ export const HomePage = () => {
                               color: "#101828",
                               fontWeight: 600,
                               fontSize: 24,
-                            }}>
+                            }}
+                          >
                             {userName}
                           </p>
                           <div className="flex gap-2 items-center">
@@ -210,7 +241,8 @@ export const HomePage = () => {
                               style={{
                                 color: "#475467",
                                 fontSize: 16,
-                              }}>
+                              }}
+                            >
                               {JSON.parse(localStorage.getItem("token"))
                                 ?.email || userData?.email}
                             </p>
@@ -229,7 +261,8 @@ export const HomePage = () => {
                                   paddingLeft: 10,
                                   paddingRight: 10,
                                 }}
-                                startIcon={<HiOutlineDownload />}>
+                                startIcon={<HiOutlineDownload />}
+                              >
                                 Resume
                               </Button>
                             )}
@@ -237,9 +270,7 @@ export const HomePage = () => {
                               <Button
                                 size="small"
                                 variant="text"
-                                onClick={() =>
-                                  window.open(linkedIn, "_blank")
-                                }
+                                onClick={() => window.open(linkedIn, "_blank")}
                                 style={{
                                   color: "#3538CD",
                                   textTransform: "none",
@@ -248,7 +279,8 @@ export const HomePage = () => {
                                   paddingLeft: 10,
                                   paddingRight: 10,
                                 }}
-                                startIcon={<MdOutlineArrowOutward />}>
+                                startIcon={<MdOutlineArrowOutward />}
+                              >
                                 Linkedin
                               </Button>
                             )}
@@ -265,7 +297,8 @@ export const HomePage = () => {
                             alignItems: "center",
                             position: "relative",
                             width: "70%",
-                          }}>
+                          }}
+                        >
                           <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
                             <BorderLinearProgress
                               variant="determinate"
@@ -281,16 +314,16 @@ export const HomePage = () => {
                                 userData?.personalInfo - 3
                               )}%`,
                               mt: 2,
-                            }}>
+                            }}
+                          >
                             <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center shadow-xl border border-[#D0D5DD]">
                               <p
                                 style={{
                                   color: "#101828",
                                   fontSize: 11,
                                   fontWeight: 600,
-                                }}>{`${Math.round(
-                                userData?.personalInfo
-                              )}%`}</p>
+                                }}
+                              >{`${Math.round(userData?.personalInfo)}%`}</p>
                             </div>
                           </Box>
                         </Box>
@@ -302,7 +335,8 @@ export const HomePage = () => {
                           color: "#475467",
                           fontSize: 18,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Profile Competition
                       </p>
                       <div className="flex py-2 items-center">
@@ -325,7 +359,8 @@ export const HomePage = () => {
                                 color: "#475467",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Status
                             </p>
                             <p
@@ -333,7 +368,8 @@ export const HomePage = () => {
                                 color: "#475467",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Percentage
                             </p>
                           </div>
@@ -341,7 +377,8 @@ export const HomePage = () => {
                             return (
                               <div
                                 className="flex w-full justify-between items-center py-2"
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="flex gap-2 items-center">
                                   <div
                                     style={{
@@ -355,7 +392,8 @@ export const HomePage = () => {
                                     style={{
                                       color: "#101828",
                                       fontSize: 14,
-                                    }}>
+                                    }}
+                                  >
                                     {row?.data[0]?.label}
                                   </p>
                                 </div>
@@ -364,7 +402,8 @@ export const HomePage = () => {
                                     color: "#101828",
                                     fontSize: 14,
                                     fontWeight: 500,
-                                  }}>
+                                  }}
+                                >
                                   {row?.data[0]?.value}%
                                 </p>
                               </div>
@@ -385,7 +424,8 @@ export const HomePage = () => {
                       }}
                       onClick={() => {
                         navigate("/candidate");
-                      }}>
+                      }}
+                    >
                       Update Digital Talent Profile(DTP)
                     </Button>
 
@@ -399,7 +439,8 @@ export const HomePage = () => {
                       }}
                       onClick={() => {
                         navigate("/OutputofDigitalTalentProfile");
-                      }}>
+                      }}
+                    >
                       Access Digital Talent Profile(DTP)
                     </Button>
                   </div>
@@ -424,7 +465,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <AuthorizedSvg COLOR={"#F78F54"} />
                         </div>
                         <p
@@ -432,7 +474,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Add Authorised Clients
                         </p>
                       </div>
@@ -441,7 +484,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {authorizedCount}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -449,15 +493,16 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Client request that are pending
                         </p>
                         <Button onClick={() => navigate("/authorisedclients")}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
@@ -474,7 +519,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <AssesmentSvg COLOR={"#A1CBB3"} />
                         </div>
                         <p
@@ -482,7 +528,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Client Assessments
                         </p>
                       </div>
@@ -491,7 +538,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {clientCount}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -499,15 +547,20 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Client Assessments needs to be taken
                         </p>
-                        <Button onClick={() => navigate("/assesmentform", { state : 3})}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                        <Button
+                          onClick={() =>
+                            navigate("/assesmentform", { state: 3 })
+                          }
+                        >
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
@@ -524,7 +577,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <AssesmentSvg COLOR={"#6A0DAD"} />
                         </div>
                         <p
@@ -532,7 +586,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Self- Assessments
                         </p>
                       </div>
@@ -541,7 +596,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {selfCount}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -549,15 +605,20 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Assessments needs to be taken
                         </p>
-                        <Button onClick={() => navigate("/assesmentform", { state : 2 })}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                        <Button
+                          onClick={() =>
+                            navigate("/assesmentform", { state: 2 })
+                          }
+                        >
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
@@ -568,7 +629,7 @@ export const HomePage = () => {
               {/* Actions need to be taken */}
               <div className="py-5">
                 <p style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
-                   Jobs Summary
+                  Jobs Summary
                 </p>
                 <div className="grid grid-cols-3 gap-5 mt-5">
                   <Card sx={{ borderRadius: 5 }}>
@@ -583,7 +644,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <PersonBagsvg COLOR={"#007BFF"} />
                         </div>
                         <p
@@ -591,7 +653,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Jobs Applied
                         </p>
                       </div>
@@ -600,7 +663,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {userData?.jobApllied || 0}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -608,15 +672,16 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Total no. of job you have applied for
                         </p>
                         <Button onClick={() => navigate("/job/jobportal")}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
@@ -633,7 +698,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <RejectBagsvg COLOR={"#B22234"} />
                         </div>
                         <p
@@ -641,7 +707,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Jobs Rejected
                         </p>
                       </div>
@@ -650,7 +717,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {userData?.jobRejected || 0}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -658,15 +726,16 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Total no. of job rejected
                         </p>
                         <Button onClick={() => navigate("/job/jobportal")}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
@@ -683,7 +752,8 @@ export const HomePage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                          }}>
+                          }}
+                        >
                           <BagWithPesonsvg COLOR={"#28A745"} />
                         </div>
 
@@ -692,7 +762,8 @@ export const HomePage = () => {
                             color: "#475467",
                             fontSize: 16,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Jobs Interview
                         </p>
                       </div>
@@ -701,7 +772,8 @@ export const HomePage = () => {
                           color: "#1D1F2C",
                           fontWeight: 600,
                           fontSize: 30,
-                        }}>
+                        }}
+                      >
                         {userData?.jobInterview || 0}
                       </p>
                       <div className="flex items-center justify-between ">
@@ -709,15 +781,16 @@ export const HomePage = () => {
                           style={{
                             color: "#475467",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Total no. of job interview
                         </p>
                         <Button onClick={() => navigate("/job/jobportal")}>
-                        <IconButton>
-                          <FaArrowRight
-                            style={{ color: "#008080", fontSize: 18 }}
-                          />
-                        </IconButton>
+                          <IconButton>
+                            <FaArrowRight
+                              style={{ color: "#008080", fontSize: 18 }}
+                            />
+                          </IconButton>
                         </Button>
                       </div>
                     </CardContent>
