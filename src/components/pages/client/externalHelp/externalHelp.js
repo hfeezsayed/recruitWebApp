@@ -17,18 +17,14 @@ import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
 
-
 export const ExternalHelp = () => {
   const [value, setValue] = useState(0);
-  const [sourcingHelpList, setSourcingHelpList] = useState(
-    []
-  );
+  const [sourcingHelpList, setSourcingHelpList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
 
   const checkStatusRound = (status) => {
     let color = "";
@@ -44,7 +40,7 @@ export const ExternalHelp = () => {
       color = "#E05880";
       backGround = "#E0588020";
     }
-    
+
     return (
       <div
         style={{
@@ -58,12 +54,14 @@ export const ExternalHelp = () => {
           paddingTop: 5,
           paddingBottom: 5,
           borderRadius: 20,
-        }}>
+        }}
+      >
         <p
           style={{
             color: color,
             fontSize: 14,
-          }}>
+          }}
+        >
           {status}
         </p>
       </div>
@@ -73,36 +71,38 @@ export const ExternalHelp = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
-      axiosInstance
-        .get(`/getExternalStaffingJobs?clientId=${user.userId}`)
-        .then((response) => {
-          console.log(response.data);
-          setSourcingHelpList(response.data)
-          setLoading(false);
-        })
-        .catch((e) => {
-          console.log(e);
-          setLoading(false);
-        });
-   }, []);
+    axiosInstance
+      .get(`/getExternalStaffingJobs?clientId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setSourcingHelpList(response.data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+  }, []);
 
-
-  
   const filterData = (dataList) => {
-    if(value === 0){
-      return dataList.filter(item =>
-        item.sourcing?.toLowerCase().includes("sourcing".toLowerCase()))
+    if (value === 0) {
+      return dataList.filter((item) =>
+        item.sourcing?.toLowerCase().includes("sourcing".toLowerCase())
+      );
     }
-    if(value === 1){
-      return dataList.filter(item =>
-        item.onboarding?.toLowerCase().includes("onboarding".toLowerCase()))
+    if (value === 1) {
+      return dataList.filter((item) =>
+        item.onboarding?.toLowerCase().includes("onboarding".toLowerCase())
+      );
     }
-    if(value === 2){
-      return dataList.filter(item =>
-        item.externalService?.toLowerCase().includes("externalService".toLowerCase()))
+    if (value === 2) {
+      return dataList.filter((item) =>
+        item.externalService
+          ?.toLowerCase()
+          .includes("externalService".toLowerCase())
+      );
     }
-  }
-
+  };
 
   const SourcingHelp = () => {
     return (
@@ -111,7 +111,8 @@ export const ExternalHelp = () => {
           <Table
             sx={{ minWidth: 650, border: 1, borderColor: "#D0D5DD" }}
             aria-label="simple table"
-            stickyHeader>
+            stickyHeader
+          >
             <TableHead>
               <TableRow>
                 <TableCell
@@ -120,7 +121,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Job ID
                 </TableCell>
                 <TableCell
@@ -129,7 +131,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Job Name
                 </TableCell>
                 <TableCell
@@ -138,7 +141,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Department
                 </TableCell>
                 <TableCell
@@ -147,7 +151,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Status
                 </TableCell>
                 <TableCell
@@ -156,7 +161,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Location
                 </TableCell>
                 <TableCell
@@ -165,7 +171,8 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Posted Date
                 </TableCell>
                 <TableCell
@@ -174,44 +181,46 @@ export const ExternalHelp = () => {
                     fontSize: 14,
                     fontWeight: 500,
                     bgcolor: "#F8F9FA",
-                  }}>
+                  }}
+                >
                   Deadline Date
                 </TableCell>
               </TableRow>
             </TableHead>
             {loading === true ? (
-            <Spinner />
-          ) : (
-            <TableBody>
-              {filterData(sourcingHelpList).map((row, index) => (
-                <TableRow
-                  key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row.jobId}
-                  </TableCell>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row.jobName}
-                  </TableCell>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row?.department}
-                  </TableCell>
-                  <TableCell padding="none">
-                    {checkStatusRound(row?.status)}
-                  </TableCell>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row?.location}
-                  </TableCell>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row?.postedDate}
-                  </TableCell>
-                  <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                    {row?.declineDate}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          )}
+              <Spinner />
+            ) : (
+              <TableBody>
+                {filterData(sourcingHelpList).map((row, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row.jobId}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row.jobName}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row?.department}
+                    </TableCell>
+                    <TableCell padding="none">
+                      {checkStatusRound(row?.status)}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row?.location}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row?.postedDate}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                      {row?.declineDate}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            )}
           </Table>
         </TableContainer>
       </div>
@@ -248,7 +257,8 @@ export const ExternalHelp = () => {
                       borderTopLeftRadius: 5,
                       borderTopRightRadius: 5,
                     },
-                  }}>
+                  }}
+                >
                   <Tab
                     label="Sourcing"
                     id="1"

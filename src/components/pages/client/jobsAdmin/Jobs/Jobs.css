@@ -1,3 +1,22 @@
 .jobs-listing .jobs-header-section .MuiButtonBase-root {
   padding: 10px 15px;
 }
+
+/* Job listing tabs css */
+.joblist-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  text-transform: none;
+  color: #475467;
+  font-size: 16px;
+}
+
+.joblist-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #008080;
+}
+
+.joblist-tabs .css-1ujnqem-MuiTabs-root {
+  border-bottom: 1px solid #e2e4e6;
+}
+
+.joblist-tabs .css-1aquho2-MuiTabs-indicator {
+  background-color: #008080;
+}

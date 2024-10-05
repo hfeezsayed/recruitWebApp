@@ -29,11 +29,10 @@ export const CandidateAssessmentQuestionnaire = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(location.state);
     let url = ``;
-    if(location.state.batchId) {
-        url = `/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
-    }
-    else{
-        url = `/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`
+    if (location.state.batchId) {
+      url = `/getAssessmentQuestionnaire?assessmentType=${location.state.batchName}`;
+    } else {
+      url = `/getAssessmentQuestionnaire?assessmentType=${location.state.selected[0].name}`;
     }
     axiosInstance
       .get(url)
@@ -76,25 +75,24 @@ export const CandidateAssessmentQuestionnaire = () => {
     const jobId = localStorage.getItem("jobId");
     let batchName = "";
     let assessmentName = "";
-    if(location.state.batchId) {
-        assessmentName = location.state.batchName;
-    }
-    else{
-        batchName = location.state.batchName;
-        assessmentName = location.state.selected[0].name;
+    if (location.state.batchId) {
+      assessmentName = location.state.batchName;
+    } else {
+      batchName = location.state.batchName;
+      assessmentName = location.state.selected[0].name;
     }
     axiosInstance
-      .post(`/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
-        { 
-            questionList,
-            batchName,
-            assessmentName
-        },
-        
+      .post(
+        `/saveCandidateAssessment?candidateId=${user.userId}&batchId=${location.state.batchId}`,
+        {
+          questionList,
+          batchName,
+          assessmentName,
+        }
       )
       .then((response) => {
         console.log(response.data);
-        navigate("/assesmentform")
+        navigate("/assesmentform");
       })
       .catch((error) => console.log(error));
   };
@@ -155,13 +153,15 @@ export const CandidateAssessmentQuestionnaire = () => {
             return (
               <div
                 className="border p-2 flex justify-between items-center"
-                key={index}>
+                key={index}
+              >
                 <p
                   style={{
                     color: "#475467",
                     fontSize: 14,
                     textTransform: "none",
-                  }}>
+                  }}
+                >
                   {value}
                 </p>
                 <TextField
@@ -212,7 +212,8 @@ export const CandidateAssessmentQuestionnaire = () => {
             onChange={(e) => {
               handleRatingChange(IcpTemplateQuestion, e.target.value);
             }}
-            name="radio-buttons-group">
+            name="radio-buttons-group"
+          >
             {IcpTemplateQuestion.options.map((data, index) => {
               return (
                 <div className="border px-2 py-1" key={index}>
@@ -241,7 +242,8 @@ export const CandidateAssessmentQuestionnaire = () => {
                           color: "#475467",
                           fontSize: 14,
                           textTransform: "none",
-                        }}>
+                        }}
+                      >
                         {data}
                       </p>
                     }
@@ -278,7 +280,8 @@ export const CandidateAssessmentQuestionnaire = () => {
                   color: currentSection > 0 ? "#008080" : "#475467",
                   fontWeight: 500,
                   fontSize: 14,
-                }}>
+                }}
+              >
                 Questions
               </p>
 
@@ -288,7 +291,8 @@ export const CandidateAssessmentQuestionnaire = () => {
                   color: currentSection > 1 ? "#008080" : "#475467",
                   fontWeight: 500,
                   fontSize: 14,
-                }}>
+                }}
+              >
                 Submit Assessment Confirmation
               </p>
             </div>
@@ -312,7 +316,8 @@ export const CandidateAssessmentQuestionnaire = () => {
                   fontSize: 14,
                   fontWeight: 500,
                   marginTop: 10,
-                }}>
+                }}
+              >
                 Statement {currentQuestion + 1}
               </p>
             </div>
@@ -323,7 +328,7 @@ export const CandidateAssessmentQuestionnaire = () => {
             {IcpTemplateQuestion?.questionType === "RATING" && (
               <RatingQuestion />
             )} */}
-             <RatingQuestion />
+            <RatingQuestion />
           </div>
         </div>
       </div>

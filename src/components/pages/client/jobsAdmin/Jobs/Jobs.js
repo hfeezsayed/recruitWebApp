@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //Navbar
 import { ClientSideNav } from "../../../../widgets/clientSideNav";
 import { TopNav } from "../../../../widgets/topNav";
@@ -16,17 +16,19 @@ import { CiSearch } from "react-icons/ci";
 import WorkflowView from "./WorkflowView/WorkflowView";
 import BoardView from "./BoardView/BoardView";
 import ListView from "./ListView/ListVIew";
-//assets
 
 const Jobs = () => {
   const [currentView, setCurrentView] = useState("WorkFlow");
   const [search, setSearch] = useState("");
+
   return (
     <div className="flex">
       <ClientSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
-        <TopNav />
-        <div className="jobs-listing pt-8 px-5">
+        <div className="jobs-top-nav">
+          <TopNav />
+        </div>
+        <div className="jobs-listing pt-8 px-4 pb-8">
           <div className="jobs-header-section">
             <h2 className="text-2xl pt-4 font-bold main-black">Jobs Summary</h2>
             <div className="pt-8 pb-11">
@@ -39,7 +41,8 @@ const Jobs = () => {
                     >
                       <Button
                         style={{
-                          backgroundColor: "#F8F9FA",
+                          backgroundColor:
+                            currentView === "WorkFlow" ? "#f8f9fa" : "#ffffff",
                           color:
                             currentView === "WorkFlow"
                               ? "#008080"
@@ -64,7 +67,8 @@ const Jobs = () => {
                       </Button>
                       <Button
                         style={{
-                          backgroundColor: "#F8F9FA",
+                          backgroundColor:
+                            currentView === "Board" ? "#f8f9fa" : "#ffffff",
                           color:
                             currentView === "Board" ? "#008080" : "#47546770",
                           borderColor: "#D0D5DD",
@@ -79,7 +83,8 @@ const Jobs = () => {
                       </Button>
                       <Button
                         style={{
-                          backgroundColor: "#F8F9FA",
+                          backgroundColor:
+                            currentView === "List" ? "#f8f9fa" : "#ffffff",
                           color:
                             currentView === "List" ? "#008080" : "#47546770",
                           borderColor: "#D0D5DD",

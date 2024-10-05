@@ -1,12 +1,16 @@
+.jobs-top-nav .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+  margin-left: -15px;
+}
+
 .jobs-flow .card {
-  width: 260px;
+  width: 255px;
   background: #f8f9fa;
   padding: 15px 10px;
   border-radius: 8px 8px 0px 0px;
 }
 
 .jobs-flow .card .inner-card {
-  width: 240px;
+  width: 234px;
   background-color: #fff;
   margin: auto;
   margin-top: 15px;
@@ -76,6 +80,11 @@
 }
 .jobs-flow .card .inner-card .body-content .card-footer p:nth-child(4) {
   color: #7fb27f;
+}
+
+.dot-gray {
+  color: #7e8795;
+  padding-right: 4px;
 }
 
 .jobs-flow .card .card-header:nth-child(3) {

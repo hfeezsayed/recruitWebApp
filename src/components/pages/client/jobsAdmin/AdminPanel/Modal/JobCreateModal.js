@@ -9,11 +9,61 @@ import { Button } from "@mui/material";
 import { MdCancelPresentation } from "react-icons/md";
 //Extrenal css
 import "./Modal.css";
+//API Endpoint
+import axiosInstance from "../../../../../utils/axiosInstance";
+//notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const JobCreateModal = ({ open, setOpen }) => {
+  const [saveJob, setSaveJob] = useState({
+    jobName: "",
+    department: "",
+    locaiton: "",
+    clientName: "",
+    jobType: "",
+    created: "",
+    totalPositions: "",
+  });
+
   const handleClose = () => setOpen(false);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSaveJob({
+      ...saveJob,
+      [e.target.name]: value,
+    });
+  };
+
+  const handleSaveJob = () => {
+    axiosInstance
+      .post(`/saveJob`, saveJob)
+      .then((data) => {
+        console.log("save job", data);
+        toast.success("Save Job Successfully");
+        setOpen(false);
+        setSaveJob({
+          jobName: "",
+          department: "",
+          locaiton: "",
+          clientName: "",
+          jobType: "",
+          created: "",
+          totalPositions: "",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
+
   return (
     <div className="jobCreate-modal">
+      {/* notification alert start*/}
+      <ToastContainer />
+      {/* notification alert End*/}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -49,6 +99,9 @@ const JobCreateModal = ({ open, setOpen }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="jobName"
+                        value={saveJob.jobName}
+                        onChange={handleChange}
                       />
                     </div>
 
@@ -57,6 +110,9 @@ const JobCreateModal = ({ open, setOpen }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="department"
+                        value={saveJob.department}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -65,14 +121,17 @@ const JobCreateModal = ({ open, setOpen }) => {
                     <div className="input-box select-box">
                       <p>Location</p>
                       <select
-                        name="city"
-                        id="location"
                         className="form-control outline-none"
+                        name="locaiton"
+                        value={saveJob.locaiton}
+                        onChange={handleChange}
                       >
-                        <option value="1">Delhi</option>
-                        <option value="2">Mumabi</option>
-                        <option value="3">Agra</option>
-                        <option value="4">Dehradun</option>
+                        <option defaultValue="Select">Select</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Mumbai">Mumabi</option>
+                        <option value="Agra">Agra</option>
+                        <option value="Banglore">Banglore</option>
+                        <option value="Pune">Pune</option>
                       </select>
                       <div className="white-blank">
                         <MdKeyboardArrowDown className="down-arrow" />
@@ -84,6 +143,9 @@ const JobCreateModal = ({ open, setOpen }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="clientName"
+                        value={saveJob.clientName}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -92,34 +154,38 @@ const JobCreateModal = ({ open, setOpen }) => {
                     <div className="input-box select-box">
                       <p>Job Type</p>
                       <select
-                        name="city"
-                        id="location"
                         className="form-control outline-none"
+                        name="jobType"
+                        value={saveJob.jobType}
+                        onChange={handleChange}
                       >
-                        <option value="1">Select</option>
-                        <option value="2">b</option>
-                        <option value="3">c</option>
-                        <option value="4">d</option>
+                        <option defaultValue="Select">Select</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time Freelancer">
+                          Part Time Freelancer
+                        </option>
+                        <option value="Full Time Freelancer">
+                          Full Time Freelancer
+                        </option>
+                        <option value="Contract To Hire">
+                          Contract To Hire
+                        </option>
                       </select>
                       <div className="white-blank">
                         <MdKeyboardArrowDown className="down-arrow" />
                       </div>
                     </div>
-                    <div className="input-box select-box">
+                    <div className="input-box">
                       <p>Created</p>
-                      <select
-                        name="city"
-                        id="location"
+                      <input
                         className="form-control outline-none"
-                      >
-                        <option value="1">Select</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                      </select>
-                      <div className="white-blank">
-                        <MdKeyboardArrowDown className="down-arrow" />
-                      </div>
+                        placeholder="Type..."
+                        type="date"
+                        name="created"
+                        value={saveJob.created}
+                        onChange={handleChange}
+                      />
                     </div>
                   </div>
 
@@ -127,14 +193,20 @@ const JobCreateModal = ({ open, setOpen }) => {
                     <div className="input-box select-box">
                       <p>Total number of positions</p>
                       <select
-                        name="city"
-                        id="location"
                         className="form-control w-full-100 outline-none"
+                        name="totalPositions"
+                        value={saveJob.totalPositions}
+                        onChange={handleChange}
                       >
-                        <option value="1">Select</option>
+                        <option defaultValue="Select">Select</option>
+                        <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
                       </select>
                       <div className="white-blank">
                         <MdKeyboardArrowDown className="down-arrow" />
@@ -148,12 +220,14 @@ const JobCreateModal = ({ open, setOpen }) => {
                   <Button
                     variant="outlined"
                     style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                    onClick={handleClose}
                   >
                     Cancel
                   </Button>
                   <Button
                     variant="contained"
                     style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                    onClick={handleSaveJob}
                   >
                     Save
                   </Button>

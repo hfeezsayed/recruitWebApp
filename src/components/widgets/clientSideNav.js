@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Collapse } from "@mui/material";
+import { Collapse, List } from "@mui/material";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { LuSettings } from "react-icons/lu";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
@@ -73,6 +73,7 @@ export const ClientSideNav = ({ openTemplate }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
+  const [openSecondLevel, setOpenSecondLevel] = React.useState(false);
   const [showAcordian, setShowAcordian] = React.useState(
     openTemplate ? true : false
   );
@@ -89,6 +90,11 @@ export const ClientSideNav = ({ openTemplate }) => {
   };
 
   const currentState = location.pathname;
+
+  const handleClickSecondLevel = () => {
+    setOpenSecondLevel(!openSecondLevel);
+  };
+
   return (
     <>
       <div
@@ -278,7 +284,7 @@ export const ClientSideNav = ({ openTemplate }) => {
             </div>
             <div
               className="pl-16 py-2"
-              // onClick={() => navigate("/jobs-admin/jobs")}
+              onClick={() => navigate("/jobs-admin/jobs")}
             >
               <p
                 style={{
@@ -290,10 +296,28 @@ export const ClientSideNav = ({ openTemplate }) => {
                   opacity: 0.6,
                   cursor: "pointer",
                 }}
+                onClick={handleClickSecondLevel}
+                className="flex justify-between items-center"
               >
                 Jobs
+                {/* <span className="pr-7">
+                  {openSecondLevel ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </span> */}
               </p>
             </div>
+            {/* <Collapse in={openSecondLevel} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding className="sub-level-menu ">
+                <ListItem>
+                  <ListItemText primary="Sourcing Help" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Onboarding Help" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Full Service Staff Help" />
+                </ListItem>
+              </List>
+            </Collapse> */}
             <div
               className="pl-16 py-2"
               onClick={() => navigate("/client/jobs-admin/applicant")}
@@ -331,9 +355,6 @@ export const ClientSideNav = ({ openTemplate }) => {
                   bgcolor: "#d5d5d5",
                 },
               }}
-              // onClick={() => {
-              //   navigate("/client/clientManagementSection");
-              // }}
             >
               <ListItemIcon
                 sx={{
@@ -627,11 +648,11 @@ export const ClientSideNav = ({ openTemplate }) => {
           <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              // onClick={() =>
-              //   navigate(
-              //     "/assessment/selfAssessments/rating-aggregate-dimensions"
-              //   )
-              // }
+              onClick={() =>
+                navigate(
+                  "/assessment/selfAssessments/rating-aggregate-dimensions"
+                )
+              }
             >
               <p
                 style={{

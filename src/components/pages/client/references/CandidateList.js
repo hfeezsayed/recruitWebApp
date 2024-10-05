@@ -195,7 +195,7 @@ const CandidateList = () => {
                             align="center"
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                           >
-                            Candidate List
+                            Candidate Name
                           </TableCell>
                           <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}

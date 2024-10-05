@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -8,11 +8,58 @@ import { Button } from "@mui/material";
 //icons
 import { MdCancelPresentation } from "react-icons/md";
 import "./Modal.css";
+//API Endpoint
+import axiosInstance from "../../../../../utils/axiosInstance";
+//notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddClientModal = ({ showModal, setShowModal }) => {
+  const [saveClient, setSaveClient] = useState({
+    companyName: "",
+    email: "",
+    name: "",
+    phoneNumber: "",
+    industry: "",
+    companyAddress: "",
+  });
+
   const handleClose = () => setShowModal(false);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSaveClient({
+      ...saveClient,
+      [e.target.name]: value,
+    });
+  };
+
+  const handleSaveClient = () => {
+    axiosInstance
+      .post(`/saveClient`, saveClient)
+      .then((data) => {
+        console.log("save Clients", data);
+        toast.success("Save Successfully");
+        setShowModal(false);
+        setSaveClient({
+          companyName: "",
+          email: "",
+          name: "",
+          phoneNumber: "",
+          industry: "",
+          companyAddress: "",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="addClient-modal">
+      {/* notification alert start*/}
+      <ToastContainer />
+      {/* notification alert End*/}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -48,6 +95,9 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="companyName"
+                        value={saveClient.companyName}
+                        onChange={handleChange}
                       />
                     </div>
 
@@ -56,6 +106,9 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="email"
+                        value={saveClient.email}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -66,20 +119,23 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                       <input
                         className="form-control outline-none"
                         placeholder="Type..."
+                        name="phoneNumber"
+                        value={saveClient.phoneNumber}
+                        onChange={handleChange}
                       />
                     </div>
 
                     <div className="input-box select-box">
                       <p>Industry</p>
                       <select
-                        name="city"
-                        id="location"
                         className="form-control outline-none"
+                        name="industry"
+                        value={saveClient.industry}
+                        onChange={handleChange}
                       >
-                        <option value="1">Select</option>
-                        <option value="2">b</option>
-                        <option value="3">c</option>
-                        <option value="4">d</option>
+                        <option defaultValue="select">Select</option>
+                        <option value="IT">IT</option>
+                        <option value="Banking">Banking</option>
                       </select>
                       <div className="white-blank">
                         <MdKeyboardArrowDown className="down-arrow" />
@@ -93,6 +149,9 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                       <input
                         className="form-control outline-none w-full-100"
                         placeholder="Type..."
+                        name="companyAddress"
+                        value={saveClient.companyAddress}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -104,12 +163,14 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                     <Button
                       variant="outlined"
                       style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                      onClick={() => setShowModal(false)}
                     >
                       Cancel
                     </Button>
                     <Button
                       variant="contained"
                       style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                      onClick={handleSaveClient}
                     >
                       Save
                     </Button>

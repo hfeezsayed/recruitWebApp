@@ -106,7 +106,8 @@ export const WorkValueTemplate = () => {
                     }}
                     onClick={() =>
                       navigate("/templates/workValueTemplateCreate")
-                    }>
+                    }
+                  >
                     Create New Template
                   </Button>
                 </div>
@@ -118,28 +119,34 @@ export const WorkValueTemplate = () => {
                           <TableRow>
                             <TableCell
                               align="center"
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Serial Number
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Template Name
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Template Tag
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Template Description
                             </TableCell>
                             <TableCell
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Created By
                             </TableCell>
                             <TableCell
                               align="center"
-                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
                               Actions
                             </TableCell>
                           </TableRow>
@@ -174,14 +181,16 @@ export const WorkValueTemplate = () => {
                                         "/templates/workValueTemplateView",
                                         { state: row }
                                       )
-                                    }>
+                                    }
+                                  >
                                     View
                                   </Button>
                                 </TableCell>
                                 <TableCell
                                   padding="none"
                                   align="center"
-                                  sx={{ color: "#475467" }}>
+                                  sx={{ color: "#475467" }}
+                                >
                                   <Button
                                     size="small"
                                     variant="text"
@@ -196,7 +205,8 @@ export const WorkValueTemplate = () => {
                                           state: row,
                                         }
                                       )
-                                    }>
+                                    }
+                                  >
                                     Edit
                                   </Button>
                                 </TableCell>

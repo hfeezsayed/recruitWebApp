@@ -1,44 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../../../../../utils/axiosInstance";
 import "./LogsTable.css";
 
 const LogsTable = () => {
-  const data = [
-    {
-      id: 1,
-      userName: "User123 Admin User",
-      actionType: "Moved Applicant Status",
-      actionTyp: `'John Doe' to Interview Scheduled for 'Product Manager'`,
-      dateTime: "11/ 07/2024 10:00 AM",
-    },
-    {
-      id: 2,
-      userName: "User123 Admin User",
-      actionType: "Deleted Applicant",
-      actionTyp: `'Jane Smith' from 'Data Analyst' job`,
-      dateTime: "11/ 07/2024 10:00 AM",
-    },
-    {
-      id: 3,
-      userName: "User123 Admin User",
-      actionType: "Updated Job Status",
-      actionTyp: `'Sales Manager' changed to Closed`,
-      dateTime: "11/ 07/2024 10:00 AM",
-    },
-    {
-      id: 4,
-      userName: "User123 Admin User",
-      actionType: "Moved Applicant Status",
-      actionTyp: `'John Doe' to Interview Scheduled for 'Product Manager'`,
-      dateTime: "11/ 07/2024 10:00 AM",
-    },
-    {
-      id: 5,
-      userName: "User123 Admin User",
-      actionType: "Updated Job Status",
-      actionTyp: `'Sales Manager' changed to Closed`,
-      dateTime: "11/ 07/2024 10:00 AM",
-    },
-  ];
+  const [userLogs, setUserLogs] = useState([]); //for user logs api
+
+  //GET Request for Activity logs
+  useEffect(() => {
+    axiosInstance
+      .get(`/getApplicationActivities?pageNo=1&pageSize=10`)
+      .then((response) => {
+        //console.log("getApplicationActivities", response.data.data);
+        setUserLogs(response.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="logs-table">
@@ -51,17 +29,17 @@ const LogsTable = () => {
             <tr>
               <th>User Name</th>
               <th>Action Type</th>
-              <th>Action Type</th>
+              <th>Action Activity Type</th>
               <th>Date and Time</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((user, index) => (
+            {userLogs?.map((user, index) => (
               <tr key={index}>
-                <td>{user.userName}</td>
-                <td>{user.actionType}</td>
-                <td>{user.actionTyp}</td>
-                <td>{user.dateTime}</td>
+                <td>{user.doneBy}</td>
+                <td>{user.userActivity}</td>
+                <td>{user.userActivityType}</td>
+                <td>{user.createdAt}</td>
               </tr>
             ))}
           </tbody>

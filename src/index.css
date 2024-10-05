@@ -51,3 +51,19 @@ code {
   right: 20px;
   cursor: pointer;
 }
+
+/* clientSideNav */
+.sub-level-menu .css-10hburv-MuiTypography-root {
+  padding-left: 3.3rem;
+  color: rgb(71, 84, 103);
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.sub-level-menu .css-1p823my-MuiListItem-root {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  cursor: pointer;
+}

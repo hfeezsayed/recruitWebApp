@@ -61,6 +61,13 @@
   margin: 3rem 0px;
   float: right;
 }
+
+.floating-btn .maintop {
+  position: fixed;
+  right: 1rem;
+  bottom: 2rem;
+}
+
 .floating-btn .add-btn {
   font-size: 3rem;
   cursor: pointer;
@@ -92,15 +99,26 @@
 }
 
 .floating-btn .toggle-block .user-btn {
-  position: absolute;
-  top: -35px;
-  right: 68px;
+  position: fixed;
+  bottom: 5rem;
+  right: 4rem;
 }
 
 .floating-btn .toggle-block .create-btn {
-  position: absolute;
-  top: 20px;
-  right: 90px;
+  position: fixed;
+  bottom: 2rem;
+  right: 6rem;
+}
+
+.floating-btn .createIcon:hover,
+.floating-btn .userIcon:hover {
+  color: #fff;
+}
+
+.floating-btn .toggle-block .create-btn:hover,
+.floating-btn .toggle-block .user-btn:hover {
+  background-color: #008080;
+  color: #fff;
 }
 
 /* // floating button animation */

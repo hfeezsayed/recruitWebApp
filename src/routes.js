@@ -99,6 +99,7 @@ import RatingAggregate from "./components/pages/client/assessments/SelfAssessmen
 import RatingStyle from "./components/pages/client/assessments/SelfAssessments/RatingStyle/RatingStyle";
 import RatingAggregateDimensions from "./components/pages/client/assessments/SelfAssessments/RatingAggregateDimensions/RatingAggregateDimensions";
 import Jobs from "./components/pages/client/jobsAdmin/Jobs/Jobs";
+import WorkflowView from "./components/pages/client/jobsAdmin/Jobs/WorkflowView/WorkflowView";
 
 export const Routes = () => {
   return (
@@ -305,7 +306,10 @@ export const Routes = () => {
           element={<RatingAggregateDimensions />}
         />
         <Route path="jobs-admin/jobs" element={<Jobs />} />
-
+        <Route
+          path="jobs-admin/jobs/workflow-view"
+          element={<WorkflowView />}
+        />
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

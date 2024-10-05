@@ -27,7 +27,7 @@ export const DashBoard = () => {
     axiosInstance
       .get(`/getClientDashboardData?clientId=${user.userId}`)
       .then((response) => {
-        console.log(response.data);
+        console.log("client", response.data);
         setuserData(response.data);
       })
       .catch((e) => {

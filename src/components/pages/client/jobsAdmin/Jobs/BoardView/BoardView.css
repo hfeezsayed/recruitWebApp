@@ -1,0 +1,85 @@
+.jobs-flow .board-view .card {
+  width: 340px;
+  min-height: 210px;
+  background: none;
+  padding: 0;
+  border: 1px solid #eaecf0;
+}
+
+.jobs-flow .board-view .card .css-1qvr50w-MuiTypography-root {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.jobs-flow .board-view .card .new-post {
+  font-size: 12px;
+  font-weight: 500;
+  color: #7d5ae2;
+  padding: 2px 6px;
+  background-color: #f2effd;
+  border-radius: 3px;
+  margin-left: 7px;
+}
+
+.jobs-flow .board-view .card .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+  padding: 0;
+  color: #d9d9d9;
+}
+
+.jobs-flow .board-view .card {
+  border-radius: 8px;
+}
+
+.jobs-flow .board-view .card .sub-header p {
+  font-size: 14px;
+  color: #7e8795;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jobs-flow .board-view .card .body-content .left-img img {
+  width: 48px;
+  height: 48px;
+}
+
+.jobs-flow .board-view .card .body-content hr {
+  border: 1px solid #dfe2e6 !important;
+}
+
+.jobs-flow .board-view .card .body-content .right-content p:nth-child(1) {
+  font-size: 14px;
+  color: #475467;
+  padding-bottom: 8px;
+}
+
+.jobs-flow .board-view .card .body-content .right-content p:nth-child(2) {
+  font-size: 12px;
+  color: #727a87;
+}
+
+.jobs-flow .board-view .card .card-footer {
+  padding: 16px 0px;
+}
+
+.jobs-flow .board-view .card .card-footer .more-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: #008080;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Progress bar */
+.card-footer .progress-bar .css-10jyip1-MuiLinearProgress-root {
+  background-color: #ebf6f1;
+  height: 6px;
+  border-radius: 200px;
+}
+
+.card-footer .progress-bar .css-17282r-MuiLinearProgress-bar1 {
+  background-color: #34a770;
+}
