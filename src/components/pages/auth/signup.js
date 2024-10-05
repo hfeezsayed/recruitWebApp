@@ -61,9 +61,9 @@ export const SignUp = () => {
       <div className="w-full ">
         <div className="mt-5 px-10 flex items-center gap-2">
           <img src={logo} width={32} alt="logo" />
-          <p style={{ fontSize: 20, fontWeight: 600, color: "#101828" }}>
+          {/* <p style={{ fontSize: 20, fontWeight: 600, color: "#101828" }}>
             Xenhire
-          </p>
+          </p> */}
         </div>
         <div className="items-center justify-center flex mt-10">
           <div className="min-w-96 grid grid-flow-row">

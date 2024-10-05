@@ -107,11 +107,9 @@ export const AssignCandidates = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
-      )
+      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
-        console.log(data);
+        console.log("candidate----", data.data);
         setData(data.data);
         setPage(data?.pageNo || 1);
       })
@@ -136,35 +134,28 @@ export const AssignCandidates = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
     axiosInstance
-      .post(
-        `/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`,
-        {
-          addCandidateDatabase,
-          candidateName,
-          candidateEmail,
-          candidateNo,
-          candidateLinkedin,
-        },
-        
-      )
+      .post(`/addCandidateToJob?clientId=${user.userId}&jobId=${jobId}`, {
+        addCandidateDatabase,
+        candidateName,
+        candidateEmail,
+        candidateNo,
+        candidateLinkedin,
+      })
       .then((data) => {
         console.log(data.data);
         const formData = new FormData();
-        formData.append("file", candidateResume)
+        formData.append("file", candidateResume);
         axiosInstance
           .post(
             `/uploadCandidateResume?candidateId=${data.data.userId}`,
-             formData,
-             
+            formData
           )
           .then((response) => {
             navigate("/job/createJob");
-          })
-          
+          });
       })
       .catch((e) => console.log(e));
   };
-
 
   const handleAssignCandidate = (selected) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -172,14 +163,13 @@ export const AssignCandidates = () => {
     axiosInstance
       .post(
         `/assignCandidatesToJob?clientId=${user.userId}&jobId=${jobId}`,
-         selected,
-         
+        selected
       )
       .then((data) => {
-        console.log(data.data)
+        console.log(data.data);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   return (
     <div>
@@ -211,7 +201,8 @@ export const AssignCandidates = () => {
                           color: "#101828",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Select
                       </span>
                     );
@@ -219,14 +210,16 @@ export const AssignCandidates = () => {
 
                   return selected;
                 }}
-                sx={{ minWidth: 250, color: "#101828", mt: 1 }}>
+                sx={{ minWidth: 250, color: "#101828", mt: 1 }}
+              >
                 <MenuItem disabled value="">
                   <span
                     style={{
                       color: "#475467",
                       fontSize: 16,
                       fontWeight: 600,
-                    }}>
+                    }}
+                  >
                     Actions
                   </span>
                 </MenuItem>
@@ -236,7 +229,8 @@ export const AssignCandidates = () => {
                     value={name}
                     style={{
                       color: name === actions ? "#66B2B2" : "#54595E",
-                    }}>
+                    }}
+                  >
                     <Radio
                       checked={name === actions}
                       sx={{
@@ -255,11 +249,13 @@ export const AssignCandidates = () => {
               {actions === "Assign Candidate" && (
                 <div>
                   <p
-                    style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                    style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}
+                  >
                     Assign Candidate List
                   </p>
                   <p
-                    style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                    style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}
+                  >
                     Listed below are the details regarding each candidate.
                   </p>
                   <div className="py-5 flex justify-between items-center">
@@ -284,7 +280,8 @@ export const AssignCandidates = () => {
                         backgroundColor: "#EAF4F5",
                         textTransform: "none",
                       }}
-                      onClick={() => {}}>
+                      onClick={() => {}}
+                    >
                       Add Candidate
                     </Button>
                   </div>
@@ -296,7 +293,8 @@ export const AssignCandidates = () => {
                             <TableRow>
                               <TableCell
                                 padding="checkbox"
-                                sx={{ bgcolor: "#F8F9FA" }}>
+                                sx={{ bgcolor: "#F8F9FA" }}
+                              >
                                 <Checkbox
                                   color="primary"
                                   indeterminate={
@@ -317,23 +315,28 @@ export const AssignCandidates = () => {
                                 />
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Candidate Names
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Email Address
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Phone Number
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 LinkedIn Id
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Resume
                               </TableCell>
                             </TableRow>
@@ -349,7 +352,8 @@ export const AssignCandidates = () => {
                                   tabIndex={-1}
                                   key={index}
                                   selected={isItemSelected}
-                                  sx={{ cursor: "pointer" }}>
+                                  sx={{ cursor: "pointer" }}
+                                >
                                   <TableCell padding="checkbox">
                                     <Checkbox
                                       color="primary"
@@ -379,14 +383,16 @@ export const AssignCandidates = () => {
                                   </TableCell>
                                   <TableCell
                                     padding="none"
-                                    sx={{ color: "#475467" }}>
+                                    sx={{ color: "#475467" }}
+                                  >
                                     <Button
                                       size="small"
                                       style={{
                                         color: "#28A745",
                                         fontSize: 14,
                                         textTransform: "none",
-                                      }}>
+                                      }}
+                                    >
                                       View
                                     </Button>
                                   </TableCell>
@@ -419,17 +425,19 @@ export const AssignCandidates = () => {
                         navigate(-1);
                       }}
                       variant="outlined"
-                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                    >
                       Cancle
                     </Button>
                     <Button
                       onClick={() => {
                         {
-                         handleAssignCandidate(selected);
+                          handleAssignCandidate(selected);
                         }
                       }}
                       variant="contained"
-                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                    >
                       Confirm
                     </Button>
                   </div>
@@ -443,7 +451,8 @@ export const AssignCandidates = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Add Candidate
                     </p>
                     <p style={{ color: "#475467", fontSize: 14 }}>
@@ -458,7 +467,8 @@ export const AssignCandidates = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Candidate Name
                         </p>
                         <TextField
@@ -475,7 +485,8 @@ export const AssignCandidates = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Email Address
                         </p>
                         <TextField
@@ -493,7 +504,8 @@ export const AssignCandidates = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Phone Number
                         </p>
                         <TextField
@@ -511,7 +523,8 @@ export const AssignCandidates = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           LinkedIn Profile
                         </p>
                         <TextField
@@ -530,7 +543,8 @@ export const AssignCandidates = () => {
                           color: "#475467",
                           fontSize: 20,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Upload Resume
                       </p>
                       <div className="flex gap-5 items-center">
@@ -551,7 +565,8 @@ export const AssignCandidates = () => {
                                 fontSize: 30,
                               }}
                             />
-                          }>
+                          }
+                        >
                           Attach, Dropbox, or enter manually
                           <br />
                           File type: pdf, doc, docx, txt,rtf (Less than 25 MB)
@@ -601,13 +616,15 @@ export const AssignCandidates = () => {
                         navigate(-1);
                       }}
                       variant="outlined"
-                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                    >
                       Cancle
                     </Button>
                     <Button
                       onClick={handleAddAsignment}
                       variant="contained"
-                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                    >
                       Confirm
                     </Button>
                   </div>

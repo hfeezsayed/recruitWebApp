@@ -21,7 +21,7 @@ import { TopNav } from "../../../widgets/topNav";
 import axios from "axios";
 import { useEffect } from "react";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 
 export const JobDetailCreate = () => {
   const navigate = useNavigate();
@@ -66,21 +66,37 @@ export const JobDetailCreate = () => {
   const [envision, setEnvision] = useState("");
   const [settings, setSettings] = useState(null);
 
+  //For create locations
+  const [options, setOptions] = useState([]);
+  const [education, setEducation] = useState([
+    {
+      jobLocation: null,
+      jobFamily: null,
+      jobDepartment: null,
+      workSetting: null,
+      roleType: null,
+      visa: null,
+      roleTravel: null,
+      differentAcademic: null,
+      minimumLevelQualification: null,
+    },
+  ]);
+
   // popup
   const [templateName, setTemplateName] = useState("");
   const [templateTag, setTemplateTag] = useState("");
   const [templateDescription, setTemplateDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
-  const options = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
-  ];
+  // const options = [
+  //   { label: "The Shawshank Redemption", year: 1994 },
+  //   { label: "The Godfather", year: 1972 },
+  //   { label: "The Godfather: Part II", year: 1974 },
+  //   { label: "The Dark Knight", year: 2008 },
+  //   { label: "12 Angry Men", year: 1957 },
+  //   { label: "Schindler's List", year: 1993 },
+  //   { label: "Pulp Fiction", year: 1994 },
+  // ];
 
   const workSettings = [
     { label: "On-Site", value: "On-Site" },
@@ -133,38 +149,98 @@ export const JobDetailCreate = () => {
   ];
 
   const yes_no = ["Yes", "No"];
-  
-  const convertToOptions = (commaSeparatedString) => {
-    //console.log(commaSeparatedString);
-    if(commaSeparatedString !== undefined){
-      const options = [];
-      commaSeparatedString?.split(',').map(item => {
-       // console.log(item);
-        const trimmedItem = item.trim();
-        options.push({"label" : trimmedItem, "value" : trimmedItem});
+
+  //Create for location code start
+  const handleCreate = (optionType, inputValue) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .post("/addPersonalInfoOption?candidateId=" + user.userId, {
+        name: inputValue,
+        optionType: optionType,
+      }) // Replace with your API endpoint
+      .then((response) => {
+        console.log(response.data);
+        setOptions(response.data);
+        console.log(optionType);
+
+        if (optionType === "jobFamily") setJobFamily(inputValue);
+        if (optionType === "jobLocation") setJobLocation(inputValue);
+        if (optionType === "jobDepartment") setJobDepartment(inputValue);
+        if (optionType === "workSetting") setWorkSetting(inputValue);
+        if (optionType === "roleType") setRoleType(inputValue);
+        if (optionType === "visa") setVisa(inputValue);
+        if (optionType === "roleTravel") setRoleTravel(inputValue);
+        if (optionType === "minimumLevelQualification")
+          setMinimumLevelQualification(inputValue);
+        if (optionType === "differentAcademic")
+          setDifferentAcademic(inputValue);
+      })
+      .catch((error) => {
+        console.error("Error adding the item:", error);
       });
-      return options;
-    }
-    else{
-      console.log("in the else");
-      return tools;
-    }
-  }
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-      axiosInstance
-        .get(`/getClientSettings?clientId=${user.userId}`)
-        .then((response) => {
-          console.log(response.data);
-          setSettings(response.data)
-          setEeo(response.data?.eeo);
-          setCompanyInfo(response.data.companyOverview);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-   }, []);
+    console.log(user);
+    axiosInstance
+      .get(`/getPersonalInfoOptions?candidateId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setOptions(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  const getOptions = (optionType) => {
+    const filteredOptions = options.filter(
+      (option) => option.optionType === optionType
+    );
+    const convertedList = filteredOptions.map((item) => ({
+      label: item.label, // This will be displayed in the dropdown
+      value: item.label, // This will be the unique identifier
+    }));
+    return convertedList;
+  };
+
+  const handleChangeEducation = (e, value, i) => {
+    let newFormValues = [...education];
+    newFormValues[i][e] = value;
+    setEducation(newFormValues);
+  };
+
+  //Create for location code end
+
+  const convertToOptions = (commaSeparatedString) => {
+    //console.log(commaSeparatedString);
+    if (commaSeparatedString !== undefined) {
+      const options = [];
+      commaSeparatedString?.split(",").map((item) => {
+        // console.log(item);
+        const trimmedItem = item.trim();
+        options.push({ label: trimmedItem, value: trimmedItem });
+      });
+      return options;
+    } else {
+      console.log("in the else");
+      return tools;
+    }
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .get(`/getClientSettings?clientId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setSettings(response.data);
+        setEeo(response.data?.eeo);
+        setCompanyInfo(response.data.companyOverview);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -204,8 +280,8 @@ export const JobDetailCreate = () => {
 
   const getJobDescription = async () => {
     const title = jobTitle;
-    const softwares = software.map(option => option.value);
-    const certifications = certification.map(option => option.value);
+    const softwares = software.map((option) => option.value);
+    const certifications = certification.map((option) => option.value);
     axios
       .post("https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/", {
         jobTitle,
@@ -220,7 +296,6 @@ export const JobDetailCreate = () => {
         benefits,
         equalEmployeeOpportunity,
         specificIndustryExperience,
-
         industryKnowledge,
         workSetting,
         roleType,
@@ -248,8 +323,8 @@ export const JobDetailCreate = () => {
   const savejobDetail = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    const softwares = software.map(option => option.value);
-    const certifications = certification.map(option => option.value);
+    const softwares = software.map((option) => option.value);
+    const certifications = certification.map((option) => option.value);
     axiosInstance
       .post(
         "/saveJobTemplateForJob?clientId=" +
@@ -271,7 +346,6 @@ export const JobDetailCreate = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-
           industryKnowledge,
           workSetting,
           roleType,
@@ -291,9 +365,9 @@ export const JobDetailCreate = () => {
         }
       )
       .then((data) => {
-        console.log(data.data);
+        console.log("save job______", data.data);
         //localStorage.setItem("jobId", data.data.jobId);
-        //navigate("/job/CreateJob", { state: data.data.jobId });
+        navigate("/job/CreateJob", { state: data.data.jobId });
       })
       .catch((e) => console.log(e));
     closePopup();
@@ -302,8 +376,8 @@ export const JobDetailCreate = () => {
   const saveAsTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    const softwares = software.map(option => option.value);
-    const certifications = certification.map(option => option.value);
+    const softwares = software.map((option) => option.value);
+    const certifications = certification.map((option) => option.value);
     axiosInstance
       .post(
         "/saveJobTemplateForJob?clientId=" +
@@ -484,11 +558,6 @@ export const JobDetailCreate = () => {
       .catch((e) => console.log(e));
   };
 
-
-  const handleCreate = () => {
-
-  }
-
   return (
     <div>
       <div className="flex">
@@ -516,7 +585,8 @@ export const JobDetailCreate = () => {
                     color: "#008080",
                     backgroundColor: "#EAF4F5",
                     fontSize: 14,
-                  }}>
+                  }}
+                >
                   Copy data from the template
                 </Button>
               </div>
@@ -541,7 +611,9 @@ export const JobDetailCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobCode).map((option) => option.label)}
+                  options={convertToOptions(settings?.jobCode).map(
+                    (option) => option.label
+                  )}
                   value={jobCode || null}
                   onChange={(e, newvalue) => setJobCode(newvalue)}
                   renderInput={(params) => (
@@ -553,46 +625,70 @@ export const JobDetailCreate = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Family
                 </p>
-                <Autocomplete
-                  size="small"
-                  disablePortal
-                  options={convertToOptions(settings?.jobFamily).map((option) => option.label)}
-                  value={jobFamily || null}
-                  onChange={(e, newvalue) => setJobFamily(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                />
+                {education.map((jbFmly, index) => (
+                  <CreatableSelect
+                    isClearable
+                    options={getOptions("jobFamily")}
+                    value={jbFmly.jobFamily}
+                    onChange={(selected) =>
+                      handleChangeEducation("jobFamily", selected, index)
+                    }
+                    onCreateOption={(selected) =>
+                      handleCreate("jobFamily", selected)
+                    }
+                    placeholder="Select or create an item"
+                  />
+                ))}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Department
                 </p>
-                <Autocomplete
+                {/* <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobDepartment).map((option) => option.label)}
+                  options={convertToOptions(settings?.jobDepartment).map(
+                    (option) => option.label
+                  )}
                   value={jobDepartment || null}
                   onChange={(e, newvalue) => setJobDepartment(newvalue)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
-                />
+                /> */}
+                {education.map((jbDepmnt, index) => (
+                  <CreatableSelect
+                    isClearable
+                    options={getOptions("jobDepartment")}
+                    value={jbDepmnt.jobDepartment}
+                    onChange={(selected) =>
+                      handleChangeEducation("jobDepartment", selected, index)
+                    }
+                    onCreateOption={(selected) =>
+                      handleCreate("jobDepartment", selected)
+                    }
+                    placeholder="Select or create an item"
+                  />
+                ))}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Location
                 </p>
-                <Autocomplete
-                  size="small"
-                  disablePortal
-                  options={convertToOptions(settings?.jobLocation).map((option) => option.label)}
-                  value={jobLocation || null}
-                  onChange={(e, newvalue) => setJobLocation(newvalue)}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                />
+                {education.map((locatn, index) => (
+                  <CreatableSelect
+                    isClearable
+                    options={getOptions("jobLocation")}
+                    value={locatn.jobLocation}
+                    onChange={(selected) =>
+                      handleChangeEducation("jobLocation", selected, index)
+                    }
+                    onCreateOption={(selected) =>
+                      handleCreate("jobLocation", selected)
+                    }
+                    placeholder="Select or create an item"
+                  />
+                ))}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -621,7 +717,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Company Overview
                     </p>
                     <Button
@@ -633,7 +730,8 @@ export const JobDetailCreate = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={getCompanyOverview}>
+                      onClick={getCompanyOverview}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -670,7 +768,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -679,7 +778,8 @@ export const JobDetailCreate = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     For the Company Overview, ensure it succinctly captures the
                     mission and culture of the company in three sentences. This
                     summary should provide a clear and compelling introduction
@@ -696,7 +796,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Summary
                     </p>
                     <Button
@@ -708,7 +809,8 @@ export const JobDetailCreate = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateJobSummary}>
+                      onClick={generateJobSummary}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -728,7 +830,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -737,7 +840,8 @@ export const JobDetailCreate = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     The job summary should succinctly outline the expectations
                     of this role in three sentences. Include details on the
                     reporting manager's role to provide clarity on hierarchical
@@ -753,7 +857,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Responsibilities
                     </p>
                     <Button
@@ -765,7 +870,8 @@ export const JobDetailCreate = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateResponsibility}>
+                      onClick={generateResponsibility}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -785,7 +891,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -794,7 +901,8 @@ export const JobDetailCreate = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Outline detailed but concise core responsibilities,
                     emphasizing unique organizational duties (e.g., social media
                     expertise for event promotion). Highlight daily activities
@@ -813,7 +921,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Benefits
                     </p>
                     <Button
@@ -825,7 +934,8 @@ export const JobDetailCreate = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateBenefit}>
+                      onClick={generateBenefit}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -845,7 +955,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -854,7 +965,8 @@ export const JobDetailCreate = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Include benefits in 3-5 words each, such as 'Flexible work
                     schedules' and 'Health Insurance', to attract top talent.
                   </p>
@@ -868,7 +980,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Equal Employee Opportunity (EEO)
                     </p>
                     <Button
@@ -880,7 +993,8 @@ export const JobDetailCreate = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateEEO}>
+                      onClick={generateEEO}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -901,7 +1015,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -910,7 +1025,8 @@ export const JobDetailCreate = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Craft an effective EEO statement: Be specific about
                     compliance with EEOC rules, mention relevant employment
                     practices beyond hiring, highlight diversity and inclusion
@@ -945,7 +1061,8 @@ export const JobDetailCreate = () => {
               <div className="grid grid-cols-2 gap-8 mt-3">
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Would industry knowledge be valued even without direct
                     experience?
                   </p>
@@ -962,45 +1079,59 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What is the work setting for the role?
                   </p>
-                  <Autocomplete
-                    size="small"
-                    disablePortal
-                    options={convertToOptions(settings?.workSetting).map((option) => option.label)}
-                    value={workSetting || null}
-                    onChange={(e, newvalue) => setWorkSetting(newvalue)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                  />
+                  {education.map((wrkStng, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("workSetting")}
+                      value={wrkStng.workSetting}
+                      onChange={(selected) =>
+                        handleChangeEducation("workSetting", selected, index)
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("workSetting", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Type of role
                   </p>
-                  <Autocomplete
-                    size="small"
-                    disablePortal
-                    options={convertToOptions(settings?.typeRole).map((option) => option.label)}
-                    value={roleType || null}
-                    onChange={(e, newvalue) => setRoleType(newvalue)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                  />
+
+                  {education.map((typRole, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("roleType")}
+                      value={typRole.roleType}
+                      onChange={(selected) =>
+                        handleChangeEducation("roleType", selected, index)
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("roleType", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What are the timings for the role?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.roleTiming).map((option) => option.label)}
+                    options={convertToOptions(settings?.roleTiming).map(
+                      (option) => option.label
+                    )}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -1010,26 +1141,33 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     How frequent does the role require to travel?
                   </p>
-                  <Autocomplete
-                    size="small"
-                    disablePortal
-                    options={convertToOptions(settings?.travel).map((option) => option.label)}
-                    value={roleTravel || null}
-                    onChange={(e, newvalue) => setRoleTravel(newvalue)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                  />
+
+                  {education.map((rolTrvl, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("roleTravel")}
+                      value={rolTrvl.roleTravel}
+                      onChange={(selected) =>
+                        handleChangeEducation("roleTravel", selected, index)
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("roleTravel", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
                 <div className="grid grid-flow-row gap-2 ">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What kind of visa are you looking for ?
                   </p>
-                  <Autocomplete
+                  {/* <Autocomplete
                     size="small"
                     disablePortal
                     options={options.map((option) => option.label)}
@@ -1038,7 +1176,21 @@ export const JobDetailCreate = () => {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                  />
+                  /> */}
+                  {education.map((vsa, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("visa")}
+                      value={vsa.visa}
+                      onChange={(selected) =>
+                        handleChangeEducation("visa", selected, index)
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("visa", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -1050,14 +1202,17 @@ export const JobDetailCreate = () => {
               <div className="grid-cols-2 grid gap-8 mt-8">
                 <div className="grid grid-flow-row gap-2 mt-3">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Minimum level of academic qualification do you seek in
                     potential candidates?
                   </p>
-                  <Autocomplete
+                  {/* <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.acadamicQualification).map((option) => option.label)}
+                    options={convertToOptions(
+                      settings?.acadamicQualification
+                    ).map((option) => option.label)}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)
@@ -1065,11 +1220,30 @@ export const JobDetailCreate = () => {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                  />
+                  /> */}
+                  {education.map((diffAcdmic, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("minimumLevelQualification")}
+                      value={diffAcdmic.minimumLevelQualification}
+                      onChange={(selected) =>
+                        handleChangeEducation(
+                          "minimumLevelQualification",
+                          selected,
+                          index
+                        )
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("minimumLevelQualification", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
                 <div className="grid grid-flow-row gap-2 mt-3">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there regulatory/ compliance requirements for academic
                     qualifications?
                   </p>
@@ -1087,24 +1261,34 @@ export const JobDetailCreate = () => {
 
                 <div className="grid grid-flow-row gap-2 py-5">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Open to candidates with diverse academic backgrounds with
                     required skills?
                   </p>
-                  <Autocomplete
-                    size="small"
-                    disablePortal
-                    options={yes_no}
-                    value={differentAcademic || null}
-                    onChange={(e, newvalue) => setDifferentAcademic(newvalue)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                  />
+                  {education.map((diffAcdmic, index) => (
+                    <CreatableSelect
+                      isClearable
+                      options={getOptions("differentAcademic")}
+                      value={diffAcdmic.differentAcademic}
+                      onChange={(selected) =>
+                        handleChangeEducation(
+                          "differentAcademic",
+                          selected,
+                          index
+                        )
+                      }
+                      onCreateOption={(selected) =>
+                        handleCreate("differentAcademic", selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  ))}
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What should a successful candidate achieve in this role
                     within three years?
                   </p>
@@ -1120,55 +1304,54 @@ export const JobDetailCreate = () => {
                 {/* cerificate */}
                 <div className="grid grid-flow-row gap-2 h-fit">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there any specific certifications or licenses that
                     candidates must hold?
                   </p>
-                      <>
-                        <div>
-                        <CreatableSelect
-                          isClearable
-                          isMulti
-                          options={certOpts}
-                          value={certification || null}
-                          onChange={(selected) =>
-                              handleChangeCertificate(
-                               selected
-                              )
-                            }
-                          placeholder="Select or create an item"
-                        />
-                        </div>
-                      </>
+                  <>
+                    <div>
+                      <CreatableSelect
+                        isClearable
+                        isMulti
+                        options={certOpts}
+                        value={certification || null}
+                        onChange={(selected) =>
+                          handleChangeCertificate(selected)
+                        }
+                        placeholder="Select or create an item"
+                      />
+                    </div>
+                  </>
                 </div>
                 {/* tools */}
                 <div className="grid grid-flow-row gap-2 h-fit">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there any tools or software candidates should be
                     proficient in?
                   </p>
-                        <div>
-                            <CreatableSelect
-                              isClearable
-                              isMulti
-                              options={tools}
-                              value={software || null}
-                              onChange={(selected) =>
-                                  handleChangeToolsAndSoftware(
-                                  selected
-                                  )
-                                }
-                              placeholder="Select or create an item"
-                            />
-                        </div>
+                  <div>
+                    <CreatableSelect
+                      isClearable
+                      isMulti
+                      options={tools}
+                      value={software || null}
+                      onChange={(selected) =>
+                        handleChangeToolsAndSoftware(selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="grid grid-flow-row gap-2 pb-8">
                 <div className="pt-3 ">
                   <p
-                    style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                    style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}
+                  >
                     Generate screening question for this role
                   </p>
                   <Button
@@ -1180,7 +1363,8 @@ export const JobDetailCreate = () => {
                       margin: 3,
                     }}
                     startIcon={<AiNetworksvg COLOR={"#008080"} />}
-                    onClick={getJobDescription}>
+                    onClick={getJobDescription}
+                  >
                     Generate JD
                   </Button>
                 </div>
@@ -1207,13 +1391,15 @@ export const JobDetailCreate = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
                 onClick={savejobDetail}
                 variant="outlined"
-                style={{ color: "#008080" }}>
+                style={{ color: "#008080" }}
+              >
                 Save
               </Button>
               <Button
@@ -1221,7 +1407,8 @@ export const JobDetailCreate = () => {
                   setShowPopup(true);
                 }}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 Save AS Template
               </Button>
             </div>
@@ -1230,7 +1417,8 @@ export const JobDetailCreate = () => {
               <DialogTitle>Template Details</DialogTitle>
               <IconButton
                 onClick={closePopup}
-                style={{ position: "absolute", top: 10, right: 10 }}>
+                style={{ position: "absolute", top: 10, right: 10 }}
+              >
                 <IoIosCloseCircleOutline />
               </IconButton>
               <Divider />
@@ -1242,7 +1430,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Template Name
                     </p>
                     <TextField
@@ -1259,7 +1448,8 @@ export const JobDetailCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Template Tags
                     </p>
                     <TextField
@@ -1273,7 +1463,8 @@ export const JobDetailCreate = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 py-8">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Job Template Description
                   </p>
                   <textarea
@@ -1293,7 +1484,8 @@ export const JobDetailCreate = () => {
                 <Button
                   onClick={saveAsTemplate}
                   variant="contained"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}
+                >
                   SAVE
                 </Button>
               </DialogActions>

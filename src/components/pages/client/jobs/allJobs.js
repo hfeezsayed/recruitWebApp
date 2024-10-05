@@ -424,7 +424,7 @@ export const AllJobs = () => {
             <Spinner />
           ) : (
             <div>
-              {filterData.length === 0 && filter === false ? (
+              {filterData.length === true && filter === false ? (
                 <div className="p-8 h-full">
                   <div>
                     <p
@@ -434,7 +434,7 @@ export const AllJobs = () => {
                         fontWeight: 700,
                       }}
                     >
-                      All Jobs
+                      `All Jobs`
                     </p>
                     <Button
                       size="small"
