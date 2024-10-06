@@ -100,6 +100,8 @@ import RatingStyle from "./components/pages/client/assessments/SelfAssessments/R
 import RatingAggregateDimensions from "./components/pages/client/assessments/SelfAssessments/RatingAggregateDimensions/RatingAggregateDimensions";
 import Jobs from "./components/pages/client/jobsAdmin/Jobs/Jobs";
 import WorkflowView from "./components/pages/client/jobsAdmin/Jobs/WorkflowView/WorkflowView";
+import { CandidatesLists } from "./components/pages/client/jobsAdmin/candidates/candidatesList";
+import { CreateCandidates } from "./components/pages/client/jobsAdmin/candidates/createCandidate";
 
 export const Routes = () => {
   return (
@@ -116,6 +118,23 @@ export const Routes = () => {
         path="digitalTalentProfileResult"
         element={<TalentProfileResult />}
       />
+
+      {/* Role Admin */}
+      <Route path="" element={<PrivateRoute requiredRole="ROLE_ADMIN" />}>
+        <Route path="/admin" element={<AdminDashBoard />} />
+        <Route path="jobs-admin/jobs" element={<Jobs />} />
+        <Route
+          path="jobs-admin/jobs/workflow-view"
+          element={<WorkflowView />}
+        />
+        <Route path="client/jobs-admin/applicant" element={<Applicant />} />
+        <Route path="clientManagement" element={<ClientManagementSec />} />
+        <Route path="assignCandidate" element={<CandidatesLists />} />
+        <Route path="createCandidate" element={<CreateCandidates />} />
+        <Route path="*" element={<Error404 />} />
+      </Route>
+
+      {/* Role Candidate */}
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CANDIDATE" />}>
         <Route path="candidate" element={<Candidate />} />
         <Route path="candidate/dashboard" element={<HomePage />} />
@@ -167,6 +186,8 @@ export const Routes = () => {
         <Route path="authorisedclients" element={<AuthorisedClient />} />
         <Route path="*" element={<Error404 />} />
       </Route>
+
+      {/* Role client */}
       <Route path="" element={<PrivateRoute requiredRole="ROLE_CLIENT" />}>
         <Route path="client/dashboard" element={<DashBoard />} />
         <Route path="profile" element={<ProfileDashboard />} />
@@ -285,13 +306,8 @@ export const Routes = () => {
           element={<PriorityRanking />}
         />
         <Route path="references/rating" element={<Rating />} />
-        <Route path="dashboardPanel" element={<AdminDashBoard />} />
+
         <Route path="createCandidate" element={<CreateCandidate />} />
-        <Route
-          path="client/jobs-admin/clientManagementSection"
-          element={<ClientManagementSec />}
-        />
-        <Route path="client/jobs-admin/applicant" element={<Applicant />} />
 
         <Route
           path="assessment/selfAssessments/rating-aggregate"
@@ -305,11 +321,7 @@ export const Routes = () => {
           path="assessment/selfAssessments/rating-aggregate-dimensions"
           element={<RatingAggregateDimensions />}
         />
-        <Route path="jobs-admin/jobs" element={<Jobs />} />
-        <Route
-          path="jobs-admin/jobs/workflow-view"
-          element={<WorkflowView />}
-        />
+
         <Route path="*" element={<Error404 />} />
       </Route>
       <Route path="*" element={<Error404 />} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ClientManagementSec.css";
-import { ClientSideNav } from "../../../../widgets/clientSideNav";
+import { AdminSideNav } from "../../../../widgets/adminSideNav";
 import { TopNav } from "../../../../widgets/topNav";
 //MUI
 import {
@@ -98,7 +98,7 @@ const ClientManagementSec = () => {
 
   return (
     <div className="flex">
-      <ClientSideNav />
+      <AdminSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
         <TopNav />
         {loading === true ? (

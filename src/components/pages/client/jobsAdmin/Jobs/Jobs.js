@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //Navbar
-import { ClientSideNav } from "../../../../widgets/clientSideNav";
+import { AdminSideNav } from "../../../../widgets/adminSideNav";
 import { TopNav } from "../../../../widgets/topNav";
 import "./Jobs.css";
 //MUI start
@@ -23,7 +23,7 @@ const Jobs = () => {
 
   return (
     <div className="flex">
-      <ClientSideNav />
+      <AdminSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
         <div className="jobs-top-nav">
           <TopNav />

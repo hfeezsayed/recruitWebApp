@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //Side navbar
-import { ClientSideNav } from "../../../../widgets/clientSideNav";
+import { AdminSideNav } from "../../../../widgets/adminSideNav";
 //Top Navbar
 import { TopNav } from "../../../../widgets/topNav";
 //other components
@@ -69,7 +69,7 @@ export const AdminDashBoard = () => {
 
   return (
     <div className="flex">
-      <ClientSideNav />
+      <AdminSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
         <TopNav />
         {loading === true ? (
