@@ -221,13 +221,15 @@ export const IcpTemplateEdit = () => {
             return (
               <div
                 className="border p-2 flex justify-between items-center"
-                key={index}>
+                key={index}
+              >
                 <p
                   style={{
                     color: "#475467",
                     fontSize: 14,
                     textTransform: "none",
-                  }}>
+                  }}
+                >
                   {value}
                 </p>
                 <TextField
@@ -310,7 +312,8 @@ export const IcpTemplateEdit = () => {
         style={{
           opacity,
           padding: 3,
-        }}>
+        }}
+      >
         <text className=" pr-2 text-app-Teal text-2xl">&#x2022;</text>
         <text>{content}</text>
       </div>
@@ -416,7 +419,8 @@ export const IcpTemplateEdit = () => {
             onChange={(e) => {
               handleRatingChange(IcpTemplateQuestion, e.target.value);
             }}
-            name="radio-buttons-group">
+            name="radio-buttons-group"
+          >
             {IcpTemplateQuestion.options.map((data, index) => {
               return (
                 <div className="border px-2 py-1" key={index}>
@@ -445,7 +449,8 @@ export const IcpTemplateEdit = () => {
                           color: "#475467",
                           fontSize: 14,
                           textTransform: "none",
-                        }}>
+                        }}
+                      >
                         {data}
                       </p>
                     }
@@ -505,7 +510,8 @@ export const IcpTemplateEdit = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 700,
-                      }}>
+                      }}
+                    >
                       Choose Ideal Candidate Persona Templates
                     </p>
                     <p
@@ -513,7 +519,8 @@ export const IcpTemplateEdit = () => {
                         color: "#475467",
                         fontSize: 14,
                         fontWeight: 400,
-                      }}>
+                      }}
+                    >
                       Please choose Ideal Candidate Persona template from the
                       available options.
                     </p>
@@ -545,20 +552,24 @@ export const IcpTemplateEdit = () => {
                                 />
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Serial Number
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Template Name
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Created By
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Result
                                 </TableCell>
                               </TableRow>
@@ -602,7 +613,8 @@ export const IcpTemplateEdit = () => {
                                           navigate("/job/icpResult", {
                                             state: row,
                                           });
-                                        }}>
+                                        }}
+                                      >
                                         View
                                       </Button>
                                     </TableCell>
@@ -636,7 +648,8 @@ export const IcpTemplateEdit = () => {
                         style={{
                           color: "#ffffff",
                           backgroundColor: "#008080",
-                        }}>
+                        }}
+                      >
                         CONFIRM
                       </Button>
                     </div>
@@ -656,7 +669,8 @@ export const IcpTemplateEdit = () => {
                         color: "#008080",
                         fontWeight: 500,
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       Ideal Candidate Persona
                     </p>
                     <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
@@ -665,7 +679,8 @@ export const IcpTemplateEdit = () => {
                         color: currentSection > 0 ? "#008080" : "#475467",
                         fontWeight: 500,
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       Questions
                     </p>
 
@@ -675,7 +690,8 @@ export const IcpTemplateEdit = () => {
                         color: currentSection > 1 ? "#008080" : "#475467",
                         fontWeight: 500,
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       Submit Assessment Confirmation
                     </p>
                   </div>
@@ -685,7 +701,8 @@ export const IcpTemplateEdit = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Choose Ideal Candidate Persona Templates from the existing
                       options
                     </p>
@@ -701,7 +718,8 @@ export const IcpTemplateEdit = () => {
                         color: "#101828",
                         fontSize: 14,
                         textAlign: "right",
-                      }}>
+                      }}
+                    >
                       Statement {currentQuestion + 1}/{questionList.length}
                     </p>
                     <p
@@ -710,7 +728,8 @@ export const IcpTemplateEdit = () => {
                         fontSize: 14,
                         fontWeight: 500,
                         marginTop: 10,
-                      }}>
+                      }}
+                    >
                       Statement {currentQuestion + 1}
                     </p>
                   </div>
@@ -727,7 +746,8 @@ export const IcpTemplateEdit = () => {
                     <DialogTitle>Template Details</DialogTitle>
                     <IconButton
                       onClick={closePopup}
-                      style={{ position: "absolute", top: 10, right: 10 }}>
+                      style={{ position: "absolute", top: 10, right: 10 }}
+                    >
                       <IoIosCloseCircleOutline />
                     </IconButton>
                     <Divider />
@@ -739,7 +759,8 @@ export const IcpTemplateEdit = () => {
                               color: "#344054",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job Template Name
                           </p>
                           <TextField
@@ -756,7 +777,8 @@ export const IcpTemplateEdit = () => {
                               color: "#344054",
                               fontSize: 14,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Job Template Tags
                           </p>
                           <TextField
@@ -774,7 +796,8 @@ export const IcpTemplateEdit = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Job Template Description
                         </p>
                         <textarea
@@ -796,7 +819,8 @@ export const IcpTemplateEdit = () => {
                       <Button
                         onClick={closePopup}
                         variant="outlined"
-                        style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                        style={{ color: "#475467", borderColor: "#D0D5DD" }}
+                      >
                         cancel
                       </Button>
                       <Button
@@ -805,7 +829,8 @@ export const IcpTemplateEdit = () => {
                         style={{
                           color: "#ffffff",
                           backgroundColor: "#008080",
-                        }}>
+                        }}
+                      >
                         SAVE
                       </Button>
                     </DialogActions>

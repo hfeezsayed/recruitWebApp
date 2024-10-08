@@ -43,14 +43,6 @@ const ListVIew = () => {
   const [boardingHelp, setBoardingHelp] = useState([]);
   const [fullServiceHelp, setFullServiceHelp] = useState([]);
 
-  //Tabs Start
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const handleTabChange = (e, tabIndex) => {
-    console.log(tabIndex);
-    setCurrentTabIndex(tabIndex);
-  };
-  //Tabs end
-
   //GET request for Souring Help
   useEffect(() => {
     axiosInstance
@@ -173,984 +165,327 @@ const ListVIew = () => {
   const handleJobDescription = () => {};
 
   return (
-    <div className="list-view-table py-3 w-[1040px]">
-      <div>
-        <div className="joblist-tabs">
-          <Tabs value={currentTabIndex} onChange={handleTabChange}>
-            <Tab label="Sourcing Help" />
-            <Tab label="Onboarding Help" />
-            <Tab label="Full Service Staff Help" />
-          </Tabs>
-
-          {/* TAB 1 Contents */}
-          {currentTabIndex === 0 && (
-            <Box sx={{ width: "100%" }}>
-              <h2 className="smallTextGray pt-8 pb-4 font-medium text-[20px]">
-                All Jobs
-              </h2>
-              <Paper sx={{ width: "100%", mb: 2 }}>
-                <TableContainer sx={{ maxHeight: 500 }}>
-                  <Table stickyHeader>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
+    <div className="list-view-table pb-3 w-[1040px]">
+      <div className="joblist-tabs">
+        <Box sx={{ width: "100%" }}>
+          <h2 className="smallTextGray pt-3 pb-4 font-medium text-[20px]">
+            All Jobs
+          </h2>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <TableContainer sx={{ maxHeight: 500 }}>
+              <Table stickyHeader>
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      <TableSortLabel active="" direction="" onClick="">
+                        Job Name
+                      </TableSortLabel>
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Department
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Client Name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Created
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Job Type
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Job Status
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Job Sub - Status
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      New
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Active
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Hired
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Job Description
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Download Pdf
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        bgcolor: "#F8F9FA",
+                        color: "#101828",
+                        border: 1,
+                        borderColor: "#D0D5DD50",
+                      }}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {sourcingHelp.map((user, index) => (
+                    <TableRow key={index}>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.jobName}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.jobDepartment}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.companyName}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.createdDate}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {jobTypeColor(user.jobType)}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {jobStatusColor(user.jobStatus)}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.jobSubStatus}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.total}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.newly}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.active}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        {user.hired}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        padding="none"
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        <IconButton
+                          onClick={(e) => {
+                            handleJd(e);
+                            setAnchorData();
                           }}
                         >
-                          <TableSortLabel active="" direction="" onClick="">
-                            Job Name
-                          </TableSortLabel>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
+                          <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        padding="none"
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        <Button
+                          style={{
+                            color: "#5FAEDA",
+                            fontSize: 14,
+                            textTransform: "none",
+                          }}
+                          onClick={() => {}}
+                        >
+                          Download
+                        </Button>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        padding="none"
+                        sx={{
+                          color: "#475467",
+                          border: 1,
+                          borderColor: "#D0D5DD50",
+                        }}
+                      >
+                        <IconButton
+                          onClick={(e) => {
+                            handleClick(e);
+                            setAnchorData();
                           }}
                         >
-                          Department
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Client Name
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Created
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Type
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Sub - Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Total
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          New
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Active
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Hired
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Description
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Download Pdf
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Actions
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {sourcingHelp.map((user, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobDepartment}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.companyName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.createdDate}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobTypeColor(user.jobType)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobStatusColor(user.jobStatus)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobSubStatus}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.total}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.newly}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.active}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.hired}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleJd(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <Button
-                              style={{
-                                color: "#5FAEDA",
-                                fontSize: 14,
-                                textTransform: "none",
-                              }}
-                              onClick={() => {}}
-                            >
-                              Download
-                            </Button>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleClick(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </Box>
-          )}
-
-          {/* TAB 2 Contents */}
-          {currentTabIndex === 1 && (
-            <Box sx={{ width: "100%" }}>
-              <h2 className="smallTextGray pt-8 pb-4 font-medium text-[20px]">
-                All Jobs
-              </h2>
-              <Paper sx={{ width: "100%", mb: 2 }}>
-                <TableContainer sx={{ maxHeight: 500 }}>
-                  <Table stickyHeader>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          <TableSortLabel active="" direction="" onClick="">
-                            Job Name
-                          </TableSortLabel>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Department
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Client Name
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Created
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Type
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Sub - Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Total
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          New
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Active
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Hired
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Description
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Download Pdf
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Actions
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {boardingHelp.map((user, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobDepartment}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.companyName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.createdDate}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobTypeColor(user.jobType)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobStatusColor(user.jobStatus)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobSubStatus}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.total}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.newly}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.active}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.hired}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleJd(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <Button
-                              style={{
-                                color: "#5FAEDA",
-                                fontSize: 14,
-                                textTransform: "none",
-                              }}
-                              onClick={() => {}}
-                            >
-                              Download
-                            </Button>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleClick(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </Box>
-          )}
-
-          {/* TAB 3 Contents */}
-          {currentTabIndex === 2 && (
-            <Box sx={{ width: "100%" }}>
-              <h2 className="smallTextGray pt-8 pb-4 font-medium text-[20px]">
-                All Jobs
-              </h2>
-              <Paper sx={{ width: "100%", mb: 2 }}>
-                <TableContainer sx={{ maxHeight: 500 }}>
-                  <Table stickyHeader>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          <TableSortLabel active="" direction="" onClick="">
-                            Job Name
-                          </TableSortLabel>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Department
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Client Name
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Created
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Type
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Sub - Status
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Total
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          New
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Active
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Hired
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Job Description
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Download Pdf
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            bgcolor: "#F8F9FA",
-                            color: "#101828",
-                            border: 1,
-                            borderColor: "#D0D5DD50",
-                          }}
-                        >
-                          Actions
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {fullServiceHelp.map((user, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobDepartment}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.companyName}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.createdDate}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobTypeColor(user.jobType)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {jobStatusColor(user.jobStatus)}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.jobSubStatus}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.total}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.newly}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.active}
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            {user.hired}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleJd(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <Button
-                              style={{
-                                color: "#5FAEDA",
-                                fontSize: 14,
-                                textTransform: "none",
-                              }}
-                              onClick={() => {}}
-                            >
-                              Download
-                            </Button>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            padding="none"
-                            sx={{
-                              color: "#475467",
-                              border: 1,
-                              borderColor: "#D0D5DD50",
-                            }}
-                          >
-                            <IconButton
-                              onClick={(e) => {
-                                handleClick(e);
-                                setAnchorData();
-                              }}
-                            >
-                              <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </Box>
-          )}
-        </div>
+                          <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Box>
       </div>
       {/*Actions menu */}
       <Menu

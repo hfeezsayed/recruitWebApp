@@ -102,6 +102,11 @@ import Jobs from "./components/pages/client/jobsAdmin/Jobs/Jobs";
 import WorkflowView from "./components/pages/client/jobsAdmin/Jobs/WorkflowView/WorkflowView";
 import { CandidatesLists } from "./components/pages/client/jobsAdmin/candidates/candidatesList";
 import { CreateCandidates } from "./components/pages/client/jobsAdmin/candidates/createCandidate";
+import SourcingHelp from "./components/pages/client/jobsAdmin/Jobs/SourcingHelp/SourcingHelp";
+import OnboardingHelp from "./components/pages/client/jobsAdmin/Jobs/OnboardingHelp/OnboardingHelp";
+import FullServiceStaffHelp from "./components/pages/client/jobsAdmin/Jobs/FullServiceStaffHelp/FullServiceStaffHelp";
+import { CandidatesAssign } from "./components/pages/candidate/candidates/candidatesList";
+import { CreateCandidatesUser } from "./components/pages/candidate/candidates/createCandidate";
 
 export const Routes = () => {
   return (
@@ -122,11 +127,15 @@ export const Routes = () => {
       {/* Role Admin */}
       <Route path="" element={<PrivateRoute requiredRole="ROLE_ADMIN" />}>
         <Route path="/admin" element={<AdminDashBoard />} />
-        <Route path="jobs-admin/jobs" element={<Jobs />} />
+        <Route path="jobs" element={<Jobs />} />
         <Route
           path="jobs-admin/jobs/workflow-view"
           element={<WorkflowView />}
         />
+        <Route path="sourcingHelp" element={<SourcingHelp />} />
+        <Route path="onboardingHelp" element={<OnboardingHelp />} />
+        <Route path="fullServiceStaffHelp" element={<FullServiceStaffHelp />} />
+
         <Route path="client/jobs-admin/applicant" element={<Applicant />} />
         <Route path="clientManagement" element={<ClientManagementSec />} />
         <Route path="assignCandidate" element={<CandidatesLists />} />
@@ -140,6 +149,14 @@ export const Routes = () => {
         <Route path="candidate/dashboard" element={<HomePage />} />
         <Route path="job/jobportal" element={<JobPortal />} />
         <Route path="job/jobDetails" element={<JobDetails />} />
+        <Route
+          path="candidate/assignCandidate"
+          element={<CandidatesAssign />}
+        />
+        <Route
+          path="candidate/createCandidate"
+          element={<CreateCandidatesUser />}
+        />
         {/* <Route
           path="job/screeningQuestions"
           element={<ScreeningQuestionsResponse />}
@@ -184,6 +201,7 @@ export const Routes = () => {
         <Route path="createAssessment" element={<CreateAssessment />} />
         <Route path="assesmentform" element={<AssesmentForm />} />
         <Route path="authorisedclients" element={<AuthorisedClient />} />
+
         <Route path="*" element={<Error404 />} />
       </Route>
 

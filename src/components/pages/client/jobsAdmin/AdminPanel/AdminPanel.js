@@ -28,11 +28,14 @@ import AddClientModal from "./Modal/AddClientModal";
 //API endPoint
 import Spinner from "../../../../utils/spinner";
 import axiosInstance from "../../../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 export const AdminDashBoard = () => {
   const [boxVisibility, setBoxVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState([]); //for cards api
+
+  const navigate = useNavigate();
 
   //Modal code start
   const [open, setOpen] = useState(false);
@@ -90,7 +93,12 @@ export const AdminDashBoard = () => {
                   <Card sx={{ minWidth: 330 }} variant="outlined">
                     <CardHeader
                       avatar={
-                        <Avatar sx={{ bgcolor: "#FEF5F0", color: "#F78F54" }}>
+                        <Avatar
+                          sx={{
+                            bgcolor: "#FEF5F0",
+                            color: "#F78F54",
+                          }}
+                        >
                           <img src={groupUser} alt="total job posted" />
                         </Avatar>
                       }
@@ -153,7 +161,10 @@ export const AdminDashBoard = () => {
                       <p className="smallTextGray text-sm">
                         Total applicants that are active
                       </p>
-                      <Button size="large">
+                      <Button
+                        size="large"
+                        onClick={() => navigate("/client/jobs-admin/applicant")}
+                      >
                         <img src={rightArrow} className="arrow-img" />
                       </Button>
                     </CardActions>

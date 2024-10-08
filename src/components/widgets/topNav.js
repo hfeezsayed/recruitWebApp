@@ -33,7 +33,7 @@ export const TopNav = () => {
 
   return (
     <div className="grid grid-cols-2 py-2 w-full">
-      <div className="px-8 flex items-center">
+      <div className="px-8 flex items-center -z-10">
         <TextField
           size="small"
           placeholder="Search or type"
@@ -52,12 +52,14 @@ export const TopNav = () => {
       <div className="grid grid-flow-col justify-end items-center gap-4 px-3">
         <div
           className="grid grid-flow-col gap-2 justify-start items-center"
-          onClick={handleClick}>
+          onClick={handleClick}
+        >
           <IconButton
             size="small"
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}>
+            aria-expanded={open ? "true" : undefined}
+          >
             <Avatar sx={{ width: 24, height: 24 }} src={usIcon} />
           </IconButton>
           <p style={{ fontSize: 18, fontWeight: 600, color: "#101828" }}>
@@ -74,18 +76,21 @@ export const TopNav = () => {
               vertical: "top",
               horizontal: "right",
             }}
-            classes={{ colorError: "#E05880" }}>
+            classes={{ colorError: "#E05880" }}
+          >
             <FaRegBell style={{ color: "#FFA412", fontSize: 18 }} />
           </Badge>
         </IconButton>
         <div
           className="grid grid-flow-col gap-2 justify-start items-center"
-          onClick={handleClick}>
+          onClick={handleClick}
+        >
           <IconButton
             size="small"
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}>
+            aria-expanded={open ? "true" : undefined}
+          >
             <Avatar
               sx={{ width: 32, height: 32 }}
               src="https://i.pravatar.cc/250?u=mail@ashallendesign.co.uk"
@@ -130,7 +135,8 @@ export const TopNav = () => {
             },
           }}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        >
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <GoPerson
@@ -153,7 +159,8 @@ export const TopNav = () => {
             onClick={() => {
               localStorage.clear();
               navigate("/logout");
-            }}>
+            }}
+          >
             <ListItemIcon>
               <FiLogOut
                 style={{ color: "#475467", fontWeight: 600, fontSize: 18 }}

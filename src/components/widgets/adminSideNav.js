@@ -84,10 +84,6 @@ export const AdminSideNav = ({ openTemplate }) => {
     openTemplate ? true : false
   );
 
-  const [showAcordianJobsAdmin, setShowAcordianJobsAdmin] = React.useState(
-    openTemplate ? true : false
-  );
-
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -129,7 +125,7 @@ export const AdminSideNav = ({ openTemplate }) => {
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
-                minHeight: 30,
+                minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 mx: open ? 2.5 : 1.5,
                 mt: 2,
@@ -172,7 +168,7 @@ export const AdminSideNav = ({ openTemplate }) => {
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
-                minHeight: 30,
+                minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 mx: open ? 2.5 : 1.5,
                 mt: 2,
@@ -222,28 +218,25 @@ export const AdminSideNav = ({ openTemplate }) => {
 
           {/* JOBS ADMIN CODE START */}
 
+          {/* djd */}
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
-                minHeight: 30,
+                minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 mx: open ? 2.5 : 1.5,
                 my: 1,
                 px: 1,
+                bgcolor: currentState.includes("jobs") ? "#008080" : "#ffffff",
+                color: currentState.includes("jobs") ? "#ffffff" : "#475467",
                 borderRadius: 2,
-                bgcolor: currentState.includes("jobsadmin")
-                  ? "#008080"
-                  : "#ffffff",
-                color: currentState.includes("jobsadmin")
-                  ? "#ffffff"
-                  : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
               }}
               onClick={() => {
-                setShowAcordianJobsAdmin(!showAcordianJobsAdmin);
-                // navigate("/dashboardPanel");
+                navigate("/jobs");
+                setShowAcordian(!showAcordian);
               }}
             >
               <ListItemIcon
@@ -251,31 +244,25 @@ export const AdminSideNav = ({ openTemplate }) => {
                   minWidth: 0,
                   mr: open ? 1 : "auto",
                   justifyContent: "center",
-                  fontSize: 20,
                 }}
               >
-                <LuCalendarSearch
-                  COLOR={
-                    currentState.includes("jobsadmin") ? "#ffffff" : "#475467"
-                  }
-                  fontSize={20}
+                <TemplateSvg
+                  COLOR={currentState.includes("jobs") ? "#ffffff" : "#475467"}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Jobs"}
                 primaryTypographyProps={{
-                  color: currentState.includes("jobsadmin")
-                    ? "#ffffff"
-                    : "#475467",
+                  color: currentState.includes("jobs") ? "#ffffff" : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {!showAcordianJobsAdmin ? (
+              {!showAcordian ? (
                 <IoIosArrowUp
                   style={{
-                    color: currentState.includes("jobsadmin")
+                    color: currentState.includes("jobs")
                       ? "#ffffff"
                       : "#475467",
                   }}
@@ -283,7 +270,7 @@ export const AdminSideNav = ({ openTemplate }) => {
               ) : (
                 <IoIosArrowDown
                   style={{
-                    color: currentState.includes("jobsadmin")
+                    color: currentState.includes("jobs")
                       ? "#ffffff"
                       : "#475467",
                   }}
@@ -292,59 +279,57 @@ export const AdminSideNav = ({ openTemplate }) => {
             </ListItemButton>
           </ListItem>
           {/* collapse */}
-          <Collapse in={showAcordianJobsAdmin} timeout="auto" unmountOnExit>
+          <Collapse in={showAcordian} timeout="auto" unmountOnExit>
             <div
-              className="pl-16 py-2"
-              onClick={() => navigate("/jobs-admin/jobs")}
+              className="pl-16 py-2 cursor-pointer"
+              onClick={() => navigate("/sourcingHelp")}
             >
               <p
                 style={{
-                  color: currentState.includes("job-istings")
+                  color: currentState.includes("sourcingHelp")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer",
                 }}
-                onClick={handleClickSecondLevel}
-                className="flex justify-between items-center"
               >
-                Jobs
-                {/* <span className="pr-7">
-                  {openSecondLevel ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </span> */}
+                Sourcing Help
               </p>
             </div>
-            {/* <Collapse in={openSecondLevel} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding className="sub-level-menu ">
-                <ListItem>
-                  <ListItemText primary="Sourcing Help" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Onboarding Help" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Full Service Staff Help" />
-                </ListItem>
-              </List>
-            </Collapse> */}
+
             <div
-              className="pl-16 py-2"
-              onClick={() => navigate("/client/jobs-admin/applicant")}
+              className="pl-16 py-2 cursor-pointer"
+              onClick={() => navigate("/onboardingHelp")}
             >
               <p
                 style={{
-                  color: currentState.includes("applicant")
+                  color: currentState.includes("onboardingHelp")
                     ? "#008080"
                     : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                  cursor: "pointer",
                 }}
               >
-                Applicant
+                Onboarding Help
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2 cursor-pointer"
+              onClick={() => navigate("/fullServiceStaffHelp")}
+            >
+              <p
+                style={{
+                  color: currentState.includes("fullServiceStaffHelp")
+                    ? "#008080"
+                    : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
+              >
+                Full Service Staff Help
               </p>
             </div>
           </Collapse>

@@ -286,7 +286,7 @@ const Applicant = () => {
                 </Paper>
                 <div className="flex justify-between items-center">
                   <p style={{ color: "#475467", fontSize: 14 }}>
-                    Showing {applicantData?.totalCount || 1} results found
+                    Showing {applicantData?.length || 0} results found
                   </p>
                   <Pagination
                     count={PAGECOUNT}

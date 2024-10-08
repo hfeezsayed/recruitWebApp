@@ -5,11 +5,11 @@
   padding-bottom: 21px;
   margin: 20px;
   margin-bottom: 0px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #d0d5dd;
 }
 
 .dashboard-overview .cards .css-10rie1s-MuiPaper-root-MuiCard-root {
-  border: 1px solid #dedede;
+  border: 1px solid #f3f3f3;
   border-radius: 10px;
   box-shadow: -2px 3px 4px 0px #e5e5e5;
 }

@@ -67,3 +67,7 @@ code {
   padding-bottom: 3px;
   cursor: pointer;
 }
+
+.zIndex {
+  z-index: -999;
+}

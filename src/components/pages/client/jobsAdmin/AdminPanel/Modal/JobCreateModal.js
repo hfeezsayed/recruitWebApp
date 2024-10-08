@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Button } from "@mui/material";
 //icons
-import { MdCancelPresentation } from "react-icons/md";
+import { FaWindowClose } from "react-icons/fa";
 //Extrenal css
 import "./Modal.css";
 //API Endpoint
@@ -85,8 +85,8 @@ const JobCreateModal = ({ open, setOpen }) => {
                border-gray-50 px-10 py-[18px] focus:outline-none"
                 >
                   <h2 className="text-xl font-bold main-black">Job Create</h2>
-                  <MdCancelPresentation
-                    className="text-2xl cursor-pointer"
+                  <FaWindowClose
+                    className="text-2xl cursor-pointer text-[#475467]"
                     onClick={handleClose}
                   />
                 </div>
