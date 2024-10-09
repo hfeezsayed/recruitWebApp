@@ -107,7 +107,6 @@ import OnboardingHelp from "./components/pages/client/jobsAdmin/Jobs/OnboardingH
 import FullServiceStaffHelp from "./components/pages/client/jobsAdmin/Jobs/FullServiceStaffHelp/FullServiceStaffHelp";
 import { CandidatesAssign } from "./components/pages/candidate/candidates/candidatesList";
 import { CreateCandidatesUser } from "./components/pages/candidate/candidates/createCandidate";
-import DraggableList from "./components/pages/client/jobsAdmin/DemoDraggable/DraggableList";
 
 export const Routes = () => {
   return (
@@ -136,12 +135,10 @@ export const Routes = () => {
         <Route path="sourcingHelp" element={<SourcingHelp />} />
         <Route path="onboardingHelp" element={<OnboardingHelp />} />
         <Route path="fullServiceStaffHelp" element={<FullServiceStaffHelp />} />
-
         <Route path="client/jobs-admin/applicant" element={<Applicant />} />
         <Route path="clientManagement" element={<ClientManagementSec />} />
         <Route path="assignCandidate" element={<CandidatesLists />} />
         <Route path="createCandidate" element={<CreateCandidates />} />
-        <Route path="demoDraggable" element={<DraggableList />} />
         <Route path="*" element={<Error404 />} />
       </Route>
 
