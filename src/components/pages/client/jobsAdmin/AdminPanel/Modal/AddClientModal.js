@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Button } from "@mui/material";
 //icons
-import { MdCancelPresentation } from "react-icons/md";
+import { FaWindowClose } from "react-icons/fa";
 import "./Modal.css";
 //API Endpoint
 import axiosInstance from "../../../../../utils/axiosInstance";
@@ -81,8 +81,8 @@ const AddClientModal = ({ showModal, setShowModal }) => {
                border-gray-50 px-10 py-[18px] focus:outline-none"
                 >
                   <h2 className="text-xl font-bold main-black">Add Client</h2>
-                  <MdCancelPresentation
-                    className="text-2xl cursor-pointer"
+                  <FaWindowClose
+                    className="text-2xl cursor-pointer text-[#475467]"
                     onClick={handleClose}
                   />
                 </div>

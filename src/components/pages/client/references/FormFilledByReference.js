@@ -33,7 +33,7 @@ const FormFilledByReferences = () => {
     axiosInstance
       .get(`/getAllCandidateReferences?clientId=1&candidateId=33`)
       .then((data) => {
-        //console.log("candidate reference", data);
+        console.log("candidate reference", data);
         setData(data.data);
         setLoading(false);
       })
@@ -62,107 +62,105 @@ const FormFilledByReferences = () => {
               <h2 className="font-medium smallTextGray">
                 Candidate information:
               </h2>
-              {data?.data?.map((user, index) => (
-                <div key={index}>
-                  <div className="grid grid-cols-2 gap-8 mt-5 mb-8">
-                    <div className="grid grid-flow-row gap-1">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Candidate Name:
-                      </p>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        placeholder={user.candidateName}
-                        value={user.candidateName}
-                        className="disable-bg"
-                      />
-                    </div>
-                    <div className="grid grid-flow-row gap-1">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Position Applied For:
-                      </p>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        type="email"
-                        placeholder={user.position}
-                        value={user.position}
-                        className="disable-bg"
-                      />
-                    </div>
-                    <div className="grid grid-flow-row gap-1">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Reference Contact Name:
-                      </p>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        type="tel"
-                        placeholder={user.phoneNumber}
-                        value={user.phoneNumber}
-                        className="disable-bg"
-                      />
-                    </div>
-                    <div className="grid grid-flow-row gap-1">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Reference Contact Position:
-                      </p>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        type="url"
-                        placeholder={user.designation}
-                        value={user.designation}
-                        className="disable-bg"
-                      />
-                    </div>
+              <div>
+                <div className="grid grid-cols-2 gap-8 mt-5 mb-8">
+                  <div className="grid grid-flow-row gap-1">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Candidate Name:
+                    </p>
+                    <TextField
+                      size="small"
+                      fullWidth
+                      placeholder="Arpita Sharma..."
+                      value=""
+                      className="disable-bg"
+                    />
                   </div>
-                  <div className="grid grid-cols-1">
-                    <div className="grid grid-flow-row">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Reference Contact Organisation:
-                      </p>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        placeholder={user.company}
-                        value={user.company}
-                        className="disable-bg"
-                      />
-                    </div>
+                  <div className="grid grid-flow-row gap-1">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Position Applied For:
+                    </p>
+                    <TextField
+                      size="small"
+                      fullWidth
+                      type="email"
+                      placeholder="Senior Software Engineer"
+                      value=""
+                      className="disable-bg"
+                    />
+                  </div>
+                  <div className="grid grid-flow-row gap-1">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Reference Contact Name:
+                    </p>
+                    <TextField
+                      size="small"
+                      fullWidth
+                      type="tel"
+                      placeholder="Finton Rodrigues"
+                      value=""
+                      className="disable-bg"
+                    />
+                  </div>
+                  <div className="grid grid-flow-row gap-1">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Reference Contact Position:
+                    </p>
+                    <TextField
+                      size="small"
+                      fullWidth
+                      type="url"
+                      placeholder="Director..."
+                      value=""
+                      className="disable-bg"
+                    />
                   </div>
                 </div>
-              ))}
+                <div className="grid grid-cols-1">
+                  <div className="grid grid-flow-row">
+                    <p
+                      style={{
+                        color: "#344054",
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Reference Contact Organisation:
+                    </p>
+                    <TextField
+                      size="small"
+                      fullWidth
+                      placeholder="Tech Solutions"
+                      value=""
+                      className="disable-bg"
+                    />
+                  </div>
+                </div>
+              </div>
 
               <div className="filled-by-reference mt-11">
                 <h2 className="font-medium smallTextGray text-xl/8">

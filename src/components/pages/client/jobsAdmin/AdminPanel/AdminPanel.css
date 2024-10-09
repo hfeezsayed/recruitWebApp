@@ -8,13 +8,13 @@
   border-bottom: 1px solid #d0d5dd;
 }
 
-.dashboard-overview .cards .css-10rie1s-MuiPaper-root-MuiCard-root {
+.dashboard-overview .cards .css-1v5z4dq-MuiPaper-root-MuiCard-root {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
   box-shadow: -2px 3px 4px 0px #e5e5e5;
 }
 
-.dashboard-overview .cards .css-10rie1s-MuiPaper-root-MuiCard-root:hover {
+.dashboard-overview .cards .css-1v5z4dq-MuiPaper-root-MuiCard-root:hover {
   box-shadow: 0 0 15px #017f7f4f;
   transition: 0.5s;
   transform: scale(0.9);

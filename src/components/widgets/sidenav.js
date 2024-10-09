@@ -494,54 +494,6 @@ export const SideNav = ({ openTemplate }) => {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 30,
-                justifyContent: open ? "initial" : "center",
-                mx: open ? 2.5 : 1.5,
-                mt: 2,
-                mb: 1,
-                px: 1,
-                borderRadius: 2,
-                bgcolor:
-                  currentState === "/assignCandidate" ? "#008080" : "#ffffff",
-                color:
-                  currentState === "/assignCandidate" ? "#ffffff" : "#475467",
-                ":hover": {
-                  bgcolor: "#d5d5d5",
-                },
-              }}
-              onClick={() => {
-                navigate("/candidate/assignCandidate");
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 1 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <TbUsers
-                  COLOR={
-                    currentState === "assignCandidate" ? "#ffffff" : "#475467"
-                  }
-                  fontSize={20}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Candidates"}
-                primaryTypographyProps={{
-                  color:
-                    currentState === "/assignCandidate" ? "#ffffff" : "#475467",
-                  fontSize: 14,
-                  fontWeight: 500,
-                }}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
         </div>
       </Drawer>
     </>

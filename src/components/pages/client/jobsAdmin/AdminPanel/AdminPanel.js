@@ -61,7 +61,7 @@ export const AdminDashBoard = () => {
     axiosInstance
       .get(`/getAdminDashboardProperties`)
       .then((response) => {
-        //console.log("getAdminDashboardProperties", response);
+        console.log("getAdminDashboardProperties", response);
         setUserData(response.data);
         setLoading(false);
       })
@@ -88,9 +88,13 @@ export const AdminDashBoard = () => {
                   This area provides quick metrics and insights.
                 </p>
               </div>
+
               <div className="cards">
-                <div className="flex justify-between gap-3 mt-7">
-                  <Card sx={{ minWidth: 330 }} variant="outlined">
+                <div className="md:flex sm:flex justify-between gap-3 mt-7">
+                  <Card
+                    variant="outlined"
+                    className="sm:w-full md:w-33 lg:w-33 xl:w-33 2xl:w-33"
+                  >
                     <CardHeader
                       avatar={
                         <Avatar
@@ -113,13 +117,19 @@ export const AdminDashBoard = () => {
                       <p className="smallTextGray text-sm">
                         Job Posted in database
                       </p>
-                      <Button size="large">
+                      <Button
+                        size="large"
+                        onClick={() => navigate("/assignCandidate")}
+                      >
                         <img src={rightArrow} className="arrow-img" />
                       </Button>
                     </CardActions>
                   </Card>
 
-                  <Card sx={{ minWidth: 330 }} variant="outlined">
+                  <Card
+                    variant="outlined"
+                    className="sm:w-full md:w-33 lg:w-33 xl:w-33 2xl:w-33"
+                  >
                     <CardHeader
                       avatar={
                         <Avatar sx={{ bgcolor: "#FEF5F0", color: "#F78F54" }}>
@@ -137,13 +147,19 @@ export const AdminDashBoard = () => {
                       <p className="smallTextGray text-sm">
                         Total clients that are active
                       </p>
-                      <Button size="large">
+                      <Button
+                        size="large"
+                        onClick={() => navigate("/clientManagement")}
+                      >
                         <img src={rightArrow} className="arrow-img" />
                       </Button>
                     </CardActions>
                   </Card>
 
-                  <Card sx={{ minWidth: 330 }} variant="outlined">
+                  <Card
+                    variant="outlined"
+                    className="sm:w-full md:w-33 lg:w-33 xl:w-33 2xl:w-33"
+                  >
                     <CardHeader
                       avatar={
                         <Avatar sx={{ bgcolor: "#FEF5F0", color: "#F78F54" }}>

@@ -245,11 +245,12 @@ export const AllJobs = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    console.log("AllJobDraggableData", user);
     setLoading(true);
     axiosInstance
       .get(`/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((response) => {
-        console.log(response.data);
+        console.log("dragData", response.data);
         setData(response?.data.data);
         setTasks(AllJobDataTokanBan(response?.data.data));
         setFilterData(response?.data.data);
