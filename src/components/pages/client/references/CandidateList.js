@@ -36,6 +36,26 @@ const CandidateList = () => {
 
   const navigate = useNavigate();
 
+  const pageChangeHandle = (pageNO, pageSize) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance
+      .get(
+        `/getReferencesCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=${pageSize}`
+      )
+      .then((data) => {
+        console.log("referenceCandidates*****", data);
+        setData(data.data);
+        setPage(data?.pageNo);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+    setPage(pageNO);
+  };
+
   //GET Request
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -83,10 +103,6 @@ const CandidateList = () => {
   //Pagecount
   const PAGECOUNT =
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
-
-  const pageChangeHandle = (pageNO) => {
-    setPage(pageNO);
-  };
 
   //checkbox
   const handleCheckbox = (e) => {
@@ -304,7 +320,7 @@ const CandidateList = () => {
                 </Paper>
                 <div className="flex justify-between items-center">
                   <p style={{ color: "#475467", fontSize: 14 }}>
-                    Showing {data.length || 0} results found
+                    Showing {data?.totalCount || 1} results found
                   </p>
                   <Pagination
                     count={PAGECOUNT}

@@ -100,21 +100,30 @@ export const AssessmentListView = () => {
         <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-          (
-            <Spinner/>
-          )
-          :
-          (
+          {loading === true ? (
+            <Spinner />
+          ) : (
             <div>
               {data.length === 0 ? (
                 <div className="p-8 h-full">
                   <div>
-                    <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 22,
+                        fontWeight: 700,
+                      }}
+                    >
                       Choose Team Templates from the existing options
                     </p>
 
-                    <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 14,
+                        fontWeight: 400,
+                      }}
+                    >
                       Please choose a team template from the available options.
                     </p>
                   </div>
@@ -127,7 +136,8 @@ export const AssessmentListView = () => {
                           fontSize: 20,
                           fontWeight: 500,
                           marginTop: 25,
-                        }}>
+                        }}
+                      >
                         No Assessment Batch Created
                       </p>
                       <Button
@@ -139,7 +149,8 @@ export const AssessmentListView = () => {
                         }}
                         onClick={() => {
                           navigate("/allAssessmentBatches");
-                        }}>
+                        }}
+                      >
                         Add the first assessment batch to initiate the list
                       </Button>
                     </div>
@@ -148,10 +159,22 @@ export const AssessmentListView = () => {
               ) : (
                 <div className="p-8">
                   <div>
-                    <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                    <p
+                      style={{
+                        color: "#101828",
+                        fontSize: 22,
+                        fontWeight: 700,
+                      }}
+                    >
                       Assignment Batches
                     </p>
-                    <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                    <p
+                      style={{
+                        color: "#475467",
+                        fontSize: 14,
+                        fontWeight: 400,
+                      }}
+                    >
                       Select the assessments that you want to allocate to the
                       candidate.
                     </p>
@@ -177,7 +200,8 @@ export const AssessmentListView = () => {
                           backgroundColor: "#EAF4F5",
                           textTransform: "none",
                         }}
-                        onClick={() => navigate("/selectAssesment")}>
+                        onClick={() => navigate("/selectAssesment")}
+                      >
                         Create New Batch
                       </Button>
                     </div>
@@ -189,29 +213,35 @@ export const AssessmentListView = () => {
                               <TableRow>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Serial Number
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Template Name
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Created By
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Candidate Details
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Edit
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Status
                                 </TableCell>
                               </TableRow>
@@ -220,7 +250,9 @@ export const AssessmentListView = () => {
                               {data?.data?.map((row, index) => {
                                 return (
                                   <TableRow key={index}>
-                                    <TableCell align="center">{row.id}</TableCell>
+                                    <TableCell align="center">
+                                      {row.id}
+                                    </TableCell>
                                     <TableCell sx={{ color: "#475467" }}>
                                       {row.batchName}
                                     </TableCell>
@@ -239,7 +271,8 @@ export const AssessmentListView = () => {
                                           console.log(row);
                                           setShowPopupView(true);
                                           setViewData(row);
-                                        }}>
+                                        }}
+                                      >
                                         View
                                       </Button>
                                     </TableCell>
@@ -254,7 +287,8 @@ export const AssessmentListView = () => {
                                         onClick={() => {
                                           setShowPopupEdit(true);
                                           setViewData(row);
-                                        }}>
+                                        }}
+                                      >
                                         Edit
                                       </Button>
                                     </TableCell>
@@ -286,7 +320,7 @@ export const AssessmentListView = () => {
                   </div>
                 </div>
               )}
-          </div>
+            </div>
           )}
         </div>
 

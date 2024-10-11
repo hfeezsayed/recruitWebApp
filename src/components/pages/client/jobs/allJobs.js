@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogActions,
+  Pagination,
 } from "@mui/material";
 import {
   Box,
@@ -79,6 +80,7 @@ export const AllJobs = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [page, setPage] = React.useState(1);
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -221,20 +223,48 @@ export const AllJobs = () => {
     });
   };
 
-  const handleFilter = (value) => {
+  //Pagination start
+  const pageChangeHandle = (pageNO, pageSize) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance //getAllJobsByFilter?pageNo=1&pageSize=25&filter=${value}
+      .get(`/getAllJobsByFilter&pageNo=${pageNO}&pageSize=${pageSize}`)
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+        setPage(data?.pageNo || 0);
+        setPage(data?.pageSize || 0);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+    setPage(pageNO);
+    setPage(pageSize);
+  };
+
+  const PAGECOUNT =
+    data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
+  //Pagination end
+
+  const handleFilter = (value, pageNO, pageSize) => {
     const user = JSON.parse(localStorage.getItem("token"));
     console.log(value);
     setFilterValue(value);
     setLoading(true);
     setFilter(true);
-    axiosInstance
-      .get(`/getFilterJobs?clientId=${user.userId}&filterValue=${value}`)
+    axiosInstance //getAllJobsByFilter?pageNo=1&pageSize=10&filter=sourcingHelp
+      .get(
+        `/getAllJobsByFilter?pageNo=${pageNO}&pageSize=${pageSize}&filter=${value}`
+      )
       .then((response) => {
         console.log(response.data);
         setData(response?.data.data);
         setFilterData(response?.data.data);
         setLoading(false);
-        //setPage(data?.pageNo || 1);
+        setPage(data?.pageNo || 0);
+        setPage(data?.pageSize || 0);
       })
       .catch((e) => {
         setLoading(false);
@@ -248,7 +278,7 @@ export const AllJobs = () => {
     console.log("AllJobDraggableData", user);
     setLoading(true);
     axiosInstance
-      .get(`/getAllJobs?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .get(`/getAllAdminJobs?pageNo=1&pageSize=25`)
       .then((response) => {
         console.log("dragData", response.data);
         setData(response?.data.data);
@@ -425,7 +455,7 @@ export const AllJobs = () => {
             <Spinner />
           ) : (
             <div>
-              {filterData.length === true && filter === false ? (
+              {filterData.length === 0 && filter === false ? (
                 <div className="p-8 h-full">
                   <div>
                     <p
@@ -740,10 +770,9 @@ export const AllJobs = () => {
                                             style={{
                                               borderWidth: 1,
                                               borderColor: "#E2E8F0",
-                                              backgroundColor:
-                                                snapshot.isDragging
-                                                  ? "#CFC8C980"
-                                                  : "#ffffff",
+                                              backgroundColor: snapshot.isDragging
+                                                ? "#CFC8C980"
+                                                : "#ffffff",
 
                                               borderRadius: 8,
                                               marginTop: 10,
@@ -753,7 +782,7 @@ export const AllJobs = () => {
                                             <div className="flex justify-between items-center p-2">
                                               <div className="flex gap-2 items-center">
                                                 <img
-                                                  src="https://picsum.photos/200"
+                                                  src={item?.image}
                                                   alt="person"
                                                   style={{
                                                     width: 32,
@@ -805,7 +834,7 @@ export const AllJobs = () => {
                                                   fontSize: 10,
                                                 }}
                                               >
-                                                Created Date:{" "}
+                                                Created Date:
                                                 {item?.createdDate}
                                               </p>
                                               <p
@@ -822,7 +851,7 @@ export const AllJobs = () => {
                                                   fontSize: 10,
                                                 }}
                                               >
-                                                Application Sub-status:{" "}
+                                                Application Sub-status:
                                                 {item?.jobSubStatus}
                                               </p>
                                             </div>
@@ -1447,6 +1476,20 @@ export const AllJobs = () => {
                               </Table>
                             </TableContainer>
                           </Paper>
+                          <div className="flex justify-between items-center">
+                            <p style={{ color: "#475467", fontSize: 14 }}>
+                              Showing {data.length || 0} results found
+                            </p>
+                            <Pagination
+                              count={PAGECOUNT}
+                              page={page}
+                              variant="outlined"
+                              shape="rounded"
+                              onChange={(e, newvalue) => {
+                                pageChangeHandle(newvalue);
+                              }}
+                            />
+                          </div>
                         </Box>
                       </div>
                     )}

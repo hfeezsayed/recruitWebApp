@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./BoardView.css";
+import axiosInstance from "../../../../../utils/axiosInstance";
 //MUI
 import { Fade, Menu, MenuItem } from "@mui/material";
-import { Card, CardContent } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Box,
+  linearProgressClasses,
+  styled,
+  Button,
+} from "@mui/material";
 //Progress bar
-import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
 //icons
 import { FiEdit } from "react-icons/fi";
@@ -14,35 +23,45 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { HiDotsVertical } from "react-icons/hi";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { CiLocationOn } from "react-icons/ci";
+import { MdOutlineArrowOutward } from "react-icons/md";
 import { IoTimeOutline } from "react-icons/io5";
-import { PiLineVertical } from "react-icons/pi";
-import { HiOutlineUsers } from "react-icons/hi";
-import { FiArrowUpRight } from "react-icons/fi";
-//images
-import appStore from "../../../../../../assets/images/app-store.png";
-import adobeImg from "../../../../../../assets/images/adobe-store.png";
 
 const BoardView = () => {
+  const navigate = useNavigate();
   //ecllipse action menu popup code start
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
+  const [data, setData] = useState([]);
   const [anchorData, setAnchorData] = useState();
-  const [progress, setProgress] = useState(0);
+  const [filterData, setFilterData] = useState([]);
+
+  //progress bar
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 5.5,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: "#ebf6f1",
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      background: `#46BD84`,
+    },
+  }));
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
+    axiosInstance
+      .get(`/getAllAdminJobs?pageNo=1&pageSize=25`)
+      .then((response) => {
+        console.log("board card data---", response.data);
+        setData(response?.data.data);
+        setFilterData(response?.data.data);
+        // setLoading(false);
+        //setPage(data?.pageNo || 1);
+      })
+      .catch((e) => {
+        // setLoading(false);
+        console.log(e);
       });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
   }, []);
 
   const handleClose = () => {
@@ -57,6 +76,7 @@ const BoardView = () => {
 
   const handleJobClone = () => {};
   //ecllipse action menu popup code end
+
   return (
     <div className="jobs-flow">
       <h2 className="smallTextGray pt-3 pb-4 font-medium text-[20px]">
@@ -64,316 +84,178 @@ const BoardView = () => {
       </h2>
       <div className="flex flex-wrap gap-3">
         {/* first card */}
-        <div className="board-view">
-          <div className="card">
-            <Card>
-              <CardContent>
-                <div className="flex justify-between">
-                  <div className="mb-1">
-                    <div className="flex justify-between items-center mb-2">
-                      <h2 className="text-[16px] font-bold">
-                        Senior Software Engineer
-                      </h2>
-                      <span className="new-post">New post</span>
-                    </div>
-                    <div className="sub-header flex">
-                      <p>
-                        <span>
-                          <CiLocationOn />
-                        </span>
-                        <span className="pl-1">Hyderabad</span>
-                      </p>
-                      <p className="px-2">
-                        <span>
-                          <IoTimeOutline />
-                        </span>
-                        <span className="pl-1">Full time</span>
-                      </p>
-                      <p>
-                        <PiLineVertical />
-                        <span>Part time</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-baseline">
-                    <IconButton
-                      aria-label="settings"
-                      onClick={(e) => {
-                        handleClick(e);
-                        setAnchorData();
-                      }}
-                    >
-                      <HiDotsVertical />
-                    </IconButton>
-                  </div>
-                </div>
-                <div className="body-content">
-                  <div className="flex gap-1 pt-5 pb-5">
-                    <div className="left-img">
-                      <img src={appStore} />
-                    </div>
-                    <div className="right-content pl-1">
-                      <p>Linear Company</p>
-                      <p>
-                        Hiring Manger:
-                        <span className="font-medium text-[#101828] pl-1">
-                          Alex Johnson
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="card-footer">
-                    <div className="flex justify-between">
-                      <div className="flex justify-between items-center gap-2">
-                        <span>
-                          <HiOutlineUsers className="text-[#727a87]" />
-                        </span>
-                        <span className="text-[14px] text-[#727a87]">
-                          Candidates
-                        </span>
-                      </div>
-                      <div>
-                        <a className="more-details">
-                          More Details
-                          <FiArrowUpRight className="font-medium" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-        <div className="board-view">
-          <div className="card">
-            <Card>
-              <CardContent>
-                <div className="flex justify-between">
-                  <div className="mb-1">
-                    <div className="flex justify-between items-center mb-2">
-                      <h2 className="text-[16px] font-bold">
-                        Senior Software Engineer
-                      </h2>
-                      <span className="new-post">New post</span>
-                    </div>
-                    <div className="sub-header flex">
-                      <p>
-                        <span>
-                          <CiLocationOn />
-                        </span>
-                        <span className="pl-1">Hyderabad</span>
-                      </p>
-                      <p className="px-2">
-                        <span>
-                          <IoTimeOutline />
-                        </span>
-                        <span className="pl-1">Full time</span>
-                      </p>
-                      <p>
-                        <PiLineVertical />
-                        <span>Part time</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-baseline">
-                    <IconButton
-                      aria-label="settings"
-                      onClick={(e) => {
-                        handleClick(e);
-                        setAnchorData();
-                      }}
-                    >
-                      <HiDotsVertical />
-                    </IconButton>
-                  </div>
-                </div>
-                <div className="body-content">
-                  <div className="flex gap-1 pt-5 pb-5">
-                    <div className="left-img">
-                      <img src={adobeImg} alt="adobe" />
-                    </div>
-                    <div className="right-content pl-1">
-                      <p>Adobe</p>
-                      <p>
-                        Hiring Manger:
-                        <span className="font-medium text-[#101828] pl-1">
-                          Alex Johnson
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="card-footer">
-                    <div className="hidden">
-                      <div className="flex justify-between">
-                        <div className="flex justify-between items-center gap-2">
-                          <span>
-                            <HiOutlineUsers className="text-[#727a87]" />
-                          </span>
-                          <span className="text-[14px] text-[#727a87]">
-                            Candidates
-                          </span>
-                        </div>
-                        <div>
-                          <a className="more-details">
-                            More Details
-                            <FiArrowUpRight className="font-medium" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Progress bar */}
+        {filterData.map((row, index) => (
+          <div className="board-view" key={index}>
+            <div className="card">
+              <Card>
+                <CardContent>
+                  <div className="flex justify-between">
+                    <div className="mb-1">
+                      <div className="flex justify-between items-center mb-2">
+                        <h2 className="text-[16px] font-bold">
+                          {row?.jobName}
+                        </h2>
 
-                    <div className="progress-bar">
-                      <p className="flex justify-between text-[#121212] font-medium text-[12px]">
-                        <span>Job Progress</span>
-                        <span>32%</span>
-                      </p>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-evenly",
-                          width: "100%",
-                          margin: "auto",
+                        {row?.newJob ? (
+                          <span className="new-post">New post</span>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className="sub-header flex">
+                        <p>
+                          <span>
+                            <CiLocationOn />
+                          </span>
+                          <span className="pl-1">{row?.location}</span>
+                        </p>
+                        {row?.typeOfHire.map((data, index) => (
+                          <p className="px-2" key={index}>
+                            <span>
+                              <IoTimeOutline />
+                            </span>
+                            <span className="pl-1">{data}</span>
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-baseline">
+                      <IconButton
+                        aria-label="settings"
+                        onClick={(e) => {
+                          handleClick(e);
+                          setAnchorData();
                         }}
                       >
-                        <Stack
-                          sx={{
-                            width: "100%",
-                            color: "grey.500",
-                          }}
-                          spacing={2}
-                        >
-                          <LinearProgress
-                            variant="determinate"
-                            value={progress}
-                            color="secondary"
-                          />
-                        </Stack>
+                        <HiDotsVertical />
+                      </IconButton>
+                    </div>
+                  </div>
+                  <div className="body-content">
+                    <div className="flex gap-1 pt-5 pb-5">
+                      <div className="left-img">
+                        <img src={row.image} />
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-        <div className="board-view">
-          <div className="card">
-            <Card>
-              <CardContent>
-                <div className="flex justify-between">
-                  <div className="mb-1">
-                    <div className="flex justify-between items-center mb-2">
-                      <h2 className="text-[16px] font-bold">
-                        Senior Software Engineer
-                      </h2>
-                      <span className="new-post">New post</span>
-                    </div>
-                    <div className="sub-header flex">
-                      <p>
-                        <span>
-                          <CiLocationOn />
-                        </span>
-                        <span className="pl-1">Hyderabad</span>
-                      </p>
-                      <p className="px-2">
-                        <span>
-                          <IoTimeOutline />
-                        </span>
-                        <span className="pl-1">Full time</span>
-                      </p>
-                      <p>
-                        <PiLineVertical />
-                        <span>Part time</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-baseline">
-                    <IconButton
-                      aria-label="settings"
-                      onClick={(e) => {
-                        handleClick(e);
-                        setAnchorData();
-                      }}
-                    >
-                      <HiDotsVertical />
-                    </IconButton>
-                  </div>
-                </div>
-                <div className="body-content">
-                  <div className="flex gap-1 pt-5 pb-5">
-                    <div className="left-img">
-                      <img src={appStore} />
-                    </div>
-                    <div className="right-content pl-1">
-                      <p>Adobe</p>
-                      <p>
-                        Hiring Manger:
-                        <span className="font-medium text-[#101828] pl-1">
-                          Alex Johnson
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="card-footer">
-                    <div className="hidden">
-                      <div className="flex justify-between">
-                        <div className="flex justify-between items-center gap-2">
-                          <span>
-                            <HiOutlineUsers className="text-[#727a87]" />
+                      <div className="right-content pl-1">
+                        <p>{row.companyName}</p>
+                        <p>
+                          Hiring Manger:
+                          <span className="font-medium text-[#101828] pl-1">
+                            {row.hiringManager}
                           </span>
-                          <span className="text-[14px] text-[#727a87]">
-                            Candidates
-                          </span>
-                        </div>
-                        <div>
-                          <a className="more-details">
-                            More Details
-                            <FiArrowUpRight className="font-medium" />
-                          </a>
-                        </div>
+                        </p>
                       </div>
                     </div>
-                    {/* Progress bar */}
-
-                    <div className="progress-bar">
-                      <p className="flex justify-between text-[#121212] font-medium text-[12px]">
-                        <span>Job Progress</span>
-                        <span>32%</span>
-                      </p>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-evenly",
-                          width: "100%",
-                          margin: "auto",
-                        }}
-                      >
-                        <Stack
-                          sx={{
-                            width: "100%",
-                            color: "grey.500",
-                          }}
-                          spacing={2}
-                        >
-                          <LinearProgress
-                            variant="determinate"
-                            value={progress}
-                            color="secondary"
-                          />
-                        </Stack>
-                      </div>
-                    </div>
+                    <hr />
+                    <CardActions>
+                      {row?.jobProgress < 100 ? (
+                        <div className="w-full ">
+                          <div className="flex justify-between pb-1">
+                            <p
+                              style={{
+                                color: "#121212",
+                                fontSize: 12,
+                                fontWeight: 500,
+                              }}
+                            >
+                              Job Progress
+                            </p>
+                            <p
+                              style={{
+                                color: "#121212",
+                                fontSize: 12,
+                                fontWeight: 500,
+                              }}
+                            >
+                              {row?.jobProgress} %
+                            </p>
+                          </div>
+                          <Box sx={{ width: "100%" }}>
+                            <BorderLinearProgress
+                              variant="determinate"
+                              value={row?.jobProgress || 0}
+                            />
+                          </Box>
+                          <div className="flex justify-end w-full">
+                            <Button
+                              size="small"
+                              onClick={() =>
+                                navigate("/job/createJob", {
+                                  state: row.id,
+                                })
+                              }
+                              style={{
+                                color: "#008080",
+                                textTransform: "none",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                textDecoration: "underline",
+                                padding: 0,
+                              }}
+                              endIcon={<MdOutlineArrowOutward />}
+                            >
+                              Complete Job
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full ">
+                          <div className="flex justify-between pb-1">
+                            <p
+                              style={{
+                                color: "#121212",
+                                fontSize: 12,
+                                fontWeight: 500,
+                              }}
+                            >
+                              Job Progress
+                            </p>
+                            <p
+                              style={{
+                                color: "#121212",
+                                fontSize: 12,
+                                fontWeight: 500,
+                              }}
+                            >
+                              {row?.jobProgress} %
+                            </p>
+                          </div>
+                          <Box sx={{ width: "100%" }}>
+                            <BorderLinearProgress
+                              variant="determinate"
+                              value={row?.jobProgress || 100}
+                            />
+                          </Box>
+                          <div className="flex justify-end w-full">
+                            <Button
+                              size="small"
+                              onClick={() =>
+                                navigate("/assignCandidate", {
+                                  //state: row.id,
+                                })
+                              }
+                              style={{
+                                color: "#008080",
+                                textTransform: "none",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                textDecoration: "underline",
+                                padding: 0,
+                              }}
+                              endIcon={<MdOutlineArrowOutward />}
+                            >
+                              More Details
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </CardActions>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/*Actions menu */}

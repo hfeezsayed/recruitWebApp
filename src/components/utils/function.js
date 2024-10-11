@@ -151,16 +151,18 @@ export const AllJobDataTokanBan = (data) => {
     Sourcing_Candidates: { name: "Sourcing Candidates", items: [] },
     "Screening_&_Evaluation": { name: "Screening & Evaluation", items: [] },
     Interviewing: { name: "Interviewing", items: [] },
-    Offer_Processing: { name : "Offer Processing", items: []},
-    Placement_Confirmed: { name : "Placement Cofirmed", items : []},
-    Onboarding : { name : "Onboarding", items: []},
-    Closed_Successful: {name : "Closed Successful", items: []},
-    Closed_Onhold : {name : "Closed Position Onhold", items: []},
-    Closed_Unsuccessful : {name: "Closed UnSuccessful", items: []},
+    // Offer_Processing: { name: "Offer Processing", items: [] },
+    // Placement_Confirmed: { name: "Placement Cofirmed", items: [] },
+    // Onboarding: { name: "Onboarding", items: [] },
+    // Closed_Successful: { name: "Closed Successful", items: [] },
+    // Closed_Onhold: { name: "Closed Position Onhold", items: [] },
+    // Closed_Unsuccessful: { name: "Closed UnSuccessful", items: [] },
   };
 
   data.forEach((post) => {
-    const status = post.jobStatus.replace(/\s+/g, "_");
+    let status = post.jobStatus || "";
+    status = post?.jobStatus?.replace("/react-site/public/g", "");
+    console.log(status);
     if (result[status]) {
       result[status].items.push({
         ...post,
@@ -184,7 +186,10 @@ export const CreateJobDataTokanBan = (data) => {
     Shortlisted: { name: "Shortlisted", items: [] },
     Hiring_Manager_Submission: { name: "Hiring Manager Submission", items: [] },
     Hiring_Manager_Approved: { name: "Hiring Manager Approved", items: [] },
-    Hiring_Manager_Interview_Scheduled: { name: "Hiring Manager Interview Scheduled", items: [] },
+    Hiring_Manager_Interview_Scheduled: {
+      name: "Hiring Manager Interview Scheduled",
+      items: [],
+    },
     Interviewing: { name: "Interviewing", items: [] },
     Offer_Extended: { name: "Offer Extended", items: [] },
     Offer_Accepted: { name: "Offer Accepted", items: [] },

@@ -1832,7 +1832,8 @@ export const CreateJob = () => {
                           textTransform: "none",
                         }}
                         onClick={() => {
-                          navigate("/job/assignCandidates");
+                          // navigate("/job/assignCandidates");
+                          navigate("/clientAssignedCandidates");
                         }}
                       >
                         Add or Assign Candidates
@@ -1959,10 +1960,9 @@ export const CreateJob = () => {
                                           padding: "8px",
                                           minWidth: "280px",
                                           maxWidth: "380px",
-                                          backgroundColor:
-                                            snapshot.isDraggingOver
-                                              ? "lightblue"
-                                              : "white",
+                                          backgroundColor: snapshot.isDraggingOver
+                                            ? "lightblue"
+                                            : "white",
                                         }}
                                       >
                                         <div
@@ -2040,10 +2040,9 @@ export const CreateJob = () => {
                                                 style={{
                                                   borderWidth: 1,
                                                   borderColor: "#E2E8F0",
-                                                  backgroundColor:
-                                                    snapshot.isDragging
-                                                      ? "#CFC8C980"
-                                                      : "#ffffff",
+                                                  backgroundColor: snapshot.isDragging
+                                                    ? "#CFC8C980"
+                                                    : "#ffffff",
                                                   borderRadius: 8,
                                                   marginTop: 10,
                                                   ...provided.draggableProps

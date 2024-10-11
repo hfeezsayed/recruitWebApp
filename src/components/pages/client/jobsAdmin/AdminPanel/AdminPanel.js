@@ -117,10 +117,7 @@ export const AdminDashBoard = () => {
                       <p className="smallTextGray text-sm">
                         Job Posted in database
                       </p>
-                      <Button
-                        size="large"
-                        onClick={() => navigate("/assignCandidate")}
-                      >
+                      <Button size="large" onClick={() => navigate("/jobs")}>
                         <img src={rightArrow} className="arrow-img" />
                       </Button>
                     </CardActions>

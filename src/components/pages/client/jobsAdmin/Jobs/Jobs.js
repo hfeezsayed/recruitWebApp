@@ -18,7 +18,7 @@ import BoardView from "./BoardView/BoardView";
 import ListView from "./ListView/ListVIew";
 
 const Jobs = () => {
-  const [currentView, setCurrentView] = useState("WorkFlow");
+  const [currentView, setCurrentView] = useState("Board");
   const [search, setSearch] = useState("");
 
   return (
@@ -164,7 +164,7 @@ const Jobs = () => {
             {/* Board View Start */}
             {currentView === "Board" && <BoardView />}
             {/* List View Start */}
-            {currentView === "List" && <ListView />}
+            {currentView === "List" && <ListView search={search} />}
           </div>
         </div>
       </div>

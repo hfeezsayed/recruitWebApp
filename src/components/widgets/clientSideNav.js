@@ -19,6 +19,7 @@ import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../assets/icon/jobsvg";
 import { TemplateSvg } from "../../assets/icon/templatesvg";
+import { FiUsers } from "react-icons/fi";
 
 const drawerWidth = 256;
 
@@ -510,8 +511,14 @@ export const ClientSideNav = ({ openTemplate }) => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "candidates" ? "#008080" : "#ffffff",
-                color: currentState === "candidates" ? "#ffffff" : "#475467",
+                bgcolor:
+                  currentState === "/clientAssignedCandidates"
+                    ? "#008080"
+                    : "#ffffff",
+                color:
+                  currentState === "/clientAssignedCandidates"
+                    ? "#ffffff"
+                    : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
@@ -527,18 +534,23 @@ export const ClientSideNav = ({ openTemplate }) => {
                   justifyContent: "center",
                 }}
               >
-                <AiOutlineQuestionCircle
+                <FiUsers
                   style={{
                     color:
-                      currentState === "candidates" ? "#ffffff" : "#475467",
-                    fontSize: 22,
+                      currentState === "/clientAssignedCandidates"
+                        ? "#ffffff"
+                        : "#475467",
+                    fontSize: 20,
                   }}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"Candidates"}
                 primaryTypographyProps={{
-                  color: currentState === "candidates" ? "#ffffff" : "#475467",
+                  color:
+                    currentState === "/clientAssignedCandidates"
+                      ? "#ffffff"
+                      : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -556,8 +568,14 @@ export const ClientSideNav = ({ openTemplate }) => {
                 my: 1,
                 px: 1,
                 borderRadius: 2,
-                bgcolor: currentState === "references" ? "#008080" : "#ffffff",
-                color: currentState === "references" ? "#ffffff" : "#475467",
+                bgcolor:
+                  currentState === "/references/candidatelist"
+                    ? "#008080"
+                    : "#ffffff",
+                color:
+                  currentState === "/references/candidatelist"
+                    ? "#ffffff"
+                    : "#475467",
                 ":hover": {
                   bgcolor: "#d5d5d5",
                 },
@@ -573,18 +591,23 @@ export const ClientSideNav = ({ openTemplate }) => {
                   justifyContent: "center",
                 }}
               >
-                <AiOutlineQuestionCircle
+                <FiUsers
                   style={{
                     color:
-                      currentState === "references" ? "#ffffff" : "#475467",
-                    fontSize: 22,
+                      currentState === "/references/candidatelist"
+                        ? "#ffffff"
+                        : "#475467",
+                    fontSize: 20,
                   }}
                 />
               </ListItemIcon>
               <ListItemText
                 primary={"References"}
                 primaryTypographyProps={{
-                  color: currentState === "references" ? "#ffffff" : "#475467",
+                  color:
+                    currentState === "/references/candidatelist"
+                      ? "#ffffff"
+                      : "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -640,6 +663,7 @@ export const ClientSideNav = ({ openTemplate }) => {
               />
             </ListItemButton>
           </ListItem>
+
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{

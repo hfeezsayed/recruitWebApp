@@ -50,10 +50,10 @@ const ClientManagementSec = () => {
   //Pagination handle start
   const pageChangeHandle = (pageNO) => {
     setLoading(true);
-    axiosInstance
+    axiosInstance //getAllClients?pageNo=1&pageSize=10
       .get(`/getAllClients?pageNo=${pageNO}&pageSize=5`)
       .then((response) => {
-        //console.log("getAllClients", response);
+        console.log("getAllClients", response);
         setAllClients(response.data.data);
         setPage(response?.data?.pageNo);
         setLoading(false);
@@ -77,7 +77,7 @@ const ClientManagementSec = () => {
   //GET Request
   useEffect(() => {
     axiosInstance
-      .get(`/getAllClients?pageNo=1&pageSize=10`)
+      .get(`/getAllClients?pageNo=1&pageSize=9`)
       .then((response) => {
         console.log("getAllClients", response);
         setAllClients(response.data.data);

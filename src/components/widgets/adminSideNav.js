@@ -22,6 +22,7 @@ import { AssesmentSvg } from "../../assets/icon/assesmentsvg";
 import { AuthorizedSvg } from "../../assets/icon/authorizedsvg";
 import { JobSvg } from "../../assets/icon/jobsvg";
 import { TemplateSvg } from "../../assets/icon/templatesvg";
+import { RiDashboardFill } from "react-icons/ri";
 
 const drawerWidth = 256;
 
@@ -149,8 +150,11 @@ export const AdminSideNav = ({ openTemplate }) => {
                   justifyContent: "center",
                 }}
               >
-                <DashboardSvg
-                  COLOR={currentState === "admin" ? "#ffffff" : "#475467"}
+                <RiDashboardFill
+                  style={{
+                    color: currentState === "/admin" ? "#ffffff" : "#475467",
+                    fontSize: 20,
+                  }}
                 />
               </ListItemIcon>
               <ListItemText
@@ -195,10 +199,13 @@ export const AdminSideNav = ({ openTemplate }) => {
                 }}
               >
                 <RiCalculatorLine
-                  COLOR={
-                    currentState === "clientManagement" ? "#ffffff" : "#475467"
-                  }
-                  fontSize={20}
+                  style={{
+                    color:
+                      currentState === "/clientManagement"
+                        ? "#ffffff"
+                        : "#475467",
+                    fontSize: 20,
+                  }}
                 />
               </ListItemIcon>
               <ListItemText
@@ -366,10 +373,13 @@ export const AdminSideNav = ({ openTemplate }) => {
                 }}
               >
                 <TbUsers
-                  COLOR={
-                    currentState === "assignCandidate" ? "#ffffff" : "#475467"
-                  }
-                  fontSize={20}
+                  style={{
+                    color:
+                      currentState === "/assignCandidate"
+                        ? "#ffffff"
+                        : "#475467",
+                    fontSize: 20,
+                  }}
                 />
               </ListItemIcon>
               <ListItemText

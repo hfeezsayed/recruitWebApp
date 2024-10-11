@@ -79,7 +79,6 @@ export const AssignCandidates = () => {
   };
 
   // pagination
-
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
@@ -109,7 +108,7 @@ export const AssignCandidates = () => {
     axiosInstance
       .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
-        console.log("candidate----", data.data);
+        console.log("Assign candidates----", data);
         setData(data.data);
         setPage(data?.pageNo || 1);
       })
@@ -280,7 +279,7 @@ export const AssignCandidates = () => {
                         backgroundColor: "#EAF4F5",
                         textTransform: "none",
                       }}
-                      onClick={() => {}}
+                      onClick={() => setActions("Add Candidate")}
                     >
                       Add Candidate
                     </Button>

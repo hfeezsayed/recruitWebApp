@@ -15,6 +15,7 @@ import {
   IconButton,
   Tab,
   Tabs,
+  Pagination,
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -30,7 +31,7 @@ import { MdOutlinePersonOutline } from "react-icons/md";
 //API endPoint
 import axiosInstance from "../../../../../utils/axiosInstance";
 
-const ListVIew = () => {
+const ListVIew = ({ search, setSearch }) => {
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
   const [anchorData, setAnchorData] = useState();
@@ -39,30 +40,42 @@ const ListVIew = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showClonePopup, setShowClonePopup] = useState(false);
   //API
-  const [sourcingHelp, setSourcingHelp] = useState([]);
-  const [boardingHelp, setBoardingHelp] = useState([]);
+  const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [page, setPage] = useState(1);
   const [fullServiceHelp, setFullServiceHelp] = useState([]);
+
+  //Pagination start
+  const pageChangeHandle = (pageNO, pageSize) => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance //getAllJobsByFilter?pageNo=1&pageSize=25&filter=${value}
+      .get(
+        `/getAllJobsByFilter&pageNo=${pageNO}&pageSize=${pageSize}&filter=fullServiceHelp`
+      )
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+        setPage(data?.pageNo || 0);
+        setPage(data?.pageSize || 0);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setPage(pageNO);
+    setPage(pageSize);
+  };
+
+  const PAGECOUNT =
+    data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
+  //Pagination end
 
   //GET request for Souring Help
   useEffect(() => {
     axiosInstance
-      .get(`/getAllJobsByFilter?pageNo=1&pageSize=10&filter=sourcingHelp`)
+      .get(`/getAllAdminJobs?pageNo=1&pageSize=25`)
       .then((response) => {
-        //console.log("getAllJobsByFilter", response);
-        setSourcingHelp(response.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  //GET request for Boarding Help
-  useEffect(() => {
-    axiosInstance
-      .get(`/getAllJobsByFilter?pageNo=1&pageSize=10&filter=onboardHelp`)
-      .then((response) => {
-        //console.log("boardingHelp", response);
-        setBoardingHelp(response.data.data);
+        console.log("getAllJobs", response);
+        setFilterData(response.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -75,7 +88,7 @@ const ListVIew = () => {
       .get(`/getAllJobsByFilter?pageNo=1&pageSize=10&filter=fullServiceHelp`)
       .then((response) => {
         console.log("fullServiceHelp", response);
-        setFullServiceHelp(response.data.data);
+        setFilterData(response.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -91,11 +104,20 @@ const ListVIew = () => {
       color = "#0862CE";
       backGround = "#f1f7ff";
     } else if (jobType === "Full time") {
-      color = "#8314C7";
-      backGround = "#8314C7";
+      color = "#0862CE";
+      backGround = "#f1f7ff";
     } else if (jobType === "Part time") {
       color = "#0862CE";
-      backGround = "#8314C7";
+      backGround = "#f1f7ff";
+    } else if (jobType === "not defined") {
+      color = "#0862CE";
+      backGround = "#f1f7ff";
+    } else if (jobType === "Testing") {
+      color = "#0862CE";
+      backGround = "#f1f7ff";
+    } else if (jobType === "Executive") {
+      color = "#0862CE";
+      backGround = "#f1f7ff";
     }
 
     return (
@@ -112,6 +134,30 @@ const ListVIew = () => {
       </p>
     );
   };
+
+  //sort Data start
+
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const sortComparator = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return order === "asc" ? -1 : 1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return order === "asc" ? 1 : -1;
+    }
+    return 0;
+  };
+
+  const sortedRows = filterData.sort((a, b) => sortComparator(a, b, orderBy));
+  //sort Data End
 
   //Color for Job Status
   const jobStatusColor = (jobStatus) => {
@@ -184,7 +230,11 @@ const ListVIew = () => {
                         borderColor: "#D0D5DD50",
                       }}
                     >
-                      <TableSortLabel active="" direction="" onClick="">
+                      <TableSortLabel
+                        active={orderBy === "jobName"}
+                        direction={orderBy === "jobName" ? order : "asc"}
+                        onClick={() => handleRequestSort("jobName")}
+                      >
                         Job Name
                       </TableSortLabel>
                     </TableCell>
@@ -322,7 +372,7 @@ const ListVIew = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {sourcingHelp.map((user, index) => (
+                  {sortedRows.map((user, index) => (
                     <TableRow key={index}>
                       <TableCell
                         sx={{
@@ -485,6 +535,20 @@ const ListVIew = () => {
               </Table>
             </TableContainer>
           </Paper>
+          <div className="flex justify-between items-center">
+            <p style={{ color: "#475467", fontSize: 14 }}>
+              Showing {sortedRows.length || 0} results found
+            </p>
+            <Pagination
+              count={PAGECOUNT}
+              page={page}
+              variant="outlined"
+              shape="rounded"
+              onChange={(e, newvalue) => {
+                pageChangeHandle(newvalue);
+              }}
+            />
+          </div>
         </Box>
       </div>
       {/*Actions menu */}
