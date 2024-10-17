@@ -75,6 +75,7 @@ export const ClientSideNav = ({ openTemplate }) => {
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
   const [openSecondLevel, setOpenSecondLevel] = React.useState(false);
+  const [showAssesment, setShowAssesment] = React.useState(false);
   const [showAcordian, setShowAcordian] = React.useState(
     openTemplate ? true : false
   );
@@ -368,8 +369,114 @@ export const ClientSideNav = ({ openTemplate }) => {
             </div>
           </Collapse>
 
-          {/* Assessment */}
+          {/* Assessment new */}
           <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                my: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor:
+                  currentState === "/clientAssesmentForm"
+                    ? "#008080"
+                    : "#ffffff",
+                color:
+                  currentState === "/clientAssesmentForm"
+                    ? "#ffffff"
+                    : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                setShowAssesment(!showAssesment);
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AssesmentSvg
+                  COLOR={
+                    currentState === "/clientAssesmentForm"
+                      ? "#ffffff"
+                      : "#475467"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Assessments"}
+                onClick={() => navigate("/clientAssesmentForm", { state: 1 })}
+                primaryTypographyProps={{
+                  color:
+                    currentState === "/clientAssesmentForm"
+                      ? "#ffffff"
+                      : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+              {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            </ListItemButton>
+          </ListItem>
+          {/* Assessment collapse new*/}
+          <Collapse in={showAssesment} timeout="auto" unmountOnExit>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/clientAssesmentForm", { state: 1 })}
+            >
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
+              >
+                All - Assessments
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/clientAssesmentForm", { state: 2 })}
+            >
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
+              >
+                Self - Assessments
+              </p>
+            </div>
+            <div
+              className="pl-16 py-2"
+              onClick={() => navigate("/clientAssesmentForm", { state: 3 })}
+            >
+              <p
+                style={{
+                  color: "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
+              >
+                Clients - Assessment
+              </p>
+            </div>
+          </Collapse>
+
+          {/* Assessment old */}
+          {/* <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -435,9 +542,9 @@ export const ClientSideNav = ({ openTemplate }) => {
                 />
               )}
             </ListItemButton>
-          </ListItem>
-          {/* collapse */}
-          <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
+          </ListItem> */}
+          {/* Assessment collapse old */}
+          {/* <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
               onClick={() =>
@@ -500,7 +607,7 @@ export const ClientSideNav = ({ openTemplate }) => {
                 Clients- Assessments
               </p>
             </div>
-          </Collapse>
+          </Collapse> */}
 
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton

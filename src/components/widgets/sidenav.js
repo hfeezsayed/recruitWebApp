@@ -357,51 +357,57 @@ export const SideNav = ({ openTemplate }) => {
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {/* {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />} */}
+              {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </ListItemButton>
           </ListItem>
           {/* collapse */}
-          {/* <Collapse in={showAssesment} timeout="auto" unmountOnExit>
+          <Collapse in={showAssesment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 1 })}>
+              onClick={() => navigate("/assesmentform", { state: 1 })}
+            >
               <p
                 style={{
                   color: "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 All - Assessments
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 2 })}>
+              onClick={() => navigate("/assesmentform", { state: 2 })}
+            >
               <p
                 style={{
                   color: "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Self - Assessments
               </p>
             </div>
             <div
               className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 3 })}>
+              onClick={() => navigate("/assesmentform", { state: 3 })}
+            >
               <p
                 style={{
                   color: "#475467",
                   fontSize: 14,
                   fontWeight: 500,
                   opacity: 0.6,
-                }}>
+                }}
+              >
                 Clients - Assessment
               </p>
             </div>
-          </Collapse> */}
+          </Collapse>
 
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
@@ -494,6 +500,54 @@ export const SideNav = ({ openTemplate }) => {
               />
             </ListItemButton>
           </ListItem>
+          {/* <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 30,
+                justifyContent: open ? "initial" : "center",
+                mx: open ? 2.5 : 1.5,
+                mt: 2,
+                mb: 1,
+                px: 1,
+                borderRadius: 2,
+                bgcolor:
+                  currentState === "/assignCandidate" ? "#008080" : "#ffffff",
+                color:
+                  currentState === "/assignCandidate" ? "#ffffff" : "#475467",
+                ":hover": {
+                  bgcolor: "#d5d5d5",
+                },
+              }}
+              onClick={() => {
+                navigate("/candidate/assignCandidate");
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <TbUsers
+                  COLOR={
+                    currentState === "assignCandidate" ? "#ffffff" : "#475467"
+                  }
+                  fontSize={20}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Candidates"}
+                primaryTypographyProps={{
+                  color:
+                    currentState === "/assignCandidate" ? "#ffffff" : "#475467",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem> */}
         </div>
       </Drawer>
     </>

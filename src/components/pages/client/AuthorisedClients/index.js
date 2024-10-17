@@ -28,13 +28,13 @@ import {
 } from "@mui/material";
 import axiosInstance from "../../../utils/axiosInstance";
 import { IoMdClose } from "react-icons/io";
-import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { AuthorisedClients } from "../../../dummy/Data";
 import { useEffect } from "react";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
 
-export const AuthorisedClient = () => {
+export const ClientAuthorisedClient = () => {
   const [search, setSearch] = useState();
   const [authClientList, setAuthClientList] = useState([]); //useState(AuthorisedClients);
   const [openPopup, setOpenPopup] = useState(false);
@@ -315,7 +315,7 @@ export const AuthorisedClient = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

@@ -107,6 +107,9 @@ import OnboardingHelp from "./components/pages/client/jobsAdmin/Jobs/OnboardingH
 import FullServiceStaffHelp from "./components/pages/client/jobsAdmin/Jobs/FullServiceStaffHelp/FullServiceStaffHelp";
 import { CandidatesAssign } from "./components/pages/candidate/candidates/candidatesList";
 import { CreateCandidatesUser } from "./components/pages/candidate/candidates/createCandidate";
+import { ClientAssesmentForm } from "./components/pages/client/AssessmentForm";
+import { ClientAuthorisedClient } from "./components/pages/client/AuthorisedClients";
+import { ClientCreateAssessment } from "./components/pages/client/AssessmentForm/createAssessment";
 
 export const Routes = () => {
   return (
@@ -216,6 +219,18 @@ export const Routes = () => {
           path="job/workValueTemplate"
           element={<JobWorkValueTemplate />}
         />
+        {/* assessment start*/}
+        <Route
+          path="clientcreateAssessment"
+          element={<ClientCreateAssessment />}
+        />
+        <Route path="clientAssesmentForm" element={<ClientAssesmentForm />} />
+        <Route
+          path="clientauthorisedclients"
+          element={<ClientAuthorisedClient />}
+        />
+        {/* assessment end*/}
+
         <Route path="job/valuesCreate" element={<ValuesCreate />} />
         <Route path="job/valuesEdit" element={<ValuesEdit />} />
         <Route path="job/valuesResult" element={<ValuesResult />} />

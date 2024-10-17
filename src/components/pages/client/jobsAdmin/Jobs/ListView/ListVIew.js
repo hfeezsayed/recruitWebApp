@@ -31,7 +31,7 @@ import { MdOutlinePersonOutline } from "react-icons/md";
 //API endPoint
 import axiosInstance from "../../../../../utils/axiosInstance";
 
-const ListVIew = ({ search, setSearch }) => {
+const ListVIew = ({ search }) => {
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
   const [anchorData, setAnchorData] = useState();
@@ -43,30 +43,29 @@ const ListVIew = ({ search, setSearch }) => {
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(1);
-  const [fullServiceHelp, setFullServiceHelp] = useState([]);
 
   //Pagination start
-  const pageChangeHandle = (pageNO, pageSize) => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance //getAllJobsByFilter?pageNo=1&pageSize=25&filter=${value}
-      .get(
-        `/getAllJobsByFilter&pageNo=${pageNO}&pageSize=${pageSize}&filter=fullServiceHelp`
-      )
+  const pageChangeHandle = (pageNO) => {
+    axiosInstance
+      .get(`/getAllAdminJobs?pageNo=${pageNO}&pageSize=25`)
       .then((data) => {
         console.log(data);
         setData(data.data);
         setPage(data?.pageNo || 0);
-        setPage(data?.pageSize || 0);
       })
       .catch((e) => {
         console.log(e);
       });
     setPage(pageNO);
-    setPage(pageSize);
   };
+
+  useEffect(() => {
+    setPage(data?.pageNo || 1);
+  }, [data]);
 
   const PAGECOUNT =
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
+  console.log("PAGECOUNT", PAGECOUNT);
   //Pagination end
 
   //GET request for Souring Help
@@ -76,19 +75,7 @@ const ListVIew = ({ search, setSearch }) => {
       .then((response) => {
         console.log("getAllJobs", response);
         setFilterData(response.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  //GET request for Full Service Help
-  useEffect(() => {
-    axiosInstance
-      .get(`/getAllJobsByFilter?pageNo=1&pageSize=10&filter=fullServiceHelp`)
-      .then((response) => {
-        console.log("fullServiceHelp", response);
-        setFilterData(response.data.data);
+        setPage(data?.pageNo || 0);
       })
       .catch((err) => {
         console.log(err);
@@ -372,165 +359,169 @@ const ListVIew = ({ search, setSearch }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {sortedRows.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.jobName}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.jobDepartment}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.companyName}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.createdDate}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {jobTypeColor(user.jobType)}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {jobStatusColor(user.jobStatus)}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.jobSubStatus}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.total}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.newly}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.active}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        {user.hired}
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        padding="none"
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        <IconButton
-                          onClick={(e) => {
-                            handleJd(e);
-                            setAnchorData();
+                  {sortedRows
+                    .filter((item) =>
+                      item.jobName.toLowerCase().includes(search.toLowerCase())
+                    )
+                    .map((user, index) => (
+                      <TableRow key={index}>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
                           }}
                         >
-                          <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        padding="none"
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        <Button
-                          style={{
-                            color: "#5FAEDA",
-                            fontSize: 14,
-                            textTransform: "none",
-                          }}
-                          onClick={() => {}}
-                        >
-                          Download
-                        </Button>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        padding="none"
-                        sx={{
-                          color: "#475467",
-                          border: 1,
-                          borderColor: "#D0D5DD50",
-                        }}
-                      >
-                        <IconButton
-                          onClick={(e) => {
-                            handleClick(e);
-                            setAnchorData();
+                          {user.jobName}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
                           }}
                         >
-                          <HiDotsVertical style={{ color: "#D9D9D9" }} />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                          {user.jobDepartment}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.companyName}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.createdDate}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {jobTypeColor(user.jobType)}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {jobStatusColor(user.jobStatus)}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.jobSubStatus}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.total}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.newly}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.active}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          {user.hired}
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          padding="none"
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          <IconButton
+                            onClick={(e) => {
+                              handleJd(e);
+                              setAnchorData();
+                            }}
+                          >
+                            <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          padding="none"
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          <Button
+                            style={{
+                              color: "#5FAEDA",
+                              fontSize: 14,
+                              textTransform: "none",
+                            }}
+                            onClick={() => {}}
+                          >
+                            Download
+                          </Button>
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          padding="none"
+                          sx={{
+                            color: "#475467",
+                            border: 1,
+                            borderColor: "#D0D5DD50",
+                          }}
+                        >
+                          <IconButton
+                            onClick={(e) => {
+                              handleClick(e);
+                              setAnchorData();
+                            }}
+                          >
+                            <HiDotsVertical style={{ color: "#D9D9D9" }} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>

@@ -12,15 +12,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useLocation } from "react-router-dom";
 import { IoFilterSharp } from "react-icons/io5";
-import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { AllAssessmentData, ClientAssessmentData } from "../../../dummy/Data";
 import { Footer } from "../../../widgets/footer";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../utils/spinner";
+import { ClientSideNav } from "../../../widgets/clientSideNav";
 
-export const AssesmentForm = () => {
+export const ClientAssesmentForm = () => {
   const [search, setSearch] = useState();
   const location = useLocation();
   const [value, setValue] = React.useState(0);
@@ -589,7 +589,7 @@ export const AssesmentForm = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           {loading === true ? (
@@ -628,7 +628,7 @@ export const AssesmentForm = () => {
                     Filter
                   </Button>
                   <Button
-                    onClick={() => navigate("/createAssessment")}
+                    onClick={() => navigate("/clientcreateAssessment")}
                     style={{
                       color: "#008080",
                       background: "#EAF4F5",

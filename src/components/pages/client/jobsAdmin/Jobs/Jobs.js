@@ -162,7 +162,7 @@ const Jobs = () => {
             {/* Workflow View Start */}
             {currentView === "WorkFlow" && <WorkflowView />}
             {/* Board View Start */}
-            {currentView === "Board" && <BoardView />}
+            {currentView === "Board" && <BoardView search={search} />}
             {/* List View Start */}
             {currentView === "List" && <ListView search={search} />}
           </div>

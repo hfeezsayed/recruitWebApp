@@ -20,9 +20,8 @@ import { Footer } from "../../../widgets/footer";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { selectAssesmentData } from "../../../dummy/Data";
-import { SideNav } from "../../../widgets/sidenav";
 
-export const CreateAssessment = () => {
+export const ClientCreateAssessment = () => {
   const navigate = useNavigate();
   const [batchName, setBatchName] = useState("");
   const [data, setData] = useState(selectAssesmentData);
@@ -106,7 +105,7 @@ export const CreateAssessment = () => {
   return (
     <div>
       <div className="flex">
-        <SideNav />
+        <ClientSideNav />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">

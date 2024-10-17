@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Create Axios instance with default configuration
 const axiosInstance = axios.create({
   //baseURL: 'http://localhost:8080/xen', // Replace with your API base URL
-  baseURL : 'https://xenflexer.northcentralus.cloudapp.azure.com/xen',
+  baseURL: "https://xenflexer.northcentralus.cloudapp.azure.com/xen",
   timeout: 1000000, // Timeout in milliseconds (optional)
 });
 
@@ -11,8 +11,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // You can modify headers, add tokens, etc. here before sending the request
-    const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
-    console.log(token);
+    const token = localStorage.getItem("token"); // Assuming you store the token in localStorage
+    console.log("token----", token);
     if (token) {
       const accessToken = JSON.parse(localStorage.getItem("token")).accessToken;
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -37,11 +37,11 @@ axiosInstance.interceptors.response.use(
     if (response && response.status === 401) {
       // Handle 401 Unauthorized error
       // For example, redirect to login page or display a message
-      console.log('Unauthorized request. Redirecting to login...');
+      console.log("Unauthorized request. Redirecting to login...");
       localStorage.removeItem("token");
       localStorage.removeItem("jobId");
       //navigate("/login")
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
     return Promise.reject(error); // Reject the promise to propagate the error
   }

@@ -301,83 +301,89 @@ export const CandidatesList = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {data?.data?.map((row, index) => {
-                              const isItemSelected = isSelected(row);
-                              return (
-                                <TableRow
-                                  hover
-                                  role="checkbox"
-                                  aria-checked={isItemSelected}
-                                  tabIndex={-1}
-                                  key={index}
-                                  selected={isItemSelected}
-                                  sx={{
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  <TableCell padding="checkbox">
-                                    <Checkbox
-                                      color="primary"
-                                      checked={isItemSelected}
-                                      onClick={(event) =>
-                                        handleClick(event, row)
-                                      }
+                            {data?.data
+                              ?.filter((item) =>
+                                item.name
+                                  .toLowerCase()
+                                  .includes(search.toLowerCase())
+                              )
+                              .map((row, index) => {
+                                const isItemSelected = isSelected(row);
+                                return (
+                                  <TableRow
+                                    hover
+                                    role="checkbox"
+                                    aria-checked={isItemSelected}
+                                    tabIndex={-1}
+                                    key={index}
+                                    selected={isItemSelected}
+                                    sx={{
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    <TableCell padding="checkbox">
+                                      <Checkbox
+                                        color="primary"
+                                        checked={isItemSelected}
+                                        onClick={(event) =>
+                                          handleClick(event, row)
+                                        }
+                                        sx={{
+                                          color: "#D0D5DD",
+                                          "&.Mui-checked": {
+                                            color: "#66B2B2",
+                                          },
+                                        }}
+                                      />
+                                    </TableCell>
+                                    <TableCell
                                       sx={{
-                                        color: "#D0D5DD",
-                                        "&.Mui-checked": {
-                                          color: "#66B2B2",
-                                        },
-                                      }}
-                                    />
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                    }}
-                                  >
-                                    {row.name}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                    }}
-                                  >
-                                    {row.emailId}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                    }}
-                                  >
-                                    {row.mobileNo}
-                                  </TableCell>
-                                  <TableCell
-                                    sx={{
-                                      color: "#475467",
-                                    }}
-                                  >
-                                    {row.linkedIn}
-                                  </TableCell>
-                                  <TableCell
-                                    padding="none"
-                                    sx={{
-                                      color: "#475467",
-                                    }}
-                                  >
-                                    <Button
-                                      size="small"
-                                      style={{
-                                        color: "#28A745",
-                                        fontSize: 14,
-                                        textTransform: "none",
+                                        color: "#475467",
                                       }}
                                     >
-                                      View
-                                    </Button>
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            })}
+                                      {row.name}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
+                                      {row.emailId}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
+                                      {row.mobileNo}
+                                    </TableCell>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
+                                      {row.linkedIn}
+                                    </TableCell>
+                                    <TableCell
+                                      padding="none"
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
+                                      <Button
+                                        size="small"
+                                        style={{
+                                          color: "#28A745",
+                                          fontSize: 14,
+                                          textTransform: "none",
+                                        }}
+                                      >
+                                        View
+                                      </Button>
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
                           </TableBody>
                         </Table>
                       </TableContainer>

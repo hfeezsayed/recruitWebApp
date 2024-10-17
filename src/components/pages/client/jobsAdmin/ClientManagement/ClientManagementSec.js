@@ -32,7 +32,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axiosInstance from "../../../../utils/axiosInstance";
 //Loading
 import Spinner from "../../../../utils/spinner";
-import { Link } from "react-router-dom";
 
 const ClientManagementSec = () => {
   //ecllipse action menu popup code start
@@ -43,45 +42,44 @@ const ClientManagementSec = () => {
   //loading
   const [loading, setLoading] = useState(false);
   //for API
-  const [allClients, setAllClients] = useState([]);
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   //Pagination
   const [page, setPage] = useState(1);
 
   //Pagination handle start
   const pageChangeHandle = (pageNO) => {
-    setLoading(true);
-    axiosInstance //getAllClients?pageNo=1&pageSize=10
+    axiosInstance
       .get(`/getAllClients?pageNo=${pageNO}&pageSize=5`)
-      .then((response) => {
-        console.log("getAllClients", response);
-        setAllClients(response.data.data);
-        setPage(response?.data?.pageNo);
-        setLoading(false);
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+        setPage(data?.pageNo || 0);
       })
       .catch((e) => {
         console.log(e);
-        setLoading(false);
       });
     setPage(pageNO);
   };
 
-  const PAGECOUNT =
-    allClients?.totalCount > 0
-      ? Math.ceil(allClients?.totalCount / allClients?.pageSize)
-      : 1;
+  useEffect(() => {
+    setPage(data?.pageNo || 1);
+  }, [data]);
 
-  console.log("totalCount", allClients?.data?.totalCount);
+  const PAGECOUNT =
+    data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
+  console.log("PAGECOUNT", PAGECOUNT);
 
   //Pagination handle End
 
   //GET Request
   useEffect(() => {
-    axiosInstance
-      .get(`/getAllClients?pageNo=1&pageSize=9`)
+    axiosInstance //getAllClients?pageNo=1&pageSize=10
+      .get(`/getAllClients?pageNo=1&pageSize=5`)
       .then((response) => {
         console.log("getAllClients", response);
-        setAllClients(response.data.data);
-        setPage(response?.data?.pageNo);
+        setData(response?.data);
+        setPage(data?.pageNo || 0);
       })
       .catch((err) => {
         console.log(err);
@@ -118,8 +116,9 @@ const ClientManagementSec = () => {
                 <div className="flex justify-between">
                   <TextField
                     size="small"
-                    value=""
+                    value={search}
                     placeholder="Search..."
+                    onChange={(e) => setSearch(e.target.value)}
                     sx={{ minWidth: 320 }}
                     InputProps={{
                       startAdornment: (
@@ -201,54 +200,60 @@ const ClientManagementSec = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {allClients.map((row, index) => {
-                          return (
-                            <TableRow key={index}>
-                              <TableCell sx={{ color: "#475467" }}>
-                                <FormControlLabel control={<Checkbox />} />
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.companyName}
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.email}
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.phoneNumber}
-                              </TableCell>
-                              <TableCell
-                                sx={{ color: "#475467", textAlign: "center" }}
-                              >
-                                {row.createdAt}
-                              </TableCell>
-                              <TableCell
-                                sx={{ color: "#475467", textAlign: "center" }}
-                              >
-                                <div className="status">{row.status}</div>
-                              </TableCell>
-                              <TableCell
-                                sx={{ color: "#475467" }}
-                                className="action-type relative"
-                              >
-                                <div className="flex gap-3 justify-center cursor-pointer">
-                                  <BsThreeDotsVertical
-                                    onClick={(e) => {
-                                      handleClick(e);
-                                      setAnchorData(row);
-                                    }}
-                                  />
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
+                        {data?.data
+                          ?.filter((item) =>
+                            item.companyName
+                              .toLowerCase()
+                              .includes(search.toLowerCase())
+                          )
+                          .map((row, index) => {
+                            return (
+                              <TableRow key={index}>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  <FormControlLabel control={<Checkbox />} />
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.companyName}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.email}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.phoneNumber}
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#475467", textAlign: "center" }}
+                                >
+                                  {row.createdAt}
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#475467", textAlign: "center" }}
+                                >
+                                  <div className="status">{row.status}</div>
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#475467" }}
+                                  className="action-type relative"
+                                >
+                                  <div className="flex gap-3 justify-center cursor-pointer">
+                                    <BsThreeDotsVertical
+                                      onClick={(e) => {
+                                        handleClick(e);
+                                        setAnchorData(row);
+                                      }}
+                                    />
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 </Paper>
                 <div className="flex justify-between items-center">
                   <p style={{ color: "#475467", fontSize: 14 }}>
-                    Showing {allClients?.length} results found
+                    Showing {data?.totalCount} results found
                   </p>
                   <Pagination
                     count={PAGECOUNT}

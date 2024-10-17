@@ -52,6 +52,7 @@ export const PersonalInformation = () => {
   const [url, setUrl] = useState();
   const [summary, setSummary] = useState();
   const [resume, setResume] = useState("");
+  const [prefferedLocation, setPrefferedLocation] = useState("");
   const [education, setEducation] = useState([
     {
       degree: null,
@@ -60,6 +61,7 @@ export const PersonalInformation = () => {
       certificate: null,
       city: null,
       state: null,
+      prefferedLocation: null,
     },
   ]);
   const [activeScreen, setActiveScreen] = useState(1);
@@ -92,7 +94,6 @@ export const PersonalInformation = () => {
   // form 2
   const [workSetting, setWorkSetting] = useState();
   const [workShift, setWorkShift] = useState();
-  const [prefferedLocation, setPrefferedLocation] = useState();
   const [openToRelocate, setOpenToRelocate] = useState();
   const [requiredForTravel, setRequiredForTravel] = useState();
   const [workSchedule, setWorkSchedule] = useState();
@@ -416,7 +417,7 @@ export const PersonalInformation = () => {
 
     // navigate("/valueassessmentform");
     const user = JSON.parse(localStorage.getItem("token"));
-    const educationList = [];
+    // const educationList = "";
     await axiosInstance
       .post("/postCandidatePersonalInfo?candidateId=" + user.userId, {
         file,
@@ -425,7 +426,7 @@ export const PersonalInformation = () => {
         contactNumber,
         url,
         summary,
-        educationList,
+        // educationList,
         workSetting,
         workShift,
         prefferedLocation,
@@ -1658,17 +1659,21 @@ export const PersonalInformation = () => {
                     >
                       What are your preferred locations for the job?
                     </p>
-                    <CreatableSelect
+
+                    {/* <CreatableSelect
                       isClearable
                       options={getOptions("prefferedLocation")}
                       value={prefferedLocation}
-                      onChange={(e) => setPrefferedLocation(e)}
+                      onChange={(selected) =>
+                        setPrefferedLocation("prefferedLocation", selected)
+                      }
                       onCreateOption={(selected) =>
                         handleCreate("prefferedLocation", selected)
                       }
                       placeholder="Select or create an item"
-                    />
-                    {/* <Autocomplete
+                    /> */}
+
+                    <Autocomplete
                       disablePortal
                       size="small"
                       fullWidth
@@ -1678,7 +1683,7 @@ export const PersonalInformation = () => {
                       renderInput={(params) => (
                         <TextField {...params} placeholder="Select" required />
                       )}
-                    /> */}
+                    />
                   </div>
                   <div className="grid grid-flow-row">
                     <p

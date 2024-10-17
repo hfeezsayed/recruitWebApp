@@ -285,7 +285,7 @@ export const AllJobs = () => {
         setTasks(AllJobDataTokanBan(response?.data.data));
         setFilterData(response?.data.data);
         setLoading(false);
-        //setPage(data?.pageNo || 1);
+        setPage(data?.pageNo || 1);
       })
       .catch((e) => {
         setLoading(false);
@@ -843,7 +843,7 @@ export const AllJobs = () => {
                                                   fontSize: 10,
                                                 }}
                                               >
-                                                Job Type: {item?.typeOfHire[0]}
+                                                Job Type: {item?.typeOfHire}
                                               </p>
                                               <p
                                                 style={{
