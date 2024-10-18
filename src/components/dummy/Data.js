@@ -2955,39 +2955,48 @@ export const jobScreeningQuestionData = {
   answersList: [
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
     {
       questino: "Why are you interested in this role?",
-      ans: "I am passionate about software development and have been following your company's innovative projects.",
+      ans:
+        "I am passionate about software development and have been following your company's innovative projects.",
     },
   ],
 };

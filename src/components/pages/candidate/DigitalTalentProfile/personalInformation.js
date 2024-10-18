@@ -265,6 +265,7 @@ export const PersonalInformation = () => {
               ? response.data.contactNumber
               : ""
           );
+
           if (response.data?.education && response.data?.education.length > 0) {
             setEducation(response.data?.education);
           }

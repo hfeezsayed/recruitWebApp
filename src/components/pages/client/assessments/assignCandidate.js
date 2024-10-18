@@ -93,10 +93,7 @@ export const AssignCandidate = () => {
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`,
-        
-      )
+      .get(`/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -118,10 +115,7 @@ export const AssignCandidate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -147,33 +141,28 @@ export const AssignCandidate = () => {
   const handleAddAsignment = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const batchName = location?.state?.batchName;
-    const selectedAssignments =  location?.state?.selected;
+    const selectedAssignments = location?.state?.selected;
     await axiosInstance
-      .post(
-        `/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`,
-        {
-          batchName,
-          selectedAssignments,
-          addCandidateDatabase,
-          candidateName,
-          candidateEmail,
-          candidateNo,
-          candidateLinkedin,
-        },
-        
-      )
+      .post(`/saveClientAssessmentBatchAddCandidate?clientId=${user.userId}`, {
+        batchName,
+        selectedAssignments,
+        addCandidateDatabase,
+        candidateName,
+        candidateEmail,
+        candidateNo,
+        candidateLinkedin,
+      })
       .then((response) => {
         const formData = new FormData();
-        formData.append("file", candidateResume)
+        formData.append("file", candidateResume);
         axiosInstance
           .post(
             `/uploadCandidateResume?candidateId=${response.data.userId}`,
-             formData,
-             
+            formData
           )
           .then((response) => {
-            navigate("/assessmentsList")  
-          })
+            navigate("/assessmentsList");
+          });
       })
       .catch((e) => console.log(e));
   };
@@ -210,7 +199,8 @@ export const AssignCandidate = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                          >
                             Assessment Name
                           </TableCell>
                         </TableRow>
@@ -221,9 +211,11 @@ export const AssignCandidate = () => {
                             <TableRow
                               hover
                               key={index}
-                              sx={{ cursor: "pointer" }}>
+                              sx={{ cursor: "pointer" }}
+                            >
                               <TableCell
-                                sx={{ color: "#475467", fontSize: 14 }}>
+                                sx={{ color: "#475467", fontSize: 14 }}
+                              >
                                 {row?.name}
                               </TableCell>
                             </TableRow>
@@ -255,7 +247,8 @@ export const AssignCandidate = () => {
                           color: "#101828",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Select
                       </span>
                     );
@@ -263,14 +256,16 @@ export const AssignCandidate = () => {
 
                   return selected;
                 }}
-                sx={{ minWidth: 250, color: "#101828", mt: 1 }}>
+                sx={{ minWidth: 250, color: "#101828", mt: 1 }}
+              >
                 <MenuItem disabled value="">
                   <span
                     style={{
                       color: "#475467",
                       fontSize: 16,
                       fontWeight: 600,
-                    }}>
+                    }}
+                  >
                     Actions
                   </span>
                 </MenuItem>
@@ -280,7 +275,8 @@ export const AssignCandidate = () => {
                     value={name}
                     style={{
                       color: name === actions ? "#66B2B2" : "#54595E",
-                    }}>
+                    }}
+                  >
                     <Radio
                       checked={name === actions}
                       sx={{
@@ -306,7 +302,8 @@ export const AssignCandidate = () => {
                             <TableRow>
                               <TableCell
                                 padding="checkbox"
-                                sx={{ bgcolor: "#F8F9FA" }}>
+                                sx={{ bgcolor: "#F8F9FA" }}
+                              >
                                 <Checkbox
                                   color="primary"
                                   indeterminate={
@@ -327,15 +324,18 @@ export const AssignCandidate = () => {
                                 />
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Candidate Names
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Email Id
                               </TableCell>
                               <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                              >
                                 Mobile Number
                               </TableCell>
                             </TableRow>
@@ -352,7 +352,8 @@ export const AssignCandidate = () => {
                                   tabIndex={-1}
                                   key={index}
                                   selected={isItemSelected}
-                                  sx={{ cursor: "pointer" }}>
+                                  sx={{ cursor: "pointer" }}
+                                >
                                   <TableCell padding="checkbox">
                                     <Checkbox
                                       color="primary"
@@ -423,7 +424,8 @@ export const AssignCandidate = () => {
                         navigate(-1);
                       }}
                       variant="outlined"
-                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                    >
                       Cancel
                     </Button>
                     <Button
@@ -438,7 +440,8 @@ export const AssignCandidate = () => {
                         }
                       }}
                       variant="contained"
-                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                    >
                       Confirm
                     </Button>
                   </div>
@@ -452,7 +455,8 @@ export const AssignCandidate = () => {
                         color: "#475467",
                         fontSize: 20,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Add Candidates to do the assignments
                     </p>
                   </div>
@@ -464,7 +468,8 @@ export const AssignCandidate = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Candidate Name
                         </p>
                         <TextField
@@ -481,7 +486,8 @@ export const AssignCandidate = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Email Address
                         </p>
                         <TextField
@@ -499,7 +505,8 @@ export const AssignCandidate = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Phone Number
                         </p>
                         <TextField
@@ -517,7 +524,8 @@ export const AssignCandidate = () => {
                             color: "#344054",
                             fontSize: 14,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           LinkedIn Profile
                         </p>
                         <TextField
@@ -536,7 +544,8 @@ export const AssignCandidate = () => {
                           color: "#475467",
                           fontSize: 20,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Upload Resume
                       </p>
                       <div className="flex gap-5 items-center">
@@ -558,7 +567,8 @@ export const AssignCandidate = () => {
                                 fontSize: 30,
                               }}
                             />
-                          }>
+                          }
+                        >
                           Choose File
                           <br />
                           (Less than 25 MB)
@@ -627,13 +637,15 @@ export const AssignCandidate = () => {
                         navigate(-1);
                       }}
                       variant="outlined"
-                      style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                      style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                    >
                       Cancle
                     </Button>
                     <Button
                       onClick={handleAddAsignment}
                       variant="contained"
-                      style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                      style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                    >
                       Confirm
                     </Button>
                   </div>

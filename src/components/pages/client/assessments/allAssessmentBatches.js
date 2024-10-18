@@ -34,7 +34,8 @@ export const AllAssessmentBatches = () => {
                     fontSize: 20,
                     fontWeight: 500,
                     marginTop: 25,
-                  }}>
+                  }}
+                >
                   No Assessment Batch Created
                 </p>
                 <Button
@@ -45,8 +46,9 @@ export const AllAssessmentBatches = () => {
                     textTransform: "none",
                   }}
                   onClick={() => {
-                    navigate("/assessmentsList");
-                  }}>
+                    navigate("/selectAssesment");
+                  }}
+                >
                   Add the first assessment batch to initiate the list
                 </Button>
               </div>

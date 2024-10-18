@@ -220,7 +220,7 @@ export const Routes = () => {
           element={<JobWorkValueTemplate />}
         />
         {/* assessment start*/}
-        <Route
+        {/* <Route
           path="clientcreateAssessment"
           element={<ClientCreateAssessment />}
         />
@@ -228,7 +228,7 @@ export const Routes = () => {
         <Route
           path="clientauthorisedclients"
           element={<ClientAuthorisedClient />}
-        />
+        /> */}
         {/* assessment end*/}
 
         <Route path="job/valuesCreate" element={<ValuesCreate />} />
@@ -297,6 +297,7 @@ export const Routes = () => {
         <Route path="templates/icp" element={<IcpTemplate />} />
         <Route path="templates/icpResult" element={<IcpTemplateResult />} />
         <Route path="templates/icpEdit" element={<IcpTemplateEdit />} />
+        {/* Assessment Start  */}
         <Route path="allAssessmentBatches" element={<AllAssessmentBatches />} />
         <Route path="assessmentsList" element={<AssessmentListView />} />
         <Route path="selectAssesment" element={<SelectAssessment />} />
@@ -305,7 +306,8 @@ export const Routes = () => {
           element={<AssesmentBatchDetails />}
         />
         <Route path="assessmentResult" element={<AsssessmentResult />} />
-        <Route path="assignCandidate" element={<AssignCandidate />} />
+        <Route path="assignCandidates" element={<AssignCandidate />} />
+        {/* Assessment End  */}
         <Route
           path="jobCandidateCombination"
           element={<JobCandidateCombination />}

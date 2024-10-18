@@ -22,21 +22,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
   const { batchId } = useLocation().state || {};
   const navigate = useNavigate();
-  
-  
-  
+
   const handleAsignCandidates = async () => {
     //  navigate("/assesmentResult");
     const user = JSON.parse(localStorage.getItem("token"));
-
     axiosInstance
-      .post(
-        `/saveClientAssessmentBatch?&clientId=${user?.userId}`,
-         data,
-         
-      )
+      .post(`/saveClientAssessmentBatch?&clientId=${user?.userId}`, data)
       .then((response) => {
-        navigate("/assessmentList");
+        navigate("/assessmentsList");
       })
       .catch((e) => console.log(e));
   };
@@ -45,13 +38,15 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
     <Dialog
       open={open}
       onClose={setClose}
-      PaperProps={{ sx: { minWidth: "55%" } }}>
+      PaperProps={{ sx: { minWidth: "55%" } }}
+    >
       <DialogTitle sx={{ color: "#141414", fontWeight: 500 }}>
         Batch Details
       </DialogTitle>
       <IconButton
         onClick={setClose}
-        style={{ position: "absolute", top: 10, right: 10 }}>
+        style={{ position: "absolute", top: 10, right: 10 }}
+      >
         <IoIosCloseCircleOutline />
       </IconButton>
       <Divider />
@@ -84,7 +79,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                 return (
                   <p
                     key={index}
-                    style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}
+                  >
                     {row?.name}
                   </p>
                 );
@@ -112,7 +108,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Candidate Names
                         </TableCell>
                         <TableCell
@@ -121,7 +118,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Email Id
                         </TableCell>
                         <TableCell
@@ -130,7 +128,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Mobile Number
                         </TableCell>
                         <TableCell
@@ -139,7 +138,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Status
                         </TableCell>
                       </TableRow>
@@ -150,13 +150,15 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                           <TableRow
                             key={index}
                             hover
-                            sx={{ cursor: "pointer" }}>
+                            sx={{ cursor: "pointer" }}
+                          >
                             <TableCell
                               sx={{
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.name}
                             </TableCell>
                             <TableCell
@@ -164,7 +166,8 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.emailId}
                             </TableCell>
                             <TableCell
@@ -172,16 +175,12 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.mobileNo}
                             </TableCell>
                             <TableCell sx={{ color: "#58A20F" }}>
-                              {modelType === "save" ? (
-                                ""
-                              ):
-                              (
-                                row.status
-                              )}
+                              {modelType === "save" ? "" : row.status}
                             </TableCell>
                           </TableRow>
                         );
@@ -193,20 +192,22 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
             </Box>
           </div>
           <div className="flex justify-end py-5 gap-5">
-              <Button
-                onClick={() => {
-                  navigate(0);
-                }}
-                variant="outlined"
-                style={{ borderColor: "#D0D5DD", color: "#475467" }}>
-                Cancel
-              </Button>
-              <Button
-                onClick={handleAsignCandidates}
-                variant="contained"
-                style={{ backgroundColor: "#008080", color: "#ffffff" }}>
-                Confirm
-              </Button>
+            <Button
+              onClick={() => {
+                navigate(0);
+              }}
+              variant="outlined"
+              style={{ borderColor: "#D0D5DD", color: "#475467" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAsignCandidates}
+              variant="contained"
+              style={{ backgroundColor: "#008080", color: "#ffffff" }}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       </DialogContent>

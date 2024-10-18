@@ -68,8 +68,7 @@ export const SelectAssessment = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -92,10 +91,7 @@ export const SelectAssessment = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -142,7 +138,8 @@ export const SelectAssessment = () => {
                       <TableRow>
                         <TableCell
                           padding="checkbox"
-                          sx={{ bgcolor: "#F8F9FA" }}>
+                          sx={{ bgcolor: "#F8F9FA" }}
+                        >
                           <Checkbox
                             color="primary"
                             indeterminate={
@@ -163,7 +160,8 @@ export const SelectAssessment = () => {
                           />
                         </TableCell>
                         <TableCell
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Assessment Name
                         </TableCell>
                       </TableRow>
@@ -180,7 +178,8 @@ export const SelectAssessment = () => {
                             tabIndex={-1}
                             key={index}
                             selected={isItemSelected}
-                            sx={{ cursor: "pointer" }}>
+                            sx={{ cursor: "pointer" }}
+                          >
                             <TableCell padding="checkbox">
                               <Checkbox
                                 color="primary"
@@ -246,17 +245,20 @@ export const SelectAssessment = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ borderColor: "#D0D5DD", color: "#475467" }}>
+                style={{ borderColor: "#D0D5DD", color: "#475467" }}
+              >
                 Cancle
               </Button>
+
               <Button
                 onClick={() => {
-                  navigate("/assignCandidate", {
+                  navigate("/assignCandidates", {
                     state: { selected: selected, batchName: batchName },
                   });
                 }}
                 variant="contained"
-                style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                style={{ backgroundColor: "#008080", color: "#ffffff" }}
+              >
                 Confirm
               </Button>
             </div>

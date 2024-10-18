@@ -128,7 +128,6 @@ export const Candidate = () => {
     }
   };
 
-
   const handlePersonalInfo = () => {
     console.log(userData.personalInfoId);
     if (userData.personalInfo === true) {
@@ -154,30 +153,30 @@ export const Candidate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
       .get(`/downloadResume?candidateId=${user.userId}`, {
-        responseType: 'blob'
+        responseType: "blob",
       })
       .then((response) => {
-        const disposition = response.headers['content-disposition'];
-        let filename = '';
+        const disposition = response.headers["content-disposition"];
+        let filename = "";
         console.log(response.headers);
-        if (disposition && disposition.includes('attachment')) {
-            console.log(disposition);
-            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = filenameRegex.exec(disposition);
-            console.log(matches)
-            if (matches != null && matches[1]) {
-                filename = matches[1].replace(/['"]/g, '');
-            }
+        if (disposition && disposition.includes("attachment")) {
+          console.log(disposition);
+          const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = filenameRegex.exec(disposition);
+          console.log(matches);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, "");
+          }
         }
 
         // If filename is not found, you can use a default name
         if (!filename) {
-            filename = 'resume';
+          filename = "resume";
         }
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', filename);
+        link.setAttribute("download", filename);
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
@@ -204,7 +203,8 @@ export const Candidate = () => {
                 <div className="py-4 flex gap-6">
                   <div
                     className="w-28 h-28 rounded-full "
-                    style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
+                    style={{ borderWidth: 2, borderColor: "#66B2B2" }}
+                  >
                     <img
                       src={
                         userData.image ||
@@ -215,9 +215,11 @@ export const Candidate = () => {
                     />
                     <div
                       className="relative -mt-8 justify-end flex h-9"
-                      style={{ backgroundColor: "#" }}>
+                      style={{ backgroundColor: "#" }}
+                    >
                       <IconButton
-                        style={{ padding: 6, backgroundColor: "#66B2B2" }}>
+                        style={{ padding: 6, backgroundColor: "#66B2B2" }}
+                      >
                         <BsFillCameraFill
                           style={{ color: "#ffffff", fontSize: 22 }}
                         />
@@ -230,7 +232,8 @@ export const Candidate = () => {
                         color: "#101828",
                         fontWeight: 600,
                         fontSize: 24,
-                      }}>
+                      }}
+                    >
                       {userName}
                     </p>
                     <div className="flex gap-2 items-center pt-1">
@@ -244,7 +247,8 @@ export const Candidate = () => {
                         style={{
                           color: "#475467",
                           fontSize: 16,
-                        }}>
+                        }}
+                      >
                         {JSON.parse(localStorage.getItem("token"))?.email ||
                           userData?.email}
                       </p>
@@ -261,7 +265,8 @@ export const Candidate = () => {
                             paddingLeft: 10,
                             paddingRight: 10,
                           }}
-                          startIcon={<HiOutlineDownload />}>
+                          startIcon={<HiOutlineDownload />}
+                        >
                           Resume
                         </Button>
                       )}
@@ -280,7 +285,8 @@ export const Candidate = () => {
                             paddingLeft: 10,
                             paddingRight: 10,
                           }}
-                          startIcon={<MdOutlineArrowOutward />}>
+                          startIcon={<MdOutlineArrowOutward />}
+                        >
                           Linkedin
                         </Button>
                       )}
@@ -302,7 +308,8 @@ export const Candidate = () => {
                       <Box sx={{ minWidth: 35 }}>
                         <Typography
                           variant="body2"
-                          color="text.secondary">{`${Math.round(
+                          color="text.secondary"
+                        >{`${Math.round(
                           userData?.personalInfo ? 100 : 0
                         )}%`}</Typography>
                       </Box>
@@ -318,7 +325,8 @@ export const Candidate = () => {
                       }}
                       onClick={() => {
                         navigate("/OutputofDigitalTalentProfile");
-                      }}>
+                      }}
+                    >
                       Access Digital Talent Profile(DTP)
                     </Button>
                   </div>
@@ -359,7 +367,8 @@ export const Candidate = () => {
                                 ? "#58A20F"
                                 : "#101828",
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Completed
                           </p>
                         </div>
@@ -383,7 +392,8 @@ export const Candidate = () => {
                                 color: "#101828",
                                 fontWeight: 600,
                                 fontSize: 20,
-                              }}>
+                              }}
+                            >
                               Candidate Details
                             </p>
                           </div>
@@ -400,9 +410,8 @@ export const Candidate = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() =>
-                          handlePersonalInfo()
-                        }>
+                        onClick={() => handlePersonalInfo()}
+                      >
                         {userData?.personalInfo ? "Edit" : "Not taken"}
                       </Button>
                     </CardActions>
@@ -436,7 +445,8 @@ export const Candidate = () => {
                                 ? "#58A20F"
                                 : "#101828",
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Completed
                           </p>
                         </div>
@@ -460,7 +470,8 @@ export const Candidate = () => {
                                 color: "#101828",
                                 fontWeight: 600,
                                 fontSize: 20,
-                              }}>
+                              }}
+                            >
                               My Job Preferences
                             </p>
                           </div>
@@ -477,7 +488,8 @@ export const Candidate = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() => handlePreferences()}>
+                        onClick={() => handlePreferences()}
+                      >
                         {userData?.preferences ? "Edit" : "Not taken"}
                       </Button>
                     </CardActions>
@@ -511,7 +523,8 @@ export const Candidate = () => {
                                 ? "#58A20F"
                                 : "#101828",
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Completed
                           </p>
                         </div>
@@ -535,7 +548,8 @@ export const Candidate = () => {
                                 color: "#101828",
                                 fontWeight: 600,
                                 fontSize: 20,
-                              }}>
+                              }}
+                            >
                               Value Assessment
                             </p>
                           </div>
@@ -554,7 +568,8 @@ export const Candidate = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() => showValueAssessmentResult()}>
+                        onClick={() => showValueAssessmentResult()}
+                      >
                         {userData?.valueAssessment
                           ? "view results"
                           : "Not taken"}
@@ -590,7 +605,8 @@ export const Candidate = () => {
                                 ? "#58A20F"
                                 : "#101828",
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Completed
                           </p>
                         </div>
@@ -614,7 +630,8 @@ export const Candidate = () => {
                                 color: "#101828",
                                 fontWeight: 600,
                                 fontSize: 20,
-                              }}>
+                              }}
+                            >
                               Talent Spectrum Analysis
                             </p>
                           </div>
@@ -631,7 +648,8 @@ export const Candidate = () => {
                           fontSize: 14,
                         }}
                         endIcon={<FaArrowRight />}
-                        onClick={() => showAssessmentResult()}>
+                        onClick={() => showAssessmentResult()}
+                      >
                         {userData?.assessment ? "view results" : "Not taken"}
                       </Button>
                     </CardActions>
@@ -640,7 +658,8 @@ export const Candidate = () => {
                 {/* Actions need to be taken */}
                 <div className="mt-5">
                   <p
-                    style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}>
+                    style={{ color: "#101828", fontWeight: 600, fontSize: 20 }}
+                  >
                     Summary
                   </p>
                   <div className="grid grid-cols-3 gap-5 mt-5">
@@ -653,7 +672,8 @@ export const Candidate = () => {
                               color: "#475467",
                               fontSize: 16,
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Add Authorised Clients
                           </p>
                         </div>
@@ -662,7 +682,8 @@ export const Candidate = () => {
                             color: "#1D1F2C",
                             fontWeight: 600,
                             fontSize: 30,
-                          }}>
+                          }}
+                        >
                           {authorizedCount}
                         </p>
                         <div className="flex items-center justify-between ">
@@ -670,15 +691,18 @@ export const Candidate = () => {
                             style={{
                               color: "#475467",
                               fontSize: 14,
-                            }}>
+                            }}
+                          >
                             Client request that are pending
                           </p>
-                          <Button onClick={() => navigate("/authorisedclients")}>
-                          <IconButton>
-                            <FaArrowRight
-                              style={{ color: "#008080", fontSize: 18 }}
-                            />
-                          </IconButton>
+                          <Button
+                            onClick={() => navigate("/authorisedclients")}
+                          >
+                            <IconButton>
+                              <FaArrowRight
+                                style={{ color: "#008080", fontSize: 18 }}
+                              />
+                            </IconButton>
                           </Button>
                         </div>
                       </CardContent>
@@ -692,7 +716,8 @@ export const Candidate = () => {
                               color: "#475467",
                               fontSize: 16,
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Client Assessments
                           </p>
                         </div>
@@ -701,7 +726,8 @@ export const Candidate = () => {
                             color: "#1D1F2C",
                             fontWeight: 600,
                             fontSize: 30,
-                          }}>
+                          }}
+                        >
                           {clientCount}
                         </p>
                         <div className="flex items-center justify-between ">
@@ -709,15 +735,20 @@ export const Candidate = () => {
                             style={{
                               color: "#475467",
                               fontSize: 14,
-                            }}>
+                            }}
+                          >
                             Client Assessments needs to be taken
                           </p>
-                          <Button onClick={() => navigate("/assesmentform", { state : 3})}>
-                          <IconButton>
-                            <FaArrowRight
-                              style={{ color: "#008080", fontSize: 18 }}
-                            />
-                          </IconButton>
+                          <Button
+                            onClick={() =>
+                              navigate("/assesmentform", { state: 3 })
+                            }
+                          >
+                            <IconButton>
+                              <FaArrowRight
+                                style={{ color: "#008080", fontSize: 18 }}
+                              />
+                            </IconButton>
                           </Button>
                         </div>
                       </CardContent>
@@ -731,7 +762,8 @@ export const Candidate = () => {
                               color: "#475467",
                               fontSize: 16,
                               fontWeight: 600,
-                            }}>
+                            }}
+                          >
                             Self- Assessments
                           </p>
                         </div>
@@ -740,7 +772,8 @@ export const Candidate = () => {
                             color: "#1D1F2C",
                             fontWeight: 600,
                             fontSize: 30,
-                          }}>
+                          }}
+                        >
                           {selfCount}
                         </p>
                         <div className="flex items-center justify-between ">
@@ -748,15 +781,20 @@ export const Candidate = () => {
                             style={{
                               color: "#475467",
                               fontSize: 14,
-                            }}>
+                            }}
+                          >
                             Assessments needs to be taken
                           </p>
-                          <Button onClick={() => navigate("/assesmentform", { state : 2 })}>
-                          <IconButton>
-                            <FaArrowRight
-                              style={{ color: "#008080", fontSize: 18 }}
-                            />
-                          </IconButton>
+                          <Button
+                            onClick={() =>
+                              navigate("/assesmentform", { state: 2 })
+                            }
+                          >
+                            <IconButton>
+                              <FaArrowRight
+                                style={{ color: "#008080", fontSize: 18 }}
+                              />
+                            </IconButton>
                           </Button>
                         </div>
                       </CardContent>

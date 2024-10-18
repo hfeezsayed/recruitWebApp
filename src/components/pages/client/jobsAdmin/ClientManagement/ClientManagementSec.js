@@ -74,7 +74,7 @@ const ClientManagementSec = () => {
 
   //GET Request
   useEffect(() => {
-    axiosInstance //getAllClients?pageNo=1&pageSize=10
+    axiosInstance
       .get(`/getAllClients?pageNo=1&pageSize=5`)
       .then((response) => {
         console.log("getAllClients", response);
@@ -253,7 +253,7 @@ const ClientManagementSec = () => {
                 </Paper>
                 <div className="flex justify-between items-center">
                   <p style={{ color: "#475467", fontSize: 14 }}>
-                    Showing {data?.totalCount} results found
+                    Showing {data?.totalCount || 0} results found
                   </p>
                   <Pagination
                     count={PAGECOUNT}

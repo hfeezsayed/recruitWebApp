@@ -370,7 +370,7 @@ export const ClientSideNav = ({ openTemplate }) => {
           </Collapse>
 
           {/* Assessment new */}
-          <ListItem disablePadding sx={{ display: "block" }}>
+          {/* <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -425,9 +425,9 @@ export const ClientSideNav = ({ openTemplate }) => {
               />
               {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
           {/* Assessment collapse new*/}
-          <Collapse in={showAssesment} timeout="auto" unmountOnExit>
+          {/* <Collapse in={showAssesment} timeout="auto" unmountOnExit>
             <div
               className="pl-16 py-2"
               onClick={() => navigate("/clientAssesmentForm", { state: 1 })}
@@ -473,10 +473,10 @@ export const ClientSideNav = ({ openTemplate }) => {
                 Clients - Assessment
               </p>
             </div>
-          </Collapse>
+          </Collapse> */}
 
           {/* Assessment old */}
-          {/* <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -496,8 +496,7 @@ export const ClientSideNav = ({ openTemplate }) => {
                 },
               }}
               onClick={() => {
-                setShowAcordianAssessment(!showAcordianAssessment);
-                // navigate("/assessmentsList");
+                navigate("/assessmentsList");
               }}
             >
               <ListItemIcon
@@ -524,25 +523,8 @@ export const ClientSideNav = ({ openTemplate }) => {
                 }}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-              {!showAcordianAssessment ? (
-                <IoIosArrowUp
-                  style={{
-                    color: currentState.includes("templates")
-                      ? "#ffffff"
-                      : "#475467",
-                  }}
-                />
-              ) : (
-                <IoIosArrowDown
-                  style={{
-                    color: currentState.includes("templates")
-                      ? "#ffffff"
-                      : "#475467",
-                  }}
-                />
-              )}
             </ListItemButton>
-          </ListItem> */}
+          </ListItem>
           {/* Assessment collapse old */}
           {/* <Collapse in={showAcordianAssessment} timeout="auto" unmountOnExit>
             <div

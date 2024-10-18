@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment, Pagination, TextField } from "@mui/material";
-import { IoSearchOutline } from "react-icons/io5";
+import {
+  Button,
+  InputAdornment,
+  Pagination,
+  TextField,
+  Checkbox,
+} from "@mui/material";
+
+import { IoSearchOutline, IoFilter } from "react-icons/io5";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,12 +26,14 @@ import NoDataFound from "../../../../assets/images/noData Found.png";
 import { BatchDetailEditPopUp } from "./batchDetailEditPopUp";
 import { BatchDetailViewPopUp } from "./batchDetailViewPopUp";
 import Spinner from "../../../utils/spinner";
+import "./index.css";
 
 export const AssessmentListView = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(assignmentBatchesData);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState([]);
 
   const [viewData, setViewData] = useState();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
@@ -77,6 +86,38 @@ export const AssessmentListView = () => {
       });
   }, []);
 
+  //select row start
+  const handleClick = (event, row) => {
+    const selectedIndex = selected.indexOf(row);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, row);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
+  const isSelected = (row) => selected.indexOf(row) !== -1;
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = data?.data || [];
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
+  //select row end
+
   const checkStatus = (status) => {
     let color = "#475467";
 
@@ -91,7 +132,16 @@ export const AssessmentListView = () => {
     } else {
       color = "#475467";
     }
-    return <p style={{ color: color, fontSize: 14 }}>{status}</p>;
+    return (
+      <p
+        style={{
+          color: color,
+          fontSize: 14,
+        }}
+      >
+        {status}
+      </p>
+    );
   };
 
   return (
@@ -184,7 +234,9 @@ export const AssessmentListView = () => {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search..."
-                        sx={{ minWidth: 320 }}
+                        sx={{
+                          minWidth: 320,
+                        }}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -193,70 +245,189 @@ export const AssessmentListView = () => {
                           ),
                         }}
                       />
-                      <Button
-                        variant="text"
-                        style={{
-                          color: "#008080",
-                          backgroundColor: "#EAF4F5",
-                          textTransform: "none",
-                        }}
-                        onClick={() => navigate("/selectAssesment")}
-                      >
-                        Create New Batch
-                      </Button>
+                      <div>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          // onClick={handleClickFilter}
+                          style={{
+                            color: "#252525",
+                            borderColor: "#D0D5DD",
+                            textTransform: "none",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            borderRadius: 8,
+                            width: 94,
+                            height: 38,
+                            marginRight: 10,
+                          }}
+                          startIcon={
+                            <IoFilter
+                              style={{
+                                color: "#252525",
+                              }}
+                            />
+                          }
+                        >
+                          Filter
+                        </Button>
+                        <Button
+                          variant="text"
+                          style={{
+                            color: "#008080",
+                            backgroundColor: "#EAF4F5",
+                            textTransform: "none",
+                            marginRight: 10,
+                          }}
+                          onClick={() => navigate("/assignCandidates")}
+                        >
+                          Add New Batch
+                        </Button>
+                        {/* <Button
+                          variant="text"
+                          style={{
+                            color: "#008080",
+                            backgroundColor: "#EAF4F5",
+                            textTransform: "none",
+                          }}
+                          onClick={() => navigate("/selectAssesment")}
+                        >
+                          Create New Batch
+                        </Button> */}
+                      </div>
                     </div>
-                    <Box sx={{ width: "100%" }}>
-                      <Paper sx={{ width: "100%", mb: 2 }}>
-                        <TableContainer sx={{ maxHeight: 500 }}>
+                    <Box
+                      sx={{
+                        width: "100%",
+                      }}
+                    >
+                      <Paper
+                        sx={{
+                          width: "100%",
+                          mb: 2,
+                        }}
+                      >
+                        <TableContainer
+                          sx={{
+                            maxHeight: 500,
+                          }}
+                          className="assessment-table"
+                        >
                           <Table stickyHeader>
                             <TableHead>
                               <TableRow>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
-                                  Serial Number
+                                  <Checkbox
+                                    color="primary"
+                                    indeterminate={
+                                      selected.length > 0 &&
+                                      selected.length < data?.data?.length
+                                    }
+                                    checked={
+                                      data?.data?.length > 0 &&
+                                      selected.length === data?.data?.length
+                                    }
+                                    onChange={handleSelectAllClick}
+                                    sx={{
+                                      color: "#D0D5DD",
+                                      "&.Mui-checked ": {
+                                        color: "#66B2B2",
+                                      },
+                                    }}
+                                  />
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
-                                  Template Name
+                                  Batch Name
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
                                   Created By
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
                                   Candidate Details
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
                                   Edit
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                  sx={{
+                                    bgcolor: "#F8F9FA",
+                                    color: "#101828",
+                                  }}
                                 >
                                   Status
                                 </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {data?.data?.map((row, index) => {
+                              {data?.data.map((row, index) => {
+                                const isItemSelected = isSelected(row);
                                 return (
-                                  <TableRow key={index}>
+                                  <TableRow
+                                    hover
+                                    role="checkbox"
+                                    aria-checked={isItemSelected}
+                                    tabIndex={-1}
+                                    key={index}
+                                    selected={isItemSelected}
+                                    sx={{
+                                      cursor: "pointer",
+                                    }}
+                                  >
                                     <TableCell align="center">
-                                      {row.id}
+                                      <Checkbox
+                                        color="primary"
+                                        checked={isItemSelected}
+                                        onClick={(event) =>
+                                          handleClick(event, row)
+                                        }
+                                        sx={{
+                                          color: "#D0D5DD",
+                                          "&.Mui-checked": {
+                                            color: "#66B2B2",
+                                          },
+                                        }}
+                                      />
                                     </TableCell>
-                                    <TableCell sx={{ color: "#475467" }}>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
                                       {row.batchName}
                                     </TableCell>
-                                    <TableCell sx={{ color: "#475467" }}>
+                                    <TableCell
+                                      sx={{
+                                        color: "#475467",
+                                      }}
+                                    >
                                       {row.createdBy}
                                     </TableCell>
                                     <TableCell padding="none" align="center">
@@ -303,7 +474,12 @@ export const AssessmentListView = () => {
                         </TableContainer>
                       </Paper>
                       <div className="flex justify-between items-center">
-                        <p style={{ color: "#475467", fontSize: 14 }}>
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 14,
+                          }}
+                        >
                           Showing {data?.totalCount || 0} results found
                         </p>
                         <Pagination
