@@ -6,6 +6,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { locations } from "../../../utils/allLocations";
 
 export const TeamEdit = () => {
   const navigate = useNavigate();
@@ -13,30 +14,24 @@ export const TeamEdit = () => {
   const [teamLocation, setTeamLocation] = useState();
   const [crossFunctionality, setCrossFunctionality] = useState();
   const [specifyDomain, setSpecifyDomain] = useState();
+  const [templateName, setTemplateName] = useState("");
+  const [templateTag, setTemplateTag] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
   const [id, setId] = useState();
 
   const [teamWorkingDes, setTeamWorkingDes] = useState("");
   const [describeContributions, setDescribeContributions] = useState("");
   const [workValues, setWorkValues] = useState("");
   const [technicalSkills, setTechnicalSkills] = useState("");
-  
 
   const location = useLocation();
 
-  const options = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
-  ];
+  const options = [{ label: "Testing" }];
 
   const yes_no = [
     { label: "Yes", value: "Yes" },
     { label: "No", value: "No" },
-  ]
+  ];
 
   const handleSubmit = async () => {
     const domainRole = specifyDomain;
@@ -46,24 +41,25 @@ export const TeamEdit = () => {
     const jobId = localStorage.getItem("jobId");
     axiosInstance
       .post(
-        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}`,
+        `/saveTeamTemplateForJob?clientId=${user.userId}&jobId=${jobId}&template=0`,
         {
-          id,
           teamSize,
           teamLocation,
           crossFunctionality,
           domainRole,
           project,
           contributions,
+          templateName,
+          templateTag,
+          templateDescription,
           workValues,
-          technicalSkills
-        },
-        
+          technicalSkills,
+        }
       )
       .then((data) => {
         console.log(data.data);
-        navigate("/job/createJob", { state : jobId});
-    })
+        navigate("/job/createJob", { state: jobId });
+      })
       .catch((e) => console.log(e));
   };
 
@@ -76,21 +72,18 @@ export const TeamEdit = () => {
           .get(
             `/getTeamTemplate?clientId=${user.userId}&templateId=${location.state.jobData.teamId}`
           )
-          .then(
-            (data) => {
-              console.log(data);
-              setId(data.data.id);
-              setTeamSize(data.data.teamSize);
-              setTeamLocation(data.data.teamLocation);
-              setCrossFunctionality(data.data.crossFunctionality);
-              setSpecifyDomain(data.data.domainRole);
-              setTeamWorkingDes(data.data.project);
-              setDescribeContributions(data.data.contributions);
-              setWorkValues(data.data.workValues);
-              setTechnicalSkills(data.data.technicalSkills);
-            },
-            
-          )
+          .then((data) => {
+            console.log(data);
+            setId(data.data.id);
+            setTeamSize(data.data.teamSize);
+            setTeamLocation(data.data.teamLocation);
+            setCrossFunctionality(data.data.crossFunctionality);
+            setSpecifyDomain(data.data.domainRole);
+            setTeamWorkingDes(data.data.project);
+            setDescribeContributions(data.data.contributions);
+            setWorkValues(data.data.workValues);
+            setTechnicalSkills(data.data.technicalSkills);
+          })
           .catch((e) => {
             console.log(e);
           });
@@ -106,13 +99,13 @@ export const TeamEdit = () => {
   }, [location.state]);
 
   const teamSizeOpts = [
-    { label : "1-5", value: "1-5"},
-    { label : "5-10", value: "5-10"},
-    { label : "10-15", value: "10-15"},
-    { label : "15-20", value: "15-20"},
-    { label : "20-30", value: "20-30"},
-    { label : "30+", value: "30+"}
-  ]
+    { label: "1-5", value: "1-5" },
+    { label: "5-10", value: "5-10" },
+    { label: "10-15", value: "10-15" },
+    { label: "15-20", value: "15-20" },
+    { label: "20-30", value: "20-30" },
+    { label: "30+", value: "30+" },
+  ];
 
   return (
     <div>
@@ -150,10 +143,11 @@ export const TeamEdit = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   What is the location of the team where it works from?
                 </p>
+
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={locations.map((option) => option.label)}
                   value={teamLocation || null}
                   onChange={(e, newvalue) => setTeamLocation(newvalue)}
                   renderInput={(params) => (
@@ -181,6 +175,7 @@ export const TeamEdit = () => {
                   If yes, please specify the domain or teams the role will
                   interact with?
                 </p>
+
                 <Autocomplete
                   size="small"
                   disablePortal
@@ -232,7 +227,9 @@ export const TeamEdit = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                How important are Work Values to you? Is this talent dimension used in filtering candidates or not? (Note: by default, we use this as one of the talent dimensions in the overall score.)
+                How important are Work Values to you? Is this talent dimension
+                used in filtering candidates or not? (Note: by default, we use
+                this as one of the talent dimensions in the overall score.)
               </p>
               <Autocomplete
                 size="small"
@@ -247,7 +244,10 @@ export const TeamEdit = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Do you want to give extra weight to Technical Skills compared to other talent dimensions? (Note: By default, we assign corresponding weightages based on your response in the ICP Analysis.)
+                Do you want to give extra weight to Technical Skills compared to
+                other talent dimensions? (Note: By default, we assign
+                corresponding weightages based on your response in the ICP
+                Analysis.)
               </p>
               <Autocomplete
                 size="small"
@@ -266,13 +266,15 @@ export const TeamEdit = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
                 onClick={handleSubmit}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 CONFIRM
               </Button>
             </div>

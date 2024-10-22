@@ -22,7 +22,6 @@ import {
   skillLevel,
   PreferOffice,
   workShifts,
-  locations,
   yes_No,
   travels,
   work_Comapny,
@@ -40,6 +39,7 @@ import {
   softwares,
   environments,
 } from "../seedData";
+import { locations } from "../../../utils/allLocations";
 import CreatableSelect from "react-select/creatable";
 
 export const PersonalInformation = () => {
@@ -1660,19 +1660,6 @@ export const PersonalInformation = () => {
                     >
                       What are your preferred locations for the job?
                     </p>
-
-                    {/* <CreatableSelect
-                      isClearable
-                      options={getOptions("prefferedLocation")}
-                      value={prefferedLocation}
-                      onChange={(selected) =>
-                        setPrefferedLocation("prefferedLocation", selected)
-                      }
-                      onCreateOption={(selected) =>
-                        handleCreate("prefferedLocation", selected)
-                      }
-                      placeholder="Select or create an item"
-                    /> */}
 
                     <Autocomplete
                       disablePortal

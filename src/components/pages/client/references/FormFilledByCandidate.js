@@ -70,7 +70,7 @@ const FormFilledByCandidate = () => {
       })
       .then((data) => {
         console.log("saveReference", data);
-        toast(data.data.result);
+        toast.success(data.data.result);
         setCandidateName("");
         setPosition("");
         setReferenceName("");
@@ -117,13 +117,11 @@ const FormFilledByCandidate = () => {
 
   return (
     <div className="flex candidate-request-reference">
-      <ClientSideNav />
       <div className="w-full min-h-screen side-bar pr-3">
         {/* notification alert start*/}
         <ToastContainer />
         {/* notification alert End*/}
-        <TopNav />
-        <div className="body-content p-8">
+        <div className="body-content p-12">
           <h2 className="text-2xl pt-4 font-bold main-black">
             Employee Reference Check Form
           </h2>
@@ -225,7 +223,7 @@ const FormFilledByCandidate = () => {
                         fontWeight: 500,
                       }}
                     >
-                      Reference Email Number
+                      Reference Email
                     </p>
                     <TextField
                       size="small"
@@ -338,7 +336,7 @@ const FormFilledByCandidate = () => {
                           value={hasSuperior}
                           onChange={(e) => setHasSuperior(e.target.value)}
                         >
-                          <MenuItem value=""></MenuItem>
+                          <MenuItem value="yes">Yes</MenuItem>
                         </Select>
                       </FormControl>
                     </Box>

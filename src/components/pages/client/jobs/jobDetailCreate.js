@@ -42,8 +42,10 @@ export const JobDetailCreate = () => {
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [specificIndustryExperience, setSpecificIndustryExperience] =
-    useState();
+  const [
+    specificIndustryExperience,
+    setSpecificIndustryExperience,
+  ] = useState();
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
   const [roleType, setRoleType] = useState();

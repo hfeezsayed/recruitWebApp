@@ -374,7 +374,7 @@ export const CandidatesLists = () => {
                       color: "#475467",
                     }}
                   >
-                    Cancle
+                    Cancel
                   </Button>
                   <Button
                     onClick={() => {

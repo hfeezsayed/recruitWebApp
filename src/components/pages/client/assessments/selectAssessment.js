@@ -247,7 +247,7 @@ export const SelectAssessment = () => {
                 variant="outlined"
                 style={{ borderColor: "#D0D5DD", color: "#475467" }}
               >
-                Cancle
+                Cancel
               </Button>
 
               <Button

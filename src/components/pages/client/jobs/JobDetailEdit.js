@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
 import CreatableSelect from "react-select/creatable";
+import { locations } from "../../../utils/allLocations";
 
 export const JobDetailEdit = () => {
   const navigate = useNavigate();
@@ -42,8 +43,10 @@ export const JobDetailEdit = () => {
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [specificIndustryExperience, setSpecificIndustryExperience] =
-    useState();
+  const [
+    specificIndustryExperience,
+    setSpecificIndustryExperience,
+  ] = useState();
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
   const [roleType, setRoleType] = useState();
@@ -86,15 +89,13 @@ export const JobDetailEdit = () => {
     },
   ]);
 
-  // const options = [
-  //   { label: "The Shawshank Redemption", year: 1994 },
-  //   { label: "The Godfather", year: 1972 },
-  //   { label: "The Godfather: Part II", year: 1974 },
-  //   { label: "The Dark Knight", year: 2008 },
-  //   { label: "12 Angry Men", year: 1957 },
-  //   { label: "Schindler's List", year: 1993 },
-  //   { label: "Pulp Fiction", year: 1994 },
-  // ];
+  const VisaOptions = [
+    { label: "B-1" },
+    { label: "B-2" },
+    { label: "H-2A" },
+    { label: "Student Visa" },
+    { label: "Work Visa" },
+  ];
 
   const workSettings = [
     { label: "On-Site", value: "On-Site" },
@@ -160,7 +161,6 @@ export const JobDetailEdit = () => {
         console.log(response.data);
         setOptions(response.data);
         console.log(optionType);
-
         if (optionType === "jobFamily") setJobFamily(inputValue);
         if (optionType === "jobLocation") setJobLocation(inputValue);
         if (optionType === "jobDepartment") setJobDepartment(inputValue);
@@ -259,7 +259,6 @@ export const JobDetailEdit = () => {
         benefits,
         equalEmployeeOpportunity,
         specificIndustryExperience,
-
         industryKnowledge,
         workSetting,
         roleType,
@@ -303,16 +302,16 @@ export const JobDetailEdit = () => {
   const saveJobDetail = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    setCompanyInfo(companyOverview);
-    setResponsibilities(responsebility);
-    setBenefits(benefit);
-    setPositionSummary(jobSummary);
-    setEqualEmployeeOpportunity(eeo);
     const softwares = software.map((option) => option.value);
     const certifications = certification.map((option) => option.value);
     axiosInstance
       .post(
-        "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
+        "/saveJobTemplateForJob?clientId=" +
+          user.userId +
+          "&jobId=" +
+          jobId +
+          "&template=" +
+          0,
         {
           jobTitle,
           jobCode,
@@ -326,7 +325,6 @@ export const JobDetailEdit = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-
           industryKnowledge,
           workSetting,
           roleType,
@@ -346,13 +344,66 @@ export const JobDetailEdit = () => {
         }
       )
       .then((data) => {
-        console.log(data.data);
+        console.log("save job______", data.data);
         //localStorage.setItem("jobId", data.data.jobId);
         navigate("/job/CreateJob", { state: data.data.jobId });
       })
       .catch((e) => console.log(e));
     closePopup();
   };
+
+  // const saveJobDetail = async () => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   const jobId = localStorage.getItem("jobId");
+  //   setCompanyInfo(companyOverview);
+  //   setResponsibilities(responsebility);
+  //   setBenefits(benefit);
+  //   setPositionSummary(jobSummary);
+  //   setEqualEmployeeOpportunity(eeo);
+  //   const softwares = software.map((option) => option.value);
+  //   const certifications = certification.map((option) => option.value);
+  //   axiosInstance
+  //     .post(
+  //       "/saveJobTemplateForJob?clientId=" + user.userId + "&jobId=" + jobId,
+  //       {
+  //         jobTitle,
+  //         jobCode,
+  //         jobFamily,
+  //         jobDepartment,
+  //         jobLocation,
+  //         salary,
+  //         companyInfo,
+  //         positionSummry,
+  //         responsibilities,
+  //         benefits,
+  //         equalEmployeeOpportunity,
+  //         specificIndustryExperience,
+  //         industryKnowledge,
+  //         workSetting,
+  //         roleType,
+  //         roleTimings,
+  //         roleTravel,
+  //         visa,
+  //         minimumLevelQualification,
+  //         requireRegulatory,
+  //         differentAcademic,
+  //         certifications,
+  //         softwares,
+  //         envision,
+  //         templateName,
+  //         templateTag,
+  //         templateDescription,
+  //         jobDescription,
+  //       }
+  //     )
+  //     .then((data) => {
+  //       console.log(data.data);
+  //       //localStorage.setItem("jobId", data.data.jobId);
+  //       navigate("/job/CreateJob", { state: data.data.jobId });
+  //     })
+  //     .catch((e) => console.log(e));
+  //   closePopup();
+  // };
 
   const saveAsTemplate = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -375,7 +426,6 @@ export const JobDetailEdit = () => {
           benefits,
           equalEmployeeOpportunity,
           specificIndustryExperience,
-
           industryKnowledge,
           workSetting,
           roleType,
@@ -727,7 +777,20 @@ export const JobDetailEdit = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Location
                 </p>
+
                 <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={locations.map((option) => option.label)}
+                  value={jobLocation || null}
+                  onChange={(e, value) => setJobLocation(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
+
+                {/* <Autocomplete
                   size="small"
                   disablePortal
                   options={convertToOptions(settings?.jobLocation).map(
@@ -738,7 +801,7 @@ export const JobDetailEdit = () => {
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
-                />
+                /> */}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -1212,9 +1275,10 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={VisaOptions.map((option) => option.label)}
+                    // options={options.map((option) => option.label)}
                     value={visa || null}
-                    onChange={(e, newvalue) => setVisa(newvalue.value)}
+                    onChange={(e, newvalue) => setVisa(newvalue, e)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}

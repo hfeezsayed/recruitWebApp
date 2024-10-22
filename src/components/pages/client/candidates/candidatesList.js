@@ -418,7 +418,7 @@ export const CandidatesList = () => {
                         color: "#475467",
                       }}
                     >
-                      Cancle
+                      Cancel
                     </Button>
                     <Button
                       onClick={() => {
@@ -609,7 +609,7 @@ export const CandidatesList = () => {
                     variant="outlined"
                     style={{ borderColor: "#D0D5DD", color: "#475467" }}
                   >
-                    Cancle
+                    Cancel
                   </Button>
                   <Button
                     onClick={handleAddAsignment}

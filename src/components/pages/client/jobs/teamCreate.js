@@ -44,18 +44,19 @@ export const TeamCreate = () => {
   ];
 
   const teamSizeOpts = [
-    { label : "1-5", value: "1-5"},
-    { label : "5-10", value: "5-10"},
-    { label : "10-15", value: "10-15"},
-    { label : "15-20", value: "15-20"},
-    { label : "20-30", value: "20-30"},
-    { label : "30+", value: "30+"}
-  ]
+    { label: "1-5", value: "1-5" },
+    { label: "5-10", value: "5-10" },
+    { label: "10-15", value: "10-15" },
+    { label: "15-20", value: "15-20" },
+    { label: "20-30", value: "20-30" },
+    { label: "30+", value: "30+" },
+  ];
 
   const yes_no = [
     { label: "Yes", value: "Yes" },
     { label: "No", value: "No" },
-  ]
+  ];
+
   const handleSubmit = async () => {
     const domainRole = specifyDomain;
     const project = teamWorkingDes;
@@ -76,17 +77,15 @@ export const TeamCreate = () => {
           templateTag,
           templateDescription,
           workValues,
-          technicalSkills
-        },
-        
+          technicalSkills,
+        }
       )
       .then((data) => {
-         console.log(data.data)
-         navigate("/job/createJob", { state : jobId});  
+        console.log(data.data);
+        navigate("/job/createJob", { state: jobId });
       })
       .catch((e) => console.log(e));
   };
-
 
   const saveAsTemplate = async () => {
     const domainRole = specifyDomain;
@@ -107,12 +106,11 @@ export const TeamCreate = () => {
           templateName,
           templateTag,
           templateDescription,
-        },
-        
+        }
       )
       .then((data) => {
-         console.log(data.data)
-         navigate("/job/createJob", { state : jobId});  
+        console.log(data.data);
+        navigate("/job/createJob", { state: jobId });
       })
       .catch((e) => console.log(e));
   };
@@ -126,7 +124,7 @@ export const TeamCreate = () => {
 
   useEffect(() => {
     console.log(location.state?.selected);
-    if(location.state?.selected){
+    if (location.state?.selected) {
       setTeamSize(location.state.selected.teamSize);
       setTeamLocation(location.state.selected.teamLocation);
       setCrossFunctionality(location.state.selected.crossFunctionality);
@@ -161,7 +159,8 @@ export const TeamCreate = () => {
                     backgroundColor: "#EAF4F5",
                     textTransform: "none",
                   }}
-                  onClick={() => navigate("/job/teamList")}>
+                  onClick={() => navigate("/job/teamList")}
+                >
                   Copy data from the template
                 </Button>
               </div>
@@ -270,7 +269,9 @@ export const TeamCreate = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                How important are Work Values to you? Is this talent dimension used in filtering candidates or not? (Note: by default, we use this as one of the talent dimensions in the overall score.)
+                How important are Work Values to you? Is this talent dimension
+                used in filtering candidates or not? (Note: by default, we use
+                this as one of the talent dimensions in the overall score.)
               </p>
               <Autocomplete
                 size="small"
@@ -285,7 +286,10 @@ export const TeamCreate = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Do you want to give extra weight to Technical Skills compared to other talent dimensions? (Note: By default, we assign corresponding weightages based on your response in the ICP Analysis.)
+                Do you want to give extra weight to Technical Skills compared to
+                other talent dimensions? (Note: By default, we assign
+                corresponding weightages based on your response in the ICP
+                Analysis.)
               </p>
               <Autocomplete
                 size="small"
@@ -304,21 +308,24 @@ export const TeamCreate = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
-                  onClick={handleSubmit}
-                  variant="outlined"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  save
-                </Button>
+                onClick={handleSubmit}
+                variant="outlined"
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
+                save
+              </Button>
               <Button
                 onClick={() => {
                   setShowPopup(true);
                 }}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 SAVE As Template
               </Button>
             </div>
@@ -327,7 +334,8 @@ export const TeamCreate = () => {
               <DialogTitle>Template Details</DialogTitle>
               <IconButton
                 onClick={closePopup}
-                style={{ position: "absolute", top: 10, right: 10 }}>
+                style={{ position: "absolute", top: 10, right: 10 }}
+              >
                 <IoIosCloseCircleOutline />
               </IconButton>
               <Divider />
@@ -339,7 +347,8 @@ export const TeamCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Team Template Name
                     </p>
                     <TextField
@@ -356,7 +365,8 @@ export const TeamCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Team Template Tags
                     </p>
                     <TextField
@@ -370,7 +380,8 @@ export const TeamCreate = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 py-8">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Team Template Description
                   </p>
                   <textarea
@@ -390,8 +401,9 @@ export const TeamCreate = () => {
                 <Button
                   onClick={saveAsTemplate}
                   variant="contained"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
-                  SAVE 
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}
+                >
+                  SAVE
                 </Button>
               </DialogActions>
             </Dialog>

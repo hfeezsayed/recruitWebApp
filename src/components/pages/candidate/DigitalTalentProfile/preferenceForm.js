@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { SideNav } from "../../../widgets/sidenav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { locations } from "../../../utils/allLocations";
 import {
   qualifications,
   specializations,
@@ -15,7 +16,6 @@ import {
   skillLevel,
   PreferOffice,
   workShifts,
-  locations,
   yes_No,
   travels,
   work_Comapny,
