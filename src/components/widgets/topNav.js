@@ -34,7 +34,7 @@ export const TopNav = () => {
   return (
     <div className="grid grid-cols-2 py-2 w-full">
       <div className="px-8 flex items-center -z-10">
-        <TextField
+        {/* <TextField
           size="small"
           placeholder="Search or type"
           value={search}
@@ -47,25 +47,13 @@ export const TopNav = () => {
               </InputAdornment>
             ),
           }}
-        />
+        /> */}
       </div>
       <div className="grid grid-flow-col justify-end items-center gap-4 px-3">
-        <div
-          className="grid grid-flow-col gap-2 justify-start items-center"
-          onClick={handleClick}
-        >
-          <IconButton
-            size="small"
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar sx={{ width: 24, height: 24 }} src={usIcon} />
-          </IconButton>
+        <div className="grid grid-flow-col gap-2 justify-start items-center">
           <p style={{ fontSize: 18, fontWeight: 600, color: "#101828" }}>
             Eng (US)
           </p>
-          <IoIosArrowDown />
         </div>
 
         <IconButton>
@@ -145,7 +133,7 @@ export const TopNav = () => {
             </ListItemIcon>
             Profile
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => navigate("/signup")}>
             <ListItemIcon>
               <FiBookOpen
                 style={{ color: "#475467", fontWeight: 600, fontSize: 18 }}

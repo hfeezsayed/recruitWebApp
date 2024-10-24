@@ -291,40 +291,20 @@ export const HomePage = () => {
                         <p style={{ color: "#101828", fontSize: 14 }}>
                           Profile Completion
                         </p>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            position: "relative",
-                            width: "70%",
-                          }}
-                        >
-                          <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Box sx={{ width: "50%", mr: 1 }}>
                             <BorderLinearProgress
                               variant="determinate"
-                              value={userData?.personalInfo}
+                              value={userData?.personalInfo ? 100 : 0}
                             />
                           </Box>
-
-                          <Box
-                            sx={{
-                              minWidth: 35,
-                              position: "absolute",
-                              left: `${Math.round(
-                                userData?.personalInfo - 3
-                              )}%`,
-                              mt: 2,
-                            }}
-                          >
-                            <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center shadow-xl border border-[#D0D5DD]">
-                              <p
-                                style={{
-                                  color: "#101828",
-                                  fontSize: 11,
-                                  fontWeight: 600,
-                                }}
-                              >{`${Math.round(userData?.personalInfo)}%`}</p>
-                            </div>
+                          <Box sx={{ minWidth: 35 }}>
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                            >{`${Math.round(
+                              userData?.personalInfo ? 100 : 0
+                            )}%`}</Typography>
                           </Box>
                         </Box>
                       </div>

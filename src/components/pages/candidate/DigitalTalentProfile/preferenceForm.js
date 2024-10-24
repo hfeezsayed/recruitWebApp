@@ -18,7 +18,6 @@ import {
   workShifts,
   yes_No,
   travels,
-  work_Comapny,
   schedules,
   appealings,
   currency,
@@ -72,7 +71,7 @@ export const PreferenceForm = () => {
   const [openToRelocate, setOpenToRelocate] = useState();
   const [requiredForTravel, setRequiredForTravel] = useState();
   const [workSchedule, setWorkSchedule] = useState();
-  const [workIndepandently, setWorkIndepandently] = useState();
+  const [workIndependantly, setworkIndepandently] = useState();
   const [expectedSalary, setexpectedSalary] = useState({
     range: null,
     currency: null,
@@ -104,6 +103,12 @@ export const PreferenceForm = () => {
     { label: "Atonomy", value: "Atonomy" },
   ];
 
+  const work_Comapny = [
+    { label: "Independantly", value: "Independantly" },
+    { label: "Small", value: "Small" },
+    { label: "Large", value: "Large" },
+  ];
+
   // industry experiance
   const addIndustryExperience = () => {
     setIndustryExperience([
@@ -128,6 +133,7 @@ export const PreferenceForm = () => {
       )
       .then((response) => {
         const data = response.data;
+        console.log("preferenceForm", data);
         if (response.data) {
           setImportantFactor(data.importantFactor);
           setWorkSetting(data.workSetting);
@@ -136,7 +142,7 @@ export const PreferenceForm = () => {
           setOpenToRelocate(data.openToRelocate);
           setRequiredForTravel(data.requiredForTravel);
           setWorkSchedule(data.workSchedule);
-          setWorkIndepandently(data.workIndepandently);
+          setworkIndepandently(data.workIndependantly);
           setexpectedSalary(data.expectedSalary);
           setExpectedRange(data.expectedRange);
           setTypeOfJobOpening(data.typeOfJobOpening);
@@ -248,7 +254,7 @@ export const PreferenceForm = () => {
       openToRelocate,
       requiredForTravel,
       workSchedule,
-      workIndepandently,
+      workIndependantly,
       expectedSalary,
       expectedRange,
       typeOfJobOpening,
@@ -285,13 +291,13 @@ export const PreferenceForm = () => {
         openToRelocate,
         requiredForTravel,
         workSchedule,
-        workIndepandently,
+        workIndependantly,
         expectedSalary,
         appealingWork,
         workEnvironment,
         importantFactor,
       })
-      .then((data) => console.log(data), navigate("/digitalTalentProfile"))
+      .then((data) => console.log(data), navigate("/candidate"))
       .catch((e) => console.log(e));
   };
 
@@ -489,8 +495,8 @@ export const PreferenceForm = () => {
                   size="small"
                   fullWidth
                   options={work_Comapny.map((option) => option.label)}
-                  value={workIndepandently || null}
-                  onChange={(e, value) => setWorkIndepandently(value)}
+                  value={workIndependantly || null}
+                  onChange={(e, value) => setworkIndepandently(value)}
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" required />
                   )}
@@ -606,6 +612,18 @@ export const PreferenceForm = () => {
                   )}
                 />
               </div>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "#008080",
+                  color: "#ffffff",
+                  marginTop: "25px",
+                  marginRight: "15px",
+                }}
+                onClick={() => navigate("/candidate")}
+              >
+                Back
+              </Button>
               <Button
                 variant="contained"
                 style={{

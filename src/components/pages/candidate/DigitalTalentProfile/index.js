@@ -176,7 +176,8 @@ export const DigitalTalentProfile = () => {
                     padding: 2,
                     backgroundColor: "#FBFCFE",
                     my: 2,
-                  }}>
+                  }}
+                >
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p
@@ -184,13 +185,15 @@ export const DigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Candidate Summary
                       </p>
                       <div className="py-4 flex gap-6">
                         <div
                           className="w-28 h-28 rounded-full "
-                          style={{ borderWidth: 2, borderColor: "#66B2B2" }}>
+                          style={{ borderWidth: 2, borderColor: "#66B2B2" }}
+                        >
                           <img
                             src={
                               userData.image ||
@@ -201,12 +204,14 @@ export const DigitalTalentProfile = () => {
                           />
                           <div
                             className="relative -mt-8 justify-end flex h-9"
-                            style={{ backgroundColor: "#" }}>
+                            style={{ backgroundColor: "#" }}
+                          >
                             <IconButton
                               style={{
                                 padding: 6,
                                 backgroundColor: "#66B2B2",
-                              }}>
+                              }}
+                            >
                               <BsFillCameraFill
                                 style={{ color: "#ffffff", fontSize: 22 }}
                               />
@@ -219,7 +224,8 @@ export const DigitalTalentProfile = () => {
                               color: "#101828",
                               fontWeight: 600,
                               fontSize: 24,
-                            }}>
+                            }}
+                          >
                             {userName}
                           </p>
                           <div className="flex gap-2 items-center">
@@ -233,7 +239,8 @@ export const DigitalTalentProfile = () => {
                               style={{
                                 color: "#475467",
                                 fontSize: 16,
-                              }}>
+                              }}
+                            >
                               {JSON.parse(localStorage.getItem("token"))
                                 ?.email || userData?.email}
                             </p>
@@ -252,7 +259,8 @@ export const DigitalTalentProfile = () => {
                                   paddingLeft: 10,
                                   paddingRight: 10,
                                 }}
-                                startIcon={<HiOutlineDownload />}>
+                                startIcon={<HiOutlineDownload />}
+                              >
                                 Resume
                               </Button>
                             )}
@@ -271,7 +279,8 @@ export const DigitalTalentProfile = () => {
                                   paddingLeft: 10,
                                   paddingRight: 10,
                                 }}
-                                startIcon={<MdOutlineArrowOutward />}>
+                                startIcon={<MdOutlineArrowOutward />}
+                              >
                                 Linkedin
                               </Button>
                             )}
@@ -282,39 +291,20 @@ export const DigitalTalentProfile = () => {
                         <p style={{ color: "#101828", fontSize: 14 }}>
                           Profile Completion
                         </p>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            position: "relative",
-                            width: "70%",
-                          }}>
-                          <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Box sx={{ width: "50%", mr: 1 }}>
                             <BorderLinearProgress
                               variant="determinate"
-                              value={userData?.personalInfo}
+                              value={userData?.personalInfo ? 100 : 0}
                             />
                           </Box>
-
-                          <Box
-                            sx={{
-                              minWidth: 35,
-                              position: "absolute",
-                              left: `${Math.round(
-                                userData?.personalInfo - 3
-                              )}%`,
-                              mt: 2,
-                            }}>
-                            <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center shadow-xl border border-[#D0D5DD]">
-                              <p
-                                style={{
-                                  color: "#101828",
-                                  fontSize: 11,
-                                  fontWeight: 600,
-                                }}>{`${Math.round(
-                                userData?.personalInfo
-                              )}%`}</p>
-                            </div>
+                          <Box sx={{ minWidth: 35 }}>
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                            >{`${Math.round(
+                              userData?.personalInfo ? 100 : 0
+                            )}%`}</Typography>
                           </Box>
                         </Box>
                       </div>
@@ -325,7 +315,8 @@ export const DigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Profile Competition
                       </p>
                       <div className="flex py-2 items-center">
@@ -348,7 +339,8 @@ export const DigitalTalentProfile = () => {
                                 color: "#475467",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Status
                             </p>
                             <p
@@ -356,7 +348,8 @@ export const DigitalTalentProfile = () => {
                                 color: "#475467",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Percentage
                             </p>
                           </div>
@@ -364,7 +357,8 @@ export const DigitalTalentProfile = () => {
                             return (
                               <div
                                 className="flex w-full justify-between items-center py-2"
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="flex gap-2 items-center">
                                   <div
                                     style={{
@@ -378,7 +372,8 @@ export const DigitalTalentProfile = () => {
                                     style={{
                                       color: "#101828",
                                       fontSize: 14,
-                                    }}>
+                                    }}
+                                  >
                                     {row?.data[0]?.label}
                                   </p>
                                 </div>
@@ -387,7 +382,8 @@ export const DigitalTalentProfile = () => {
                                     color: "#101828",
                                     fontSize: 14,
                                     fontWeight: 500,
-                                  }}>
+                                  }}
+                                >
                                   {row?.data[0]?.value}%
                                 </p>
                               </div>
@@ -408,7 +404,8 @@ export const DigitalTalentProfile = () => {
                       }}
                       onClick={() => {
                         navigate("/candidate");
-                      }}>
+                      }}
+                    >
                       Update Digital Talent Profile(DTP)
                     </Button>
 
@@ -422,7 +419,8 @@ export const DigitalTalentProfile = () => {
                       }}
                       onClick={() => {
                         navigate("/OutputofDigitalTalentProfile");
-                      }}>
+                      }}
+                    >
                       Access Digital Talent Profile(DTP)
                     </Button>
                   </div>

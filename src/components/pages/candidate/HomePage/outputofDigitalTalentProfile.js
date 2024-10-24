@@ -64,7 +64,7 @@ export const OutputofDigitalTalentProfile = () => {
     axiosInstance
       .get(`/getCandidateDTPDescription?candidateId=${user.userId}`)
       .then((response) => {
-        console.log(response.data);
+        console.log("getCandidateDTPDescription", response.data);
         setPersonalInfio(response.data.personalInfo);
         // setPreferenceForm(response.data.preferences);
         setWorkValueData(response.data?.values);
@@ -158,7 +158,8 @@ export const OutputofDigitalTalentProfile = () => {
                     color: "#008080",
                     fontSize: 22,
                     fontWeight: 600,
-                  }}>
+                  }}
+                >
                   Output of Digital Talent Profile
                 </p>
                 <p style={{ color: "#475467", fontSize: 14 }}>
@@ -176,7 +177,8 @@ export const OutputofDigitalTalentProfile = () => {
                     variant="text"
                     style={{ color: "#5E8EBD", textTransform: "none" }}
                     endIcon={<FiDownload />}
-                    onClick={DownloadPdf}>
+                    onClick={DownloadPdf}
+                  >
                     Download PDF
                   </Button>
                 </div>
@@ -226,7 +228,8 @@ export const OutputofDigitalTalentProfile = () => {
                       textDecoration: "underline",
                       cursor: "pointer",
                     }}
-                    href="#">
+                    href="#"
+                  >
                     {personalInfo?.url}
                   </a>
                 </div>
@@ -250,7 +253,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 250,
-                      }}>
+                      }}
+                    >
                       Degree
                     </p>
                     <p style={{ color: "#101828", fontSize: 18 }}>
@@ -263,7 +267,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 250,
-                      }}>
+                      }}
+                    >
                       Field of study
                     </p>
                     <p style={{ color: "#101828", fontSize: 18 }}>
@@ -276,7 +281,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 250,
-                      }}>
+                      }}
+                    >
                       Institutions
                     </p>
                     <p style={{ color: "#101828", fontSize: 18 }}>
@@ -289,7 +295,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 250,
-                      }}>
+                      }}
+                    >
                       City
                     </p>
                     <p style={{ color: "#101828", fontSize: 18 }}>
@@ -302,7 +309,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 250,
-                      }}>
+                      }}
+                    >
                       State
                     </p>
                     <p style={{ color: "#101828", fontSize: 18 }}>
@@ -327,7 +335,8 @@ export const OutputofDigitalTalentProfile = () => {
                       fontSize: 18,
                       fontWeight: 500,
                       paddingTop: 8,
-                    }}>
+                    }}
+                  >
                     Academic Qualifications
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -337,7 +346,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What level of academic qualification have you attained?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -350,7 +360,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is your specialization?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -364,7 +375,8 @@ export const OutputofDigitalTalentProfile = () => {
                         color: "#475467",
                         fontSize: 18,
                         minWidth: 320,
-                      }}>
+                      }}
+                    >
                       Can you share your academic background and how it aligns
                       with this role?
                     </p>
@@ -388,7 +400,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Professional Experience
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -398,7 +411,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         How many years of experience do you have
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -411,7 +425,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Could you elaborate on your experience in [specific area
                         relevant to the role]
                       </p>
@@ -425,7 +440,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Have you previously worked in a specific industry
                         related to this role? If Yes then specify your role
                         there.
@@ -440,7 +456,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Have you had experience with stakeholders for business
                         goals?
                       </p>
@@ -454,7 +471,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is your notice period in the current organization?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -467,7 +485,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Do you have team handling experience? (If yes, please
                         select the team size)
                       </p>
@@ -481,7 +500,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Please select the industry and specify the industry
                         experience
                       </p>
@@ -500,7 +520,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Skills
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -512,7 +533,8 @@ export const OutputofDigitalTalentProfile = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             Primary Skills
                           </p>
 
@@ -543,7 +565,8 @@ export const OutputofDigitalTalentProfile = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             Secondary Skills
                           </p>
 
@@ -574,7 +597,8 @@ export const OutputofDigitalTalentProfile = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             Please add the tools or software application you
                             have used in the past
                           </p>
@@ -600,7 +624,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Work Experience
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -610,7 +635,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Which work setting do you prefer in-office?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -623,7 +649,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is your preference on work shifts?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -636,7 +663,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What are your preferred locations for the job?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -649,7 +677,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Are you open to relocation if required for the job?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -662,7 +691,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         If your work requires you to travel, how comfortable are
                         you to travel?
                       </p>
@@ -676,7 +706,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is your preferred work schedule?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -689,7 +720,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Do you prefer working independently or as part of a
                         small team, or as a part of a large team?
                       </p>
@@ -701,7 +733,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Compensation and Job Type
                   </p>
                   <div className="grid grid-cols-2 py-5 gap-5">
@@ -711,7 +744,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What are salary expectations:
                       </p>
                       <div>
@@ -736,7 +770,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is the type of job openings are you interested in ?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -747,7 +782,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Work Environment and Values
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -757,7 +793,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is appealing to you at work?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -770,7 +807,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What kind of work environment are you looking for?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -783,7 +821,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         Is the company outlook on environment important? Like
                         sustainability initiatives, being carbon neutral etc.
                       </p>
@@ -795,7 +834,8 @@ export const OutputofDigitalTalentProfile = () => {
                 </div>
                 <div className="py-4">
                   <p
-                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}>
+                    style={{ color: "#65BFBF", fontSize: 18, fontWeight: 500 }}
+                  >
                     Legal and Visa Status
                   </p>
                   <div className="grid grid-cols-2 gap-5">
@@ -805,7 +845,8 @@ export const OutputofDigitalTalentProfile = () => {
                           color: "#475467",
                           fontSize: 18,
                           width: 320,
-                        }}>
+                        }}
+                      >
                         What is your current Visa or Work status?
                       </p>
                       <p style={{ color: "#101828", fontSize: 18 }}>
@@ -829,7 +870,8 @@ export const OutputofDigitalTalentProfile = () => {
                     height={350}
                     width={450}
                     outerRadius="80%"
-                    data={workValueData}>
+                    data={workValueData}
+                  >
                     <PolarGrid />
                     <Tooltip />
                     <PolarAngleAxis dataKey="statement" />
@@ -855,7 +897,8 @@ export const OutputofDigitalTalentProfile = () => {
                               borderColor: "#D0D5DD50",
                               width: 250,
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Work Attribute
                           </TableCell>
                           <TableCell
@@ -866,7 +909,8 @@ export const OutputofDigitalTalentProfile = () => {
                               border: 1,
                               borderColor: "#D0D5DD50",
                               fontWeight: 500,
-                            }}>
+                            }}
+                          >
                             Ranking of the work attributes
                           </TableCell>
                         </TableRow>
@@ -880,7 +924,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   color: "#475467",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 {row?.statement}
                               </TableCell>
                               <TableCell
@@ -890,7 +935,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   border: 1,
                                   borderColor: "#D0D5DD50",
                                   fontWeight: 500,
-                                }}>
+                                }}
+                              >
                                 {row?.rating}
                               </TableCell>
                             </TableRow>
@@ -917,7 +963,8 @@ export const OutputofDigitalTalentProfile = () => {
                     fontSize: 22,
                     fontWeight: 600,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Spectrum Analysis
                 </p>
                 <div className="flex gap-5 py-5">
@@ -925,7 +972,8 @@ export const OutputofDigitalTalentProfile = () => {
                   <Table
                     sx={{
                       borderWidth: 1,
-                    }}>
+                    }}
+                  >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -936,7 +984,8 @@ export const OutputofDigitalTalentProfile = () => {
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
                             minWidth: 600,
-                          }}>
+                          }}
+                        >
                           Talent Dimensions
                         </TableCell>
                         <TableCell
@@ -946,7 +995,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Attributes
                         </TableCell>
                       </TableRow>
@@ -961,7 +1011,8 @@ export const OutputofDigitalTalentProfile = () => {
                               fontWeight: 500,
                               borderWidth: 1,
                             }}
-                            rowSpan={behaviour?.length + 1}>
+                            rowSpan={behaviour?.length + 1}
+                          >
                             {/* <div
                               className="border rounded-lg p-4 w-full"
                               style={{
@@ -981,7 +1032,8 @@ export const OutputofDigitalTalentProfile = () => {
                                           style={{
                                             color: "#D0D5DD",
                                             fontSize: 32,
-                                          }}>
+                                          }}
+                                        >
                                           &#x2015;
                                           <span style={{ fontSize: 22 }}>
                                             &#x2022;
@@ -992,7 +1044,8 @@ export const OutputofDigitalTalentProfile = () => {
                                             color: "#000000",
                                             fontSize: 16,
                                             fontWeight: 500,
-                                          }}>
+                                          }}
+                                        >
                                           {row}
                                         </p>
                                         {/* <p style={{ color: "#475467", fontSize: 14 }}>
@@ -1017,7 +1070,8 @@ export const OutputofDigitalTalentProfile = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row}
                             </TableCell>
                           </TableRow>
@@ -1033,7 +1087,8 @@ export const OutputofDigitalTalentProfile = () => {
                     fontSize: 22,
                     fontWeight: 600,
                     marginTop: 10,
-                  }}>
+                  }}
+                >
                   Pie Charts
                 </p>
                 {/* chart 1 table */}
@@ -1041,7 +1096,8 @@ export const OutputofDigitalTalentProfile = () => {
                   <Table
                     sx={{
                       borderWidth: 1,
-                    }}>
+                    }}
+                  >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -1051,7 +1107,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Emotional Flexibility
                         </TableCell>
                         <TableCell
@@ -1061,7 +1118,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Labels
                         </TableCell>
                         <TableCell
@@ -1072,7 +1130,8 @@ export const OutputofDigitalTalentProfile = () => {
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
                           }}
-                          align="center">
+                          align="center"
+                        >
                           Rating out of 5
                         </TableCell>
                         <TableCell
@@ -1082,7 +1141,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Attributes
                         </TableCell>
                       </TableRow>
@@ -1098,7 +1158,8 @@ export const OutputofDigitalTalentProfile = () => {
                               borderWidth: 1,
                               width: 450,
                             }}
-                            rowSpan={5}>
+                            rowSpan={5}
+                          >
                             <div className="flex justify-end">
                               <PieChart
                                 series={convertedEmtional}
@@ -1125,7 +1186,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 <div
                                   className="flex"
                                   style={{
@@ -1134,13 +1196,15 @@ export const OutputofDigitalTalentProfile = () => {
                                     borderRadius: 3,
                                     paddingLeft: 5,
                                   }}
-                                  key={index}>
+                                  key={index}
+                                >
                                   <div className="col-span-2">
                                     <p
                                       style={{
                                         color: "#475467",
                                         fontSize: 16,
-                                      }}>
+                                      }}
+                                    >
                                       {row.label}
                                     </p>
                                   </div>
@@ -1153,7 +1217,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontWeight: 500,
                                   borderWidth: 1,
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 {row.rating}
                               </TableCell>
                               <TableCell
@@ -1162,7 +1227,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 {row.attribute}
                               </TableCell>
                             </TableRow>
@@ -1177,7 +1243,8 @@ export const OutputofDigitalTalentProfile = () => {
                   <Table
                     sx={{
                       borderWidth: 1,
-                    }}>
+                    }}
+                  >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -1187,7 +1254,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Cognitive Agility
                         </TableCell>
                         <TableCell
@@ -1197,7 +1265,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Labels
                         </TableCell>
                         <TableCell
@@ -1208,7 +1277,8 @@ export const OutputofDigitalTalentProfile = () => {
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
                           }}
-                          align="center">
+                          align="center"
+                        >
                           Rating out of 5
                         </TableCell>
                         <TableCell
@@ -1218,7 +1288,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Attributes
                         </TableCell>
                       </TableRow>
@@ -1234,7 +1305,8 @@ export const OutputofDigitalTalentProfile = () => {
                               borderWidth: 1,
                               width: 450,
                             }}
-                            rowSpan={5}>
+                            rowSpan={5}
+                          >
                             <div className="flex justify-end">
                               <PieChart
                                 series={convertCognitive}
@@ -1261,7 +1333,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 <div
                                   className="flex"
                                   style={{
@@ -1270,13 +1343,15 @@ export const OutputofDigitalTalentProfile = () => {
                                     borderRadius: 3,
                                     paddingLeft: 5,
                                   }}
-                                  key={index}>
+                                  key={index}
+                                >
                                   <div className="col-span-2">
                                     <p
                                       style={{
                                         color: "#475467",
                                         fontSize: 16,
-                                      }}>
+                                      }}
+                                    >
                                       {row.label}
                                     </p>
                                   </div>
@@ -1289,7 +1364,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontWeight: 500,
                                   borderWidth: 1,
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 {row.rating}
                               </TableCell>
                               <TableCell
@@ -1298,7 +1374,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 {row.attribute}
                               </TableCell>
                             </TableRow>
@@ -1313,7 +1390,8 @@ export const OutputofDigitalTalentProfile = () => {
                   <Table
                     sx={{
                       borderWidth: 1,
-                    }}>
+                    }}
+                  >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -1323,7 +1401,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Sociability Skills
                         </TableCell>
                         <TableCell
@@ -1333,7 +1412,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Labels
                         </TableCell>
                         <TableCell
@@ -1344,7 +1424,8 @@ export const OutputofDigitalTalentProfile = () => {
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
                           }}
-                          align="center">
+                          align="center"
+                        >
                           Rating out of 5
                         </TableCell>
                         <TableCell
@@ -1354,7 +1435,8 @@ export const OutputofDigitalTalentProfile = () => {
                             fontWeight: 600,
                             borderWidth: 1,
                             bgcolor: "#F8F9FA",
-                          }}>
+                          }}
+                        >
                           Attributes
                         </TableCell>
                       </TableRow>
@@ -1370,7 +1452,8 @@ export const OutputofDigitalTalentProfile = () => {
                               borderWidth: 1,
                               width: 450,
                             }}
-                            rowSpan={5}>
+                            rowSpan={5}
+                          >
                             <div className="flex justify-end">
                               <PieChart
                                 series={convertSociability}
@@ -1397,7 +1480,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 <div
                                   className="flex"
                                   style={{
@@ -1406,13 +1490,15 @@ export const OutputofDigitalTalentProfile = () => {
                                     borderRadius: 3,
                                     paddingLeft: 5,
                                   }}
-                                  key={index}>
+                                  key={index}
+                                >
                                   <div className="col-span-2">
                                     <p
                                       style={{
                                         color: "#475467",
                                         fontSize: 16,
-                                      }}>
+                                      }}
+                                    >
                                       {row.label}
                                     </p>
                                   </div>
@@ -1425,7 +1511,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontWeight: 500,
                                   borderWidth: 1,
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 {row.rating}
                               </TableCell>
                               <TableCell
@@ -1434,7 +1521,8 @@ export const OutputofDigitalTalentProfile = () => {
                                   fontSize: 14,
                                   fontWeight: 500,
                                   borderWidth: 1,
-                                }}>
+                                }}
+                              >
                                 {row.attribute}
                               </TableCell>
                             </TableRow>

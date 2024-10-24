@@ -461,7 +461,7 @@ export const PersonalInformation = () => {
       })
       .then((data) => {
         console.log(data);
-        navigate("/candidate/dashboard");
+        navigate("/candidate");
       })
       .catch((e) => console.log(e));
   };
@@ -1580,6 +1580,13 @@ export const PersonalInformation = () => {
               {/* buttons */}
               <div className="flex justify-end py-8 gap-5">
                 <Button
+                  variant="outlined"
+                  style={{ borderColor: "#787879", color: "#787879" }}
+                  onClick={() => setActiveScreen(1)}
+                >
+                  Back
+                </Button>
+                <Button
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}
                   type="submit"
@@ -2018,7 +2025,7 @@ export const PersonalInformation = () => {
                 <Button
                   variant="outlined"
                   style={{ borderColor: "#787879", color: "#787879" }}
-                  onClick={() => setActiveScreen(1)}
+                  onClick={() => setActiveScreen(2)}
                 >
                   Back
                 </Button>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Radar,
   RadarChart,
@@ -7,6 +8,7 @@ import {
   PolarRadiusAxis,
   Tooltip,
 } from "recharts";
+import { Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,7 +18,7 @@ import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { valueAssesmentResult, workValueViewData } from "../../../dummy/Data";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Spinner from "../../../utils/spinner";
@@ -27,20 +29,23 @@ export const ValueAssessmentResult = () => {
   const [loading, setLoading] = useState(false);
 
   const { version } = useLocation().state || {};
+  const navigate = useNavigate();
 
-  useEffect( () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
-    axiosInstance.get("/getCandidateValueResult?candidateId="+user.userId+"&versionNo=-1",
-    )
-    .then(response => {
+    axiosInstance
+      .get(
+        "/getCandidateValueResult?candidateId=" + user.userId + "&versionNo=-1"
+      )
+      .then((response) => {
         setAssessmentData(response.data);
         setLoading(false);
-    })
-    .catch(error => {
-      console.log(error);
-      setLoading(false);
-    })
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -70,7 +75,8 @@ export const ValueAssessmentResult = () => {
                   height={350}
                   width={450}
                   outerRadius="80%"
-                  data={assesmentData}>
+                  data={assesmentData}
+                >
                   <PolarGrid />
                   <Tooltip />
                   <PolarAngleAxis dataKey="statement" />
@@ -95,7 +101,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Work Attribute
                         </TableCell>
                         <TableCell
@@ -104,7 +111,8 @@ export const ValueAssessmentResult = () => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Frequency Selected
                         </TableCell>
                       </TableRow>
@@ -116,7 +124,8 @@ export const ValueAssessmentResult = () => {
                             color: "#171717",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Priority 4
                         </TableCell>
                         <TableCell
@@ -125,7 +134,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             backgroundColor: "#C2E0E8",
-                          }}>
+                          }}
+                        >
                           <div className="grid grid-cols-4 gap-y-2">
                             {assesmentData?.map((data) => {
                               return Number(data?.rating) === 4 ? (
@@ -141,7 +151,8 @@ export const ValueAssessmentResult = () => {
                             color: "#171717",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Priority 3
                         </TableCell>
                         <TableCell
@@ -150,7 +161,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             backgroundColor: "#F2EFC9",
-                          }}>
+                          }}
+                        >
                           <div className="grid grid-cols-4 gap-y-2">
                             {assesmentData?.map((data) => {
                               return Number(data?.rating) === 3 ? (
@@ -166,7 +178,8 @@ export const ValueAssessmentResult = () => {
                             color: "#171717",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Priority 2
                         </TableCell>
                         <TableCell
@@ -175,7 +188,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             backgroundColor: "#D1E6D5",
-                          }}>
+                          }}
+                        >
                           <div className="grid grid-cols-4 gap-y-2">
                             {assesmentData?.map((data) => {
                               return Number(data?.rating) === 2 ? (
@@ -191,7 +205,8 @@ export const ValueAssessmentResult = () => {
                             color: "#171717",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Priority 1
                         </TableCell>
                         <TableCell
@@ -200,7 +215,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             backgroundColor: "#ECCCB7",
-                          }}>
+                          }}
+                        >
                           <div className="grid grid-cols-4 gap-y-2">
                             {assesmentData?.map((data) => {
                               return Number(data?.rating) === 1 ? (
@@ -216,7 +232,8 @@ export const ValueAssessmentResult = () => {
                             color: "#171717",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           No Priority
                         </TableCell>
                         <TableCell
@@ -225,7 +242,8 @@ export const ValueAssessmentResult = () => {
                             border: 1,
                             borderColor: "#D0D5DD50",
                             backgroundColor: "#EDDAD3",
-                          }}>
+                          }}
+                        >
                           <div className="grid grid-cols-4 gap-y-2">
                             {assesmentData?.map((data) => {
                               return Number(data?.rating) === 0 ? (
@@ -238,6 +256,18 @@ export const ValueAssessmentResult = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                    marginTop: "25px",
+                    marginRight: "15px",
+                  }}
+                  onClick={() => navigate("/candidate")}
+                >
+                  Back
+                </Button>
               </Box>
             </div>
           )}

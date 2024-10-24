@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Collapse } from "@mui/material";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import logoNew from "../../assets/images/xenThub.png";
 import { DashboardSvg } from "../../assets/icon/dashboardsvg";
@@ -71,6 +71,38 @@ export const SideNav = ({ openTemplate }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
+
+  //for assessment dropdown menu code start
+  const [allActive, setAllActive] = React.useState(false);
+  const [selfActive, setSelfActive] = React.useState(false);
+  const [clientActive, setClientActive] = React.useState(false);
+
+  const toggleClass1 = () => {
+    setAllActive(true);
+    setSelfActive(false);
+    setClientActive(false);
+    navigate("/assesmentform", {
+      state: 1,
+    });
+  };
+  const toggleClass2 = () => {
+    setSelfActive(true);
+    setAllActive(false);
+    setClientActive(false);
+    navigate("/assesmentform", {
+      state: 2,
+    });
+  };
+  const toggleClass3 = () => {
+    setAllActive(false);
+    setSelfActive(false);
+    setClientActive(true);
+    navigate("/assesmentform", {
+      state: 3,
+    });
+  };
+  //for assessment dropdown menu code end
+
   const [showAcordian, setShowAcordian] = React.useState(
     openTemplate ? true : false
   );
@@ -95,22 +127,44 @@ export const SideNav = ({ openTemplate }) => {
       >
         <IconButton onClick={handleDrawer}>
           {open ? (
-            <FaAngleLeft style={{ color: "#ffffff", fontSize: 20 }} />
+            <FaAngleLeft
+              style={{
+                color: "#ffffff",
+                fontSize: 20,
+              }}
+            />
           ) : (
-            <FaAngleRight style={{ color: "#ffffff", fontSize: 20 }} />
+            <FaAngleRight
+              style={{
+                color: "#ffffff",
+                fontSize: 20,
+              }}
+            />
           )}
         </IconButton>
       </div>
       <Drawer variant="permanent" open={open} className="z-0">
-        <DrawerHeader sx={{ justifyContent: "center" }}>
+        <DrawerHeader
+          sx={{
+            justifyContent: "center",
+          }}
+        >
           <img
             src={logoNew}
             alt="logo"
-            style={{ width: 180, marginTop: "20px" }}
+            style={{
+              width: 180,
+              marginTop: "20px",
+            }}
           />
         </DrawerHeader>
         <div>
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -156,12 +210,19 @@ export const SideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                }}
               />
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -209,7 +270,9 @@ export const SideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                }}
               />
               {showAcordian ? (
                 <IoIosArrowUp
@@ -312,7 +375,12 @@ export const SideNav = ({ openTemplate }) => {
             </div>
           </Collapse>
 
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -355,61 +423,42 @@ export const SideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                }}
               />
               {showAssesment ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </ListItemButton>
           </ListItem>
+
           {/* collapse */}
           <Collapse in={showAssesment} timeout="auto" unmountOnExit>
             <div
-              className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 1 })}
+              className={allActive ? "activeClass" : "defaultActiveClass"}
+              onClick={toggleClass1}
             >
-              <p
-                style={{
-                  color: "#475467",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  opacity: 0.6,
-                }}
-              >
-                All - Assessments
-              </p>
+              <p className="pl-16 py-2">All - Assessments</p>
             </div>
             <div
-              className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 2 })}
+              className={selfActive ? "activeClass" : "defaultActiveClass"}
+              onClick={toggleClass2}
             >
-              <p
-                style={{
-                  color: "#475467",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  opacity: 0.6,
-                }}
-              >
-                Self - Assessments
-              </p>
+              <p className="pl-16 py-2">Self - Assessments</p>
             </div>
             <div
-              className="pl-16 py-2"
-              onClick={() => navigate("/assesmentform", { state: 3 })}
+              className={clientActive ? "activeClass" : "defaultActiveClass"}
+              onClick={toggleClass3}
             >
-              <p
-                style={{
-                  color: "#475467",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  opacity: 0.6,
-                }}
-              >
-                Clients - Assessment
-              </p>
+              <p className="pl-16 py-2">Clients - Assessment</p>
             </div>
           </Collapse>
 
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -455,11 +504,18 @@ export const SideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                }}
               />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -496,7 +552,9 @@ export const SideNav = ({ openTemplate }) => {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                }}
               />
             </ListItemButton>
           </ListItem>

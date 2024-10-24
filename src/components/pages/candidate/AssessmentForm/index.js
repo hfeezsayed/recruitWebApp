@@ -375,7 +375,7 @@ export const AssesmentForm = () => {
               {selfAssessmentList.map((row, index) => (
                 <TableRow
                   key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell
                     component="th"

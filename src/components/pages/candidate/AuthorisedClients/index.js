@@ -35,7 +35,7 @@ import { AuthorisedClients } from "../../../dummy/Data";
 import { useEffect } from "react";
 
 export const AuthorisedClient = () => {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [authClientList, setAuthClientList] = useState([]); //useState(AuthorisedClients);
   const [openPopup, setOpenPopup] = useState(false);
   const [managerName, setHiringManagerName] = useState();
@@ -413,84 +413,90 @@ export const AuthorisedClient = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filterNotAuthorizedorDeclined().map((row, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          "&:last-child td, &:last-child th": {
-                            border: 1,
-                            borderColor: "#D0D5DD",
-                          },
-                        }}
-                      >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          sx={{ color: "#475467", fontSize: 14 }}
+                    {filterNotAuthorizedorDeclined()
+                      ?.filter((item) =>
+                        item.clientName
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                      )
+                      .map((row, index) => (
+                        <TableRow
+                          key={index}
+                          sx={{
+                            "&:last-child td, &:last-child th": {
+                              border: 1,
+                              borderColor: "#D0D5DD",
+                            },
+                          }}
                         >
-                          {row.clientName}
-                        </TableCell>
-                        <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                          {row.managerName}
-                        </TableCell>
-                        <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                          {row.email}
-                        </TableCell>
-                        <TableCell sx={{ color: "#F4BC06", fontSize: 14 }}>
-                          {row.date}
-                        </TableCell>
-                        <TableCell>
-                          <RadioGroup
-                            row
-                            aria-labelledby="demo-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            sx={{ color: "#475467", fontSize: 14 }}
                           >
-                            <FormControlLabel
-                              value="approve"
-                              control={
-                                <Radio
-                                  checked={row.authorized}
-                                  size="small"
-                                  onChange={(e) =>
-                                    handleAuthorize(row, e.target.checked)
-                                  }
-                                  sx={{ color: "#58A20F" }}
-                                />
-                              }
-                              sx={{
-                                backgroundColor: "#F4FAF1",
-                                pr: 2,
-                                borderRadius: 10,
-                              }}
-                              label={
-                                <p style={{ color: "#057903" }}>Approve</p>
-                              }
-                            />
-                            <FormControlLabel
-                              value="decline"
-                              control={
-                                <Radio
-                                  checked={row.declined}
-                                  size="small"
-                                  onChange={(e) =>
-                                    handleDecline(row, e.target.checked)
-                                  }
-                                  sx={{ color: "#E05880" }}
-                                />
-                              }
-                              sx={{
-                                backgroundColor: "#FCEEEE",
-                                pr: 2,
-                                borderRadius: 10,
-                              }}
-                              label={
-                                <p style={{ color: "#E05880" }}>Decline</p>
-                              }
-                            />
-                          </RadioGroup>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                            {row.clientName}
+                          </TableCell>
+                          <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                            {row.managerName}
+                          </TableCell>
+                          <TableCell sx={{ color: "#475467", fontSize: 14 }}>
+                            {row.email}
+                          </TableCell>
+                          <TableCell sx={{ color: "#F4BC06", fontSize: 14 }}>
+                            {row.date}
+                          </TableCell>
+                          <TableCell>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                            >
+                              <FormControlLabel
+                                value="approve"
+                                control={
+                                  <Radio
+                                    checked={row.authorized}
+                                    size="small"
+                                    onChange={(e) =>
+                                      handleAuthorize(row, e.target.checked)
+                                    }
+                                    sx={{ color: "#58A20F" }}
+                                  />
+                                }
+                                sx={{
+                                  backgroundColor: "#F4FAF1",
+                                  pr: 2,
+                                  borderRadius: 10,
+                                }}
+                                label={
+                                  <p style={{ color: "#057903" }}>Approve</p>
+                                }
+                              />
+                              <FormControlLabel
+                                value="decline"
+                                control={
+                                  <Radio
+                                    checked={row.declined}
+                                    size="small"
+                                    onChange={(e) =>
+                                      handleDecline(row, e.target.checked)
+                                    }
+                                    sx={{ color: "#E05880" }}
+                                  />
+                                }
+                                sx={{
+                                  backgroundColor: "#FCEEEE",
+                                  pr: 2,
+                                  borderRadius: 10,
+                                }}
+                                label={
+                                  <p style={{ color: "#E05880" }}>Decline</p>
+                                }
+                              />
+                            </RadioGroup>
+                          </TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>

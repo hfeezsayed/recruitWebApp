@@ -5,7 +5,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
@@ -28,7 +29,7 @@ export const TalentAnalysisResult = () => {
     "spectrum2",
     "spectrum3",
     "spectrum4",
-    "spectrum5"
+    "spectrum5",
   ];
 
   const [userData, setUserData] = useState(icpTemplateResultData);
@@ -46,6 +47,7 @@ export const TalentAnalysisResult = () => {
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -113,7 +115,8 @@ export const TalentAnalysisResult = () => {
                   fontSize: 22,
                   fontWeight: 600,
                   marginTop: 10,
-                }}>
+                }}
+              >
                 Spectrum Analysis
               </p>
               <div className="flex gap-5 py-5">
@@ -121,7 +124,8 @@ export const TalentAnalysisResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -132,7 +136,8 @@ export const TalentAnalysisResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                           minWidth: 600,
-                        }}>
+                        }}
+                      >
                         Talent Dimensions
                       </TableCell>
                       <TableCell
@@ -142,7 +147,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -157,7 +163,8 @@ export const TalentAnalysisResult = () => {
                             fontWeight: 500,
                             borderWidth: 1,
                           }}
-                          rowSpan={behaviour?.length + 1}>
+                          rowSpan={behaviour?.length + 1}
+                        >
                           {/* <div
                               className="border rounded-lg p-4 w-full"
                               style={{
@@ -177,7 +184,8 @@ export const TalentAnalysisResult = () => {
                                         style={{
                                           color: "#475467",
                                           fontSize: 33,
-                                        }}>
+                                        }}
+                                      >
                                         &#x2015;
                                         <span style={{ fontSize: 30 }}>
                                           &#x2022;
@@ -188,7 +196,8 @@ export const TalentAnalysisResult = () => {
                                           color: "#101828",
                                           fontSize: 20,
                                           fontWeight: 500,
-                                        }}>
+                                        }}
+                                      >
                                         {row}
                                       </p>
                                       {/* <p style={{ color: "#475467", fontSize: 14 }}>
@@ -213,7 +222,8 @@ export const TalentAnalysisResult = () => {
                               fontSize: 14,
                               fontWeight: 500,
                               borderWidth: 1,
-                            }}>
+                            }}
+                          >
                             {row}
                           </TableCell>
                         </TableRow>
@@ -229,7 +239,8 @@ export const TalentAnalysisResult = () => {
                   fontSize: 22,
                   fontWeight: 600,
                   marginTop: 10,
-                }}>
+                }}
+              >
                 Pie Charts
               </p>
               {/* chart 1 table */}
@@ -237,7 +248,8 @@ export const TalentAnalysisResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -247,7 +259,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Emotional Flexibility
                       </TableCell>
                       <TableCell
@@ -257,7 +270,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -268,7 +282,8 @@ export const TalentAnalysisResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -278,7 +293,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -294,7 +310,8 @@ export const TalentAnalysisResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertedEmtional}
@@ -321,7 +338,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -330,13 +348,15 @@ export const TalentAnalysisResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -349,7 +369,8 @@ export const TalentAnalysisResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -358,7 +379,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>
@@ -373,7 +395,8 @@ export const TalentAnalysisResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -383,7 +406,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Cognitive Agility
                       </TableCell>
                       <TableCell
@@ -393,7 +417,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -404,7 +429,8 @@ export const TalentAnalysisResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -414,7 +440,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -430,7 +457,8 @@ export const TalentAnalysisResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertCognitive}
@@ -457,7 +485,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -466,13 +495,15 @@ export const TalentAnalysisResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -485,7 +516,8 @@ export const TalentAnalysisResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -494,7 +526,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>
@@ -509,7 +542,8 @@ export const TalentAnalysisResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -519,7 +553,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Sociability Skills
                       </TableCell>
                       <TableCell
@@ -529,7 +564,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -540,7 +576,8 @@ export const TalentAnalysisResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -550,7 +587,8 @@ export const TalentAnalysisResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -566,7 +604,8 @@ export const TalentAnalysisResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertSociability}
@@ -593,7 +632,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -602,13 +642,15 @@ export const TalentAnalysisResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -621,7 +663,8 @@ export const TalentAnalysisResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -630,7 +673,8 @@ export const TalentAnalysisResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>
@@ -639,6 +683,18 @@ export const TalentAnalysisResult = () => {
                     </Fragment>
                   </TableBody>
                 </Table>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                    marginTop: "25px",
+                    marginRight: "15px",
+                  }}
+                  onClick={() => navigate("/candidate")}
+                >
+                  Back
+                </Button>
               </div>
             </div>
           )}
