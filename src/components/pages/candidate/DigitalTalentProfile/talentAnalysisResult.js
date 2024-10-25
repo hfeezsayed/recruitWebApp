@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
+import "./index.css";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import {
@@ -171,10 +172,10 @@ export const TalentAnalysisResult = () => {
                                 backgroundColor: "#ffffff",
                                 borderColor: "#D0D5DD",
                               }}> */}
-                          <div className="flex justify-center">
+                          <div className="flex justify-center humanBodySk">
                             <ColorBodySvg />
 
-                            <div className="grid relative pt-5">
+                            <div className="grid relative pt-5 pl-3">
                               {pillars?.map((row, index) => {
                                 return (
                                   <div className={`flex mt-10`} key={index}>
@@ -187,9 +188,9 @@ export const TalentAnalysisResult = () => {
                                         }}
                                       >
                                         &#x2015;
-                                        <span style={{ fontSize: 30 }}>
+                                        {/* <span style={{ fontSize: 30 }}>
                                           &#x2022;
-                                        </span>
+                                        </span> */}
                                       </p>
                                       <p
                                         style={{

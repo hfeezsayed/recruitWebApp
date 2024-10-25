@@ -226,7 +226,8 @@ export const OutputofJobDescription = () => {
                         color: "#008080",
                         fontSize: 22,
                         fontWeight: 600,
-                      }}>
+                      }}
+                    >
                       Job Description
                     </p>
                     <p style={{ color: "#475467", fontSize: 14 }}>
@@ -243,15 +244,9 @@ export const OutputofJobDescription = () => {
                         size="small"
                         style={{ color: "#5E8EBD", textTransform: "none" }}
                         endIcon={<FiDownload />}
-                        onClick={DownloadPdf}>
-                        Download Pdf
-                      </Button>
-                      <Button
-                        size="small"
-                        style={{ color: "#5E8EBD", textTransform: "none" }}
-                        endIcon={<FiDownload />}
-                        onClick={DownloadWord}>
-                        Download Word
+                        onClick={DownloadPdf}
+                      >
+                        Download
                       </Button>
                     </div>
                   )}
@@ -265,7 +260,8 @@ export const OutputofJobDescription = () => {
                         color: "#008080",
                         fontSize: 18,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Details
                     </p>
                   </div>
@@ -278,7 +274,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
 
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Job Title
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -292,7 +289,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
 
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Job Code
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -306,7 +304,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
 
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Job Family
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -320,7 +319,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
 
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Job Department
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -333,7 +333,8 @@ export const OutputofJobDescription = () => {
                             color: "#475467",
                             fontSize: 18,
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Job Location
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -347,7 +348,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
 
                             width: 250,
-                          }}>
+                          }}
+                        >
                           Salary Compensation
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -363,7 +365,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Company Overview
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -376,7 +379,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Job Summary
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -389,7 +393,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Responsibilities
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -402,7 +407,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Benefits
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -420,7 +426,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Qualifications and Skills
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -433,7 +440,8 @@ export const OutputofJobDescription = () => {
                             color: "#008080",
                             fontSize: 18,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           Equal Employee Opportunity (EEO)
                         </p>
                         <p style={{ color: "#101828", fontSize: 18 }}>
@@ -447,7 +455,8 @@ export const OutputofJobDescription = () => {
                           color: "#008080",
                           fontSize: 18,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Role Requirements and Preferences
                       </p>
                       <div className="grid grid-cols-2 gap-5">
@@ -458,7 +467,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             Is it essential for the candidate to have experience
                             in a specific industry?
                           </p>
@@ -473,7 +483,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             If so, could you specify which industry and why that
                             experience is critical?
                           </p>
@@ -488,7 +499,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             Would industry knowledge be valued even without
                             direct experience?
                           </p>
@@ -503,7 +515,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             What is the work setting for the role?
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -517,7 +530,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             Type of role
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -531,7 +545,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             What are the timings for the role?
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -545,7 +560,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             How frequent does the role require to travel?
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -559,7 +575,8 @@ export const OutputofJobDescription = () => {
                               fontSize: 18,
                               minWidth: 320,
                               maxWidth: 350,
-                            }}>
+                            }}
+                          >
                             Occassional What kind of visa are you looking for ?
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -580,7 +597,8 @@ export const OutputofJobDescription = () => {
                           color: "#008080",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Work Value
                       </p>
                     </div>
@@ -590,7 +608,8 @@ export const OutputofJobDescription = () => {
                           height={350}
                           width={450}
                           outerRadius="80%"
-                          data={workValueData}>
+                          data={workValueData}
+                        >
                           <PolarGrid />
                           <Tooltip />
                           <PolarAngleAxis dataKey="value" />
@@ -615,7 +634,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     width: 250,
-                                  }}>
+                                  }}
+                                >
                                   Work Attribute
                                 </TableCell>
                                 <TableCell
@@ -624,7 +644,8 @@ export const OutputofJobDescription = () => {
                                     color: "#101828",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Frequency Selected
                                 </TableCell>
                               </TableRow>
@@ -636,7 +657,8 @@ export const OutputofJobDescription = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 4
                                 </TableCell>
                                 <TableCell
@@ -645,7 +667,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#C2E0E8",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {workValueData?.map((data) => {
                                       return Number(data?.rating) === 4 ? (
@@ -661,7 +684,8 @@ export const OutputofJobDescription = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 3
                                 </TableCell>
                                 <TableCell
@@ -670,7 +694,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#F2EFC9",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {workValueData?.map((data) => {
                                       return Number(data?.rating) === 3 ? (
@@ -686,7 +711,8 @@ export const OutputofJobDescription = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 2
                                 </TableCell>
                                 <TableCell
@@ -695,7 +721,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#D1E6D5",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {workValueData?.map((data) => {
                                       return Number(data?.rating) === 2 ? (
@@ -711,7 +738,8 @@ export const OutputofJobDescription = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 1
                                 </TableCell>
                                 <TableCell
@@ -720,7 +748,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#ECCCB7",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {workValueData?.map((data) => {
                                       return Number(data?.rating) === 1 ? (
@@ -736,7 +765,8 @@ export const OutputofJobDescription = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   No Priority
                                 </TableCell>
                                 <TableCell
@@ -745,7 +775,8 @@ export const OutputofJobDescription = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#EDDAD3",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {workValueData?.map((data) => {
                                       return Number(data?.rating) === 0 ? (
@@ -771,7 +802,8 @@ export const OutputofJobDescription = () => {
                           color: "#008080",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Team Preference
                       </p>
                     </div>
@@ -783,7 +815,8 @@ export const OutputofJobDescription = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             What is the size of the team
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -796,7 +829,8 @@ export const OutputofJobDescription = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             What is the location of the team where it works
                             from?
                           </p>
@@ -810,7 +844,8 @@ export const OutputofJobDescription = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             Does the role have to work cross functionally?
                           </p>
                           <p style={{ color: "#101828", fontSize: 18 }}>
@@ -823,7 +858,8 @@ export const OutputofJobDescription = () => {
                               color: "#475467",
                               fontSize: 18,
                               width: 320,
-                            }}>
+                            }}
+                          >
                             What problem/project is the team working on which
                             the candidate will be joining?
                           </p>
@@ -839,7 +875,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
                             minWidth: 320,
                             maxWidth: 350,
-                          }}>
+                          }}
+                        >
                           What problem/project is the team working on which the
                           candidate will be joining?
                         </p>
@@ -854,7 +891,8 @@ export const OutputofJobDescription = () => {
                             fontSize: 18,
                             minWidth: 320,
                             maxWidth: 350,
-                          }}>
+                          }}
+                        >
                           Could you describe the contributions of a particularly
                           successful team member in a similar role and how
                           they've impacted the team's success?
@@ -875,7 +913,8 @@ export const OutputofJobDescription = () => {
                           color: "#008080",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         ICP Analysis
                       </p>
                     </div>
@@ -887,7 +926,8 @@ export const OutputofJobDescription = () => {
                           fontSize: 22,
                           fontWeight: 600,
                           marginTop: 10,
-                        }}>
+                        }}
+                      >
                         Spectrum Analysis
                       </p>
                       <div className="flex gap-5 py-5">
@@ -895,7 +935,8 @@ export const OutputofJobDescription = () => {
                         <Table
                           sx={{
                             borderWidth: 1,
-                          }}>
+                          }}
+                        >
                           <TableHead>
                             <TableRow>
                               <TableCell
@@ -906,7 +947,8 @@ export const OutputofJobDescription = () => {
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
                                   minWidth: 600,
-                                }}>
+                                }}
+                              >
                                 Talent Dimensions
                               </TableCell>
                               <TableCell
@@ -916,7 +958,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Attributes
                               </TableCell>
                             </TableRow>
@@ -931,7 +974,8 @@ export const OutputofJobDescription = () => {
                                     fontWeight: 500,
                                     borderWidth: 1,
                                   }}
-                                  rowSpan={behaviour?.length + 1}>
+                                  rowSpan={behaviour?.length + 1}
+                                >
                                   {/* <div
                               className="border rounded-lg p-4 w-full"
                               style={{
@@ -946,14 +990,16 @@ export const OutputofJobDescription = () => {
                                         return (
                                           <div
                                             className={`flex mt-10`}
-                                            key={index}>
+                                            key={index}
+                                          >
                                             {/* <div className="flex text-center p-2"></div> */}
                                             <div className="flex gap-3 items-center">
                                               <p
                                                 style={{
                                                   color: "#475467",
                                                   fontSize: 33,
-                                                }}>
+                                                }}
+                                              >
                                                 &#x2015;
                                                 <span style={{ fontSize: 30 }}>
                                                   &#x2022;
@@ -964,7 +1010,8 @@ export const OutputofJobDescription = () => {
                                                   color: "#101828",
                                                   fontSize: 20,
                                                   fontWeight: 500,
-                                                }}>
+                                                }}
+                                              >
                                                 {row}
                                               </p>
                                               {/* <p style={{ color: "#475467", fontSize: 14 }}>
@@ -989,7 +1036,8 @@ export const OutputofJobDescription = () => {
                                       fontSize: 14,
                                       fontWeight: 500,
                                       borderWidth: 1,
-                                    }}>
+                                    }}
+                                  >
                                     {row}
                                   </TableCell>
                                 </TableRow>
@@ -1005,7 +1053,8 @@ export const OutputofJobDescription = () => {
                           fontSize: 22,
                           fontWeight: 600,
                           marginTop: 10,
-                        }}>
+                        }}
+                      >
                         Pie Charts
                       </p>
                       {/* chart 1 table */}
@@ -1013,7 +1062,8 @@ export const OutputofJobDescription = () => {
                         <Table
                           sx={{
                             borderWidth: 1,
-                          }}>
+                          }}
+                        >
                           <TableHead>
                             <TableRow>
                               <TableCell
@@ -1023,7 +1073,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Emotional Flexibility
                               </TableCell>
                               <TableCell
@@ -1033,7 +1084,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Labels
                               </TableCell>
                               <TableCell
@@ -1044,7 +1096,8 @@ export const OutputofJobDescription = () => {
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 Rating out of 5
                               </TableCell>
                               <TableCell
@@ -1054,7 +1107,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Attributes
                               </TableCell>
                             </TableRow>
@@ -1070,7 +1124,8 @@ export const OutputofJobDescription = () => {
                                     borderWidth: 1,
                                     width: 450,
                                   }}
-                                  rowSpan={5}>
+                                  rowSpan={5}
+                                >
                                   <div className="flex justify-end">
                                     <PieChart
                                       series={convertedEmtional}
@@ -1097,7 +1152,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       <div
                                         className="flex"
                                         style={{
@@ -1106,13 +1162,15 @@ export const OutputofJobDescription = () => {
                                           borderRadius: 3,
                                           paddingLeft: 5,
                                         }}
-                                        key={index}>
+                                        key={index}
+                                      >
                                         <div className="col-span-2">
                                           <p
                                             style={{
                                               color: "#475467",
                                               fontSize: 16,
-                                            }}>
+                                            }}
+                                          >
                                             {row.label}
                                           </p>
                                         </div>
@@ -1125,7 +1183,8 @@ export const OutputofJobDescription = () => {
                                         fontWeight: 500,
                                         borderWidth: 1,
                                       }}
-                                      align="center">
+                                      align="center"
+                                    >
                                       {row.rating}
                                     </TableCell>
                                     <TableCell
@@ -1134,7 +1193,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       {row.attribute}
                                     </TableCell>
                                   </TableRow>
@@ -1149,7 +1209,8 @@ export const OutputofJobDescription = () => {
                         <Table
                           sx={{
                             borderWidth: 1,
-                          }}>
+                          }}
+                        >
                           <TableHead>
                             <TableRow>
                               <TableCell
@@ -1159,7 +1220,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Cognitive Agility
                               </TableCell>
                               <TableCell
@@ -1169,7 +1231,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Labels
                               </TableCell>
                               <TableCell
@@ -1180,7 +1243,8 @@ export const OutputofJobDescription = () => {
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 Rating out of 5
                               </TableCell>
                               <TableCell
@@ -1190,7 +1254,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Attributes
                               </TableCell>
                             </TableRow>
@@ -1206,7 +1271,8 @@ export const OutputofJobDescription = () => {
                                     borderWidth: 1,
                                     width: 450,
                                   }}
-                                  rowSpan={5}>
+                                  rowSpan={5}
+                                >
                                   <div className="flex justify-end">
                                     <PieChart
                                       series={convertCognitive}
@@ -1233,7 +1299,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       <div
                                         className="flex"
                                         style={{
@@ -1242,13 +1309,15 @@ export const OutputofJobDescription = () => {
                                           borderRadius: 3,
                                           paddingLeft: 5,
                                         }}
-                                        key={index}>
+                                        key={index}
+                                      >
                                         <div className="col-span-2">
                                           <p
                                             style={{
                                               color: "#475467",
                                               fontSize: 16,
-                                            }}>
+                                            }}
+                                          >
                                             {row.label}
                                           </p>
                                         </div>
@@ -1261,7 +1330,8 @@ export const OutputofJobDescription = () => {
                                         fontWeight: 500,
                                         borderWidth: 1,
                                       }}
-                                      align="center">
+                                      align="center"
+                                    >
                                       {row.rating}
                                     </TableCell>
                                     <TableCell
@@ -1270,7 +1340,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       {row.attribute}
                                     </TableCell>
                                   </TableRow>
@@ -1285,7 +1356,8 @@ export const OutputofJobDescription = () => {
                         <Table
                           sx={{
                             borderWidth: 1,
-                          }}>
+                          }}
+                        >
                           <TableHead>
                             <TableRow>
                               <TableCell
@@ -1295,7 +1367,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Sociability Skills
                               </TableCell>
                               <TableCell
@@ -1305,7 +1378,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Labels
                               </TableCell>
                               <TableCell
@@ -1316,7 +1390,8 @@ export const OutputofJobDescription = () => {
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
                                 }}
-                                align="center">
+                                align="center"
+                              >
                                 Rating out of 5
                               </TableCell>
                               <TableCell
@@ -1326,7 +1401,8 @@ export const OutputofJobDescription = () => {
                                   fontWeight: 600,
                                   borderWidth: 1,
                                   bgcolor: "#F8F9FA",
-                                }}>
+                                }}
+                              >
                                 Attributes
                               </TableCell>
                             </TableRow>
@@ -1342,7 +1418,8 @@ export const OutputofJobDescription = () => {
                                     borderWidth: 1,
                                     width: 450,
                                   }}
-                                  rowSpan={5}>
+                                  rowSpan={5}
+                                >
                                   <div className="flex justify-end">
                                     <PieChart
                                       series={convertSociability}
@@ -1369,7 +1446,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       <div
                                         className="flex"
                                         style={{
@@ -1378,13 +1456,15 @@ export const OutputofJobDescription = () => {
                                           borderRadius: 3,
                                           paddingLeft: 5,
                                         }}
-                                        key={index}>
+                                        key={index}
+                                      >
                                         <div className="col-span-2">
                                           <p
                                             style={{
                                               color: "#475467",
                                               fontSize: 16,
-                                            }}>
+                                            }}
+                                          >
                                             {row.label}
                                           </p>
                                         </div>
@@ -1397,7 +1477,8 @@ export const OutputofJobDescription = () => {
                                         fontWeight: 500,
                                         borderWidth: 1,
                                       }}
-                                      align="center">
+                                      align="center"
+                                    >
                                       {row.rating}
                                     </TableCell>
                                     <TableCell
@@ -1406,7 +1487,8 @@ export const OutputofJobDescription = () => {
                                         fontSize: 14,
                                         fontWeight: 500,
                                         borderWidth: 1,
-                                      }}>
+                                      }}
+                                    >
                                       {row.attribute}
                                     </TableCell>
                                   </TableRow>

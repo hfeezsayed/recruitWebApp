@@ -21,6 +21,7 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { selectAssesmentData } from "../../../dummy/Data";
 import { SideNav } from "../../../widgets/sidenav";
+import "./index.css";
 
 export const CreateAssessment = () => {
   const navigate = useNavigate();
@@ -140,6 +141,7 @@ export const CreateAssessment = () => {
                         <TableCell
                           padding="checkbox"
                           sx={{ bgcolor: "#F8F9FA" }}
+                          className="checked-value"
                         >
                           <Checkbox
                             color="primary"
@@ -154,7 +156,7 @@ export const CreateAssessment = () => {
                             onChange={handleSelectAllClick}
                             sx={{
                               color: "#D0D5DD",
-                              "&.Mui-checked ": {
+                              "&.Mui-checked": {
                                 color: "#66B2B2",
                               },
                             }}
@@ -243,12 +245,12 @@ export const CreateAssessment = () => {
             <div className="flex justify-end py-5 gap-5">
               <Button
                 onClick={() => {
-                  navigate(-1);
+                  navigate("/assesmentform");
                 }}
                 variant="outlined"
-                style={{ borderColor: "#D0D5DD", color: "#475467" }}
+                style={{ backgroundColor: "#008080", color: "#ffffff" }}
               >
-                Cancel
+                Back
               </Button>
               <Button
                 onClick={() => {

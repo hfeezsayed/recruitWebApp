@@ -179,7 +179,7 @@ export const OutputofDigitalTalentProfile = () => {
                     endIcon={<FiDownload />}
                     onClick={DownloadPdf}
                   >
-                    Download PDF
+                    Download
                   </Button>
                 </div>
               )}

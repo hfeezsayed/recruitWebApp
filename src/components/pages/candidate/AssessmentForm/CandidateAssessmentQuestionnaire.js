@@ -255,6 +255,14 @@ export const CandidateAssessmentQuestionnaire = () => {
         </div>
         {/* button */}
         <div className="flex justify-end mt-4 gap-4">
+          {/* <Button
+            variant="contained"
+            type="submit"
+            sx={{ bgcolor: "#008080" }}
+            onClick={() => navigate("/createAssessment")}
+          >
+            Back
+          </Button> */}
           <Button variant="contained" type="submit" sx={{ bgcolor: "#008080" }}>
             {currentQuestion === questionList.length - 1 ? "Submit" : "Next"}
           </Button>
@@ -288,7 +296,7 @@ export const CandidateAssessmentQuestionnaire = () => {
               <FaArrowRight style={{ fontSize: 16, color: "#D0D5DD" }} />
               <p
                 style={{
-                  color: currentSection > 1 ? "#008080" : "#475467",
+                  color: currentSection > 1 ? "#008080" : "#008080",
                   fontWeight: 500,
                   fontSize: 14,
                 }}

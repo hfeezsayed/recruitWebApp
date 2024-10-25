@@ -195,14 +195,15 @@ export const PersonalInformation = () => {
       .catch((e) => console.log(e));
   }, []);
 
-  const handleUploadResume = (file) => {
+  const handleUploadResume = (file, e) => {
+    e?.preventDefault();
     const user = JSON.parse(localStorage.getItem("token"));
     const formData = new FormData();
     formData.append("file", file);
     axiosInstance
       .post(`/uploadCandidateResume?candidateId=${user.userId}`, formData)
       .then((response) => {
-        navigate("/assessmentsList");
+        navigate("/digitalTalentProfile/personalinfromation");
       })
       .catch((error) => {
         console.log(error);
@@ -576,6 +577,7 @@ export const PersonalInformation = () => {
                         onChange={(e) => handleUploadResume(e.target.files[0])}
                       />
                     </Button>
+
                     {file?.name && (
                       <IconButton
                         onClick={() => {
@@ -878,6 +880,14 @@ export const PersonalInformation = () => {
               </div>
               {/* buttons */}
               <div className="flex justify-end py-8 gap-5">
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  type="submit"
+                  onClick={() => navigate("/candidate")}
+                >
+                  Back
+                </Button>
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#008080", color: "#ffffff" }}

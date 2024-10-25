@@ -9,7 +9,7 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import axiosInstance from "../../../utils/axiosInstance";
 import { TopNav } from "../../../widgets/topNav";
@@ -23,6 +23,8 @@ export const JobDetails = () => {
   const [jobDetail, setJobDetail] = useState(jobsdata);
   const [search, setSearch] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (location.state) {
       console.log(location.state);
@@ -30,7 +32,6 @@ export const JobDetails = () => {
       setJobDetail(location.state?.row);
     }
   }, [location.state]);
-
 
   const handleCLickJob = (id) => {
     axiosInstance
@@ -47,7 +48,7 @@ export const JobDetails = () => {
     <div>
       {/* top nav */}
       <div className="flex w-full">
-        <div className="p-2 pl-5 flex gap-2">
+        <div className="p-2 pl-5 flex gap-2" onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
           <p style={{ color: "#475467", fontSize: 25 }}>Xenhire</p>
         </div>
@@ -89,7 +90,8 @@ export const JobDetails = () => {
                 fontWeight: 500,
                 borderRadius: 8,
               }}
-              startIcon={<IoFilterSharp />}>
+              startIcon={<IoFilterSharp />}
+            >
               Filter
             </Button>
           </div>
@@ -106,7 +108,8 @@ export const JobDetails = () => {
                     }}
                     onClick={() => {
                       handleCLickJob(row?.id);
-                    }}>
+                    }}
+                  >
                     <div className="pb-2">
                       <div className="flex gap-2 items-center">
                         <p
@@ -114,7 +117,8 @@ export const JobDetails = () => {
                             color: "#008080",
                             fontSize: 16,
                             fontWeight: 500,
-                          }}>
+                          }}
+                        >
                           {row?.jobName}
                         </p>
                         {row?.newPost ? (
@@ -128,7 +132,8 @@ export const JobDetails = () => {
                               paddingLeft: 8,
                               paddingRight: 8,
                               paddingBottom: 4,
-                            }}>
+                            }}
+                          >
                             New post
                           </p>
                         ) : (
@@ -140,7 +145,8 @@ export const JobDetails = () => {
                           color: "#474D6A",
                           fontSize: 12,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         {row?.companyName}
                       </p>
                     </div>
@@ -152,7 +158,8 @@ export const JobDetails = () => {
                           style={{
                             color: "#47546770",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           {row?.location}
                         </p>
                       </div>
@@ -168,7 +175,8 @@ export const JobDetails = () => {
                                 paddingRight: 5,
                                 borderRightWidth:
                                   index + 1 === row?.typeOfHire?.length ? 0 : 2,
-                              }}>
+                              }}
+                            >
                               {data}
                             </p>
                           );
@@ -182,7 +190,8 @@ export const JobDetails = () => {
                           color: "#47546770",
                           fontSize: 12,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Client :{" "}
                         <span style={{ color: "#101828" }}>
                           {row?.companyName}
@@ -193,9 +202,12 @@ export const JobDetails = () => {
                           color: "#47546770",
                           fontSize: 12,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Created Date :{" "}
-                        <span style={{ color: "#101828" }}>{row?.createdDate}</span>
+                        <span style={{ color: "#101828" }}>
+                          {row?.createdDate}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -212,14 +224,16 @@ export const JobDetails = () => {
                           color: "#101828",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         {jobDetail?.companyName}
                       </p>
                       <p
                         style={{
                           color: "#47546770",
                           fontSize: 14,
-                        }}>
+                        }}
+                      >
                         Client :{" "}
                         <span style={{ color: "#101828" }}>
                           {jobDetail?.companyName}
@@ -233,7 +247,8 @@ export const JobDetails = () => {
                           style={{
                             color: "#58A20F",
                             fontSize: 14,
-                          }}>
+                          }}
+                        >
                           Applied {jobDetail?.apliedTime} ago
                         </p>
                       </div>
@@ -245,7 +260,8 @@ export const JobDetails = () => {
                         color: "#101828",
                         fontSize: 25,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       {jobDetail?.jobName}
                     </p>
                     <div className="flex gap-3 items-center">
@@ -269,7 +285,8 @@ export const JobDetails = () => {
                                   index + 1 === jobDetail?.typeOfHire?.length
                                     ? 0
                                     : 2,
-                              }}>
+                              }}
+                            >
                               {data}
                             </p>
                           );
@@ -285,7 +302,8 @@ export const JobDetails = () => {
                     <div className="pt-3 flex justify-end gap-4">
                       <Button
                         variant="outlined"
-                        style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                        style={{ color: "#475467", borderColor: "#D0D5DD" }}
+                      >
                         SAVE
                       </Button>
                       <Button
@@ -294,7 +312,8 @@ export const JobDetails = () => {
                           backgroundColor: "#008080",
                           paddingLeft: 15,
                           paddingRight: 15,
-                        }}>
+                        }}
+                      >
                         APPLY NOW
                       </Button>
                     </div>
@@ -306,14 +325,16 @@ export const JobDetails = () => {
                         color: "#101828",
                         fontSize: 18,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Description
                     </p>
                     <p
                       style={{
                         color: "#475467",
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       {jobDetail?.jobDescription}
                     </p>
                   </div>
@@ -323,14 +344,16 @@ export const JobDetails = () => {
                         color: "#101828",
                         fontSize: 18,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Responsibilities:
                     </p>
                     <p
                       style={{
                         color: "#475467",
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       {jobDetail?.responsibility}
                     </p>
                     {/* {jobDetail?.responsibility.map((data, index) => {
@@ -352,14 +375,16 @@ export const JobDetails = () => {
                         color: "#101828",
                         fontSize: 18,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Requirements:
                     </p>
                     <p
                       style={{
                         color: "#475467",
                         fontSize: 14,
-                      }}>
+                      }}
+                    >
                       {jobDetail?.requirement}
                     </p>
                   </div>

@@ -349,26 +349,60 @@ export const AssesmentForm = () => {
             <TableHead>
               <TableRow>
                 <TableCell
-                  sx={{ color: "#101828", fontSize: 14, fontWeight: 500 }}
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 1,
+                    borderColor: "#D0D5DD",
+                  }}
                 >
                   Assessment Name
                 </TableCell>
                 <TableCell
-                  sx={{ color: "#101828", fontSize: 14, fontWeight: 500 }}
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 1,
+                    borderColor: "#D0D5DD",
+                  }}
                 >
                   Date Added
                 </TableCell>
                 <TableCell
-                  sx={{ color: "#101828", fontSize: 14, fontWeight: 500 }}
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 1,
+                    borderColor: "#D0D5DD",
+                  }}
                 >
                   Status
                 </TableCell>
                 <TableCell
-                  sx={{ color: "#101828", fontSize: 14, fontWeight: 500 }}
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 1,
+                    borderColor: "#D0D5DD",
+                  }}
                 >
                   Actions
                 </TableCell>
-                <TableCell />
+                <TableCell
+                  sx={{
+                    color: "#101828",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 1,
+                    borderColor: "#D0D5DD",
+                  }}
+                >
+                  Total Score
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -378,8 +412,8 @@ export const AssesmentForm = () => {
                   // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell
-                    component="th"
-                    scope="row"
+                    // component="th"
+                    // scope="row"
                     sx={{ color: "#475467", fontSize: 14 }}
                   >
                     {row.assessmentName}
@@ -614,19 +648,6 @@ export const AssesmentForm = () => {
                   }}
                 />
                 <div className="flex gap-4">
-                  <Button
-                    variant="outlined"
-                    style={{
-                      borderColor: "#D0D5DD",
-                      color: "#252525",
-                      textTransform: "none",
-                      fontWeight: 500,
-                      borderRadius: 8,
-                    }}
-                    startIcon={<IoFilterSharp />}
-                  >
-                    Filter
-                  </Button>
                   <Button
                     onClick={() => navigate("/createAssessment")}
                     style={{

@@ -538,7 +538,7 @@ export const Candidate = () => {
                                 style={{ color: "#777980", fontSize: 16 }}
                               />
                               <p style={{ color: "#777980", fontSize: 14 }}>
-                                5-10 mins
+                                10-15 mins
                               </p>
                             </div>
                           </div>
@@ -620,7 +620,7 @@ export const Candidate = () => {
                                 style={{ color: "#777980", fontSize: 16 }}
                               />
                               <p style={{ color: "#777980", fontSize: 14 }}>
-                                5-10 mins
+                                45-60 mins
                               </p>
                             </div>
                           </div>

@@ -42,6 +42,8 @@ export const AuthorisedClient = () => {
   const [managerEmail, setHiringManagerEmail] = useState();
   const [companyName, setCompanyname] = useState();
   const [showInfo, setShowInfo] = useState(false);
+
+  const [showTableData, setShowTableData] = useState(true);
   // const [authorize, setAuthorize] = useState(false);
   // const [decline, setDecline] = useState(false);
   const [authorizeCount, setAutorizeCount] = useState(0);
@@ -187,6 +189,22 @@ export const AuthorisedClient = () => {
     return filteredOptions;
   };
 
+  const handleApprovedFilterTable = () => {
+    const filterApproved = authClientList.filter((item) =>
+      item.authorized === true ? item.authorized : ""
+    );
+    setAuthClientList(filterApproved);
+    setShowTableData(false);
+  };
+
+  const handleDeclineFilterTable = () => {
+    const filterDecline = authClientList.filter((item) =>
+      item.declined === true ? item.declined : ""
+    );
+    setAuthClientList(filterDecline);
+    setShowTableData(false);
+  };
+
   const AuthorizedOrDeclinedClients = () => {
     return (
       <div>
@@ -209,6 +227,8 @@ export const AuthorisedClient = () => {
                       color: "#101828",
                       fontSize: 14,
                       fontWeight: 500,
+                      border: 1,
+                      borderColor: "#D0D5DD",
                     }}
                   >
                     Client Name
@@ -218,6 +238,8 @@ export const AuthorisedClient = () => {
                       color: "#101828",
                       fontSize: 14,
                       fontWeight: 500,
+                      border: 1,
+                      borderColor: "#D0D5DD",
                     }}
                   >
                     Manager Name
@@ -227,6 +249,8 @@ export const AuthorisedClient = () => {
                       color: "#101828",
                       fontSize: 14,
                       fontWeight: 500,
+                      border: 1,
+                      borderColor: "#D0D5DD",
                     }}
                   >
                     Email
@@ -236,27 +260,31 @@ export const AuthorisedClient = () => {
                       color: "#101828",
                       fontSize: 14,
                       fontWeight: 500,
+                      border: 1,
+                      borderColor: "#D0D5DD",
                     }}
                   >
                     Date Authorised
                   </TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#101828",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      border: 1,
+                      borderColor: "#D0D5DD",
+                    }}
+                  >
+                    Status
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filterAuthorizedorDeclined().map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": {
-                        border: 1,
-                        borderColor: "#D0D5DD",
-                      },
-                    }}
-                  >
+                  <TableRow key={index}>
                     <TableCell
-                      component="th"
-                      scope="row"
+                      // component="th"
+                      // scope="row"
                       sx={{ color: "#475467", fontSize: 14 }}
                     >
                       {row.clientName}
@@ -319,9 +347,11 @@ export const AuthorisedClient = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
-              Authorise Clients
-            </p>
+            {showTableData && (
+              <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
+                Authorise Clients
+              </p>
+            )}
             <div className="py-5 flex justify-between items-center">
               <TextField
                 size="small"
@@ -337,6 +367,30 @@ export const AuthorisedClient = () => {
                 }}
               />
               <div className="flex gap-4 items-center">
+                {/* <button
+                  onClick={handleApprovedFilterTable}
+                  style={{
+                    color: "#008080",
+                    background: "#EAF4F5",
+                    textTransform: "none",
+                    fontWeight: 500,
+                    borderRadius: 8,
+                  }}
+                >
+                  Approved
+                </button>
+                <button
+                  onClick={handleDeclineFilterTable}
+                  style={{
+                    color: "#008080",
+                    background: "#EAF4F5",
+                    textTransform: "none",
+                    fontWeight: 500,
+                    borderRadius: 8,
+                  }}
+                >
+                  Decline
+                </button> */}
                 <Button
                   variant="outlined"
                   style={{
@@ -365,168 +419,221 @@ export const AuthorisedClient = () => {
               </div>
             </div>
             <div>
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{ minWidth: 650, border: 1, borderColor: "#D0D5DD" }}
-                  aria-label="simple table"
-                  stickyHeader
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
+              {showTableData && (
+                <div>
+                  <div>
+                    <TableContainer component={Paper}>
+                      <Table
                         sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 500,
+                          minWidth: 650,
+                          border: 1,
+                          borderColor: "#D0D5DD",
                         }}
+                        aria-label="simple table"
+                        stickyHeader
                       >
-                        Client Name
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Manager Name
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Email
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          color: "#101828",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Date Authorised
-                      </TableCell>
-                      <TableCell>Status</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {filterNotAuthorizedorDeclined()
-                      ?.filter((item) =>
-                        item.clientName
-                          .toLowerCase()
-                          .includes(search.toLowerCase())
-                      )
-                      .map((row, index) => (
-                        <TableRow
-                          key={index}
-                          sx={{
-                            "&:last-child td, &:last-child th": {
-                              border: 1,
-                              borderColor: "#D0D5DD",
-                            },
-                          }}
-                        >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            sx={{ color: "#475467", fontSize: 14 }}
-                          >
-                            {row.clientName}
-                          </TableCell>
-                          <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                            {row.managerName}
-                          </TableCell>
-                          <TableCell sx={{ color: "#475467", fontSize: 14 }}>
-                            {row.email}
-                          </TableCell>
-                          <TableCell sx={{ color: "#F4BC06", fontSize: 14 }}>
-                            {row.date}
-                          </TableCell>
-                          <TableCell>
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-controlled-radio-buttons-group"
-                              name="controlled-radio-buttons-group"
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                border: 1,
+                                borderColor: "#D0D5DD",
+                              }}
                             >
-                              <FormControlLabel
-                                value="approve"
-                                control={
-                                  <Radio
-                                    checked={row.authorized}
-                                    size="small"
-                                    onChange={(e) =>
-                                      handleAuthorize(row, e.target.checked)
-                                    }
-                                    sx={{ color: "#58A20F" }}
-                                  />
-                                }
-                                sx={{
-                                  backgroundColor: "#F4FAF1",
-                                  pr: 2,
-                                  borderRadius: 10,
-                                }}
-                                label={
-                                  <p style={{ color: "#057903" }}>Approve</p>
-                                }
-                              />
-                              <FormControlLabel
-                                value="decline"
-                                control={
-                                  <Radio
-                                    checked={row.declined}
-                                    size="small"
-                                    onChange={(e) =>
-                                      handleDecline(row, e.target.checked)
-                                    }
-                                    sx={{ color: "#E05880" }}
-                                  />
-                                }
-                                sx={{
-                                  backgroundColor: "#FCEEEE",
-                                  pr: 2,
-                                  borderRadius: 10,
-                                }}
-                                label={
-                                  <p style={{ color: "#E05880" }}>Decline</p>
-                                }
-                              />
-                            </RadioGroup>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
-            <div className="pt-8 mb-10">
-              <p style={{ fontSize: 20, color: "#101828", fontWeight: 600 }}>
-                Requests approved for Authorised Clients
-              </p>
-              <div className="flex gap-4 mt-4">
-                <p style={{ fontSize: 16, color: "#475467" }}>
-                  Approved Requests
-                </p>{" "}
-                <p style={{ fontSize: 16, color: "#057903", fontWeight: 600 }}>
-                  {
-                    authClientList.filter((item) => item.authorized === true)
-                      .length
-                  }
-                </p>
-              </div>
-              <div className="flex gap-4 mt-2">
-                <p style={{ fontSize: 16, color: "#475467" }}>
-                  Declined Requests
-                </p>{" "}
-                <p style={{ fontSize: 16, color: "#E05880", fontWeight: 600 }}>
-                  {
-                    authClientList.filter((item) => item.declined === true)
-                      .length
-                  }
-                </p>
-              </div>
+                              Client Name
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                border: 1,
+                                borderColor: "#D0D5DD",
+                              }}
+                            >
+                              Manager Name
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                border: 1,
+                                borderColor: "#D0D5DD",
+                              }}
+                            >
+                              Email
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                border: 1,
+                                borderColor: "#D0D5DD",
+                              }}
+                            >
+                              Date Authorised
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                color: "#101828",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                border: 1,
+                                borderColor: "#D0D5DD",
+                              }}
+                            >
+                              Status
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {filterNotAuthorizedorDeclined()
+                            ?.filter((item) =>
+                              item.clientName
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                            )
+                            .map((row, index) => (
+                              <TableRow key={index}>
+                                <TableCell
+                                  // component="th"
+                                  // scope="row"
+                                  sx={{ color: "#475467", fontSize: 14 }}
+                                >
+                                  {row.clientName}
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#475467", fontSize: 14 }}
+                                >
+                                  {row.managerName}
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#475467", fontSize: 14 }}
+                                >
+                                  {row.email}
+                                </TableCell>
+                                <TableCell
+                                  sx={{ color: "#F4BC06", fontSize: 14 }}
+                                >
+                                  {row.date}
+                                </TableCell>
+                                <TableCell>
+                                  <RadioGroup
+                                    row
+                                    aria-labelledby="demo-controlled-radio-buttons-group"
+                                    name="controlled-radio-buttons-group"
+                                  >
+                                    <FormControlLabel
+                                      value="approve"
+                                      control={
+                                        <Radio
+                                          checked={row.authorized}
+                                          size="small"
+                                          onChange={(e) =>
+                                            handleAuthorize(
+                                              row,
+                                              e.target.checked
+                                            )
+                                          }
+                                          sx={{ color: "#58A20F" }}
+                                        />
+                                      }
+                                      sx={{
+                                        backgroundColor: "#F4FAF1",
+                                        pr: 2,
+                                        borderRadius: 10,
+                                      }}
+                                      label={
+                                        <p style={{ color: "#057903" }}>
+                                          Approve
+                                        </p>
+                                      }
+                                    />
+                                    <FormControlLabel
+                                      value="decline"
+                                      control={
+                                        <Radio
+                                          checked={row.declined}
+                                          size="small"
+                                          onChange={(e) =>
+                                            handleDecline(row, e.target.checked)
+                                          }
+                                          sx={{ color: "#E05880" }}
+                                        />
+                                      }
+                                      sx={{
+                                        backgroundColor: "#FCEEEE",
+                                        pr: 2,
+                                        borderRadius: 10,
+                                      }}
+                                      label={
+                                        <p style={{ color: "#E05880" }}>
+                                          Decline
+                                        </p>
+                                      }
+                                    />
+                                  </RadioGroup>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </div>
+                  <div className="pt-8 mb-10">
+                    <p
+                      style={{
+                        fontSize: 20,
+                        color: "#101828",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Requests approved for Authorised Clients
+                    </p>
+                    <div className="flex gap-4 mt-4">
+                      <p style={{ fontSize: 16, color: "#475467" }}>
+                        Approved Requests
+                      </p>{" "}
+                      <p
+                        style={{
+                          fontSize: 16,
+                          color: "#057903",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {
+                          authClientList.filter(
+                            (item) => item.authorized === true
+                          ).length
+                        }
+                      </p>
+                    </div>
+                    <div className="flex gap-4 mt-2">
+                      <p style={{ fontSize: 16, color: "#475467" }}>
+                        Declined Requests
+                      </p>{" "}
+                      <p
+                        style={{
+                          fontSize: 16,
+                          color: "#E05880",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {
+                          authClientList.filter(
+                            (item) => item.declined === true
+                          ).length
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <AuthorizedOrDeclinedClients />
           </div>
