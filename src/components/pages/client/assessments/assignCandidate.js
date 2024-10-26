@@ -89,11 +89,10 @@ export const AssignCandidate = () => {
   };
 
   // pagination
-
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(`/getAssessments?clientId=1&pageNo=${pageNO}&pageSize=5`)
+      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -125,6 +124,20 @@ export const AssignCandidate = () => {
         console.log(e);
       });
   }, []);
+
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("token"));
+  //   axiosInstance
+  //     .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`)
+  //     .then((data) => {
+  //       console.log("assessmentListData", data);
+  //       setData(data.data);
+  //       setPage(data?.pageNo || 1);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -384,10 +397,10 @@ export const AssignCandidate = () => {
                     </Paper>
                     <div className="flex justify-between items-center">
                       <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data?.totalCount} results found
+                        Showing {data?.data?.length} results found
                       </p>
                       <Pagination
-                        count={PAGECOUNT}
+                        count={1}
                         page={page}
                         variant="outlined"
                         shape="rounded"

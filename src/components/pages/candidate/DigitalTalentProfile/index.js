@@ -33,6 +33,9 @@ import { convertCompetencies } from "../../../utils/function";
 
 export const DigitalTalentProfile = () => {
   const [userData, setUserData] = useState(DigitalTalentProfileData);
+  const [profileRangeData, setProfileRangeData] = useState(
+    DigitalTalentProfileData
+  );
 
   const userName = JSON.parse(localStorage.getItem("token"))?.username
     ? JSON.parse(localStorage.getItem("token"))?.username
@@ -48,10 +51,13 @@ export const DigitalTalentProfile = () => {
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       background: `linear-gradient(90deg, #66B2B2 ${
-        100 - userData?.profileCompletd ? userData?.profileCompletd : 0
+        100 - profileRangeData?.profileCompletd
+          ? profileRangeData?.profileCompletd
+          : 0
       }%, #008080 100%)`,
     },
   }));
+
   const navigate = useNavigate();
   const [disableDTP, setDisableDTP] = useState(true);
   const [assessment, setAssessment] = useState(false);
@@ -60,35 +66,36 @@ export const DigitalTalentProfile = () => {
   const [personalInfo, setPersonalInfo] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   setLoading(true);
-  //   axiosInstance
-  //     .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setUserData(response.data);
-  //       console.log(response.data.assessment === true);
-  //       if (
-  //         response.data.assessment &&
-  //         response.data.valueAssessment &&
-  //         response.data.preferenes &&
-  //         response.data.personalInfo
-  //       ) {
-  //         console.log("dtp = ", disableDTP);
-  //         setDisableDTP(false);
-  //       }
-  //       setLoading(false);
-  //       // setAssessment(response.data.assessment);
-  //       // setValueAssessment(response.data.valueAssessment);
-  //       // setPreferences(response.data.preferenes);
-  //       // setPersonalInfo(response.data.personalInfo);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    axiosInstance
+      .get(`/getCandidateDTPInfo?candidateId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        //setUserData(response.data);
+        setProfileRangeData(response.data);
+        console.log(response.data.assessment === true);
+        if (
+          response.data.assessment &&
+          response.data.valueAssessment &&
+          response.data.preferenes &&
+          response.data.personalInfo
+        ) {
+          console.log("dtp = ", disableDTP);
+          setDisableDTP(false);
+        }
+        setLoading(false);
+        // setAssessment(response.data.assessment);
+        // setValueAssessment(response.data.valueAssessment);
+        // setPreferences(response.data.preferenes);
+        // setPersonalInfo(response.data.personalInfo);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
   const downloadResume = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -295,7 +302,7 @@ export const DigitalTalentProfile = () => {
                           <Box sx={{ width: "50%", mr: 1 }}>
                             <BorderLinearProgress
                               variant="determinate"
-                              value={userData?.personalInfo ? 100 : 0}
+                              value={profileRangeData?.personalInfo ? 100 : 0}
                             />
                           </Box>
                           <Box sx={{ minWidth: 35 }}>
@@ -303,7 +310,7 @@ export const DigitalTalentProfile = () => {
                               variant="body2"
                               color="text.secondary"
                             >{`${Math.round(
-                              userData?.personalInfo ? 100 : 0
+                              profileRangeData?.personalInfo ? 100 : 0
                             )}%`}</Typography>
                           </Box>
                         </Box>

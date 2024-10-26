@@ -247,31 +247,6 @@ export const AssessmentListView = () => {
                       />
                       <div>
                         <Button
-                          size="small"
-                          variant="outlined"
-                          // onClick={handleClickFilter}
-                          style={{
-                            color: "#252525",
-                            borderColor: "#D0D5DD",
-                            textTransform: "none",
-                            fontSize: 14,
-                            fontWeight: 500,
-                            borderRadius: 8,
-                            width: 94,
-                            height: 38,
-                            marginRight: 10,
-                          }}
-                          startIcon={
-                            <IoFilter
-                              style={{
-                                color: "#252525",
-                              }}
-                            />
-                          }
-                        >
-                          Filter
-                        </Button>
-                        <Button
                           variant="text"
                           style={{
                             color: "#008080",

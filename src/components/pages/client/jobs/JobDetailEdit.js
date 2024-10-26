@@ -23,6 +23,13 @@ import axios from "axios";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
 import CreatableSelect from "react-select/creatable";
 import { locations } from "../../../utils/allLocations";
+import {
+  timingsRole,
+  visaType,
+  roleTypes,
+  academicQualification,
+  specificCertification,
+} from "../../../utils/seedsData";
 
 export const JobDetailEdit = () => {
   const navigate = useNavigate();
@@ -101,12 +108,6 @@ export const JobDetailEdit = () => {
     { label: "On-Site", value: "On-Site" },
     { label: "Remote", value: "Remote" },
     { label: "Hybrid", value: "Hybrid" },
-  ];
-
-  const roleTypes = [
-    { label: "Contract", value: "Contract" },
-    { label: "C2H", value: "C2H" },
-    { label: "Fulltime", value: "Fulltime" },
   ];
 
   const budgetOpts = [
@@ -729,7 +730,7 @@ export const JobDetailEdit = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Family
                 </p>
-                {/* <Autocomplete
+                <Autocomplete
                   size="small"
                   disablePortal
                   options={convertToOptions(settings?.jobFamily).map(
@@ -740,8 +741,8 @@ export const JobDetailEdit = () => {
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
-                /> */}
-                {education.map((jbFmly, index) => (
+                />
+                {/* {education.map((jbFmly, index) => (
                   <CreatableSelect
                     isClearable
                     options={getOptions("jobFamily")}
@@ -754,7 +755,7 @@ export const JobDetailEdit = () => {
                     }
                     placeholder="Select or create an item"
                   />
-                ))}
+                ))} */}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -1218,9 +1219,7 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.typeRole).map(
-                      (option) => option.label
-                    )}
+                    options={roleTypes.map((option) => option.label)}
                     value={roleType || null}
                     onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
@@ -1237,9 +1236,7 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.roleTiming).map(
-                      (option) => option.label
-                    )}
+                    options={timingsRole.map((option) => option.label)}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -1275,10 +1272,9 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={VisaOptions.map((option) => option.label)}
-                    // options={options.map((option) => option.label)}
+                    options={visaType.map((option) => option.label)}
                     value={visa || null}
-                    onChange={(e, newvalue) => setVisa(newvalue, e)}
+                    onChange={(e, newvalue) => setVisa(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -1302,9 +1298,9 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(
-                      settings?.acadamicQualification
-                    ).map((option) => option.label)}
+                    options={academicQualification.map(
+                      (option) => option.label
+                    )}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)

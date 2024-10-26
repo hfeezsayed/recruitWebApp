@@ -29,6 +29,7 @@ import { convertCompetencies } from "../../../utils/function";
 
 export const HomePage = () => {
   const [userData, setUserData] = useState(DashBoardData);
+  const [profileRangeData, setProfileRangeData] = useState(DashBoardData);
   const [authorizedCount, setAuthorizedCount] = useState(0);
   const [clientCount, setClientCount] = useState(0);
   const [selfCount, setselfCount] = useState(0);
@@ -49,7 +50,9 @@ export const HomePage = () => {
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       background: `linear-gradient(90deg, #66B2B2 ${
-        100 - userData?.profileCompletd ? userData?.profileCompletd : 0
+        100 - profileRangeData?.profileCompletd
+          ? profileRangeData?.profileCompletd
+          : 0
       }%, #008080 100%)`,
     },
   }));
@@ -61,10 +64,8 @@ export const HomePage = () => {
     axiosInstance
       .get("/getCandidateDTPInfo?candidateId=" + user.userId)
       .then((response) => {
-        console.log(response.data);
-        setLinkedIn(response.data?.linkedIn);
-        // setUserData(response.data);
-
+        console.log("userDataDashboard", response.data);
+        setProfileRangeData(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -132,16 +133,16 @@ export const HomePage = () => {
   );
 
   //upload profile image
-  // function handleUploadPicChange(event) {
-  //   setUserData(event.target.files[0]);
-  // }
+  function handleUploadPicChange(event) {
+    setUserData(event.target.files[0]);
+  }
 
-  // function handleImageUploadSubmit(event) {
-  // event.preventDefault();
-  // const formData = new FormData();
-  // formData.append("file", userData);
-  // formData.append("fileName", userData.name);
-  // }
+  function handleImageUploadSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", userData);
+    formData.append("fileName", userData.name);
+  }
 
   return (
     <div>
@@ -302,7 +303,7 @@ export const HomePage = () => {
                           <Box sx={{ width: "100%", mr: 1, mt: 2 }}>
                             <BorderLinearProgress
                               variant="determinate"
-                              value={userData?.personalInfo ? 100 : 0}
+                              value={profileRangeData?.personalInfo ? 100 : 0}
                             />
                           </Box>
 
@@ -311,7 +312,7 @@ export const HomePage = () => {
                               minWidth: 35,
                               position: "absolute",
                               left: `${Math.round(
-                                userData?.personalInfo ? 100 : 0
+                                profileRangeData?.personalInfo ? 100 : 0
                               )}%`,
                               mt: 2,
                             }}
@@ -325,7 +326,7 @@ export const HomePage = () => {
                                 }}
                               >
                                 {`${Math.round(
-                                  userData?.personalInfo ? 100 : 0
+                                  profileRangeData?.personalInfo ? 100 : 0
                                 )}%`}
                               </p>
                             </div>

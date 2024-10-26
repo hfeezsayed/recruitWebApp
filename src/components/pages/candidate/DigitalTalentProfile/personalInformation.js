@@ -77,9 +77,11 @@ export const PersonalInformation = () => {
   const [noticePeriod, setNoticePeriod] = useState();
   const [teamHandling, setTeamHandling] = useState();
   const [teamSize, setTeamSize] = useState();
+
   const [indusrtyExperience, setIndustryExperience] = useState([
     { type: null, experience: null },
   ]);
+
   const [primarySkills, setPrimarySkill] = useState([
     { skill: null, expertise: null },
   ]);
@@ -1195,9 +1197,9 @@ export const PersonalInformation = () => {
                     Please select the industry and specify the industry
                     experience
                   </p>
-                  {indusrtyExperience.map((value, index) => {
+                  {indusrtyExperience?.map((value, index) => {
                     return (
-                      <>
+                      <div key={index}>
                         <div className="grid grid-cols-2 gap-8 mt-5">
                           <Autocomplete
                             disablePortal
@@ -1263,7 +1265,7 @@ export const PersonalInformation = () => {
                             </Button>
                           </div>
                         )}
-                      </>
+                      </div>
                     );
                   })}
                   <div className="py-3 flex justify-end">
@@ -1317,7 +1319,7 @@ export const PersonalInformation = () => {
                   >
                     Primary Skills
                   </p>
-                  {primarySkills.map((value, index) => {
+                  {primarySkills?.map((value, index) => {
                     return (
                       <>
                         <div className="grid grid-cols-2 gap-8 mt-5">
@@ -1433,7 +1435,7 @@ export const PersonalInformation = () => {
                   >
                     Secoundry Skills
                   </p>
-                  {secoundrySkills.map((value, index) => {
+                  {secoundrySkills?.map((value, index) => {
                     return (
                       <div key={index}>
                         <div className="grid grid-cols-2 gap-8 mt-5">
@@ -1554,7 +1556,7 @@ export const PersonalInformation = () => {
                     size="small"
                     fullWidth
                     options={softwares.map((option) => option.label)}
-                    value={softwareApplication.app || null}
+                    value={softwareApplication?.app || null}
                     onChange={(e, value) =>
                       setSoftwareApplication({
                         ...softwareApplication,
@@ -1570,7 +1572,7 @@ export const PersonalInformation = () => {
                     size="small"
                     fullWidth
                     options={skillLevel.map((option) => option.label)}
-                    value={softwareApplication.experience || null}
+                    value={softwareApplication?.experience || null}
                     onChange={(e, value) =>
                       setSoftwareApplication({
                         ...softwareApplication,
@@ -1811,7 +1813,7 @@ export const PersonalInformation = () => {
                       fullWidth
                       placeholder="Type Range"
                       size="small"
-                      value={expectedSalary.range}
+                      value={expectedSalary?.range}
                       onChange={(e) =>
                         setexpectedSalary({
                           ...expectedSalary,
@@ -1824,8 +1826,8 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={currency.map((option) => option.label)}
-                      value={expectedSalary.currency || null}
+                      options={currency?.map((option) => option.label)}
+                      value={expectedSalary?.currency || null}
                       onChange={(e, value) =>
                         setexpectedSalary({
                           ...expectedSalary,
@@ -1855,7 +1857,7 @@ export const PersonalInformation = () => {
                       fullWidth
                       placeholder="Type Range"
                       size="small"
-                      value={expectedRange.range}
+                      value={expectedRange?.range}
                       onChange={(e) =>
                         setExpectedRange({
                           ...expectedRange,
@@ -1869,8 +1871,8 @@ export const PersonalInformation = () => {
                       size="small"
                       placeholder="select currency"
                       fullWidth
-                      options={currency.map((option) => option.label)}
-                      value={expectedRange.currency || null}
+                      options={currency?.map((option) => option.label)}
+                      value={expectedRange?.currency || null}
                       onChange={(e, value) =>
                         setExpectedRange({
                           ...expectedRange,
@@ -1898,7 +1900,7 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={job_Interests.map((option) => option.label)}
+                      options={job_Interests?.map((option) => option.label)}
                       value={typeOfJobOpening || null}
                       onChange={(e, value) => setTypeOfJobOpening(value)}
                       renderInput={(params) => (
@@ -1936,7 +1938,7 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={appealings.map((option) => option.label)}
+                      options={appealings?.map((option) => option.label)}
                       value={appealingWork || null}
                       onChange={(e, value) => setAppealingWork(value)}
                       renderInput={(params) => (
@@ -1958,7 +1960,7 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={environments.map((option) => option.label)}
+                      options={environments?.map((option) => option.label)}
                       value={workEnvironment || null}
                       onChange={(e, value) => setWorkEnvironment(value)}
                       renderInput={(params) => (
@@ -1983,7 +1985,7 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={yes_No.map((option) => option.label)}
+                      options={yes_No?.map((option) => option.label)}
                       value={companyOutlook || null}
                       onChange={(e, value) => setCompanyOutlook(value)}
                       renderInput={(params) => (
@@ -2020,7 +2022,7 @@ export const PersonalInformation = () => {
                       disablePortal
                       size="small"
                       fullWidth
-                      options={visa_status.map((option) => option.label)}
+                      options={visa_status?.map((option) => option.label)}
                       value={visaStatus || null}
                       onChange={(e, value) => setVisaStatus(value)}
                       renderInput={(params) => (

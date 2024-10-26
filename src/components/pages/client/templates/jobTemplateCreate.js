@@ -1054,9 +1054,7 @@ export const JobTemplateCreate = () => {
                           (option) => option.label
                         )}
                         value={certification || null}
-                        onChange={(e, newvalue) =>
-                          setMinimumLevelQualification(newvalue)
-                        }
+                        onChange={(e, newvalue) => setCertification(newvalue)}
                         renderInput={(params) => (
                           <TextField {...params} placeholder="Select" />
                         )}

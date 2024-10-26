@@ -61,7 +61,7 @@ export const Candidate = () => {
   let assessment = false;
   let valueAssessment = false;
   let prefereness = true;
-  let personalInfos = true;
+  let personalInfo = true;
 
   const changeUserData = () => {
     if (userData.profileCompletd > 40) {
@@ -81,7 +81,7 @@ export const Candidate = () => {
     axiosInstance
       .get("/getCandidateDTPInfo?candidateId=" + user.userId)
       .then((response) => {
-        console.log(response.data);
+        console.log("userDataDashboard", response.data);
         setUserData(response.data);
         setLoading(false);
       })
