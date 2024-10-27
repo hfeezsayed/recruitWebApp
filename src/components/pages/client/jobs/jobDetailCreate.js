@@ -137,9 +137,11 @@ export const JobDetailCreate = () => {
   ];
 
   const certOpts = [
-    { label: "Six Sigma Green belt", value: "Six Sigma Green belt" },
-    { label: "PMP", value: "PMP" },
+    { label: "IBM", value: "IBM" },
+    { label: "AWS", value: "AWS" },
     { label: "Scrum Master", value: "Scrum Master" },
+    { label: "GCP", value: "GCP" },
+    { label: "CISCO", value: "CISCO" },
   ];
 
   const tools = [
