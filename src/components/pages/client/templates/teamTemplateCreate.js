@@ -10,6 +10,7 @@ import {
   IconButton,
   DialogActions,
 } from "@mui/material";
+import { locations as allLocations } from "../../../utils/allLocations";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
@@ -63,7 +64,7 @@ export const TeamTemplateCreate = () => {
         templateTag,
         templateDescription,
         workValues,
-        technicalSkills
+        technicalSkills,
       })
       .then((data) => {
         console.log(data.data);
@@ -89,9 +90,9 @@ export const TeamTemplateCreate = () => {
   ];
 
   const yes_no = [
-  { label: "Yes", value: "Yes" },
-  { label: "No", value: "No" },
-  ]
+    { label: "Yes", value: "Yes" },
+    { label: "No", value: "No" },
+  ];
 
   return (
     <div>
@@ -131,7 +132,19 @@ export const TeamTemplateCreate = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   What is the location of the team where it works from?
                 </p>
+
                 <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={allLocations?.map((option) => option.label)}
+                  value={teamLocation || null}
+                  onChange={(e, newvalue) => setTeamLocation(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+
+                {/* <Autocomplete
                   size="small"
                   disablePortal
                   options={options.map((option) => option.label)}
@@ -140,7 +153,7 @@ export const TeamTemplateCreate = () => {
                   renderInput={(params) => (
                     <TextField {...params} placeholder="Select" />
                   )}
-                />
+                /> */}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -213,7 +226,9 @@ export const TeamTemplateCreate = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                How important are Work Values to you? Is this talent dimension used in filtering candidates or not? (Note: by default, we use this as one of the talent dimensions in the overall score.)
+                How important are Work Values to you? Is this talent dimension
+                used in filtering candidates or not? (Note: by default, we use
+                this as one of the talent dimensions in the overall score.)
               </p>
               <Autocomplete
                 size="small"
@@ -228,7 +243,10 @@ export const TeamTemplateCreate = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Do you want to give extra weight to Technical Skills compared to other talent dimensions? (Note: By default, we assign corresponding weightages based on your response in the ICP Analysis.)
+                Do you want to give extra weight to Technical Skills compared to
+                other talent dimensions? (Note: By default, we assign
+                corresponding weightages based on your response in the ICP
+                Analysis.)
               </p>
               <Autocomplete
                 size="small"
@@ -247,7 +265,8 @@ export const TeamTemplateCreate = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
@@ -255,7 +274,8 @@ export const TeamTemplateCreate = () => {
                   setShowPopup(true);
                 }}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 SAVE AS TEMPLATE
               </Button>
             </div>
@@ -264,7 +284,8 @@ export const TeamTemplateCreate = () => {
               <DialogTitle>Template Details</DialogTitle>
               <IconButton
                 onClick={closePopup}
-                style={{ position: "absolute", top: 10, right: 10 }}>
+                style={{ position: "absolute", top: 10, right: 10 }}
+              >
                 <IoIosCloseCircleOutline />
               </IconButton>
               <Divider />
@@ -276,7 +297,8 @@ export const TeamTemplateCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Team Template Name
                     </p>
                     <TextField
@@ -293,7 +315,8 @@ export const TeamTemplateCreate = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Team Template Tags
                     </p>
                     <TextField
@@ -307,7 +330,8 @@ export const TeamTemplateCreate = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 py-8">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Team Template Description
                   </p>
                   <textarea
@@ -327,13 +351,15 @@ export const TeamTemplateCreate = () => {
                 <Button
                   onClick={closePopup}
                   variant="outlined"
-                  style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                  style={{ color: "#475467", borderColor: "#D0D5DD" }}
+                >
                   cancel
                 </Button>
                 <Button
                   onClick={handleSubmit}
                   variant="contained"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}
+                >
                   SAVE
                 </Button>
               </DialogActions>

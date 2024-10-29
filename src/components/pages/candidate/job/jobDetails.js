@@ -14,7 +14,8 @@ import { CiSearch } from "react-icons/ci";
 import axiosInstance from "../../../utils/axiosInstance";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
-import logo from "../../../../assets/images/logo.png";
+import logoNew from "../../../../assets/images/xenThub.png";
+// import logo from "../../../../assets/images/logo.png";
 import { AllJobsData, JobDetails as jobsdata } from "../../../dummy/Data";
 
 export const JobDetails = () => {
@@ -27,7 +28,7 @@ export const JobDetails = () => {
 
   useEffect(() => {
     if (location.state) {
-      console.log(location.state);
+      console.log("locationJobState", location.state);
       setAllJobs(location.state?.jobs);
       setJobDetail(location.state?.row);
     }
@@ -49,8 +50,7 @@ export const JobDetails = () => {
       {/* top nav */}
       <div className="flex w-full">
         <div className="p-2 pl-5 flex gap-2" onClick={() => navigate("/")}>
-          <img src={logo} alt="logo" />
-          <p style={{ color: "#475467", fontSize: 25 }}>Xenhire</p>
+          <img src={logoNew} alt="logo" className="w-[150px]" />
         </div>
         <TopNav />
       </div>
@@ -60,10 +60,23 @@ export const JobDetails = () => {
             <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
               Jobs Created
             </p>
-            <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-              Start the process by selecting an option: use an existing job
-              template or create a new one job template.
-            </p>
+            <div className="flex justify-between">
+              <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                Start the process by selecting an option: use an existing job
+                template or create a new one job template.
+              </p>
+              <Button
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#008080",
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                }}
+                onClick={() => navigate("/job/jobportal")}
+              >
+                Back
+              </Button>
+            </div>
           </div>
           <div className="flex gap-2 py-3">
             <TextField
@@ -192,7 +205,7 @@ export const JobDetails = () => {
                           fontWeight: 500,
                         }}
                       >
-                        Client :{" "}
+                        Client :
                         <span style={{ color: "#101828" }}>
                           {row?.companyName}
                         </span>
@@ -234,7 +247,7 @@ export const JobDetails = () => {
                           fontSize: 14,
                         }}
                       >
-                        Client :{" "}
+                        Client :
                         <span style={{ color: "#101828" }}>
                           {jobDetail?.companyName}
                         </span>

@@ -11,9 +11,17 @@ import {
   DialogActions,
 } from "@mui/material";
 import {
+  timingsRole,
+  visaType,
+  roleTypes,
+  academicQualification,
+  specificCertification,
+} from "../../../utils/seedsData";
+import {
   IoIosCloseCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
+import { locations as allLocations } from "../../../utils/allLocations";
 import { FiPlus } from "react-icons/fi";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
@@ -106,12 +114,6 @@ export const JobDetailCreate = () => {
     { label: "Hybrid", value: "Hybrid" },
   ];
 
-  const roleTypes = [
-    { label: "Contract", value: "Contract" },
-    { label: "C2H", value: "C2H" },
-    { label: "Fulltime", value: "Fulltime" },
-  ];
-
   const budgetOpts = [
     { label: "yes", value: "yes" },
     { label: "No", value: "No" },
@@ -172,8 +174,8 @@ export const JobDetailCreate = () => {
         if (optionType === "roleType") setRoleType(inputValue);
         if (optionType === "visa") setVisa(inputValue);
         if (optionType === "roleTravel") setRoleTravel(inputValue);
-        if (optionType === "minimumLevelQualification")
-          setMinimumLevelQualification(inputValue);
+        // if (optionType === "minimumLevelQualification")
+        //   setMinimumLevelQualification(inputValue);
         if (optionType === "differentAcademic")
           setDifferentAcademic(inputValue);
       })
@@ -677,7 +679,17 @@ export const JobDetailCreate = () => {
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
                   Job Location
                 </p>
-                {education.map((locatn, index) => (
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  options={allLocations?.map((option) => option.label)}
+                  value={jobLocation || null}
+                  onChange={(e, newvalue) => setJobLocation(newvalue)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" />
+                  )}
+                />
+                {/* {education.map((locatn, index) => (
                   <CreatableSelect
                     isClearable
                     options={getOptions("jobLocation")}
@@ -690,7 +702,7 @@ export const JobDetailCreate = () => {
                     }
                     placeholder="Select or create an item"
                   />
-                ))}
+                ))} */}
               </div>
               <div className="grid grid-flow-row gap-2">
                 <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
@@ -1107,7 +1119,18 @@ export const JobDetailCreate = () => {
                     Type of role
                   </p>
 
-                  {education.map((typRole, index) => (
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={roleTypes.map((option) => option.label)}
+                    value={roleType || null}
+                    onChange={(e, newvalue) => setRoleType(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
+
+                  {/*{education.map((typRole, index) => (
                     <CreatableSelect
                       isClearable
                       options={getOptions("roleType")}
@@ -1120,7 +1143,7 @@ export const JobDetailCreate = () => {
                       }
                       placeholder="Select or create an item"
                     />
-                  ))}
+                  ))} */}
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
@@ -1131,9 +1154,7 @@ export const JobDetailCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.roleTiming).map(
-                      (option) => option.label
-                    )}
+                    options={timingsRole.map((option) => option.label)}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -1169,30 +1190,16 @@ export const JobDetailCreate = () => {
                   >
                     What kind of visa are you looking for ?
                   </p>
-                  {/* <Autocomplete
+                  <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={visaType.map((option) => option.label)}
                     value={visa || null}
-                    onChange={(e, newvalue) => setVisa(newvalue.value)}
+                    onChange={(e, newvalue) => setVisa(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                  /> */}
-                  {education.map((vsa, index) => (
-                    <CreatableSelect
-                      isClearable
-                      options={getOptions("visa")}
-                      value={vsa.visa}
-                      onChange={(selected) =>
-                        handleChangeEducation("visa", selected, index)
-                      }
-                      onCreateOption={(selected) =>
-                        handleCreate("visa", selected)
-                      }
-                      placeholder="Select or create an item"
-                    />
-                  ))}
+                  />
                 </div>
               </div>
             </div>
@@ -1209,12 +1216,12 @@ export const JobDetailCreate = () => {
                     Minimum level of academic qualification do you seek in
                     potential candidates?
                   </p>
-                  {/* <Autocomplete
+                  <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(
-                      settings?.acadamicQualification
-                    ).map((option) => option.label)}
+                    options={academicQualification.map(
+                      (option) => option.label
+                    )}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)
@@ -1222,25 +1229,7 @@ export const JobDetailCreate = () => {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                  /> */}
-                  {education.map((diffAcdmic, index) => (
-                    <CreatableSelect
-                      isClearable
-                      options={getOptions("minimumLevelQualification")}
-                      value={diffAcdmic.minimumLevelQualification}
-                      onChange={(selected) =>
-                        handleChangeEducation(
-                          "minimumLevelQualification",
-                          selected,
-                          index
-                        )
-                      }
-                      onCreateOption={(selected) =>
-                        handleCreate("minimumLevelQualification", selected)
-                      }
-                      placeholder="Select or create an item"
-                    />
-                  ))}
+                  />
                 </div>
                 <div className="grid grid-flow-row gap-2 mt-3">
                   <p
@@ -1323,6 +1312,19 @@ export const JobDetailCreate = () => {
                         }
                         placeholder="Select or create an item"
                       />
+
+                      {/* <Autocomplete
+                        size="small"
+                        disablePortal
+                        options={specificCertification.map(
+                          (option) => option.label
+                        )}
+                        value={certification || null}
+                        onChange={(e, newvalue) => setCertification(newvalue)}
+                        renderInput={(params) => (
+                          <TextField {...params} placeholder="Select" />
+                        )}
+                      /> */}
                     </div>
                   </>
                 </div>

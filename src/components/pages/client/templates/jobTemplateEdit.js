@@ -15,13 +15,14 @@ import {
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
+import { locations as allLocations } from "../../../utils/allLocations";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { useEffect } from "react";
 import axios from "axios";
 import { AiNetworksvg } from "../../../../assets/icon/aiNetworksvg";
-import CreatableSelect from 'react-select/creatable'
+import CreatableSelect from "react-select/creatable";
 
 export const JobTemplateEdit = () => {
   const navigate = useNavigate();
@@ -43,8 +44,10 @@ export const JobTemplateEdit = () => {
   const [equalEmployeeOpportunity, setEqualEmployeeOpportunity] = useState("");
 
   // Role Requirements
-  const [specificIndustryExperience, setSpecificIndustryExperience] =
-    useState();
+  const [
+    specificIndustryExperience,
+    setSpecificIndustryExperience,
+  ] = useState();
   const [specifyIndustryExp, setSpecifyIndustryExp] = useState("");
   const [industryKnowledge, setIndustryknowledge] = useState();
   const [workSetting, setWorkSetting] = useState();
@@ -60,7 +63,6 @@ export const JobTemplateEdit = () => {
   const [certification, setCertification] = useState([]);
   const [software, setSoftware] = useState([]);
   const [envision, setEnvision] = useState("");
-
 
   // popup
   const [templateName, setTemplateName] = useState("");
@@ -84,41 +86,39 @@ export const JobTemplateEdit = () => {
 
   const convertToOptions = (commaSeparatedString) => {
     //console.log(commaSeparatedString);
-    if(commaSeparatedString !== undefined){
+    if (commaSeparatedString !== undefined) {
       const options = [];
-      commaSeparatedString?.split(',').map(item => {
-       // console.log(item);
+      commaSeparatedString?.split(",").map((item) => {
+        // console.log(item);
         const trimmedItem = item.trim();
-        options.push({"label" : trimmedItem, "value" : trimmedItem});
+        options.push({ label: trimmedItem, value: trimmedItem });
       });
       return options;
-    }
-    else{
+    } else {
       console.log("in the else");
       return tools;
     }
-  }
+  };
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-      axiosInstance
-        .get(`/getClientSettings?clientId=${user.userId}`)
-        .then((response) => {
-          console.log(response.data);
-          setSettings(response.data)
-          setEeo(response.data?.eeo);
-          setCompanyInfo(response.data.companyOverview);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-   }, []);
-
+    axiosInstance
+      .get(`/getClientSettings?clientId=${user.userId}`)
+      .then((response) => {
+        console.log(response.data);
+        setSettings(response.data);
+        setEeo(response.data?.eeo);
+        setCompanyInfo(response.data.companyOverview);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const getJobDescription = async () => {
     const title = jobTitle;
-    const softwares = software.map(option => option.value);
-    const certifications = certification.map(option => option.value);
+    const softwares = software.map((option) => option.value);
+    const certifications = certification.map((option) => option.value);
     axios
       .post("https://xenflexer.northcentralus.cloudapp.azure.com/api/jobs/", {
         jobTitle,
@@ -161,8 +161,8 @@ export const JobTemplateEdit = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("token"));
     const jobId = localStorage.getItem("jobId");
-    const softwares = software.map(option => option.value);
-    const certifications = certification.map(option => option.value);
+    const softwares = software.map((option) => option.value);
+    const certifications = certification.map((option) => option.value);
     axiosInstance
       .post("/saveJobTemplate?clientId=" + user.userId, {
         jobTitle,
@@ -248,17 +248,15 @@ export const JobTemplateEdit = () => {
     setTemplateDescription("");
   };
 
-
-  const formattedItems = (items) =>{
+  const formattedItems = (items) => {
     console.log(items);
-    const opts =  items.map(item => ({
-              value: item,
-              label: item
-            }))
+    const opts = items.map((item) => ({
+      value: item,
+      label: item,
+    }));
     console.log(opts);
     return opts;
-  }
-
+  };
 
   const handleChangeCertificate = (selected) => {
     setCertification(selected);
@@ -267,7 +265,6 @@ export const JobTemplateEdit = () => {
   const handleChangeToolsAndSoftware = (selected) => {
     setSoftware(selected);
   };
-
 
   const workSettings = [
     { label: "On-Site", value: "On-Site" },
@@ -453,7 +450,9 @@ export const JobTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobCode).map((option) => option.label)}
+                  options={convertToOptions(settings?.jobCode).map(
+                    (option) => option.label
+                  )}
                   value={jobCode || null}
                   onChange={(e, newvalue) => setJobCode(newvalue)}
                   renderInput={(params) => (
@@ -468,7 +467,9 @@ export const JobTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobFamily).map((option) => option.label)}
+                  options={convertToOptions(settings?.jobFamily).map(
+                    (option) => option.label
+                  )}
                   value={jobFamily || null}
                   onChange={(e, newvalue) => setJobFamily(newvalue)}
                   renderInput={(params) => (
@@ -483,7 +484,9 @@ export const JobTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobDepartment).map((option) => option.label)}
+                  options={convertToOptions(settings?.jobDepartment).map(
+                    (option) => option.label
+                  )}
                   value={jobDepartment || null}
                   onChange={(e, newvalue) => setJobDepartment(newvalue)}
                   renderInput={(params) => (
@@ -498,7 +501,7 @@ export const JobTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={convertToOptions(settings?.jobLocation).map((option) => option.label)}
+                  options={allLocations?.map((option) => option.label)}
                   value={jobLocation || null}
                   onChange={(e, newvalue) => setJobLocation(newvalue)}
                   renderInput={(params) => (
@@ -533,7 +536,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Company Overview
                     </p>
                     <Button
@@ -545,7 +549,8 @@ export const JobTemplateEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={getCompanyOverview}>
+                      onClick={getCompanyOverview}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -582,7 +587,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -591,7 +597,8 @@ export const JobTemplateEdit = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     For the Company Overview, ensure it succinctly captures the
                     mission and culture of the company in three sentences. This
                     summary should provide a clear and compelling introduction
@@ -608,7 +615,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Summary
                     </p>
                     <Button
@@ -620,7 +628,8 @@ export const JobTemplateEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateJobSummary}>
+                      onClick={generateJobSummary}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -640,7 +649,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -649,7 +659,8 @@ export const JobTemplateEdit = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     The job summary should succinctly outline the expectations
                     of this role in three sentences. Include details on the
                     reporting manager's role to provide clarity on hierarchical
@@ -665,7 +676,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Responsibilities
                     </p>
                     <Button
@@ -677,7 +689,8 @@ export const JobTemplateEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateResponsibility}>
+                      onClick={generateResponsibility}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -697,7 +710,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -706,7 +720,8 @@ export const JobTemplateEdit = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Outline detailed but concise core responsibilities,
                     emphasizing unique organizational duties (e.g., social media
                     expertise for event promotion). Highlight daily activities
@@ -725,7 +740,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Benefits
                     </p>
                     <Button
@@ -737,7 +753,8 @@ export const JobTemplateEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateBenefit}>
+                      onClick={generateBenefit}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -757,7 +774,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -766,7 +784,8 @@ export const JobTemplateEdit = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Include benefits in 3-5 words each, such as 'Flexible work
                     schedules' and 'Health Insurance', to attract top talent.
                   </p>
@@ -780,7 +799,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Equal Employee Opportunity (EEO)
                     </p>
                     <Button
@@ -792,7 +812,8 @@ export const JobTemplateEdit = () => {
                         textTransform: "none",
                         backgroundColor: "#008080",
                       }}
-                      onClick={generateEEO}>
+                      onClick={generateEEO}
+                    >
                       Ask JobGPT AI
                     </Button>
                   </div>
@@ -813,7 +834,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="py-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Recommended Practice
                   </p>
                   <p
@@ -822,7 +844,8 @@ export const JobTemplateEdit = () => {
                       fontSize: 16,
                       fontStyle: "italic",
                       marginTop: 10,
-                    }}>
+                    }}
+                  >
                     Craft an effective EEO statement: Be specific about
                     compliance with EEOC rules, mention relevant employment
                     practices beyond hiring, highlight diversity and inclusion
@@ -857,7 +880,8 @@ export const JobTemplateEdit = () => {
               <div className="grid grid-cols-2 gap-8 mt-3">
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Would industry knowledge be valued even without direct
                     experience?
                   </p>
@@ -874,13 +898,16 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What is the work setting for the role?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.workSetting).map((option) => option.label)}
+                    options={convertToOptions(settings?.workSetting).map(
+                      (option) => option.label
+                    )}
                     value={workSetting || null}
                     onChange={(e, newvalue) => setWorkSetting(newvalue)}
                     renderInput={(params) => (
@@ -890,13 +917,16 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Type of role
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.typeRole).map((option) => option.label)}
+                    options={convertToOptions(settings?.typeRole).map(
+                      (option) => option.label
+                    )}
                     value={roleType || null}
                     onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
@@ -906,13 +936,16 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What are the timings for the role?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.roleTiming).map((option) => option.label)}
+                    options={convertToOptions(settings?.roleTiming).map(
+                      (option) => option.label
+                    )}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -922,13 +955,16 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     How frequent does the role require to travel?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.travel).map((option) => option.label)}
+                    options={convertToOptions(settings?.travel).map(
+                      (option) => option.label
+                    )}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
@@ -938,7 +974,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 ">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What kind of visa are you looking for ?
                   </p>
                   <Autocomplete
@@ -962,14 +999,17 @@ export const JobTemplateEdit = () => {
               <div className="grid-cols-2 grid gap-8 mt-8">
                 <div className="grid grid-flow-row gap-2 mt-3">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Minimum level of academic qualification do you seek in
                     potential candidates?
                   </p>
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.acadamicQualification).map((option) => option.label)}
+                    options={convertToOptions(
+                      settings?.acadamicQualification
+                    ).map((option) => option.label)}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)
@@ -981,7 +1021,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 mt-3">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there regulatory/ compliance requirements for academic
                     qualifications?
                   </p>
@@ -999,7 +1040,8 @@ export const JobTemplateEdit = () => {
 
                 <div className="grid grid-flow-row gap-2 py-5">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Open to candidates with diverse academic backgrounds with
                     required skills?
                   </p>
@@ -1016,7 +1058,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     What should a successful candidate achieve in this role
                     within three years?
                   </p>
@@ -1032,55 +1075,54 @@ export const JobTemplateEdit = () => {
                 {/* cerificate */}
                 <div className="grid grid-flow-row gap-2 h-fit">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there any specific certifications or licenses that
                     candidates must hold?
                   </p>
-                      <>
-                        <div>
-                        <CreatableSelect
-                          isClearable
-                          isMulti
-                          options={certOpts}
-                          value={certification || null}
-                          onChange={(selected) =>
-                              handleChangeCertificate(
-                               selected
-                              )
-                            }
-                          placeholder="Select or create an item"
-                        />
-                        </div>
-                      </>
+                  <>
+                    <div>
+                      <CreatableSelect
+                        isClearable
+                        isMulti
+                        options={certOpts}
+                        value={certification || null}
+                        onChange={(selected) =>
+                          handleChangeCertificate(selected)
+                        }
+                        placeholder="Select or create an item"
+                      />
+                    </div>
+                  </>
                 </div>
                 {/* tools */}
                 <div className="grid grid-flow-row gap-2 h-fit">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Are there any tools or software candidates should be
                     proficient in?
                   </p>
-                        <div>
-                            <CreatableSelect
-                              isClearable
-                              isMulti
-                              options={tools}
-                              value={software || null}
-                              onChange={(selected) =>
-                                  handleChangeToolsAndSoftware(
-                                  selected
-                                  )
-                                }
-                              placeholder="Select or create an item"
-                            />
-                        </div>
+                  <div>
+                    <CreatableSelect
+                      isClearable
+                      isMulti
+                      options={tools}
+                      value={software || null}
+                      onChange={(selected) =>
+                        handleChangeToolsAndSoftware(selected)
+                      }
+                      placeholder="Select or create an item"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="grid grid-flow-row gap-2 pb-8">
                 <div className="pt-3 ">
                   <p
-                    style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                    style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}
+                  >
                     Generate screening question for this role
                   </p>
                   <Button
@@ -1092,7 +1134,8 @@ export const JobTemplateEdit = () => {
                       margin: 3,
                     }}
                     startIcon={<AiNetworksvg COLOR={"#008080"} />}
-                    onClick={getJobDescription}>
+                    onClick={getJobDescription}
+                  >
                     Generate JD
                   </Button>
                 </div>
@@ -1119,7 +1162,8 @@ export const JobTemplateEdit = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
@@ -1127,7 +1171,8 @@ export const JobTemplateEdit = () => {
                   setShowPopup(true);
                 }}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 Save
               </Button>
             </div>
@@ -1136,7 +1181,8 @@ export const JobTemplateEdit = () => {
               <DialogTitle>Template Details</DialogTitle>
               <IconButton
                 onClick={closePopup}
-                style={{ position: "absolute", top: 10, right: 10 }}>
+                style={{ position: "absolute", top: 10, right: 10 }}
+              >
                 <IoIosCloseCircleOutline />
               </IconButton>
               <Divider />
@@ -1148,7 +1194,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Template Name
                     </p>
                     <TextField
@@ -1165,7 +1212,8 @@ export const JobTemplateEdit = () => {
                         color: "#344054",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Job Template Tags
                     </p>
                     <TextField
@@ -1179,7 +1227,8 @@ export const JobTemplateEdit = () => {
                 </div>
                 <div className="grid grid-flow-row gap-2 py-8">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                  >
                     Job Template Description
                   </p>
                   <textarea
@@ -1199,7 +1248,8 @@ export const JobTemplateEdit = () => {
                 <Button
                   onClick={handleSubmit}
                   variant="contained"
-                  style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                  style={{ color: "#ffffff", backgroundColor: "#008080" }}
+                >
                   SAVE
                 </Button>
               </DialogActions>

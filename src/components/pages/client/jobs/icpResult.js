@@ -25,7 +25,7 @@ export const IcpResult = () => {
     "spectrum2",
     "spectrum3",
     "spectrum4",
-    "spectrum5"
+    "spectrum5",
   ];
   const [userData, setUserData] = useState(icpTemplateResultData);
   const [behaviour, setBehaviour] = useState(BehaviouralAttributes);
@@ -93,9 +93,7 @@ export const IcpResult = () => {
           <TopNav />
           {loading === true ? (
             <Spinner />
-          ) 
-          : 
-          (
+          ) : (
             <div className="p-8">
               {/* spectrum analysis */}
               <p
@@ -104,7 +102,8 @@ export const IcpResult = () => {
                   fontSize: 22,
                   fontWeight: 600,
                   marginTop: 10,
-                }}>
+                }}
+              >
                 Spectrum Analysis
               </p>
               <div className="flex gap-5 py-5">
@@ -112,7 +111,8 @@ export const IcpResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -123,7 +123,8 @@ export const IcpResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                           minWidth: 600,
-                        }}>
+                        }}
+                      >
                         Talent Dimensions
                       </TableCell>
                       <TableCell
@@ -133,7 +134,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -148,7 +150,8 @@ export const IcpResult = () => {
                             fontWeight: 500,
                             borderWidth: 1,
                           }}
-                          rowSpan={behaviour?.length + 1}>
+                          rowSpan={behaviour?.length + 1}
+                        >
                           {/* <div
                               className="border rounded-lg p-4 w-full"
                               style={{
@@ -168,18 +171,17 @@ export const IcpResult = () => {
                                         style={{
                                           color: "#475467",
                                           fontSize: 33,
-                                        }}>
+                                        }}
+                                      >
                                         &#x2015;
-                                        <span style={{ fontSize: 30 }}>
-                                          &#x2022;
-                                        </span>
                                       </p>
                                       <p
                                         style={{
                                           color: "#101828",
                                           fontSize: 20,
                                           fontWeight: 500,
-                                        }}>
+                                        }}
+                                      >
                                         {row}
                                       </p>
                                       {/* <p style={{ color: "#475467", fontSize: 14 }}>
@@ -204,7 +206,8 @@ export const IcpResult = () => {
                               fontSize: 14,
                               fontWeight: 500,
                               borderWidth: 1,
-                            }}>
+                            }}
+                          >
                             {row}
                           </TableCell>
                         </TableRow>
@@ -221,7 +224,8 @@ export const IcpResult = () => {
                   fontSize: 22,
                   fontWeight: 600,
                   marginTop: 10,
-                }}>
+                }}
+              >
                 Pie Charts
               </p>
               {/* chart 1 table */}
@@ -229,7 +233,8 @@ export const IcpResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -239,7 +244,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Emotional Flexibility
                       </TableCell>
                       <TableCell
@@ -249,7 +255,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -260,7 +267,8 @@ export const IcpResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -270,7 +278,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -286,7 +295,8 @@ export const IcpResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertedEmtional}
@@ -313,7 +323,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -322,13 +333,15 @@ export const IcpResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -341,7 +354,8 @@ export const IcpResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -350,7 +364,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>
@@ -365,7 +380,8 @@ export const IcpResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -375,7 +391,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Cognitive Agility
                       </TableCell>
                       <TableCell
@@ -385,7 +402,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -396,7 +414,8 @@ export const IcpResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -406,7 +425,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -422,7 +442,8 @@ export const IcpResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertCognitive}
@@ -449,7 +470,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -458,13 +480,15 @@ export const IcpResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -477,7 +501,8 @@ export const IcpResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -486,7 +511,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>
@@ -501,7 +527,8 @@ export const IcpResult = () => {
                 <Table
                   sx={{
                     borderWidth: 1,
-                  }}>
+                  }}
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell
@@ -511,7 +538,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Sociability Skills
                       </TableCell>
                       <TableCell
@@ -521,7 +549,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Labels
                       </TableCell>
                       <TableCell
@@ -532,7 +561,8 @@ export const IcpResult = () => {
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
                         }}
-                        align="center">
+                        align="center"
+                      >
                         Rating out of 5
                       </TableCell>
                       <TableCell
@@ -542,7 +572,8 @@ export const IcpResult = () => {
                           fontWeight: 600,
                           borderWidth: 1,
                           bgcolor: "#F8F9FA",
-                        }}>
+                        }}
+                      >
                         Attributes
                       </TableCell>
                     </TableRow>
@@ -558,7 +589,8 @@ export const IcpResult = () => {
                             borderWidth: 1,
                             width: 450,
                           }}
-                          rowSpan={5}>
+                          rowSpan={5}
+                        >
                           <div className="flex justify-end">
                             <PieChart
                               series={convertSociability}
@@ -585,7 +617,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               <div
                                 className="flex"
                                 style={{
@@ -594,13 +627,15 @@ export const IcpResult = () => {
                                   borderRadius: 3,
                                   paddingLeft: 5,
                                 }}
-                                key={index}>
+                                key={index}
+                              >
                                 <div className="col-span-2">
                                   <p
                                     style={{
                                       color: "#475467",
                                       fontSize: 16,
-                                    }}>
+                                    }}
+                                  >
                                     {row.label}
                                   </p>
                                 </div>
@@ -613,7 +648,8 @@ export const IcpResult = () => {
                                 fontWeight: 500,
                                 borderWidth: 1,
                               }}
-                              align="center">
+                              align="center"
+                            >
                               {row.rating}
                             </TableCell>
                             <TableCell
@@ -622,7 +658,8 @@ export const IcpResult = () => {
                                 fontSize: 14,
                                 fontWeight: 500,
                                 borderWidth: 1,
-                              }}>
+                              }}
+                            >
                               {row.attribute}
                             </TableCell>
                           </TableRow>

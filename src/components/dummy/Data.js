@@ -410,19 +410,19 @@ export const DashBoardData = {
         {
           name: "Candidate Details",
           rating: 1.8,
-          percentage: 70,
+          percentage: 100,
           attribute: "Strong communication abilities",
         },
         {
           name: "Preference",
           rating: 1.8,
-          percentage: 70,
+          percentage: 60,
           attribute: "Strong communication abilities",
         },
         {
           name: "Value Assesment",
           rating: 1.8,
-          percentage: 60,
+          percentage: 50,
           attribute: "Strong communication abilities",
         },
         {
@@ -459,25 +459,25 @@ export const DigitalTalentProfileData = {
         {
           name: "Candidate Details",
           rating: 1.8,
-          percentage: 70,
+          percentage: 100,
           attribute: "Strong communication abilities",
         },
         {
           name: "Preference",
           rating: 1.8,
-          percentage: 70,
+          percentage: 60,
           attribute: "Strong communication abilities",
         },
         {
           name: "Value Assesment",
           rating: 1.8,
-          percentage: 60,
+          percentage: 50,
           attribute: "Strong communication abilities",
         },
         {
           name: "Talent Spectrum Analysis",
           rating: 3,
-          percentage: 90,
+          percentage: 40,
           attribute: "Strong communication abilities",
         },
       ],

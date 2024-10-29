@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { IoFilterSharp } from "react-icons/io5";
+import { IoFilter } from "react-icons/io5";
 import {
   Autocomplete,
   Button,
@@ -25,12 +25,16 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  Menu,
+  MenuItem,
+  Fade,
 } from "@mui/material";
 import axiosInstance from "../../../utils/axiosInstance";
 import { IoMdClose } from "react-icons/io";
 import { SideNav } from "../../../widgets/sidenav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
+import Spinner from "../../../utils/spinner";
 import { AuthorisedClients } from "../../../dummy/Data";
 import { useEffect } from "react";
 
@@ -42,12 +46,24 @@ export const AuthorisedClient = () => {
   const [managerEmail, setHiringManagerEmail] = useState();
   const [companyName, setCompanyname] = useState();
   const [showInfo, setShowInfo] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [showTableData, setShowTableData] = useState(true);
-  // const [authorize, setAuthorize] = useState(false);
-  // const [decline, setDecline] = useState(false);
-  const [authorizeCount, setAutorizeCount] = useState(0);
-  const [declineCount, setDeclineCount] = useState(0);
+  // const [authorizeCount, setAutorizeCount] = useState(0);
+  // const [declineCount, setDeclineCount] = useState(0);
+  // const [filter, setFilter] = useState(false);
+  const [anchorFilter, setAnchorFilter] = React.useState(null);
+  const [showFilterData, setShowFilterData] = useState(false);
+  const openFilter = Boolean(anchorFilter);
+
+  const handleClickFilter = (event) => {
+    setAnchorFilter(event.currentTarget);
+    setShowFilterData(true);
+  };
+
+  const handleCloseFilter = () => {
+    setAnchorFilter(null);
+  };
 
   const options = [
     { label: "The Shawshank Redemption", year: 1994 },
@@ -61,11 +77,13 @@ export const AuthorisedClient = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
     axiosInstance
       .get("/getCandidateDTPAccess?candidateId=" + user.userId)
       .then((response) => {
         console.log(response.data);
         setAuthClientList(response.data);
+        setLoading(false);
         //console.log(response.data.authorized);
         //console.log(response.data?.emtionalFlexibility[1].competencies);
       })
@@ -189,20 +207,68 @@ export const AuthorisedClient = () => {
     return filteredOptions;
   };
 
+  useEffect(() => {
+    handleApprovedFilterTable();
+    handleDeclineFilterTable();
+    handleAllList();
+  }, []);
+
   const handleApprovedFilterTable = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    setShowFilterData(false);
     const filterApproved = authClientList.filter((item) =>
-      item.authorized === true ? item.authorized : ""
+      item.authorized === true ? item.authorized : null
     );
-    setAuthClientList(filterApproved);
+    axiosInstance
+      .get("/getCandidateDTPAccess?candidateId=" + user.userId)
+      .then((response) => {
+        console.log(response.data);
+        setAuthClientList(filterApproved);
+        setLoading(false);
+        setShowFilterData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setShowTableData(false);
   };
 
   const handleDeclineFilterTable = () => {
-    const filterDecline = authClientList.filter((item) =>
-      item.declined === true ? item.declined : ""
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    setShowFilterData(false);
+    const filterApproved = authClientList.filter((item) =>
+      item.declined === true ? item.declined : null
     );
-    setAuthClientList(filterDecline);
-    setShowTableData(false);
+    axiosInstance
+      .get("/getCandidateDTPAccess?candidateId=" + user.userId)
+      .then((response) => {
+        console.log(response.data);
+        setAuthClientList(filterApproved);
+        setLoading(false);
+        setShowFilterData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleAllList = () => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    setLoading(true);
+    setShowFilterData(false);
+    axiosInstance
+      .get("/getCandidateDTPAccess?candidateId=" + user.userId)
+      .then((response) => {
+        console.log(response.data);
+        setAuthClientList(response.data);
+        setLoading(false);
+        setShowFilterData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const AuthorizedOrDeclinedClients = () => {
@@ -299,36 +365,31 @@ export const AuthorisedClient = () => {
                       {row.date}
                     </TableCell>
                     <TableCell>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="approve"
-                          control={
-                            <Radio checked={row.authorized} size="small" />
-                          }
-                          sx={{
+                      {row.authorized === true ? (
+                        <p
+                          style={{
+                            color: "#057903",
                             backgroundColor: "#F4FAF1",
-                            pr: 2,
-                            borderRadius: 10,
+                            borderRadius: 20,
+                            padding: "9px",
+                            textAlign: "center",
                           }}
-                          label={<p style={{ color: "#057903" }}>Approve</p>}
-                        />
-                        <FormControlLabel
-                          value="decline"
-                          control={
-                            <Radio checked={row.declined} size="small" />
-                          }
-                          sx={{
+                        >
+                          Approved
+                        </p>
+                      ) : (
+                        <p
+                          style={{
+                            color: "#E05880",
                             backgroundColor: "#FCEEEE",
-                            pr: 2,
-                            borderRadius: 10,
+                            borderRadius: 20,
+                            padding: "9px",
+                            textAlign: "center",
                           }}
-                          label={<p style={{ color: "#E05880" }}>Decline</p>}
-                        />
-                      </RadioGroup>
+                        >
+                          Declined
+                        </p>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -346,80 +407,62 @@ export const AuthorisedClient = () => {
         <SideNav />
         <div className="w-full min-h-screen">
           <TopNav />
-          <div className="p-8">
-            {showTableData && (
+          {loading === true ? (
+            <Spinner />
+          ) : (
+            <div className="p-8">
               <p style={{ fontSize: 22, fontWeight: 600, color: "#101828" }}>
                 Authorise Clients
               </p>
-            )}
-            <div className="py-5 flex justify-between items-center">
-              <TextField
-                size="small"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <IoIosSearch />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <div className="flex gap-4 items-center">
-                {/* <button
-                  onClick={handleApprovedFilterTable}
-                  style={{
-                    color: "#008080",
-                    background: "#EAF4F5",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
+
+              <div className="py-5 flex justify-between items-center">
+                <TextField
+                  size="small"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IoIosSearch />
+                      </InputAdornment>
+                    ),
                   }}
-                >
-                  Approved
-                </button>
-                <button
-                  onClick={handleDeclineFilterTable}
-                  style={{
-                    color: "#008080",
-                    background: "#EAF4F5",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
-                  }}
-                >
-                  Decline
-                </button> */}
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderColor: "#D0D5DD",
-                    color: "#252525",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
-                  }}
-                  startIcon={<IoFilterSharp />}
-                >
-                  Filter
-                </Button>
-                <Button
-                  style={{
-                    color: "#008080",
-                    background: "#EAF4F5",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    borderRadius: 8,
-                  }}
-                  onClick={() => setOpenPopup(true)}
-                >
-                  Add Clients
-                </Button>
+                />
+                <div className="flex gap-4 items-center">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    // onClick={handleClickFilter}
+                    style={{
+                      color: "#252525",
+                      borderColor: "#D0D5DD",
+                      textTransform: "none",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      borderRadius: 8,
+                      width: 94,
+                      height: 38,
+                    }}
+                    startIcon={<IoFilter style={{ color: "#252525" }} />}
+                  >
+                    Filter
+                  </Button>
+                  <Button
+                    style={{
+                      color: "#008080",
+                      background: "#EAF4F5",
+                      textTransform: "none",
+                      fontWeight: 500,
+                      borderRadius: 8,
+                    }}
+                    onClick={() => setOpenPopup(true)}
+                  >
+                    Add Clients
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div>
-              {showTableData && (
+              <div>
                 <div>
                   <div>
                     <TableContainer component={Paper}>
@@ -598,7 +641,7 @@ export const AuthorisedClient = () => {
                     <div className="flex gap-4 mt-4">
                       <p style={{ fontSize: 16, color: "#475467" }}>
                         Approved Requests
-                      </p>{" "}
+                      </p>
                       <p
                         style={{
                           fontSize: 16,
@@ -616,7 +659,7 @@ export const AuthorisedClient = () => {
                     <div className="flex gap-4 mt-2">
                       <p style={{ fontSize: 16, color: "#475467" }}>
                         Declined Requests
-                      </p>{" "}
+                      </p>
                       <p
                         style={{
                           fontSize: 16,
@@ -633,10 +676,10 @@ export const AuthorisedClient = () => {
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
+              <AuthorizedOrDeclinedClients />
             </div>
-            <AuthorizedOrDeclinedClients />
-          </div>
+          )}
 
           {/* dialoge */}
 
@@ -758,6 +801,73 @@ export const AuthorisedClient = () => {
             </DialogActions>
           </Dialog>
         </div>
+        {/*Filter menu */}
+        {showFilterData && (
+          <Menu
+            id="filter-menu"
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorFilter}
+            open={openFilter}
+            onClose={handleCloseFilter}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            TransitionComponent={Fade}
+          >
+            <MenuItem
+              onClick={() => {
+                handleAllList();
+              }}
+            >
+              <p
+                style={{
+                  color: "#171717",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                All
+              </p>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleApprovedFilterTable();
+              }}
+            >
+              <p
+                style={{
+                  color: "#171717",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                Approved
+              </p>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleDeclineFilterTable();
+              }}
+            >
+              <p
+                style={{
+                  color: "#171717",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                Declined
+              </p>
+            </MenuItem>
+          </Menu>
+        )}
       </div>
       <Footer />
     </div>

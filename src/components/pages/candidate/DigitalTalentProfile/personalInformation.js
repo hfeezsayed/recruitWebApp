@@ -86,7 +86,7 @@ export const PersonalInformation = () => {
     { skill: null, expertise: null },
   ]);
   const [secoundrySkills, setSecoundrySkill] = useState([
-    { skill: null, expertise: null },
+    { SecSkill: null, SecExpertise: null },
   ]);
   const [softwareApplication, setSoftwareApplication] = useState({
     app: null,
@@ -132,6 +132,19 @@ export const PersonalInformation = () => {
         type: null,
         experience: null,
       },
+    ]);
+  };
+
+  // primary skill
+  const addPrimarySkill = () => {
+    setPrimarySkill([...primarySkills, { skill: null, expertise: null }]);
+  };
+
+  // secoundry skill
+  const addSecoundrySkill = () => {
+    setSecoundrySkill([
+      ...secoundrySkills,
+      { SecSkill: null, SecExpertise: null },
     ]);
   };
 
@@ -273,6 +286,7 @@ export const PersonalInformation = () => {
             setEducation(response.data?.education);
           }
           console.log(data);
+          console.log("primarySkills", data);
           setResume(response.data?.resume);
           setWorkSetting(data.workSetting);
           setWorkShift(data.workShift);
@@ -324,11 +338,6 @@ export const PersonalInformation = () => {
     setIndustryExperience(newFormValues);
   };
 
-  // primary skill
-  const addPrimarySkill = () => {
-    setPrimarySkill([...primarySkills, { skill: null, expertise: null }]);
-  };
-
   const handleChangePrimarySkill = (e, value, i) => {
     console.log(value);
     let newFormValues = [...primarySkills];
@@ -342,10 +351,7 @@ export const PersonalInformation = () => {
     setPrimarySkill(newFormValues);
   };
 
-  // secoundry skill
-  const addSecoundrySkill = () => {
-    setSecoundrySkill([...secoundrySkills, { skill: null, expertise: null }]);
-  };
+  //Skills
 
   const handleChangeSecoundrySkill = (e, value, i) => {
     let newFormValues = [...secoundrySkills];
@@ -525,12 +531,22 @@ export const PersonalInformation = () => {
             <form className="p-8" onSubmit={onPersonalInfoSubmit}>
               {/* file upload */}
               <div>
-                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                <p
+                  style={{
+                    color: "#101828",
+                    fontSize: 22,
+                    fontWeight: 600,
+                  }}
+                >
                   Candidate Details
                 </p>
                 <div className=" py-5">
                   <p
-                    style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}
+                    style={{
+                      color: "#475467",
+                      fontSize: 20,
+                      fontWeight: 500,
+                    }}
                   >
                     Upload Resume
                   </p>
@@ -549,7 +565,10 @@ export const PersonalInformation = () => {
                           <img
                             src={pdf}
                             alt="plf icon"
-                            style={{ width: 45, height: 45 }}
+                            style={{
+                              width: 45,
+                              height: 45,
+                            }}
                           />
                         ) : (
                           <FiUpload
@@ -596,7 +615,11 @@ export const PersonalInformation = () => {
               <div className="grid grid-cols-2 gap-x-8 gap-y-5">
                 <div className="grid grid-flow-row">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                    style={{
+                      color: "#344054",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
                   >
                     Candidate Full Name
                   </p>
@@ -612,7 +635,11 @@ export const PersonalInformation = () => {
                 </div>
                 <div className="grid grid-flow-row">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                    style={{
+                      color: "#344054",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
                   >
                     Title
                   </p>
@@ -628,7 +655,11 @@ export const PersonalInformation = () => {
                 </div>
                 <div className="grid grid-flow-row">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                    style={{
+                      color: "#344054",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
                   >
                     Mobile Number
                   </p>
@@ -644,7 +675,11 @@ export const PersonalInformation = () => {
                 </div>
                 <div className="grid grid-flow-row">
                   <p
-                    style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}
+                    style={{
+                      color: "#344054",
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
                   >
                     LinkedIn Profile
                   </p>
@@ -660,7 +695,13 @@ export const PersonalInformation = () => {
                 </div>
               </div>
               <div className="grid grid-flow-row pt-5 pb-8">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
                   Summary.
                 </p>
                 <TextField
@@ -677,7 +718,13 @@ export const PersonalInformation = () => {
               </div>
               {/* education */}
               <div>
-                <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
+                <p
+                  style={{
+                    color: "#475467",
+                    fontSize: 20,
+                    fontWeight: 500,
+                  }}
+                >
                   Education
                 </p>
                 {education.map((value, index) => {
@@ -852,7 +899,9 @@ export const PersonalInformation = () => {
                             onClick={() => removeEducation(index)}
                             startIcon={
                               <IoMdRemoveCircleOutline
-                                style={{ color: "#EB5757" }}
+                                style={{
+                                  color: "#EB5757",
+                                }}
                               />
                             }
                           >
@@ -884,7 +933,10 @@ export const PersonalInformation = () => {
               <div className="flex justify-end py-8 gap-5">
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                  }}
                   type="submit"
                   onClick={() => navigate("/candidate")}
                 >
@@ -892,7 +944,10 @@ export const PersonalInformation = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                  }}
                   type="submit"
                 >
                   Next
@@ -903,7 +958,13 @@ export const PersonalInformation = () => {
           {activeScreen === 2 && (
             <form className="p-8" onSubmit={onPrefrenceSubmit}>
               <div>
-                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                <p
+                  style={{
+                    color: "#101828",
+                    fontSize: 22,
+                    fontWeight: 600,
+                  }}
+                >
                   Candidate’s Preference Form
                 </p>
                 <p
@@ -1257,7 +1318,9 @@ export const PersonalInformation = () => {
                               onClick={() => removeIndustryExperience(index)}
                               startIcon={
                                 <IoMdRemoveCircleOutline
-                                  style={{ color: "#EB5757" }}
+                                  style={{
+                                    color: "#EB5757",
+                                  }}
                                 />
                               }
                             >
@@ -1321,7 +1384,7 @@ export const PersonalInformation = () => {
                   </p>
                   {primarySkills?.map((value, index) => {
                     return (
-                      <>
+                      <div key={index}>
                         <div className="grid grid-cols-2 gap-8 mt-5">
                           <div className="grid grid-flow-row">
                             <p
@@ -1331,13 +1394,13 @@ export const PersonalInformation = () => {
                                 fontWeight: 500,
                               }}
                             >
-                              Skills {index + 1}
+                              Skills
                             </p>
                             <Autocomplete
                               disablePortal
                               size="small"
                               fullWidth
-                              options={skills.map((option) => option.label)}
+                              options={skills?.map((option) => option.label)}
                               value={value.skill || null}
                               onChange={(e, value) =>
                                 handleChangePrimarySkill("skill", value, index)
@@ -1366,7 +1429,7 @@ export const PersonalInformation = () => {
                               size="small"
                               fullWidth
                               options={skillLevel.map((option) => option.label)}
-                              value={value.expertise || null}
+                              value={value?.expertise || null}
                               onChange={(e, value) =>
                                 handleChangePrimarySkill(
                                   "expertise",
@@ -1397,7 +1460,9 @@ export const PersonalInformation = () => {
                               onClick={() => removePrimarySkill(index)}
                               startIcon={
                                 <IoMdRemoveCircleOutline
-                                  style={{ color: "#EB5757" }}
+                                  style={{
+                                    color: "#EB5757",
+                                  }}
                                 />
                               }
                             >
@@ -1405,7 +1470,7 @@ export const PersonalInformation = () => {
                             </Button>
                           </div>
                         )}
-                      </>
+                      </div>
                     );
                   })}
                   <div className="py-3 flex justify-end">
@@ -1435,7 +1500,7 @@ export const PersonalInformation = () => {
                   >
                     Secoundry Skills
                   </p>
-                  {secoundrySkills?.map((value, index) => {
+                  {secoundrySkills?.map((itemVal, index) => {
                     return (
                       <div key={index}>
                         <div className="grid grid-cols-2 gap-8 mt-5">
@@ -1447,17 +1512,17 @@ export const PersonalInformation = () => {
                                 fontWeight: 500,
                               }}
                             >
-                              Skills {index + 1}
+                              Skills
                             </p>
                             <Autocomplete
                               disablePortal
                               size="small"
                               fullWidth
                               options={skills.map((option) => option.label)}
-                              value={value.skill || null}
+                              value={itemVal?.SecSkill || null}
                               onChange={(e, value) =>
                                 handleChangeSecoundrySkill(
-                                  "skill",
+                                  "SecSkill",
                                   value,
                                   index
                                 )
@@ -1486,10 +1551,10 @@ export const PersonalInformation = () => {
                               size="small"
                               fullWidth
                               options={skillLevel.map((option) => option.label)}
-                              value={value.expertise || null}
+                              value={itemVal?.SecExpertise || null}
                               onChange={(e, value) =>
                                 handleChangeSecoundrySkill(
-                                  "expertise",
+                                  "SecExpertise",
                                   value,
                                   index
                                 )
@@ -1517,7 +1582,9 @@ export const PersonalInformation = () => {
                               onClick={() => removeSecoundrySkill(index)}
                               startIcon={
                                 <IoMdRemoveCircleOutline
-                                  style={{ color: "#EB5757" }}
+                                  style={{
+                                    color: "#EB5757",
+                                  }}
                                 />
                               }
                             >
@@ -1546,7 +1613,13 @@ export const PersonalInformation = () => {
                 </div>
               </div>
               <div className="mt-3">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
                   Please add the tools or software application you have used in
                   the past
                 </p>
@@ -1593,14 +1666,20 @@ export const PersonalInformation = () => {
               <div className="flex justify-end py-8 gap-5">
                 <Button
                   variant="outlined"
-                  style={{ borderColor: "#787879", color: "#787879" }}
+                  style={{
+                    borderColor: "#787879",
+                    color: "#787879",
+                  }}
                   onClick={() => setActiveScreen(1)}
                 >
                   Back
                 </Button>
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                  }}
                   type="submit"
                 >
                   NEXT
@@ -1611,7 +1690,13 @@ export const PersonalInformation = () => {
           {activeScreen === 3 && (
             <form className="p-8" onSubmit={onWorkPrefrenceSumnit}>
               <div>
-                <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
+                <p
+                  style={{
+                    color: "#101828",
+                    fontSize: 22,
+                    fontWeight: 600,
+                  }}
+                >
                   Candidate’s Preference Form
                 </p>
                 <p
@@ -2036,7 +2121,10 @@ export const PersonalInformation = () => {
               <div className="flex justify-end py-8 gap-5">
                 <Button
                   variant="outlined"
-                  style={{ borderColor: "#787879", color: "#787879" }}
+                  style={{
+                    borderColor: "#787879",
+                    color: "#787879",
+                  }}
                   onClick={() => setActiveScreen(2)}
                 >
                   Back
@@ -2044,7 +2132,10 @@ export const PersonalInformation = () => {
 
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  style={{
+                    backgroundColor: "#008080",
+                    color: "#ffffff",
+                  }}
                   type="submit"
                 >
                   Submit

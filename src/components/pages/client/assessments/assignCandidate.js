@@ -47,7 +47,7 @@ export const AssignCandidate = () => {
   const [candidateNo, setCandidateNo] = useState("");
   const [candidateLinkedin, setCandidateLinkedin] = useState("");
   const [candidateResume, setCandidateResume] = useState();
-
+  const [assignedCandidateList, setAssignedCandidateList] = useState([]);
   const { batchId } = useLocation().state || {};
 
   const [viewData, setViewData] = useState();
@@ -92,10 +92,12 @@ export const AssignCandidate = () => {
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .get(
+        `/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+      )
       .then((data) => {
         console.log(data);
-        setData(data.data);
+        setAssignedCandidateList(data.data);
         setPage(data?.pageNo || 0);
       })
       .catch((e) => {
@@ -114,10 +116,12 @@ export const AssignCandidate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .get(
+        `/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
+      )
       .then((data) => {
-        console.log(data);
-        setData(data.data);
+        console.log("getAllClientListData", data);
+        setAssignedCandidateList(data.data);
         setPage(data?.pageNo || 1);
       })
       .catch((e) => {
@@ -125,19 +129,18 @@ export const AssignCandidate = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("token"));
-  //   axiosInstance
-  //     .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`)
-  //     .then((data) => {
-  //       console.log("assessmentListData", data);
-  //       setData(data.data);
-  //       setPage(data?.pageNo || 1);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("token"));
+    axiosInstance
+      .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .then((data) => {
+        console.log("assessmentListData", data);
+        setData(data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -212,24 +215,63 @@ export const AssignCandidate = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell
+                            padding="checkbox"
+                            sx={{ bgcolor: "#F8F9FA" }}
+                          >
+                            <Checkbox
+                              color="primary"
+                              indeterminate={
+                                selected.length > 0 &&
+                                selected.length < data?.data?.length
+                              }
+                              checked={
+                                data?.data?.length > 0 &&
+                                selected.length === data?.data?.length
+                              }
+                              onChange={handleSelectAllClick}
+                              sx={{
+                                color: "#D0D5DD",
+                                "&.Mui-checked ": {
+                                  color: "#66B2B2",
+                                },
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell
                             sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                           >
-                            Assessment Name
+                            Assessment Names
                           </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {location?.state?.selected?.map((row, index) => {
+                        {data?.data?.map((row, index) => {
+                          const isItemSelected = isSelected(row);
                           return (
                             <TableRow
                               hover
+                              onClick={(event) => handleClick(event, row)}
+                              role="checkbox"
+                              aria-checked={isItemSelected}
+                              tabIndex={-1}
                               key={index}
+                              selected={isItemSelected}
                               sx={{ cursor: "pointer" }}
                             >
-                              <TableCell
-                                sx={{ color: "#475467", fontSize: 14 }}
-                              >
-                                {row?.name}
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  color="primary"
+                                  checked={isItemSelected}
+                                  sx={{
+                                    color: "#D0D5DD",
+                                    "&.Mui-checked": {
+                                      color: "#66B2B2",
+                                    },
+                                  }}
+                                />
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.name}
                               </TableCell>
                             </TableRow>
                           );
@@ -314,29 +356,6 @@ export const AssignCandidate = () => {
                           <TableHead>
                             <TableRow>
                               <TableCell
-                                padding="checkbox"
-                                sx={{ bgcolor: "#F8F9FA" }}
-                              >
-                                <Checkbox
-                                  color="primary"
-                                  indeterminate={
-                                    selected.length > 0 &&
-                                    selected.length < data?.data?.length
-                                  }
-                                  checked={
-                                    data?.data?.length > 0 &&
-                                    selected.length === data?.data?.length
-                                  }
-                                  onChange={handleSelectAllClick}
-                                  sx={{
-                                    color: "#D0D5DD",
-                                    "&.Mui-checked ": {
-                                      color: "#66B2B2",
-                                    },
-                                  }}
-                                />
-                              </TableCell>
-                              <TableCell
                                 sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                               >
                                 Candidate Names
@@ -354,39 +373,17 @@ export const AssignCandidate = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {data?.data?.map((row, index) => {
-                              const isItemSelected = isSelected(row);
+                            {assignedCandidateList?.data?.map((row, index) => {
                               return (
-                                <TableRow
-                                  hover
-                                  onClick={(event) => handleClick(event, row)}
-                                  role="checkbox"
-                                  aria-checked={isItemSelected}
-                                  tabIndex={-1}
-                                  key={index}
-                                  selected={isItemSelected}
-                                  sx={{ cursor: "pointer" }}
-                                >
-                                  <TableCell padding="checkbox">
-                                    <Checkbox
-                                      color="primary"
-                                      checked={isItemSelected}
-                                      sx={{
-                                        color: "#D0D5DD",
-                                        "&.Mui-checked": {
-                                          color: "#66B2B2",
-                                        },
-                                      }}
-                                    />
-                                  </TableCell>
+                                <TableRow key={index}>
                                   <TableCell sx={{ color: "#475467" }}>
                                     {row.name}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.emailId}
+                                    {row.email}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.mobileNo}
+                                    {row.phone}
                                   </TableCell>
                                 </TableRow>
                               );
@@ -397,10 +394,10 @@ export const AssignCandidate = () => {
                     </Paper>
                     <div className="flex justify-between items-center">
                       <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data?.data?.length} results found
+                        Showing {data?.totalCount || 0} results found
                       </p>
                       <Pagination
-                        count={1}
+                        count={PAGECOUNT}
                         page={page}
                         variant="outlined"
                         shape="rounded"
