@@ -81,7 +81,7 @@ export const AuthorisedClient = () => {
     axiosInstance
       .get("/getCandidateDTPAccess?candidateId=" + user.userId)
       .then((response) => {
-        console.log(response.data);
+        console.log("AuthData", response.data);
         setAuthClientList(response.data);
         setLoading(false);
         //console.log(response.data.authorized);
@@ -433,7 +433,7 @@ export const AuthorisedClient = () => {
                   <Button
                     size="small"
                     variant="outlined"
-                    // onClick={handleClickFilter}
+                    onClick={handleClickFilter}
                     style={{
                       color: "#252525",
                       borderColor: "#D0D5DD",

@@ -32,9 +32,9 @@ export const TeamTemplateEdit = () => {
   ];
 
   const yes_no = [
-  { label: "Yes", value: "Yes" },
-  { label: "No", value: "No" },
-  ]
+    { label: "Yes", value: "Yes" },
+    { label: "No", value: "No" },
+  ];
 
   const handleSubmit = async () => {
     const domainRole = specifyDomain;
@@ -50,9 +50,12 @@ export const TeamTemplateEdit = () => {
         project,
         contributions,
         workValues,
-        technicalSkills
+        technicalSkills,
       })
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data);
+        navigate("/templates/teamTemplate");
+      })
       .catch((e) => console.log(e));
   };
 
@@ -210,7 +213,9 @@ export const TeamTemplateEdit = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                How important are Work Values to you? Is this talent dimension used in filtering candidates or not? (Note: by default, we use this as one of the talent dimensions in the overall score.)
+                How important are Work Values to you? Is this talent dimension
+                used in filtering candidates or not? (Note: by default, we use
+                this as one of the talent dimensions in the overall score.)
               </p>
               <Autocomplete
                 size="small"
@@ -225,7 +230,10 @@ export const TeamTemplateEdit = () => {
             </div>
             <div className="grid grid-flow-row gap-2 py-5">
               <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                Do you want to give extra weight to Technical Skills compared to other talent dimensions? (Note: By default, we assign corresponding weightages based on your response in the ICP Analysis.)
+                Do you want to give extra weight to Technical Skills compared to
+                other talent dimensions? (Note: By default, we assign
+                corresponding weightages based on your response in the ICP
+                Analysis.)
               </p>
               <Autocomplete
                 size="small"
@@ -244,13 +252,15 @@ export const TeamTemplateEdit = () => {
                   navigate(-1);
                 }}
                 variant="outlined"
-                style={{ color: "#475467", borderColor: "#D0D5DD" }}>
+                style={{ color: "#475467", borderColor: "#D0D5DD" }}
+              >
                 back
               </Button>
               <Button
                 onClick={handleSubmit}
                 variant="contained"
-                style={{ color: "#ffffff", backgroundColor: "#008080" }}>
+                style={{ color: "#ffffff", backgroundColor: "#008080" }}
+              >
                 CONFIRM
               </Button>
             </div>

@@ -51,6 +51,17 @@ export const roleTypes = [
   },
 ];
 
+export const frequentTypes = [
+  {
+    label: "Frequent ",
+    value: "Frequent ",
+  },
+  {
+    label: "Occasional",
+    value: "Occasional",
+  },
+];
+
 export const academicQualification = [
   {
     label: "Bachelors",

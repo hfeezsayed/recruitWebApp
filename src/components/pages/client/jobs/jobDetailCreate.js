@@ -16,6 +16,7 @@ import {
   roleTypes,
   academicQualification,
   specificCertification,
+  frequentTypes,
 } from "../../../utils/seedsData";
 import {
   IoIosCloseCircleOutline,
@@ -1171,20 +1172,16 @@ export const JobDetailCreate = () => {
                     How frequent does the role require to travel?
                   </p>
 
-                  {education.map((rolTrvl, index) => (
-                    <CreatableSelect
-                      isClearable
-                      options={getOptions("roleTravel")}
-                      value={rolTrvl.roleTravel}
-                      onChange={(selected) =>
-                        handleChangeEducation("roleTravel", selected, index)
-                      }
-                      onCreateOption={(selected) =>
-                        handleCreate("roleTravel", selected)
-                      }
-                      placeholder="Select or create an item"
-                    />
-                  ))}
+                  <Autocomplete
+                    size="small"
+                    disablePortal
+                    options={frequentTypes.map((option) => option.label)}
+                    value={roleTravel || null}
+                    onChange={(e, newvalue) => setRoleTravel(newvalue)}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                  />
                 </div>
                 <div className="grid grid-flow-row gap-2 ">
                   <p

@@ -29,6 +29,7 @@ import {
   roleTypes,
   academicQualification,
   specificCertification,
+  frequentTypes,
 } from "../../../utils/seedsData";
 
 export const JobTemplateCreate = () => {
@@ -525,7 +526,7 @@ export const JobTemplateCreate = () => {
                   </div>
 
                   <textarea
-                    value={companyInfo}
+                    value={companyInfo || null}
                     onChange={(e) => setCompanyInfo(e.target.value)}
                     placeholder="type"
                     style={{
@@ -927,9 +928,7 @@ export const JobTemplateCreate = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.travel).map(
-                      (option) => option.label
-                    )}
+                    options={frequentTypes.map((option) => option.label)}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (

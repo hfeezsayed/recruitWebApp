@@ -14,6 +14,14 @@ import {
   IoIosCloseCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
+import {
+  timingsRole,
+  visaType,
+  roleTypes,
+  academicQualification,
+  specificCertification,
+  frequentTypes,
+} from "../../../utils/seedsData";
 import { FiPlus } from "react-icons/fi";
 import { locations as allLocations } from "../../../utils/allLocations";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
@@ -246,6 +254,7 @@ export const JobTemplateEdit = () => {
     setTemplateName("");
     setTemplateTag("");
     setTemplateDescription("");
+    navigate("/templates/jobTemplate");
   };
 
   const formattedItems = (items) => {
@@ -924,9 +933,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.typeRole).map(
-                      (option) => option.label
-                    )}
+                    options={roleTypes.map((option) => option.label)}
                     value={roleType || null}
                     onChange={(e, newvalue) => setRoleType(newvalue)}
                     renderInput={(params) => (
@@ -943,9 +950,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.roleTiming).map(
-                      (option) => option.label
-                    )}
+                    options={timingsRole.map((option) => option.label)}
                     value={roleTimings || null}
                     onChange={(e, newvalue) => setRoleTimings(newvalue)}
                     renderInput={(params) => (
@@ -962,9 +967,7 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.travel).map(
-                      (option) => option.label
-                    )}
+                    options={frequentTypes.map((option) => option.label)}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (
@@ -981,9 +984,9 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={options.map((option) => option.label)}
+                    options={visaType.map((option) => option.label)}
                     value={visa || null}
-                    onChange={(e, newvalue) => setVisa(newvalue.value)}
+                    onChange={(e, newvalue) => setVisa(newvalue)}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
@@ -1007,9 +1010,9 @@ export const JobTemplateEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(
-                      settings?.acadamicQualification
-                    ).map((option) => option.label)}
+                    options={academicQualification.map(
+                      (option) => option.label
+                    )}
                     value={minimumLevelQualification || null}
                     onChange={(e, newvalue) =>
                       setMinimumLevelQualification(newvalue)

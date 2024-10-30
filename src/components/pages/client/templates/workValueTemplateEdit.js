@@ -15,10 +15,9 @@ import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { Footer } from "../../../widgets/footer";
 import { TopNav } from "../../../widgets/topNav";
 import { workValueEditData } from "../../../dummy/Data";
-import { useLocation } from 'react-router-dom';
-import { useEffect} from 'react';
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-
 
 export const WorkValueTemplateEdit = () => {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export const WorkValueTemplateEdit = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav openTemplate={true}/>
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
@@ -65,21 +64,24 @@ export const WorkValueTemplateEdit = () => {
                           sx={{
                             bgcolor: "#F8F9FA",
                             color: "#101828",
-                          }}>
+                          }}
+                        >
                           Value
                         </TableCell>
                         <TableCell
                           sx={{
                             bgcolor: "#F8F9FA",
                             color: "#101828",
-                          }}>
+                          }}
+                        >
                           Statements
                         </TableCell>
                         <TableCell
                           sx={{
                             bgcolor: "#F8F9FA",
                             color: "#101828",
-                          }}>
+                          }}
+                        >
                           Ratings
                         </TableCell>
                       </TableRow>
@@ -91,19 +93,22 @@ export const WorkValueTemplateEdit = () => {
                             <TableCell
                               sx={{
                                 color: "#475467",
-                              }}>
+                              }}
+                            >
                               {row.value}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
-                              }}>
+                              }}
+                            >
                               {row.statement}
                             </TableCell>
                             <TableCell
                               sx={{
                                 color: "#475467",
-                              }}>
+                              }}
+                            >
                               <Rating
                                 value={row?.rating}
                                 onChange={(e, newvalue) =>
@@ -127,12 +132,15 @@ export const WorkValueTemplateEdit = () => {
                     color: "#475467",
                     borderColor: "#D0D5DD",
                   }}
-                  onClick={() => navigate(-1)}>
+                  onClick={() => navigate(-1)}
+                >
                   Back
                 </Button>
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#008080", color: "#ffffff" }}>
+                  style={{ backgroundColor: "#008080", color: "#ffffff" }}
+                  onClick={() => navigate("/templates/workValueTemplate")}
+                >
                   CONFIRM
                 </Button>
               </div>

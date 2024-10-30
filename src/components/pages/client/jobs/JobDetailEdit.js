@@ -29,6 +29,7 @@ import {
   roleTypes,
   academicQualification,
   specificCertification,
+  frequentTypes,
 } from "../../../utils/seedsData";
 
 export const JobDetailEdit = () => {
@@ -1253,9 +1254,7 @@ export const JobDetailEdit = () => {
                   <Autocomplete
                     size="small"
                     disablePortal
-                    options={convertToOptions(settings?.travel).map(
-                      (option) => option.label
-                    )}
+                    options={frequentTypes.map((option) => option.label)}
                     value={roleTravel || null}
                     onChange={(e, newvalue) => setRoleTravel(newvalue)}
                     renderInput={(params) => (

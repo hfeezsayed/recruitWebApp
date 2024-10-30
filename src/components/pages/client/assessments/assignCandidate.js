@@ -93,7 +93,7 @@ export const AssignCandidate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `/getBatchCandidates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -116,11 +116,9 @@ export const AssignCandidate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(
-        `/getAllClientAssignedCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`
-      )
+      .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
-        console.log("getAllClientListData", data);
+        console.log("getAllCandidates", data);
         setAssignedCandidateList(data.data);
         setPage(data?.pageNo || 1);
       })
@@ -132,7 +130,7 @@ export const AssignCandidate = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
-      .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=5`)
+      .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=20`)
       .then((data) => {
         console.log("assessmentListData", data);
         setData(data.data);
@@ -210,7 +208,7 @@ export const AssignCandidate = () => {
               </div>
               <Box sx={{ width: "100%" }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
-                  <TableContainer sx={{ maxHeight: 500 }}>
+                  <TableContainer sx={{ maxHeight: 275 }}>
                     <Table stickyHeader>
                       <TableHead>
                         <TableRow>
@@ -356,6 +354,31 @@ export const AssignCandidate = () => {
                           <TableHead>
                             <TableRow>
                               <TableCell
+                                padding="checkbox"
+                                sx={{
+                                  bgcolor: "#F8F9FA",
+                                }}
+                              >
+                                <Checkbox
+                                  color="primary"
+                                  indeterminate={
+                                    selected.length > 0 &&
+                                    selected.length < data?.data?.length
+                                  }
+                                  checked={
+                                    data?.data?.length > 0 &&
+                                    selected.length === data?.data?.length
+                                  }
+                                  onChange={handleSelectAllClick}
+                                  sx={{
+                                    color: "#D0D5DD",
+                                    "&.Mui-checked ": {
+                                      color: "#66B2B2",
+                                    },
+                                  }}
+                                />
+                              </TableCell>
+                              <TableCell
                                 sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
                               >
                                 Candidate Names
@@ -374,16 +397,42 @@ export const AssignCandidate = () => {
                           </TableHead>
                           <TableBody>
                             {assignedCandidateList?.data?.map((row, index) => {
+                              const isAssignSelected = isSelected(row);
                               return (
-                                <TableRow key={index}>
+                                <TableRow
+                                  hover
+                                  role="checkbox"
+                                  aria-checked={isAssignSelected}
+                                  tabIndex={-1}
+                                  key={index}
+                                  selected={isAssignSelected}
+                                  sx={{
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <TableCell padding="checkbox">
+                                    <Checkbox
+                                      color="primary"
+                                      checked={isAssignSelected}
+                                      onClick={(event) =>
+                                        handleClick(event, row)
+                                      }
+                                      sx={{
+                                        color: "#D0D5DD",
+                                        "&.Mui-checked": {
+                                          color: "#66B2B2",
+                                        },
+                                      }}
+                                    />
+                                  </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
                                     {row.name}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.email}
+                                    {row.emailId}
                                   </TableCell>
                                   <TableCell sx={{ color: "#475467" }}>
-                                    {row.phone}
+                                    {row.mobileNo}
                                   </TableCell>
                                 </TableRow>
                               );

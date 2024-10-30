@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import {
   Button,
@@ -40,6 +40,8 @@ export const CandidatesList = () => {
   const [candidateNo, setCandidateNo] = useState("");
   const [candidateLinkedin, setCandidateLinkedin] = useState("");
   const [candidateResume, setCandidateResume] = useState();
+
+  const { batchId } = useLocation().state || {};
 
   //for file upload
   const VisuallyHiddenInput = styled("input")({
