@@ -97,6 +97,7 @@ export const Candidate = () => {
     axiosInstance
       .get(`/getCandidateAssessmentCount?candidateId=${user.userId}`)
       .then((response) => {
+        console.log("getCandidateAssessmentCount", response.data);
         setAuthorizedCount(response.data.authorizedCount);
         setClientCount(response.data.clientCount);
         setselfCount(response.data.selfCount);
@@ -129,7 +130,7 @@ export const Candidate = () => {
   };
 
   const handlePersonalInfo = () => {
-    console.log(userData.personalInfoId);
+    console.log("personalInfoId", userData.personalInfoId);
     if (userData.personalInfo === true) {
       navigate("/digitalTalentProfile/personalinfromation", {
         state: userData?.personalInfoId,
