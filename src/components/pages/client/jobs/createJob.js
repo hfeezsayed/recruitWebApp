@@ -1072,8 +1072,8 @@ export const CreateJob = () => {
                   </div>
                 </div>
                 {/* all forms */}
-                <div className="flex gap-10 mt-3 justify-between">
-                  <div className="w-36">
+                <div className="flex gap-6 mt-3 justify-between">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.jobDetail ? 100 : 0}
                       startAngle={0}
@@ -1139,7 +1139,7 @@ export const CreateJob = () => {
                       {userData?.jobDetail ? "Edit" : "Start"}
                     </Button>
                   </div>
-                  <div className="w-36">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.workValues ? 100 : 0}
                       startAngle={0}
@@ -1205,7 +1205,7 @@ export const CreateJob = () => {
                       {userData?.workValues ? "Edit" : "Start"}
                     </Button>
                   </div>
-                  <div className="w-36">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.team ? 100 : 0}
                       startAngle={0}
@@ -1269,7 +1269,7 @@ export const CreateJob = () => {
                       {userData?.team ? "Edit" : "Start"}
                     </Button>
                   </div>
-                  <div className="w-36">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.icp ? 100 : 0}
                       startAngle={0}
@@ -1334,7 +1334,7 @@ export const CreateJob = () => {
                     </Button>
                   </div>
 
-                  <div className="w-36">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.screeningQuestions ? 100 : 0}
                       startAngle={0}
@@ -1409,7 +1409,7 @@ export const CreateJob = () => {
                     </Button>
                   </div>
 
-                  <div className="w-36">
+                  <div className="w-34">
                     <Gauge
                       value={userData?.assessmentAssigned ? 100 : 0}
                       startAngle={0}
@@ -1856,7 +1856,7 @@ export const CreateJob = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="overflow-x-scroll w-[1210px]">
+                      <div className="overflow-x-scroll w-[1028px]">
                         <div className="py-5 flex justify-between">
                           <div className="flex gap-8">
                             <Button

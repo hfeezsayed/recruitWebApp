@@ -133,7 +133,7 @@ export const TopNav = () => {
             </ListItemIcon>
             Profile
           </MenuItem>
-          <MenuItem onClick={() => navigate("/signup")}>
+          <MenuItem onClick={() => navigate("/newpassword")}>
             <ListItemIcon>
               <FiBookOpen
                 style={{ color: "#475467", fontWeight: 600, fontSize: 18 }}

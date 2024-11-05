@@ -28,8 +28,7 @@ export const IcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`,
-        
+        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
@@ -49,10 +48,7 @@ export const IcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
     axiosInstance
-      .get(
-        `/getAllIcpTemplates?clientId=${user.userId}&pageNo=1&pageSize=5`,
-        
-      )
+      .get(`/getAllIcpTemplates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data?.data);
@@ -68,85 +64,95 @@ export const IcpTemplate = () => {
   return (
     <div>
       <div className="flex">
-        <ClientSideNav openTemplate={true}/>
+        <ClientSideNav openTemplate={true} />
         <div className="w-full min-h-screen">
           <TopNav />
-          { loading === true ? 
-            (
-              <Spinner/>
-            )
-            :
-            (
-              <div className="p-8">
-                <div>
-                  <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
-                    Ideal Candidate Persona Templates
-                  </p>
-                  <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
-                    Please choose ICP template from the available options.
-                  </p>
-                  <div className="py-5 flex justify-between items-center">
-                    <TextField
-                      size="small"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Search..."
-                      sx={{ minWidth: 320 }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IoSearchOutline />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <Button
-                      variant="text"
-                      style={{
-                        color: "#008080",
-                        backgroundColor: "#EAF4F5",
-                        textTransform: "none",
-                      }}
-                      onClick={() => navigate("/templates/icpEdit")}>
-                      Create New Template
-                    </Button>
-                  </div>
-                  <Box sx={{ width: "100%" }}>
-                    <Paper sx={{ width: "100%", mb: 2 }}>
-                      <TableContainer sx={{ maxHeight: 500 }}>
-                        <Table stickyHeader>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell
-                                align="center"
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Serial Number
-                              </TableCell>
-                              <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Template Name
-                              </TableCell>
-                              <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Template Tag
-                              </TableCell>
-                              <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Template Description
-                              </TableCell>
-                              <TableCell
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Created By
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
-                                Actions
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {data?.data?.map((row, index) => {
+          {loading === true ? (
+            <Spinner />
+          ) : (
+            <div className="p-8">
+              <div>
+                <p style={{ color: "#101828", fontSize: 22, fontWeight: 700 }}>
+                  Ideal Candidate Persona Templates
+                </p>
+                <p style={{ color: "#475467", fontSize: 14, fontWeight: 400 }}>
+                  Please choose ICP template from the available options.
+                </p>
+                <div className="py-5 flex justify-between items-center">
+                  <TextField
+                    size="small"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search..."
+                    sx={{ minWidth: 320 }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IoSearchOutline />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <Button
+                    variant="text"
+                    style={{
+                      color: "#008080",
+                      backgroundColor: "#EAF4F5",
+                      textTransform: "none",
+                    }}
+                    onClick={() => navigate("/templates/icpEdit")}
+                  >
+                    Create New Template
+                  </Button>
+                </div>
+                <Box sx={{ width: "100%" }}>
+                  <Paper sx={{ width: "100%", mb: 2 }}>
+                    <TableContainer sx={{ maxHeight: 500 }}>
+                      <Table stickyHeader>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              align="center"
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Serial Number
+                            </TableCell>
+                            <TableCell
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Template Name
+                            </TableCell>
+                            <TableCell
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Template Tag
+                            </TableCell>
+                            <TableCell
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Template Description
+                            </TableCell>
+                            <TableCell
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Created By
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                            >
+                              Actions
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {data?.data
+                            ?.filter((item) =>
+                              item.templateName
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                            )
+                            .map((row, index) => {
                               return (
                                 <TableRow key={index}>
                                   <TableCell align="center">{row.id}</TableCell>
@@ -171,36 +177,39 @@ export const IcpTemplate = () => {
                                         textTransform: "none",
                                       }}
                                       onClick={() => {
-                                        navigate("/templates/icpResult", {state : row});
-                                      }}>
+                                        navigate("/templates/icpResult", {
+                                          state: row,
+                                        });
+                                      }}
+                                    >
                                       View
                                     </Button>
                                   </TableCell>
                                 </TableRow>
                               );
                             })}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </Paper>
-                    <div className="flex justify-between items-center">
-                      <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data?.totalCount || 0} results found
-                      </p>
-                      <Pagination
-                        count={PAGECOUNT}
-                        page={page}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={(e, newvalue) => {
-                          pageChangeHandle(newvalue);
-                        }}
-                      />
-                    </div>
-                  </Box>
-                </div>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Paper>
+                  <div className="flex justify-between items-center">
+                    <p style={{ color: "#475467", fontSize: 14 }}>
+                      Showing {data?.totalCount || 0} results found
+                    </p>
+                    <Pagination
+                      count={PAGECOUNT}
+                      page={page}
+                      variant="outlined"
+                      shape="rounded"
+                      onChange={(e, newvalue) => {
+                        pageChangeHandle(newvalue);
+                      }}
+                    />
+                  </div>
+                </Box>
               </div>
-            )}
+            </div>
+          )}
         </div>
       </div>
       <Footer />

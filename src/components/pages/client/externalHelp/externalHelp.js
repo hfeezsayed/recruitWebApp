@@ -192,10 +192,7 @@ export const ExternalHelp = () => {
             ) : (
               <TableBody>
                 {filterData(sourcingHelpList).map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
+                  <TableRow key={index}>
                     <TableCell sx={{ color: "#475467", fontSize: 14 }}>
                       {row.jobId}
                     </TableCell>

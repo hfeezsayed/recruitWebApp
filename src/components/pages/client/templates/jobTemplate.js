@@ -142,42 +142,50 @@ export const JobTemplate = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {data?.data?.map((row, index) => {
-                          return (
-                            <TableRow key={index}>
-                              <TableCell align="center">{index + 1}</TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.templateName}
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.templateTag}
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.templateDescription}
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.createdBy}
-                              </TableCell>
-                              <TableCell
-                                padding="none"
-                                align="center"
-                                sx={{ color: "#475467" }}
-                              >
-                                <Button
-                                  size="small"
-                                  variant="text"
-                                  style={{
-                                    color: "#5E8EBD",
-                                    textTransform: "none",
-                                  }}
-                                  onClick={() => handleEdit(row)}
+                        {data?.data
+                          ?.filter((item) =>
+                            item.templateName
+                              .toLowerCase()
+                              .includes(search.toLowerCase())
+                          )
+                          .map((row, index) => {
+                            return (
+                              <TableRow key={index}>
+                                <TableCell align="center">
+                                  {index + 1}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.templateName}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.templateTag}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.templateDescription}
+                                </TableCell>
+                                <TableCell sx={{ color: "#475467" }}>
+                                  {row.createdBy}
+                                </TableCell>
+                                <TableCell
+                                  padding="none"
+                                  align="center"
+                                  sx={{ color: "#475467" }}
                                 >
-                                  Edit
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
+                                  <Button
+                                    size="small"
+                                    variant="text"
+                                    style={{
+                                      color: "#5E8EBD",
+                                      textTransform: "none",
+                                    }}
+                                    onClick={() => handleEdit(row)}
+                                  >
+                                    Edit
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
                       </TableBody>
                     </Table>
                   </TableContainer>

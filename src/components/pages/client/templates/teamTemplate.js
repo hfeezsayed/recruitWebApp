@@ -92,7 +92,8 @@ export const TeamTemplate = () => {
                   backgroundColor: "#EAF4F5",
                   textTransform: "none",
                 }}
-                onClick={() => navigate("/templates/teamTemplateCreate")}>
+                onClick={() => navigate("/templates/teamTemplateCreate")}
+              >
                 Create New Template
               </Button>
             </div>
@@ -104,71 +105,85 @@ export const TeamTemplate = () => {
                       <TableRow>
                         <TableCell
                           align="center"
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Serial Number
                         </TableCell>
                         <TableCell
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Template Name
                         </TableCell>
                         <TableCell
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Template Tag
                         </TableCell>
                         <TableCell
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Template Description
                         </TableCell>
                         <TableCell
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Created By
                         </TableCell>
                         <TableCell
                           align="center"
-                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                          sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                        >
                           Actions
                         </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data?.data?.map((row, index) => {
-                        return (
-                          <TableRow key={index}>
-                            <TableCell align="center">{row.id}</TableCell>
-                            <TableCell sx={{ color: "#475467" }}>
-                              {row.templateName}
-                            </TableCell>
-                            <TableCell sx={{ color: "#475467" }}>
-                              {row.templateTag}
-                            </TableCell>
-                            <TableCell sx={{ color: "#475467" }}>
-                              {row.templateDescription}
-                            </TableCell>
-                            <TableCell sx={{ color: "#475467" }}>
-                              {row.createdBy}
-                            </TableCell>
-                            <TableCell
-                              padding="none"
-                              align="center"
-                              sx={{ color: "#475467" }}>
-                              <Button
-                                size="small"
-                                variant="text"
-                                style={{
-                                  color: "#5E8EBD",
-                                  textTransform: "none",
-                                }}
-                                onClick={() =>
-                                  navigate("/templates/teamTemplateEdit", {
-                                    state: row,
-                                  })
-                                }>
-                                Edit
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
+                      {data?.data
+                        ?.filter((item) =>
+                          item.templateName
+                            .toLowerCase()
+                            .includes(search.toLowerCase())
+                        )
+                        .map((row, index) => {
+                          return (
+                            <TableRow key={index}>
+                              <TableCell align="center">{row.id}</TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateName}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateTag}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.templateDescription}
+                              </TableCell>
+                              <TableCell sx={{ color: "#475467" }}>
+                                {row.createdBy}
+                              </TableCell>
+                              <TableCell
+                                padding="none"
+                                align="center"
+                                sx={{ color: "#475467" }}
+                              >
+                                <Button
+                                  size="small"
+                                  variant="text"
+                                  style={{
+                                    color: "#5E8EBD",
+                                    textTransform: "none",
+                                  }}
+                                  onClick={() =>
+                                    navigate("/templates/teamTemplateEdit", {
+                                      state: row,
+                                    })
+                                  }
+                                >
+                                  Edit
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
                     </TableBody>
                   </Table>
                 </TableContainer>

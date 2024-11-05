@@ -152,67 +152,73 @@ export const WorkValueTemplate = () => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {data?.data?.map((row, index) => {
-                            return (
-                              <TableRow key={index}>
-                                <TableCell align="center">{row.id}</TableCell>
-                                <TableCell sx={{ color: "#475467" }}>
-                                  {row.templateName}
-                                </TableCell>
-                                <TableCell sx={{ color: "#475467" }}>
-                                  {row.templateTag}
-                                </TableCell>
-                                <TableCell sx={{ color: "#475467" }}>
-                                  {row.templateDescription}
-                                </TableCell>
-                                <TableCell sx={{ color: "#475467" }}>
-                                  {row.createdBy}
-                                </TableCell>
-                                <TableCell padding="none" align="center">
-                                  <Button
-                                    size="small"
-                                    variant="text"
-                                    style={{
-                                      color: "#28A745",
-                                      textTransform: "none",
-                                    }}
-                                    onClick={() =>
-                                      navigate(
-                                        "/templates/workValueTemplateView",
-                                        { state: row }
-                                      )
-                                    }
+                          {data?.data
+                            ?.filter((item) =>
+                              item.templateName
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                            )
+                            .map((row, index) => {
+                              return (
+                                <TableRow key={index}>
+                                  <TableCell align="center">{row.id}</TableCell>
+                                  <TableCell sx={{ color: "#475467" }}>
+                                    {row.templateName}
+                                  </TableCell>
+                                  <TableCell sx={{ color: "#475467" }}>
+                                    {row.templateTag}
+                                  </TableCell>
+                                  <TableCell sx={{ color: "#475467" }}>
+                                    {row.templateDescription}
+                                  </TableCell>
+                                  <TableCell sx={{ color: "#475467" }}>
+                                    {row.createdBy}
+                                  </TableCell>
+                                  <TableCell padding="none" align="center">
+                                    <Button
+                                      size="small"
+                                      variant="text"
+                                      style={{
+                                        color: "#28A745",
+                                        textTransform: "none",
+                                      }}
+                                      onClick={() =>
+                                        navigate(
+                                          "/templates/workValueTemplateView",
+                                          { state: row }
+                                        )
+                                      }
+                                    >
+                                      View
+                                    </Button>
+                                  </TableCell>
+                                  <TableCell
+                                    padding="none"
+                                    align="center"
+                                    sx={{ color: "#475467" }}
                                   >
-                                    View
-                                  </Button>
-                                </TableCell>
-                                <TableCell
-                                  padding="none"
-                                  align="center"
-                                  sx={{ color: "#475467" }}
-                                >
-                                  <Button
-                                    size="small"
-                                    variant="text"
-                                    style={{
-                                      color: "#5E8EBD",
-                                      textTransform: "none",
-                                    }}
-                                    onClick={() =>
-                                      navigate(
-                                        "/templates/workValueTemplateEdit",
-                                        {
-                                          state: row,
-                                        }
-                                      )
-                                    }
-                                  >
-                                    Edit
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
+                                    <Button
+                                      size="small"
+                                      variant="text"
+                                      style={{
+                                        color: "#5E8EBD",
+                                        textTransform: "none",
+                                      }}
+                                      onClick={() =>
+                                        navigate(
+                                          "/templates/workValueTemplateEdit",
+                                          {
+                                            state: row,
+                                          }
+                                        )
+                                      }
+                                    >
+                                      Edit
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
                         </TableBody>
                       </Table>
                     </TableContainer>

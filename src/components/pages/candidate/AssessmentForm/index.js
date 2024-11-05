@@ -49,7 +49,7 @@ export const AssesmentForm = () => {
     axiosInstance
       .get(`/getCandidateAssessments?candidateId=${user.userId}`)
       .then((response) => {
-        console.log("allAssessment", response.data);
+        console.log("selfAssessment", response.data.candidateList);
         setSelfAssessmentList(response.data.candidateList);
         setClientAssessmentList(response.data.clientList);
         setAllAssessmentList([...selfAssessmentList, ...clientAssessmentList]);

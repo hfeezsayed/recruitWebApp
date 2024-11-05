@@ -77,14 +77,13 @@ export const DashBoard = () => {
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Summary
               </p>
-              <div className="flex justify-between gap-10 py-4">
+              <div className="grid grid-rows-1 grid-flow-col gap-4 mt-4">
                 <Card
                   sx={{
                     borderRadius: 4,
                     padding: 1,
-
-                    minWidth: "310px",
                   }}
+                  // className="w-80 md:w-96 lg:w-96"
                 >
                   <div className="p-4 gap-2 flex items-center">
                     <div
@@ -142,9 +141,8 @@ export const DashBoard = () => {
                   sx={{
                     borderRadius: 4,
                     padding: 1,
-
-                    minWidth: "310px",
                   }}
+                  //className="w-80 md:w-96 lg:w-96"
                 >
                   <div className="p-4 gap-2 flex items-center">
                     <div
@@ -200,9 +198,8 @@ export const DashBoard = () => {
                   sx={{
                     borderRadius: 4,
                     padding: 1,
-
-                    minWidth: "310px",
                   }}
+                  //className="w-80 md:w-96 lg:w-96"
                 >
                   <div className="p-4 gap-2 flex items-center">
                     <div
