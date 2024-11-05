@@ -988,7 +988,7 @@ export const AllJobs = () => {
                                               : 2,
                                         }}
                                       >
-                                        {row.compensation}
+                                        {row?.createdDate}
                                       </p>
                                       {/* );
                                   })} */}

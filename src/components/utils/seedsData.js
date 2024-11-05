@@ -277,3 +277,30 @@ export const expertiseType = [
     value: "Limited",
   },
 ];
+
+export const domainOrTeams = [
+  {
+    label: "Testing",
+    value: "Testing",
+  },
+  {
+    label: "Development",
+    value: "Development",
+  },
+  {
+    label: "Marketing",
+    value: "Marketing",
+  },
+  {
+    label: "Design",
+    value: "Design",
+  },
+  {
+    label: "Sales",
+    value: "Sales",
+  },
+  {
+    label: "Cloud",
+    value: "Cloud",
+  },
+];

@@ -6,6 +6,8 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { locations as allLocations } from "../../../utils/allLocations";
+import { domainOrTeams } from "../../../utils/seedsData";
 
 export const TeamTemplateEdit = () => {
   const navigate = useNavigate();
@@ -21,14 +23,13 @@ export const TeamTemplateEdit = () => {
 
   const location = useLocation();
 
-  const options = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
+  const teamSizeOpts = [
+    { label: "1-5", value: "1-5" },
+    { label: "5-10", value: "5-10" },
+    { label: "10-15", value: "10-15" },
+    { label: "15-20", value: "15-20" },
+    { label: "20-30", value: "20-30" },
+    { label: "30+", value: "30+" },
   ];
 
   const yes_no = [
@@ -119,7 +120,7 @@ export const TeamTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={teamSizeOpts.map((option) => option.label)}
                   value={teamSize || null}
                   onChange={(e, newvalue) => setTeamSize(newvalue)}
                   renderInput={(params) => (
@@ -134,7 +135,7 @@ export const TeamTemplateEdit = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  options={options.map((option) => option.label)}
+                  options={allLocations?.map((option) => option.label)}
                   value={teamLocation || null}
                   onChange={(e, newvalue) => setTeamLocation(newvalue)}
                   renderInput={(params) => (
@@ -166,7 +167,7 @@ export const TeamTemplateEdit = () => {
                   size="small"
                   disablePortal
                   disabled={crossFunctionality !== "Yes"}
-                  options={options.map((option) => option.label)}
+                  options={domainOrTeams.map((option) => option.label)}
                   value={specifyDomain || null}
                   onChange={(e, newvalue) => setSpecifyDomain(newvalue)}
                   renderInput={(params) => (

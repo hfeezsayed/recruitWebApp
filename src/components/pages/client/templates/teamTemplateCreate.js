@@ -15,6 +15,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { ClientSideNav } from "../../../widgets/clientSideNav";
 import { TopNav } from "../../../widgets/topNav";
 import { Footer } from "../../../widgets/footer";
+import { domainOrTeams } from "../../../utils/seedsData";
 
 export const TeamTemplateCreate = () => {
   const navigate = useNavigate();
@@ -178,8 +179,8 @@ export const TeamTemplateCreate = () => {
                 <Autocomplete
                   size="small"
                   disablePortal
-                  disabled={crossFunctionality !== "Yes"}
-                  options={options.map((option) => option.label)}
+                  disabled={crossFunctionality == "Yes"}
+                  options={domainOrTeams.map((option) => option.label)}
                   value={specifyDomain || null}
                   onChange={(e, newvalue) => setSpecifyDomain(newvalue)}
                   renderInput={(params) => (
