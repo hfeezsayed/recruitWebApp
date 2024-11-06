@@ -28,12 +28,12 @@ export const IcpTemplate = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(
-        `/getAllValueTemplate?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
+        `/getAllIcpTemplates?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
       )
       .then((data) => {
         console.log(data);
         setData(data?.data);
-        // setPage(data?.pageNo || 0);
+        setPage(data?.pageNo || 0);
       })
       .catch((e) => {
         console.log(e);
@@ -194,7 +194,7 @@ export const IcpTemplate = () => {
                   </Paper>
                   <div className="flex justify-between items-center">
                     <p style={{ color: "#475467", fontSize: 14 }}>
-                      Showing {data?.totalCount || 0} results found
+                      Showing {data.data?.length || 0} results found
                     </p>
                     <Pagination
                       count={PAGECOUNT}

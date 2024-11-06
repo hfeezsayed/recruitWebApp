@@ -162,6 +162,7 @@ export const CreateJob = () => {
         setState({ new: false, showPopup: false });
         localStorage.setItem("jobId", response.data.id);
         setLoading(false);
+        navigate("/job/allJobs");
         // setPage(data?.pageNo || 1);
       })
       .catch((e) => {

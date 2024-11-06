@@ -347,7 +347,7 @@ export const PersonalInformation = () => {
                     fontWeight: 500,
                   }}
                 >
-                  Candidate Full Name
+                  Full Name
                 </p>
                 <TextField
                   required
@@ -399,49 +399,27 @@ export const PersonalInformation = () => {
                   onChange={(e) => setMobileNumber(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div className="grid grid-flow-row">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}
-                  >
-                    LinkedIn Profile
-                  </p>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    variant="outlined"
-                    placeholder="https://www.example.com"
-                    value={profilePicture || null}
-                    onChange={(e) => setProfilePicture(e.target.value)}
-                  />
-                </div>
-                <div className="grid grid-flow-row">
-                  <p
-                    style={{
-                      color: "#344054",
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}
-                  >
-                    Official Notice Period
-                  </p>
-                  <Autocomplete
-                    disablePortal
-                    size="small"
-                    fullWidth
-                    options={OfficialNoticePeriod.map((option) => option.label)}
-                    value={noticePeriod || null}
-                    onChange={(e, value) => setNoticePeriod(value)}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" required />
-                    )}
-                  />
-                </div>
+              <div className="grid grid-flow-row">
+                <p
+                  style={{
+                    color: "#344054",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  Official Notice Period
+                </p>
+                <Autocomplete
+                  disablePortal
+                  size="small"
+                  fullWidth
+                  options={OfficialNoticePeriod.map((option) => option.label)}
+                  value={noticePeriod || null}
+                  onChange={(e, value) => setNoticePeriod(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="Select" required />
+                  )}
+                />
               </div>
             </div>
             <div className="grid grid-flow-row pt-5 pb-8">

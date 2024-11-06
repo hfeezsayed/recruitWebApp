@@ -56,8 +56,8 @@ export const IcpTemplateResult = () => {
   useEffect(() => {
     console.log(location.state);
     setUserData(location.state);
-    setPillars(location.state.pillars);
-    setBehaviour(location.state.behaviourAttributes);
+    setPillars(location.state?.pillars);
+    setBehaviour(location.state?.behaviourAttributes);
   }, [location.state]);
 
   return (
@@ -145,7 +145,7 @@ export const IcpTemplateResult = () => {
                             <ColorBodySvg />
 
                             <div className="grid relative pt-5">
-                              {pillars.map((row, index) => {
+                              {pillars?.map((row, index) => {
                                 return (
                                   <div className={`flex mt-10`} key={index}>
                                     {/* <div className="flex text-center p-2"></div> */}
@@ -154,9 +154,9 @@ export const IcpTemplateResult = () => {
                                         style={{
                                           color: "#475467",
                                           fontSize: 33,
+                                          paddingLeft: 15,
                                         }}
                                       >
-                                        &#x2015;
                                         <span style={{ fontSize: 30 }}>
                                           &#x2022;
                                         </span>
@@ -299,7 +299,7 @@ export const IcpTemplateResult = () => {
                     </Fragment>
                     <Fragment>
                       {convertedEmtional?.map((data, index) => {
-                        let row = data.data[0];
+                        let row = data?.data[0];
                         return (
                           <TableRow key={index}>
                             <TableCell

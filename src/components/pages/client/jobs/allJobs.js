@@ -81,6 +81,7 @@ export const AllJobs = () => {
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = React.useState(1);
+  const [showMenuData, setShowMenuData] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -108,6 +109,7 @@ export const AllJobs = () => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    setShowMenuData(true);
   };
 
   const handleJd = (event) => {
@@ -196,6 +198,7 @@ export const AllJobs = () => {
         setData(response?.data.data);
         setLoading(false);
         setShowDeletePopup(false);
+        setShowMenuData(false);
         //setPage(data?.pageNo || 1);
       })
       .catch((e) => {
@@ -1495,69 +1498,75 @@ export const AllJobs = () => {
                     )}
 
                     {/*Actions menu */}
-                    <Menu
-                      id="fade-menu"
-                      MenuListProps={{
-                        "aria-labelledby": "fade-button",
-                      }}
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      TransitionComponent={Fade}
-                    >
-                      <MenuItem onClick={handleJobEdit}>
-                        <div className="flex gap-1 items-center">
-                          <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
-                          <p
-                            style={{
-                              color: "#5FAEDA",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}
-                          >
-                            Edit
-                          </p>
-                        </div>
-                      </MenuItem>
-                      <MenuItem onClick={() => setShowDeletePopup(true)}>
-                        <div className="flex gap-1 items-center">
-                          <RiDeleteBin6Line
-                            style={{ color: "#E05880", fontSize: 14 }}
-                          />
-                          <p
-                            style={{
-                              color: "#E05880",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}
-                          >
-                            Delete
-                          </p>
-                        </div>
-                      </MenuItem>
-                      <MenuItem onClick={() => setShowClonePopup(true)}>
-                        <div className="flex gap-1 items-center">
-                          <LuFiles style={{ color: "#58A20F", fontSize: 14 }} />
-                          <p
-                            style={{
-                              color: "#58A20F",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}
-                          >
-                            Clone
-                          </p>
-                        </div>
-                      </MenuItem>
-                    </Menu>
+                    {showMenuData && (
+                      <Menu
+                        id="fade-menu"
+                        MenuListProps={{
+                          "aria-labelledby": "fade-button",
+                        }}
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        TransitionComponent={Fade}
+                      >
+                        <MenuItem onClick={handleJobEdit}>
+                          <div className="flex gap-1 items-center">
+                            <TbEdit
+                              style={{ color: "#5FAEDA", fontSize: 14 }}
+                            />
+                            <p
+                              style={{
+                                color: "#5FAEDA",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              Edit
+                            </p>
+                          </div>
+                        </MenuItem>
+                        <MenuItem onClick={() => setShowDeletePopup(true)}>
+                          <div className="flex gap-1 items-center">
+                            <RiDeleteBin6Line
+                              style={{ color: "#E05880", fontSize: 14 }}
+                            />
+                            <p
+                              style={{
+                                color: "#E05880",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              Delete
+                            </p>
+                          </div>
+                        </MenuItem>
+                        <MenuItem onClick={() => setShowClonePopup(true)}>
+                          <div className="flex gap-1 items-center">
+                            <LuFiles
+                              style={{ color: "#58A20F", fontSize: 14 }}
+                            />
+                            <p
+                              style={{
+                                color: "#58A20F",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              Clone
+                            </p>
+                          </div>
+                        </MenuItem>
+                      </Menu>
+                    )}
 
                     {/*Filter menu */}
                     <Menu
@@ -1853,7 +1862,7 @@ export const AllJobs = () => {
 
                     {/* delete job popup */}
                     <Dialog open={showDeletePopup} onClose={closePopup}>
-                      <DialogTitle>Confirm Clone</DialogTitle>
+                      <DialogTitle>Confirm Delete</DialogTitle>
                       <IconButton
                         onClick={closePopup}
                         style={{ position: "absolute", top: 10, right: 10 }}

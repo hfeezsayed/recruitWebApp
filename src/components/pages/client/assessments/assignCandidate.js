@@ -36,6 +36,7 @@ export const AssignCandidate = () => {
   const options = ["Assign Candidate", "Add Candidate"];
 
   const [selected, setSelected] = React.useState([]);
+  const [selectedAssign, setSelectedAssign] = React.useState([]);
   const [data, setData] = useState(assignCandidateData);
   const [page, setPage] = React.useState(1);
 
@@ -86,6 +87,37 @@ export const AssignCandidate = () => {
       return;
     }
     setSelected([]);
+  };
+
+  //for assign table checkbox
+  const handleClickAssign = (event, row) => {
+    const selectedIndex = selectedAssign.indexOf(row);
+    let newSelectedAssign = [];
+
+    if (selectedIndex === -1) {
+      newSelectedAssign = newSelectedAssign.concat(selectedAssign, row);
+    } else if (selectedIndex === 0) {
+      newSelectedAssign = newSelectedAssign.concat(selectedAssign.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelectedAssign = newSelectedAssign.concat(selectedAssign.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelectedAssign = newSelectedAssign.concat(
+        selectedAssign.slice(0, selectedIndex),
+        selectedAssign.slice(selectedIndex + 1)
+      );
+    }
+    setSelectedAssign(newSelectedAssign);
+  };
+
+  const isSelectedAssign = (row) => selectedAssign.indexOf(row) !== -1;
+
+  const handleSelectAllAssign = (event) => {
+    if (event.target.checked) {
+      const newSelectedAssign = data?.data || [];
+      setSelectedAssign(newSelectedAssign);
+      return;
+    }
+    setSelectedAssign([]);
   };
 
   // pagination
@@ -362,14 +394,14 @@ export const AssignCandidate = () => {
                                 <Checkbox
                                   color="primary"
                                   indeterminate={
-                                    selected.length > 0 &&
-                                    selected.length < data?.data?.length
+                                    selectedAssign.length > 0 &&
+                                    selectedAssign.length < data?.data?.length
                                   }
                                   checked={
                                     data?.data?.length > 0 &&
-                                    selected.length === data?.data?.length
+                                    selectedAssign.length === data?.data?.length
                                   }
-                                  onChange={handleSelectAllClick}
+                                  onChange={handleSelectAllAssign}
                                   sx={{
                                     color: "#D0D5DD",
                                     "&.Mui-checked ": {
@@ -397,7 +429,7 @@ export const AssignCandidate = () => {
                           </TableHead>
                           <TableBody>
                             {assignedCandidateList?.data?.map((row, index) => {
-                              const isAssignSelected = isSelected(row);
+                              const isAssignSelected = isSelectedAssign(row);
                               return (
                                 <TableRow
                                   hover
@@ -415,7 +447,7 @@ export const AssignCandidate = () => {
                                       color="primary"
                                       checked={isAssignSelected}
                                       onClick={(event) =>
-                                        handleClick(event, row)
+                                        handleClickAssign(event, row)
                                       }
                                       sx={{
                                         color: "#D0D5DD",
@@ -443,7 +475,7 @@ export const AssignCandidate = () => {
                     </Paper>
                     <div className="flex justify-between items-center">
                       <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data?.totalCount || 0} results found
+                        Showing {data.data.length || 0} results found
                       </p>
                       <Pagination
                         count={PAGECOUNT}
