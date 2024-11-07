@@ -402,7 +402,7 @@ export const DashBoardData = {
   jobApllied: 0,
   jobRejected: 0,
   jobInterview: 0,
-  personalInfo: 20,
+  personalInfo: 130,
   prifileCompititionData: [
     {
       pillar2: "Candidate Profile",

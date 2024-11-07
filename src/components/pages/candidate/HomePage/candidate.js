@@ -130,7 +130,7 @@ export const Candidate = () => {
   };
 
   const handlePersonalInfo = () => {
-    console.log("personalInfoId", userData.personalInfoId);
+    console.log("personalInfoId", userData?.personalInfoId);
     if (userData.personalInfo === true) {
       navigate("/digitalTalentProfile/personalinfromation", {
         state: userData?.personalInfoId,

@@ -33,19 +33,18 @@ export const PersonalInformation = () => {
   const [candidateFullName, setCandidateFullName] = useState("");
   const [title, setTitle] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
   const [noticePeriod, setNoticePeriod] = useState("");
   const [summary, setSummary] = useState("");
 
   //Academic Qualification
   const [candidateEducationDetails, setCandidateEducationDetails] = useState([
     {
-      degree: "",
-      fieldOfStudy: "",
-      institution: "",
-      certificate: "",
-      city: "",
-      state: "",
+      degree: null,
+      fieldOfStudy: null,
+      institution: null,
+      certificate: null,
+      city: null,
+      state: null,
     },
   ]);
 
@@ -55,21 +54,20 @@ export const PersonalInformation = () => {
     setCandidateProfessionalDetails,
   ] = useState([
     {
-      projectTitle: "",
-      role: "",
-      yearsOfExperience: "",
-      projectsWorked: null,
-      projectDescription: "",
-      expWithStakeHolders: "",
-      teamHandlingExp: "",
-      teamSize: "",
+      projectTitle: null,
+      role: null,
+      yearsOfExperience: null,
+      projectDescription: null,
+      expWithStakeHolders: null,
+      teamHandlingExp: null,
+      teamSize: null,
     },
   ]);
 
   const [candidateSkillDetails, setCandidateSkillDetails] = useState([
     {
-      technology: "",
-      expertise: "",
+      technology: null,
+      expertise: null,
     },
   ]);
 
@@ -78,12 +76,12 @@ export const PersonalInformation = () => {
     setCandidateEducationDetails([
       ...candidateEducationDetails,
       {
-        degree: "",
-        fieldOfStudy: "",
-        institution: "",
-        certificate: "",
-        city: "",
-        state: "",
+        degree: null,
+        fieldOfStudy: null,
+        institution: null,
+        certificate: null,
+        city: null,
+        state: null,
       },
     ]);
   };
@@ -123,8 +121,8 @@ export const PersonalInformation = () => {
     setCandidateSkillDetails([
       ...candidateSkillDetails,
       {
-        technology: "",
-        expertise: "",
+        technology: null,
+        expertise: null,
       },
     ]);
   };
@@ -168,45 +166,43 @@ export const PersonalInformation = () => {
   //Get Request
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    let personalInfoId = 0;
-    console.log(location.state);
-    if (location.state) {
-      personalInfoId = location.state;
-    }
+    // let personalInfoId = 0;
+    // console.log(location.state);
+    // if (location.state) {
+    //   personalInfoId = location.state;
+    // }
     axiosInstance
-      .get(
-        `/getCandidateDetailsForm?candidateId=${user.userId}&personalInfoId=-1`
-      )
+      .get(`/getCandidateDetailsForm?candidateId=${user.userId}`)
       .then((response) => {
         const data = response.data;
         console.log("CandidateDetailsUpdated:", data);
-        // if (response.data) {
-        //   setResume(data.resume);
-        //   setFile(data.file);
-        //   setCandidateFullName(data.candidateFullName);
-        //   setTitle(data.title);
-        //   setMobileNumber(data.mobileNumber);
-        //   setProfilePicture(data.profilePicture);
-        //   setNoticePeriod(data.noticePeriod);
-        //   setSummary(data.summary);
-        //   setDegree(data.degree);
-        //   setFieldOfStudy(data.fieldOfStudy);
-        //   setInstitution(data.institution);
-        //   setCertificate(data.certificate);
-        //   setCity(data.city);
-        //   setState(data.state);
-        //   setProjectTitle(data.projectTitle);
-        //   setRole(data.role);
-        //   setYearsOfExperience(data.yearsOfExperience);
-        //   // setProjectsWorked(data.projectsWorked);
-        //   setProjectDescription(data.projectDescription);
-        //   setExpWithStakeHolders(data.expWithStakeHolders);
-        //   setTeamHandlingExp(data.teamHandlingExp);
-        //   setTeamSize(data.teamSize);
-        //   setCandidateSkillDetails(data.candidateSkillDetails);
-        //   setTechnology(data.technology);
-        //   setExpertise(data.expertise);
-        // }
+        if (response.data) {
+          setCandidateFullName(
+            data.candidateFullName !== null ? data.candidateFullName : ""
+          );
+          setTitle(data.title !== null ? data.title : "");
+          setMobileNumber(data.mobileNumber !== null ? data.mobileNumber : "");
+          setNoticePeriod(data.noticePeriod !== null ? data.noticePeriod : "");
+          setSummary(data.summary !== null ? data.summary : "");
+        }
+        if (
+          data.candidateEducationDetails &&
+          data.candidateEducationDetails.length > 0
+        ) {
+          setCandidateEducationDetails(data.candidateEducationDetails);
+        }
+        if (
+          data.candidateProfessionalDetails &&
+          data.candidateProfessionalDetails.length > 0
+        ) {
+          setCandidateProfessionalDetails(data.candidateProfessionalDetails);
+        }
+        if (
+          data.candidateProfessionalDetails &&
+          data.candidateProfessionalDetails.length > 0
+        ) {
+          setCandidateSkillDetails(data.candidateSkillDetails);
+        }
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -218,14 +214,11 @@ export const PersonalInformation = () => {
     e.preventDefault();
     console.log(
       "PersonalInfo:---",
-      file.name,
-      resume,
       candidateFullName,
       title,
       mobileNumber,
-      summary,
-      profilePicture,
       noticePeriod,
+      summary,
       candidateEducationDetails,
       candidateProfessionalDetails,
       candidateSkillDetails
@@ -233,18 +226,19 @@ export const PersonalInformation = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     await axiosInstance
       .post("/saveCandidateDetailsForm?candidateId=" + user.userId, {
-        resume,
         candidateFullName,
         title,
         mobileNumber,
-        summary,
-        profilePicture,
         noticePeriod,
+        summary,
         candidateEducationDetails,
         candidateProfessionalDetails,
         candidateSkillDetails,
       })
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        // navigate("/candidate");
+      })
       .catch((e) => console.log(e));
   };
 
@@ -446,7 +440,6 @@ export const PersonalInformation = () => {
             </div>
 
             {/* education */}
-
             <div className="mt-6">
               <p
                 style={{
@@ -457,182 +450,173 @@ export const PersonalInformation = () => {
               >
                 Academic Qualification
               </p>
-              {candidateEducationDetails.map((value, index) => (
-                <div key={index} className="mt-5">
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
-                    <div className="grid grid-flow-row">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Degree
-                      </p>
-                      <TextField
-                        required
-                        fullWidth
-                        size="small"
-                        variant="outlined"
-                        placeholder="Enter degree..."
-                        name="degree"
-                        value={value.degree || null}
-                        onChange={(e) => handleEducationChange(e, index)}
-                      />
-                    </div>
-                    <div className="grid grid-flow-row">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Field of Study
-                      </p>
-                      <TextField
-                        required
-                        fullWidth
-                        size="small"
-                        variant="outlined"
-                        placeholder="Enter study..."
-                        name="fieldOfStudy"
-                        value={value.fieldOfStudy || null}
-                        onChange={(e) => handleEducationChange(e, index)}
-                      />
-                    </div>
-                    <div className="grid grid-flow-row">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Institution
-                      </p>
-                      <TextField
-                        required
-                        fullWidth
-                        size="small"
-                        variant="outlined"
-                        placeholder="Enter institution..."
-                        name="institution"
-                        value={value.institution || null}
-                        onChange={(e) => handleEducationChange(e, index)}
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-5">
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}
-                        >
-                          City
-                        </p>
-                        <TextField
-                          required
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                          placeholder="Enter city..."
-                          name="city"
-                          value={value.city || null}
-                          onChange={(e) => handleEducationChange(e, index)}
-                        />
+              <div>
+                <div>
+                  {candidateEducationDetails?.map((value, index) => (
+                    <div key={index} className="mt-5">
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Degree
+                          </p>
+                          <TextField
+                            required
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                            placeholder="Enter degree..."
+                            name="degree"
+                            value={value.degree || null}
+                            onChange={(e) => handleEducationChange(e, index)}
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Field of Study
+                          </p>
+                          <TextField
+                            required
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                            placeholder="Enter study..."
+                            name="fieldOfStudy"
+                            value={value.fieldOfStudy || null}
+                            onChange={(e) => handleEducationChange(e, index)}
+                          />
+                        </div>
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Institution
+                          </p>
+                          <TextField
+                            required
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                            placeholder="Enter institution..."
+                            name="institution"
+                            value={value.institution || null}
+                            onChange={(e) => handleEducationChange(e, index)}
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-5">
+                          <div className="grid grid-flow-row">
+                            <p
+                              style={{
+                                color: "#344054",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              City
+                            </p>
+                            <TextField
+                              required
+                              fullWidth
+                              size="small"
+                              variant="outlined"
+                              placeholder="Enter city..."
+                              name="city"
+                              value={value.city || null}
+                              onChange={(e) => handleEducationChange(e, index)}
+                            />
+                          </div>
+                          <div className="grid grid-flow-row">
+                            <p
+                              style={{
+                                color: "#344054",
+                                fontSize: 14,
+                                fontWeight: 500,
+                              }}
+                            >
+                              State
+                            </p>
+                            <TextField
+                              required
+                              fullWidth
+                              size="small"
+                              variant="outlined"
+                              placeholder="Enter state..."
+                              name="state"
+                              value={value.state || null}
+                              onChange={(e) => handleEducationChange(e, index)}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div className="grid grid-flow-row">
-                        <p
-                          style={{
-                            color: "#344054",
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}
-                        >
-                          State
-                        </p>
-                        <TextField
-                          required
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                          placeholder="Enter state..."
-                          name="state"
-                          value={value.state || null}
-                          onChange={(e) => handleEducationChange(e, index)}
-                        />
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
+                        <div className="grid grid-flow-row">
+                          <p
+                            style={{
+                              color: "#344054",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Any Certificates
+                          </p>
+
+                          <select
+                            id="countries"
+                            name="certificate"
+                            onChange={(e) => handleEducationChange(e, index)}
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          >
+                            {anyCertificates.map((option) => (
+                              <option value={option.value}>
+                                {option.value || null}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-5">
-                    <div className="grid grid-flow-row">
-                      <p
-                        style={{
-                          color: "#344054",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        Any Certificates
-                      </p>
-
-                      <select
-                        id="countries"
-                        name="certificate"
-                        onChange={(e) => handleEducationChange(e, index)}
-                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option selected></option>
-                        {anyCertificates.map((option) => (
-                          <option value={option.value}>
-                            {option.value || null}
-                          </option>
-                        ))}
-                      </select>
-
-                      {/* <Autocomplete
-                        disablePortal
-                        size="small"
-                        fullWidth
-                        options={anyCertificates.map((option) => option.label)}
-                        name="certificate"
-                        value={value.certificate}
-                        onChange={(e) => handleEducationChange(e, index)}
-                        renderInput={(params) => (
-                          <TextField {...params} placeholder="Select" />
-                        )}
-                      /> */}
-                    </div>
-                  </div>
-                  {candidateEducationDetails.length > 1 && (
-                    <div className="pt-3 flex justify-end">
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        style={{
-                          color: "#EB5757",
-                          borderColor: "#E6E6E6",
-                          textTransform: "none",
-                        }}
-                        onClick={() => removeEducation(index)}
-                        startIcon={
-                          <IoMdRemoveCircleOutline
+                      {candidateEducationDetails.length > 1 && (
+                        <div className="pt-3 flex justify-end">
+                          <Button
+                            variant="outlined"
+                            size="small"
                             style={{
                               color: "#EB5757",
+                              borderColor: "#E6E6E6",
+                              textTransform: "none",
                             }}
-                          />
-                        }
-                      >
-                        Remove
-                      </Button>
+                            onClick={() => removeEducation(index)}
+                            startIcon={
+                              <IoMdRemoveCircleOutline
+                                style={{
+                                  color: "#EB5757",
+                                }}
+                              />
+                            }
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
+              </div>
+
               <div className="py-3 flex justify-end">
                 <Button
                   variant="outlined"
@@ -663,7 +647,7 @@ export const PersonalInformation = () => {
               </p>
 
               <div>
-                {candidateProfessionalDetails.map((val, index) => (
+                {candidateProfessionalDetails?.map((val, index) => (
                   <div key={index}>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
                       <div className="grid grid-flow-row">
@@ -746,7 +730,6 @@ export const PersonalInformation = () => {
                           onChange={(e) => handleProfessionalChange(e, index)}
                           class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                          <option selected></option>
                           {yes_No.map((option) => (
                             <option value={option.value}>
                               {option.value || null}
@@ -765,12 +748,10 @@ export const PersonalInformation = () => {
                           Do you have team handling experience?
                         </p>
                         <select
-                          id="countries"
                           name="teamHandlingExp"
                           onChange={(e) => handleProfessionalChange(e, index)}
                           class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                          <option selected></option>
                           {yes_No.map((option) => (
                             <option value={option.value}>
                               {option.value || null}
@@ -794,7 +775,6 @@ export const PersonalInformation = () => {
                           onChange={(e) => handleProfessionalChange(e, index)}
                           class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                          <option selected></option>
                           {teamHandSize.map((option) => (
                             <option value={option.value}>
                               {option.value || null}
@@ -843,7 +823,7 @@ export const PersonalInformation = () => {
               >
                 Skills
               </p>
-              {candidateSkillDetails.map((val, index) => (
+              {candidateSkillDetails?.map((val, index) => (
                 <div className="mt-3" key={index}>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-5 mt-3">
                     <div className="grid grid-flow-row">

@@ -87,10 +87,6 @@ export const skills = [
 
 export const skillLevel = [
   {
-    label: "Basic",
-    value: "Basic",
-  },
-  {
     label: "Expert",
     value: "Expert",
   },
