@@ -50,9 +50,7 @@ export const AssessmentListView = () => {
     const user = JSON.parse(localStorage.getItem("token"));
     setLoading(true);
     axiosInstance
-      .get(
-        `/getAssessments?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`
-      )
+      .get(`/getBatchList?clientId=${user.userId}&pageNo=${pageNO}&pageSize=5`)
       .then((data) => {
         console.log(data);
         setData(data.data);
@@ -75,7 +73,7 @@ export const AssessmentListView = () => {
     axiosInstance
       .get(`/getBatchList?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
-        console.log(data);
+        console.log("assessmentsList Data", data);
         setData(data.data);
         setPage(data?.pageNo || 1);
         setLoading(false);
@@ -254,7 +252,7 @@ export const AssessmentListView = () => {
                             textTransform: "none",
                             marginRight: 10,
                           }}
-                          onClick={() => navigate("/assignCandidates")}
+                          onClick={() => navigate("/selectAssesment")}
                         >
                           Add New Batch
                         </Button>

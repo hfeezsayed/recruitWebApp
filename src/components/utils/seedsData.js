@@ -110,10 +110,6 @@ export const specificCertification = [
 
 export const OfficialNoticePeriod = [
   {
-    label: "Select",
-    value: "Select",
-  },
-  {
     label: "15 Days",
     value: "15 Days",
   },
@@ -137,10 +133,6 @@ export const OfficialNoticePeriod = [
 
 export const anyCertificates = [
   {
-    label: "Select",
-    value: "Select",
-  },
-  {
     label: "AWS",
     value: "AWS",
   },
@@ -151,6 +143,10 @@ export const anyCertificates = [
   {
     label: "IBM",
     value: "IBM",
+  },
+  {
+    label: "CERT",
+    value: "CERT",
   },
   {
     label: "Salesforce",
@@ -164,10 +160,6 @@ export const anyCertificates = [
 
 export const yes_No = [
   {
-    label: "Select",
-    value: "Select",
-  },
-  {
     label: "Yes",
     value: "Yes",
   },
@@ -178,10 +170,6 @@ export const yes_No = [
 ];
 
 export const teamHandSize = [
-  {
-    label: "Select",
-    value: "Select",
-  },
   {
     label: "NO",
     value: "NO",
@@ -206,16 +194,8 @@ export const teamHandSize = [
 
 export const techTools = [
   {
-    label: "Select",
-    value: "Select",
-  },
-  {
     label: "Python",
     value: "Python",
-  },
-  {
-    label: "Java",
-    value: "Java",
   },
   {
     label: "Java",
@@ -281,8 +261,8 @@ export const techTools = [
 
 export const expertiseType = [
   {
-    label: "Select",
-    value: "Select",
+    label: "Basic",
+    value: "Basic",
   },
   {
     label: "Expert",

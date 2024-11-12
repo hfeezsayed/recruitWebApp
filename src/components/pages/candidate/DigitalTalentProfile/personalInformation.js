@@ -29,6 +29,7 @@ export const PersonalInformation = () => {
   const location = useLocation();
   //CandidatesDeatils
   const [resume, setResume] = useState(null);
+  const [candidateId, setCandidateId] = useState();
   const [file, setFile] = useState("");
   const [candidateFullName, setCandidateFullName] = useState("");
   const [title, setTitle] = useState("");
@@ -59,7 +60,7 @@ export const PersonalInformation = () => {
       yearsOfExperience: null,
       projectDescription: null,
       expWithStakeHolders: null,
-      teamHandlingExp: null,
+      teamHandlingExp: true,
       teamSize: null,
     },
   ]);
@@ -94,27 +95,48 @@ export const PersonalInformation = () => {
 
   //handle Change for skills
   const handleChangeSkill = (e, value, i) => {
+    // const { name, value } = e.target;
+    // const onChangeVal = [...candidateSkillDetails];
+    // onChangeVal[index][name] = value;
+    // setCandidateSkillDetails(onChangeVal);
+
     console.log(value);
     let newFormValues = [...candidateSkillDetails];
     newFormValues[i][e] = value;
     setCandidateSkillDetails(newFormValues);
   };
 
-  //handle Change for skills
-  const handleEducationChange = (e, index) => {
+  //handle Change for Academic Qualification start
+  //for Select change
+  const handleEducationChange = (e, value, i) => {
+    let newFormValues = [...candidateEducationDetails];
+    newFormValues[i][e] = value;
+    setCandidateEducationDetails(newFormValues);
+  };
+  //for input change
+  const handleEducationInputChange = (e, index) => {
     const { name, value } = e.target;
     const onChangeVal = [...candidateEducationDetails];
     onChangeVal[index][name] = value;
     setCandidateEducationDetails(onChangeVal);
   };
+  //handle Change for Academic Qualification end
 
-  //handle Change for candaidate professional details
+  //handle Change for candaidate Professional Experience start
+  //for input change
   const handleProfessionalChange = (e, index) => {
     const { name, value } = e.target;
     const onChangeVal = [...candidateProfessionalDetails];
     onChangeVal[index][name] = value;
     setCandidateProfessionalDetails(onChangeVal);
   };
+  //for Select change
+  const handleProfessionalSelectChange = (e, value, i) => {
+    let newFormValues = [...candidateProfessionalDetails];
+    newFormValues[i][e] = value;
+    setCandidateProfessionalDetails(newFormValues);
+  };
+  //handle Change for candaidate Professional Experience start
 
   //addSkillsRow
   const addSkillsRow = () => {
@@ -166,13 +188,15 @@ export const PersonalInformation = () => {
   //Get Request
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
-    // let personalInfoId = 0;
-    // console.log(location.state);
-    // if (location.state) {
-    //   personalInfoId = location.state;
-    // }
+    let personalInfoId = 0;
+    console.log(location.state);
+    if (location.state) {
+      personalInfoId = location.state;
+    }
     axiosInstance
-      .get(`/getCandidateDetailsForm?candidateId=${user.userId}`)
+      .get(
+        `/getCandidateDetailsForm?candidateId=${user.userId}&personalInfoId=-1`
+      )
       .then((response) => {
         const data = response.data;
         console.log("CandidateDetailsUpdated:", data);
@@ -224,8 +248,9 @@ export const PersonalInformation = () => {
       candidateSkillDetails
     );
     const user = JSON.parse(localStorage.getItem("token"));
+    console.log("userId---", user);
     await axiosInstance
-      .post("/saveCandidateDetailsForm?candidateId=" + user.userId, {
+      .post(`/saveCandidateDetailsForm?candidateId=${user.userId}`, {
         candidateFullName,
         title,
         mobileNumber,
@@ -403,6 +428,15 @@ export const PersonalInformation = () => {
                 >
                   Official Notice Period
                 </p>
+                {/* <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  variant="outlined"
+                  placeholder="Notice period"
+                  value={noticePeriod || null}
+                  onChange={(e) => setNoticePeriod(e.target.value)}
+                /> */}
                 <Autocomplete
                   disablePortal
                   size="small"
@@ -473,7 +507,9 @@ export const PersonalInformation = () => {
                             placeholder="Enter degree..."
                             name="degree"
                             value={value.degree || null}
-                            onChange={(e) => handleEducationChange(e, index)}
+                            onChange={(e) =>
+                              handleEducationInputChange(e, index)
+                            }
                           />
                         </div>
                         <div className="grid grid-flow-row">
@@ -494,7 +530,9 @@ export const PersonalInformation = () => {
                             placeholder="Enter study..."
                             name="fieldOfStudy"
                             value={value.fieldOfStudy || null}
-                            onChange={(e) => handleEducationChange(e, index)}
+                            onChange={(e) =>
+                              handleEducationInputChange(e, index)
+                            }
                           />
                         </div>
                         <div className="grid grid-flow-row">
@@ -515,7 +553,9 @@ export const PersonalInformation = () => {
                             placeholder="Enter institution..."
                             name="institution"
                             value={value.institution || null}
-                            onChange={(e) => handleEducationChange(e, index)}
+                            onChange={(e) =>
+                              handleEducationInputChange(e, index)
+                            }
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-5">
@@ -537,7 +577,9 @@ export const PersonalInformation = () => {
                               placeholder="Enter city..."
                               name="city"
                               value={value.city || null}
-                              onChange={(e) => handleEducationChange(e, index)}
+                              onChange={(e) =>
+                                handleEducationInputChange(e, index)
+                              }
                             />
                           </div>
                           <div className="grid grid-flow-row">
@@ -558,7 +600,9 @@ export const PersonalInformation = () => {
                               placeholder="Enter state..."
                               name="state"
                               value={value.state || null}
-                              onChange={(e) => handleEducationChange(e, index)}
+                              onChange={(e) =>
+                                handleEducationInputChange(e, index)
+                              }
                             />
                           </div>
                         </div>
@@ -574,19 +618,25 @@ export const PersonalInformation = () => {
                           >
                             Any Certificates
                           </p>
-
-                          <select
-                            id="countries"
-                            name="certificate"
-                            onChange={(e) => handleEducationChange(e, index)}
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          >
-                            {anyCertificates.map((option) => (
-                              <option value={option.value}>
-                                {option.value || null}
-                              </option>
-                            ))}
-                          </select>
+                          <Autocomplete
+                            disablePortal
+                            size="small"
+                            fullWidth
+                            options={anyCertificates.map(
+                              (option) => option.label
+                            )}
+                            value={value.certificate || null}
+                            onChange={(e, value) =>
+                              handleEducationChange("certificate", value, index)
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Select"
+                                required
+                              />
+                            )}
+                          />
                         </div>
                       </div>
                       {candidateEducationDetails.length > 1 && (
@@ -724,18 +774,37 @@ export const PersonalInformation = () => {
                           Have you had experience with stakeholders for business
                           goals?
                         </p>
-                        <select
-                          id="countries"
+                        <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={yes_No.map((option) => option.label)}
+                          value={val.expWithStakeHolders || null}
+                          onChange={(e, value) =>
+                            handleProfessionalSelectChange(
+                              "expWithStakeHolders",
+                              value,
+                              index
+                            )
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
+                          )}
+                        />
+                        {/* <TextField
+                          required
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                          placeholder="yes no..."
                           name="expWithStakeHolders"
+                          value={val.expWithStakeHolders || null}
                           onChange={(e) => handleProfessionalChange(e, index)}
-                          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          {yes_No.map((option) => (
-                            <option value={option.value}>
-                              {option.value || null}
-                            </option>
-                          ))}
-                        </select>
+                        /> */}
                       </div>
                       <div className="grid grid-flow-row">
                         <p
@@ -747,17 +816,40 @@ export const PersonalInformation = () => {
                         >
                           Do you have team handling experience?
                         </p>
-                        <select
+                        <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={yes_No.map((option) => option.label)}
+                          value={
+                            val.teamHandlingExp === true ? "Yes" : "No" || null
+                          }
+                          onChange={(e, value) =>
+                            handleProfessionalSelectChange(
+                              "teamHandlingExp",
+                              value,
+                              index
+                            )
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
+                          )}
+                        />
+
+                        {/* <TextField
+                          required
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                          placeholder="true..."
                           name="teamHandlingExp"
+                          value={val.teamHandlingExp ? "Yes" : "NO" || null}
                           onChange={(e) => handleProfessionalChange(e, index)}
-                          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          {yes_No.map((option) => (
-                            <option value={option.value}>
-                              {option.value || null}
-                            </option>
-                          ))}
-                        </select>
+                        /> */}
                       </div>
                       <div className="grid grid-flow-row">
                         <p
@@ -767,20 +859,41 @@ export const PersonalInformation = () => {
                             fontWeight: 500,
                           }}
                         >
-                          Please select the team size
+                          Please specify the team size?
                         </p>
-                        <select
-                          id="countries"
+                        <TextField
+                          required
+                          fullWidth
+                          type="number"
+                          size="small"
+                          variant="outlined"
+                          placeholder="Team Size..."
                           name="teamSize"
+                          value={val.teamSize || null}
                           onChange={(e) => handleProfessionalChange(e, index)}
-                          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          {teamHandSize.map((option) => (
-                            <option value={option.value}>
-                              {option.value || null}
-                            </option>
-                          ))}
-                        </select>
+                        />
+
+                        {/* <Autocomplete
+                          disablePortal
+                          size="small"
+                          fullWidth
+                          options={teamHandSize.map((option) => option.label)}
+                          value={val.teamSize || null}
+                          onChange={(e, value) =>
+                            handleProfessionalSelectChange(
+                              "teamSize",
+                              value,
+                              index
+                            )
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder="Select"
+                              required
+                            />
+                          )}
+                        /> */}
                       </div>
                     </div>
                     <div className="grid grid-flow-row pt-5 pb-8">

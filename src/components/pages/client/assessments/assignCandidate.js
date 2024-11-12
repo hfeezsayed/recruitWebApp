@@ -36,8 +36,8 @@ export const AssignCandidate = () => {
   const options = ["Assign Candidate", "Add Candidate"];
 
   const [selected, setSelected] = React.useState([]);
-  const [selectedAssign, setSelectedAssign] = React.useState([]);
   const [data, setData] = useState(assignCandidateData);
+
   const [page, setPage] = React.useState(1);
 
   const [allocateAssignment, setAllocateAssignment] = useState(false);
@@ -48,7 +48,7 @@ export const AssignCandidate = () => {
   const [candidateNo, setCandidateNo] = useState("");
   const [candidateLinkedin, setCandidateLinkedin] = useState("");
   const [candidateResume, setCandidateResume] = useState();
-  const [assignedCandidateList, setAssignedCandidateList] = useState([]);
+
   const { batchId } = useLocation().state || {};
 
   const [viewData, setViewData] = useState();
@@ -89,37 +89,6 @@ export const AssignCandidate = () => {
     setSelected([]);
   };
 
-  //for assign table checkbox
-  const handleClickAssign = (event, row) => {
-    const selectedIndex = selectedAssign.indexOf(row);
-    let newSelectedAssign = [];
-
-    if (selectedIndex === -1) {
-      newSelectedAssign = newSelectedAssign.concat(selectedAssign, row);
-    } else if (selectedIndex === 0) {
-      newSelectedAssign = newSelectedAssign.concat(selectedAssign.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelectedAssign = newSelectedAssign.concat(selectedAssign.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedAssign = newSelectedAssign.concat(
-        selectedAssign.slice(0, selectedIndex),
-        selectedAssign.slice(selectedIndex + 1)
-      );
-    }
-    setSelectedAssign(newSelectedAssign);
-  };
-
-  const isSelectedAssign = (row) => selectedAssign.indexOf(row) !== -1;
-
-  const handleSelectAllAssign = (event) => {
-    if (event.target.checked) {
-      const newSelectedAssign = data?.data || [];
-      setSelectedAssign(newSelectedAssign);
-      return;
-    }
-    setSelectedAssign([]);
-  };
-
   // pagination
   const pageChangeHandle = (pageNO) => {
     const user = JSON.parse(localStorage.getItem("token"));
@@ -129,7 +98,7 @@ export const AssignCandidate = () => {
       )
       .then((data) => {
         console.log(data);
-        setAssignedCandidateList(data.data);
+        setData(data.data);
         setPage(data?.pageNo || 0);
       })
       .catch((e) => {
@@ -145,27 +114,15 @@ export const AssignCandidate = () => {
   const PAGECOUNT =
     data?.totalCount > 0 ? Math.ceil(data?.totalCount / data?.pageSize) : 1;
 
+  //Candidate list data
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("token"));
     axiosInstance
       .get(`/getBatchCandidates?clientId=${user.userId}&pageNo=1&pageSize=5`)
       .then((data) => {
-        console.log("getAllCandidates", data);
-        setAssignedCandidateList(data.data);
-        setPage(data?.pageNo || 1);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("token"));
-    axiosInstance
-      .get(`/getAssessments?clientId=${user.userId}&pageNo=1&pageSize=20`)
-      .then((data) => {
-        console.log("assessmentListData", data);
+        console.log("Assign candidates----", data);
         setData(data.data);
+        setPage(data?.pageNo || 1);
       })
       .catch((e) => {
         console.log(e);
@@ -185,6 +142,7 @@ export const AssignCandidate = () => {
   });
 
   const handleAddAsignment = async () => {
+    //selectAssesment
     const user = JSON.parse(localStorage.getItem("token"));
     const batchName = location?.state?.batchName;
     const selectedAssignments = location?.state?.selected;
@@ -220,99 +178,6 @@ export const AssignCandidate = () => {
         <div className="w-full min-h-screen">
           <TopNav />
           <div className="p-8">
-            <p style={{ color: "#101828", fontSize: 22, fontWeight: 600 }}>
-              Create New Assignment Batch
-            </p>
-            <p style={{ color: "#475467", fontSize: 14 }}>
-              Select the assessments that you want to allocate to the candidate.
-            </p>
-            <div>
-              <div className="py-5">
-                <p style={{ color: "#344054", fontSize: 14, fontWeight: 500 }}>
-                  Batch Name
-                </p>
-                <TextField
-                  fullWidth
-                  size="small"
-                  placeholder="Type..."
-                  value={location.state?.batchName}
-                />
-              </div>
-              <Box sx={{ width: "100%" }}>
-                <Paper sx={{ width: "100%", mb: 2 }}>
-                  <TableContainer sx={{ maxHeight: 275 }}>
-                    <Table stickyHeader>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            padding="checkbox"
-                            sx={{ bgcolor: "#F8F9FA" }}
-                          >
-                            <Checkbox
-                              color="primary"
-                              indeterminate={
-                                selected.length > 0 &&
-                                selected.length < data?.data?.length
-                              }
-                              checked={
-                                data?.data?.length > 0 &&
-                                selected.length === data?.data?.length
-                              }
-                              onChange={handleSelectAllClick}
-                              sx={{
-                                color: "#D0D5DD",
-                                "&.Mui-checked ": {
-                                  color: "#66B2B2",
-                                },
-                              }}
-                            />
-                          </TableCell>
-                          <TableCell
-                            sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
-                          >
-                            Assessment Names
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {data?.data?.map((row, index) => {
-                          const isItemSelected = isSelected(row);
-                          return (
-                            <TableRow
-                              hover
-                              onClick={(event) => handleClick(event, row)}
-                              role="checkbox"
-                              aria-checked={isItemSelected}
-                              tabIndex={-1}
-                              key={index}
-                              selected={isItemSelected}
-                              sx={{ cursor: "pointer" }}
-                            >
-                              <TableCell padding="checkbox">
-                                <Checkbox
-                                  color="primary"
-                                  checked={isItemSelected}
-                                  sx={{
-                                    color: "#D0D5DD",
-                                    "&.Mui-checked": {
-                                      color: "#66B2B2",
-                                    },
-                                  }}
-                                />
-                              </TableCell>
-                              <TableCell sx={{ color: "#475467" }}>
-                                {row.name}
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Paper>
-              </Box>
-            </div>
-
             {/* select */}
             <div className="py-5">
               <p style={{ color: "#475467", fontSize: 20, fontWeight: 500 }}>
@@ -387,21 +252,19 @@ export const AssignCandidate = () => {
                             <TableRow>
                               <TableCell
                                 padding="checkbox"
-                                sx={{
-                                  bgcolor: "#F8F9FA",
-                                }}
+                                sx={{ bgcolor: "#F8F9FA" }}
                               >
                                 <Checkbox
                                   color="primary"
                                   indeterminate={
-                                    selectedAssign.length > 0 &&
-                                    selectedAssign.length < data?.data?.length
+                                    selected.length > 0 &&
+                                    selected.length < data?.data?.length
                                   }
                                   checked={
                                     data?.data?.length > 0 &&
-                                    selectedAssign.length === data?.data?.length
+                                    selected.length === data?.data?.length
                                   }
-                                  onChange={handleSelectAllAssign}
+                                  onChange={handleSelectAllClick}
                                   sx={{
                                     color: "#D0D5DD",
                                     "&.Mui-checked ": {
@@ -428,27 +291,23 @@ export const AssignCandidate = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {assignedCandidateList?.data?.map((row, index) => {
-                              const isAssignSelected = isSelectedAssign(row);
+                            {data?.data?.map((row, index) => {
+                              const isItemSelected = isSelected(row);
                               return (
                                 <TableRow
                                   hover
+                                  onClick={(event) => handleClick(event, row)}
                                   role="checkbox"
-                                  aria-checked={isAssignSelected}
+                                  aria-checked={isItemSelected}
                                   tabIndex={-1}
                                   key={index}
-                                  selected={isAssignSelected}
-                                  sx={{
-                                    cursor: "pointer",
-                                  }}
+                                  selected={isItemSelected}
+                                  sx={{ cursor: "pointer" }}
                                 >
                                   <TableCell padding="checkbox">
                                     <Checkbox
                                       color="primary"
-                                      checked={isAssignSelected}
-                                      onClick={(event) =>
-                                        handleClickAssign(event, row)
-                                      }
+                                      checked={isItemSelected}
                                       sx={{
                                         color: "#D0D5DD",
                                         "&.Mui-checked": {
@@ -474,8 +333,13 @@ export const AssignCandidate = () => {
                       </TableContainer>
                     </Paper>
                     <div className="flex justify-between items-center">
-                      <p style={{ color: "#475467", fontSize: 14 }}>
-                        Showing {data.data.length || 0} results found
+                      <p
+                        style={{
+                          color: "#475467",
+                          fontSize: 14,
+                        }}
+                      >
+                        Showing {data?.totalCount} results found
                       </p>
                       <Pagination
                         count={PAGECOUNT}
@@ -730,7 +594,7 @@ export const AssignCandidate = () => {
                       variant="outlined"
                       style={{ borderColor: "#D0D5DD", color: "#475467" }}
                     >
-                      Cancel
+                      Cancle
                     </Button>
                     <Button
                       onClick={handleAddAsignment}

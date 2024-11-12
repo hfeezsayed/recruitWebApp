@@ -215,6 +215,7 @@ export const Routes = () => {
         <Route path="job/jobDetailCreate" element={<JobDetailCreate />} />
         <Route path="job/jobDetailEdit" element={<JobDetailEdit />} />
         <Route path="job/valuesList" element={<ValuesList />} />
+        <Route path="createAssessment" element={<CreateAssessment />} />
         <Route
           path="job/workValueTemplate"
           element={<JobWorkValueTemplate />}

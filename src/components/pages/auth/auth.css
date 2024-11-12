@@ -1,0 +1,16 @@
+/* Media query start*/
+.main-signup .signup,
+.main-login .login {
+    display: flex;
+}
+@media (max-width: 1024px) {
+  .main-signup .signup,
+  .main-login .login {
+    flex-direction: column-reverse;
+  }
+  .img-fluid {
+    margin: 0 auto;
+  }
+}
+/* Media query end*/
+

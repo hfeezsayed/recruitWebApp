@@ -22,13 +22,15 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
     <Dialog
       open={open}
       onClose={setClose}
-      PaperProps={{ sx: { minWidth: "55%" } }}>
+      PaperProps={{ sx: { minWidth: "55%" } }}
+    >
       <DialogTitle sx={{ color: "#141414", fontWeight: 500 }}>
         Batch Details
       </DialogTitle>
       <IconButton
         onClick={setClose}
-        style={{ position: "absolute", top: 10, right: 10 }}>
+        style={{ position: "absolute", top: 10, right: 10 }}
+      >
         <IoIosCloseCircleOutline />
       </IconButton>
       <Divider />
@@ -61,7 +63,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                 return (
                   <p
                     key={index}
-                    style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}>
+                    style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}
+                  >
                     {row.name}
                   </p>
                 );
@@ -89,7 +92,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Candidate Names
                         </TableCell>
                         <TableCell
@@ -98,7 +102,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Email Id
                         </TableCell>
                         <TableCell
@@ -107,7 +112,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                             color: "#101828",
                             border: 1,
                             borderColor: "#D0D5DD50",
-                          }}>
+                          }}
+                        >
                           Mobile Number
                         </TableCell>
                       </TableRow>
@@ -118,13 +124,15 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                           <TableRow
                             key={index}
                             hover
-                            sx={{ cursor: "pointer" }}>
+                            sx={{ cursor: "pointer" }}
+                          >
                             <TableCell
                               sx={{
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.name}
                             </TableCell>
                             <TableCell
@@ -132,7 +140,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.emailId}
                             </TableCell>
                             <TableCell
@@ -140,7 +149,8 @@ export const BatchDetailEditPopUp = ({ data, setClose, open }) => {
                                 color: "#475467",
                                 border: 1,
                                 borderColor: "#D0D5DD50",
-                              }}>
+                              }}
+                            >
                               {row.mobileNo}
                             </TableCell>
                           </TableRow>

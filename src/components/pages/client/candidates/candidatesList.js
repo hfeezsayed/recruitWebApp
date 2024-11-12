@@ -125,6 +125,7 @@ export const CandidatesList = () => {
       )
       .then((data) => {
         console.log(data.data);
+        navigate("/job/createJob");
       })
       .catch((e) => console.log(e));
   };

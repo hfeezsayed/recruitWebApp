@@ -29,6 +29,7 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
     axiosInstance
       .post(`/saveClientAssessmentBatch?&clientId=${user?.userId}`, data)
       .then((response) => {
+        console.log("Batch Details Modal", response);
         navigate("/assessmentsList");
       })
       .catch((e) => console.log(e));
@@ -69,19 +70,19 @@ export const AssignCandidatePopUp = ({ data, setClose, modelType, open }) => {
             <div className="flex justify-between items-center">
               <p style={{ color: "#1A1A1A", fontSize: 18, fontWeight: 500 }}>
                 Assignment selected for this batch
-              </p>{" "}
+              </p>
               <Button style={{ color: "#5FAEDA", textTransform: "none" }}>
                 Edit
               </Button>
             </div>
             <div className="grid grid-flow-row gap-1">
-              {data?.selectedAssignment?.map((row, index) => {
+              {data?.selectedAssignments?.map((row, index) => {
                 return (
                   <p
                     key={index}
                     style={{ color: "#505050", fontSize: 16, fontWeight: 500 }}
                   >
-                    {row?.name}
+                    {row.name}
                   </p>
                 );
               })}

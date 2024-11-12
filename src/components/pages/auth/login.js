@@ -8,6 +8,7 @@ import axiosInstance from "../../utils/axiosInstance";
 //notification
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./auth.css";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -73,101 +74,110 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex">
-      {/* notification alert */}
-      <ToastContainer />
-      <div className="h-screen flex items-center min-w-fit">
-        <img src={photo} alt="background" style={{ height: "96%" }} />
-      </div>
-      <div className="w-full items-center justify-center grid grid-flow-row text-center">
-        <div className="min-w-96">
-          <div className="flex justify-center py-5">
-            <img src={logo} alt="logo" />
-          </div>
-          <p
-            style={{
-              color: "#101828",
-              fontWeight: 600,
-              fontSize: 30,
-              paddingBottom: 5,
-            }}
-          >
-            Welcome back
-          </p>
-          <p style={{ color: "#475467", fontSize: 16 }}>
-            Welcome back! Please enter your details.
-          </p>
-          <div className="text-start mt-6">
-            <p style={{ color: "#344054", fontSize: 16, paddingBottom: 3 }}>
-              Email
-            </p>
-            <TextField
-              size="small"
-              fullWidth
-              type="email"
-              variant="outlined"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="text-start mt-3">
-            <p style={{ color: "#344054", fontSize: 16, paddingBottom: 3 }}>
-              Password
-            </p>
-            <TextField
-              size="small"
-              fullWidth
-              type="password"
-              variant="outlined"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="grid grid-flow-col justify-between items-center py-3">
-            <FormControlLabel
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-              control={<Checkbox size="small" />}
-              label={
-                <p style={{ color: "#344054", fontWeight: 500, fontSize: 14 }}>
-                  Remember for 30 days
-                </p>
-              }
-            />
-            <a
-              style={{ color: "#008080", fontWeight: 600, fontSize: 16 }}
-              href="forgotpassword"
-            >
-              Forgot password
-            </a>
-          </div>
-          <Button
-            variant="contained"
-            fullWidth
-            style={{
-              backgroundColor: "#008080",
-              color: "#ffffff",
-              textTransform: "none",
-            }}
-            onClick={onSubmit}
-          >
-            Sign in
-          </Button>
-          <p className="my-5">
-            Don’t have an account?{" "}
-            <a
+    <div className="main-login">
+      <div className="login">
+        {/* notification alert */}
+        <ToastContainer />
+        <div className="h-screen flex items-center min-w-fit">
+          <img
+            src={photo}
+            alt="background"
+            style={{ height: "96%" }}
+            className="img-fluid"
+          />
+        </div>
+        <div className="w-full items-center justify-center grid grid-flow-row text-center">
+          <div className="min-w-96">
+            <div className="flex justify-center py-5">
+              <img src={logo} alt="logo" />
+            </div>
+            <p
               style={{
-                color: "#008080",
+                color: "#101828",
                 fontWeight: 600,
-                fontSize: 16,
+                fontSize: 30,
+                paddingBottom: 5,
               }}
-              href="signup"
             >
-              Sign up
-            </a>
-          </p>
+              Welcome back
+            </p>
+            <p style={{ color: "#475467", fontSize: 16 }}>
+              Welcome back! Please enter your details.
+            </p>
+            <div className="text-start mt-6">
+              <p style={{ color: "#344054", fontSize: 16, paddingBottom: 3 }}>
+                Email
+              </p>
+              <TextField
+                size="small"
+                fullWidth
+                type="email"
+                variant="outlined"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="text-start mt-3">
+              <p style={{ color: "#344054", fontSize: 16, paddingBottom: 3 }}>
+                Password
+              </p>
+              <TextField
+                size="small"
+                fullWidth
+                type="password"
+                variant="outlined"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-flow-col justify-between items-center py-3">
+              <FormControlLabel
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                control={<Checkbox size="small" />}
+                label={
+                  <p
+                    style={{ color: "#344054", fontWeight: 500, fontSize: 14 }}
+                  >
+                    Remember for 30 days
+                  </p>
+                }
+              />
+              <a
+                style={{ color: "#008080", fontWeight: 600, fontSize: 16 }}
+                href="forgotpassword"
+              >
+                Forgot password
+              </a>
+            </div>
+            <Button
+              variant="contained"
+              fullWidth
+              style={{
+                backgroundColor: "#008080",
+                color: "#ffffff",
+                textTransform: "none",
+              }}
+              onClick={onSubmit}
+            >
+              Sign in
+            </Button>
+            <p className="my-5">
+              Don’t have an account?{" "}
+              <a
+                style={{
+                  color: "#008080",
+                  fontWeight: 600,
+                  fontSize: 16,
+                }}
+                href="signup"
+              >
+                Sign up
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
