@@ -5,35 +5,35 @@ import { BallSvg } from "../../assets/icon/ballsvg";
 import logo from "../../assets/images/logo.png";
 import candidateLogo from "../../assets/images/xenThub.png";
 import logoNew from "../../assets/images/xenrecruit.png";
+import "./widgets.css";
 
 export const Footer = () => {
   const user = JSON.parse(localStorage.getItem("token"));
   return (
-    <footer className="z-50 relative bg-black bottom-0">
+    <footer className="footer-mobile z-50 relative bg-black bottom-0">
       <div className="mx-20 py-5">
         <div className="flex gap-2 items-center mb-5">
           {console.log(user)}
           {console.log(user.role === "ROLE_CANDIDATE")}
-        { user.role === "ROLE_CANDIDATE" ? (
-        <img
-            src={candidateLogo}
-            alt="logo"
-            style={{ width: 180, marginTop: "20px" }}
-          />
-        ):
-        (
-          <img
-            src={logoNew}
-            alt="logo"
-            style={{ width: 180, marginTop: "20px" }}
-          />
-        )}
+          {user.role === "ROLE_CANDIDATE" ? (
+            <img
+              src={candidateLogo}
+              alt="logo"
+              style={{ width: 180, marginTop: "20px" }}
+            />
+          ) : (
+            <img
+              src={logoNew}
+              alt="logo"
+              style={{ width: 180, marginTop: "20px" }}
+            />
+          )}
         </div>
         <p style={{ fontSize: 16, color: "#B3B3B3" }}>
           Learn more about our mission, vision, and values.
         </p>
       </div>
-      <div className="flex gap-5 mx-20">
+      <div className="service-block flex gap-5 mx-20">
         <a style={{ fontSize: 16, fontWeight: 600, color: "#B3B3B3" }} href="#">
           About Us
         </a>

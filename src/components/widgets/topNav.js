@@ -32,8 +32,8 @@ export const TopNav = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 py-2 w-full">
-      <div className="px-8 flex items-center -z-10">
+    <div className="grid grid-cols-1 py-2 w-full">
+      <div className="">
         {/* <TextField
           size="small"
           placeholder="Search or type"
@@ -50,7 +50,7 @@ export const TopNav = () => {
         /> */}
       </div>
       <div className="grid grid-flow-col justify-end items-center gap-4 px-3">
-        <div className="grid grid-flow-col gap-2 justify-start items-center">
+        <div className="">
           <p style={{ fontSize: 18, fontWeight: 600, color: "#101828" }}>
             Eng (US)
           </p>

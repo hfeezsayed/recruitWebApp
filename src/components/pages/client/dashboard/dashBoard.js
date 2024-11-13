@@ -11,6 +11,7 @@ import { JobSvg } from "../../../../assets/icon/jobsvg";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import "./dashboard.css";
 
 export const DashBoard = () => {
   const navigate = useNavigate();
@@ -77,180 +78,182 @@ export const DashBoard = () => {
               <p style={{ color: "#101828", fontSize: 20, fontWeight: 600 }}>
                 Summary
               </p>
-              <div className="grid grid-rows-1 grid-flow-col gap-4 mt-4">
-                <Card
-                  sx={{
-                    borderRadius: 4,
-                    padding: 1,
-                  }}
-                  // className="w-80 md:w-96 lg:w-96"
-                >
-                  <div className="p-4 gap-2 flex items-center">
-                    <div
-                      style={{
-                        backgroundColor: "#FEF5F0",
-                        borderRadius: 200,
-                        width: 37,
-                        height: 37,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <AuthorizedSvg COLOR="#F78F54" />
-                    </div>
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      Candidates Count
-                    </p>
-                  </div>
-                  <div className="mx-2 border border-[#D0D5DD]" />
-                  <div className="p-4">
-                    <p
-                      style={{
-                        color: "#1D1F2C",
-                        fontSize: 30,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {userData?.candidatesCount || "00"}
-                    </p>
-                    <div className="flex justify-between items-center">
+              <div className="dashboard-cards">
+                <div className="cards-mobile grid grid-rows-1 grid-flow-col gap-4 mt-4">
+                  <Card
+                    sx={{
+                      borderRadius: 4,
+                      padding: 1,
+                    }}
+                    // className="w-80 md:w-96 lg:w-96"
+                  >
+                    <div className="p-4 gap-2 flex items-center">
+                      <div
+                        style={{
+                          backgroundColor: "#FEF5F0",
+                          borderRadius: 200,
+                          width: 37,
+                          height: 37,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AuthorizedSvg COLOR="#F78F54" />
+                      </div>
                       <p
                         style={{
                           color: "#475467",
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: 600,
                         }}
                       >
-                        Candidates created in database
+                        Candidates Count
                       </p>
-                      <Button
-                        onClick={() => navigate("/clientAssignedCandidates")}
+                    </div>
+                    <div className="mx-2 border border-[#D0D5DD]" />
+                    <div className="p-4">
+                      <p
+                        style={{
+                          color: "#1D1F2C",
+                          fontSize: 30,
+                          fontWeight: 600,
+                        }}
                       >
-                        <FaArrowRight style={{ color: "#008080" }} />
-                      </Button>
+                        {userData?.candidatesCount || "00"}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 14,
+                          }}
+                        >
+                          Candidates created in database
+                        </p>
+                        <Button
+                          onClick={() => navigate("/clientAssignedCandidates")}
+                        >
+                          <FaArrowRight style={{ color: "#008080" }} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-                <Card
-                  sx={{
-                    borderRadius: 4,
-                    padding: 1,
-                  }}
-                  //className="w-80 md:w-96 lg:w-96"
-                >
-                  <div className="p-4 gap-2 flex items-center">
-                    <div
-                      style={{
-                        backgroundColor: "#E8F2EC",
-                        borderRadius: 200,
-                        width: 37,
-                        height: 37,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <AssesmentSvg COLOR="#A1CBB3" />
-                    </div>
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      Client Assessments
-                    </p>
-                  </div>
-                  <div className="mx-2 border border-[#D0D5DD]" />
-                  <div className="p-4">
-                    <p
-                      style={{
-                        color: "#1D1F2C",
-                        fontSize: 30,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {userData?.assessmentCount || "00"}
-                    </p>
-                    <div className="flex justify-between items-center">
+                  </Card>
+                  <Card
+                    sx={{
+                      borderRadius: 4,
+                      padding: 1,
+                    }}
+                    //className="w-80 md:w-96 lg:w-96"
+                  >
+                    <div className="p-4 gap-2 flex items-center">
+                      <div
+                        style={{
+                          backgroundColor: "#E8F2EC",
+                          borderRadius: 200,
+                          width: 37,
+                          height: 37,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AssesmentSvg COLOR="#A1CBB3" />
+                      </div>
                       <p
                         style={{
                           color: "#475467",
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: 600,
                         }}
                       >
-                        Client Assessments created
+                        Client Assessments
                       </p>
-                      <Button onClick={() => navigate("/assessmentsList")}>
-                        <FaArrowRight style={{ color: "#008080" }} />
-                      </Button>
                     </div>
-                  </div>
-                </Card>
-                <Card
-                  sx={{
-                    borderRadius: 4,
-                    padding: 1,
-                  }}
-                  //className="w-80 md:w-96 lg:w-96"
-                >
-                  <div className="p-4 gap-2 flex items-center">
-                    <div
-                      style={{
-                        backgroundColor: "#F1EFF7",
-                        borderRadius: 200,
-                        width: 37,
-                        height: 37,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <JobSvg COLOR="#6A0DAD" />
+                    <div className="mx-2 border border-[#D0D5DD]" />
+                    <div className="p-4">
+                      <p
+                        style={{
+                          color: "#1D1F2C",
+                          fontSize: 30,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {userData?.assessmentCount || "00"}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 14,
+                          }}
+                        >
+                          Client Assessments created
+                        </p>
+                        <Button onClick={() => navigate("/assessmentsList")}>
+                          <FaArrowRight style={{ color: "#008080" }} />
+                        </Button>
+                      </div>
                     </div>
-                    <p
-                      style={{
-                        color: "#475467",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      Job Created
-                    </p>
-                  </div>
-                  <div className="mx-2 border border-[#D0D5DD]" />
-                  <div className="p-4">
-                    <p
-                      style={{
-                        color: "#1D1F2C",
-                        fontSize: 30,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {userData?.jobCount || "00"}
-                    </p>
-                    <div className="flex justify-between items-center">
+                  </Card>
+                  <Card
+                    sx={{
+                      borderRadius: 4,
+                      padding: 1,
+                    }}
+                    //className="w-80 md:w-96 lg:w-96"
+                  >
+                    <div className="p-4 gap-2 flex items-center">
+                      <div
+                        style={{
+                          backgroundColor: "#F1EFF7",
+                          borderRadius: 200,
+                          width: 37,
+                          height: 37,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <JobSvg COLOR="#6A0DAD" />
+                      </div>
                       <p
                         style={{
                           color: "#475467",
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: 600,
                         }}
                       >
-                        No. of jobs that have been created
+                        Job Created
                       </p>
-                      <Button onClick={() => navigate("/job/allJobs")}>
-                        <FaArrowRight style={{ color: "#008080" }} />
-                      </Button>
                     </div>
-                  </div>
-                </Card>
+                    <div className="mx-2 border border-[#D0D5DD]" />
+                    <div className="p-4">
+                      <p
+                        style={{
+                          color: "#1D1F2C",
+                          fontSize: 30,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {userData?.jobCount || "00"}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p
+                          style={{
+                            color: "#475467",
+                            fontSize: 14,
+                          }}
+                        >
+                          No. of jobs that have been created
+                        </p>
+                        <Button onClick={() => navigate("/job/allJobs")}>
+                          <FaArrowRight style={{ color: "#008080" }} />
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
               </div>
             </div>
           </div>

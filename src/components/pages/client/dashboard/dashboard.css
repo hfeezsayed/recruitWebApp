@@ -1,0 +1,8 @@
+/* Media query start*/
+@media (max-width: 900px) {
+  .dashboard-cards .cards-mobile {
+    grid-auto-flow:row;
+  }
+}
+/* Media query end*/
+

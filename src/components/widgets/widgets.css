@@ -1,0 +1,7 @@
+/* Media query start*/
+@media (max-width: 900px) {
+  .footer-mobile .service-block {
+    flex-direction: column;
+  }
+}
+/* Media query end*/

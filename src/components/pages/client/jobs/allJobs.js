@@ -73,6 +73,7 @@ import { Footer } from "../../../widgets/footer";
 import NoDataFound from "../../../../assets/images/noData Found.png";
 import { WorkflowOutlinesvg } from "../../../../assets/icon/workflowOutlinesvg";
 import { AllJobDataTokanBan } from "../../../utils/function";
+import "./jobs.css";
 
 export const AllJobs = () => {
   const navigate = useNavigate();
@@ -452,8 +453,8 @@ export const AllJobs = () => {
     <div>
       <div className="flex">
         <ClientSideNav />
-        <div className="w-full min-h-screen">
-          <TopNav />
+        <div className="all-jobs w-full min-h-screen">
+          <TopNav className="top-nav-jobs" />
           {loading === true ? (
             <Spinner />
           ) : (
@@ -524,7 +525,7 @@ export const AllJobs = () => {
                   </div>
                 </div>
               ) : (
-                <div className="p-8 h-full w-full">
+                <div className="all-padding p-8 h-full w-full">
                   <div>
                     <p
                       style={{
@@ -536,8 +537,8 @@ export const AllJobs = () => {
                       Jobs Summary
                     </p>
                   </div>
-                  <div className="py-5 grid grid-flow-col gap-8 justify-between items-center">
-                    <div className="flex gap-5">
+                  <div className="jobs-summary py-5 grid grid-flow-col gap-8 justify-between items-center">
+                    <div className="job-mobile flex gap-5">
                       <ButtonGroup
                         style={{ color: "#008080" }}
                         aria-label="Medium-sized button group"
@@ -612,64 +613,49 @@ export const AllJobs = () => {
                               </InputAdornment>
                             ),
                           }}
-                          sx={{ minWidth: 412 }}
+                          sx={{ minWidth: 360 }}
                         />
                       </div>
-                    </div>
-
-                    <div className="flex gap-4">
-                      {/* <FormControl fullWidth sx={{ minWidth: 130 }}>
-                        <InputLabel id="dropdown-label">Filter Jobs</InputLabel>
-                        <Select
+                      <div className="flex gap-4">
+                        <Button
                           size="small"
-                          label="dropdown-label"
-                          value={filterValue}
-                          onChange={handleFilter}>
-                          <MenuItem value="Active">Active</MenuItem>
-                          <MenuItem value="Closed">Closed</MenuItem>
-                          <MenuItem value="90Days">Past 90 Days</MenuItem>
-                          <MenuItem value="365Days">Past 365 Days</MenuItem>
-                          <MenuItem value="All">All</MenuItem>
-                        </Select>
-                      </FormControl> */}
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        onClick={handleClickFilter}
-                        style={{
-                          color: "#252525",
-                          borderColor: "#D0D5DD",
-                          textTransform: "none",
-                          fontSize: 14,
-                          fontWeight: 500,
-                          borderRadius: 8,
-                          width: 94,
-                          height: 38,
-                        }}
-                        startIcon={<IoFilter style={{ color: "#252525" }} />}
-                      >
-                        Filter
-                      </Button>
-                      <Button
-                        size="small"
-                        onClick={() =>
-                          navigate("/job/createJob", {
-                            state: { new: true, showPopup: true },
-                          })
-                        }
-                        style={{
-                          color: "#008080",
-                          background: "#EAF4F5",
-                          textTransform: "none",
-                          fontSize: 14,
-                          fontWeight: 500,
-                          borderRadius: 8,
-                          width: 120,
-                          height: 38,
-                        }}
-                      >
-                        Create New Job
-                      </Button>
+                          variant="outlined"
+                          onClick={handleClickFilter}
+                          style={{
+                            color: "#252525",
+                            borderColor: "#D0D5DD",
+                            textTransform: "none",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            borderRadius: 8,
+                            width: 94,
+                            height: 38,
+                          }}
+                          startIcon={<IoFilter style={{ color: "#252525" }} />}
+                        >
+                          Filter
+                        </Button>
+                        <Button
+                          size="small"
+                          onClick={() =>
+                            navigate("/job/createJob", {
+                              state: { new: true, showPopup: true },
+                            })
+                          }
+                          style={{
+                            color: "#008080",
+                            background: "#EAF4F5",
+                            textTransform: "none",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            borderRadius: 8,
+                            width: 120,
+                            height: 38,
+                          }}
+                        >
+                          Create New Job
+                        </Button>
+                      </div>
                     </div>
                   </div>
                   <div className="pb-5">
@@ -909,234 +895,236 @@ export const AllJobs = () => {
                     )}
 
                     {currentView === "Card" && (
-                      <div className="grid grid-cols-3 gap-5 py-3">
-                        {filterData?.map((row, index) => {
-                          return (
-                            <div key={index}>
-                              <Card sx={{ borderRadius: 3, px: 1 }}>
-                                <CardContent>
-                                  <div className="flex justify-between gap-2">
-                                    <div className="flex gap-2">
-                                      <p
-                                        style={{
-                                          color: "#101828",
-                                          fontSize: 16,
-                                          fontWeight: 500,
-                                        }}
-                                      >
-                                        {row?.jobName}
-                                      </p>
-                                      {row?.newJob ? (
+                      <div className="boardview-mobile">
+                        <div className="board-card grid grid-cols-3 gap-5 py-3">
+                          {filterData?.map((row, index) => {
+                            return (
+                              <div key={index}>
+                                <Card sx={{ borderRadius: 3, px: 1 }}>
+                                  <CardContent>
+                                    <div className="flex justify-between gap-2">
+                                      <div className="flex gap-2">
                                         <p
                                           style={{
-                                            color: "#7D5AE2",
-                                            backgroundColor: "#7D5AE210",
+                                            color: "#101828",
                                             fontSize: 16,
                                             fontWeight: 500,
-                                            borderRadius: 3,
-                                            paddingLeft: 8,
-                                            paddingRight: 8,
-                                            paddingBottom: 4,
                                           }}
                                         >
-                                          New post
+                                          {row?.jobName}
                                         </p>
-                                      ) : (
-                                        <></>
-                                      )}
+                                        {row?.newJob ? (
+                                          <p
+                                            style={{
+                                              color: "#7D5AE2",
+                                              backgroundColor: "#7D5AE210",
+                                              fontSize: 16,
+                                              fontWeight: 500,
+                                              borderRadius: 3,
+                                              paddingLeft: 8,
+                                              paddingRight: 8,
+                                              paddingBottom: 4,
+                                            }}
+                                          >
+                                            New post
+                                          </p>
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </div>
+                                      <div>
+                                        <IconButton
+                                          onClick={(e) => {
+                                            handleClick(e);
+                                            setAnchorData(row);
+                                          }}
+                                        >
+                                          <HiDotsVertical
+                                            style={{ color: "#D9D9D9" }}
+                                          />
+                                        </IconButton>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <IconButton
-                                        onClick={(e) => {
-                                          handleClick(e);
-                                          setAnchorData(row);
-                                        }}
-                                      >
-                                        <HiDotsVertical
-                                          style={{ color: "#D9D9D9" }}
+                                    <div className="flex gap-3 items-center">
+                                      <div className="flex gap-1 items-center">
+                                        <GrLocation
+                                          style={{ color: "#47546780" }}
                                         />
-                                      </IconButton>
-                                    </div>
-                                  </div>
-                                  <div className="flex gap-3 items-center">
-                                    <div className="flex gap-1 items-center">
-                                      <GrLocation
-                                        style={{ color: "#47546780" }}
-                                      />
-                                      <p
-                                        style={{
-                                          color: "#47546770",
-                                          fontSize: 14,
-                                        }}
-                                      >
-                                        {row?.location}
-                                      </p>
-                                    </div>
-                                    <div className="flex gap-1 items-center">
-                                      <IoTimeOutline
-                                        style={{ color: "#47546780" }}
-                                      />
-                                      {/* {row?.typeOfHire.map((data, index) => {
+                                        <p
+                                          style={{
+                                            color: "#47546770",
+                                            fontSize: 14,
+                                          }}
+                                        >
+                                          {row?.location}
+                                        </p>
+                                      </div>
+                                      <div className="flex gap-1 items-center">
+                                        <IoTimeOutline
+                                          style={{ color: "#47546780" }}
+                                        />
+                                        {/* {row?.typeOfHire.map((data, index) => {
                                     return ( */}
-                                      <p
-                                        key={index}
-                                        style={{
-                                          color: "#47546770",
-                                          fontSize: 14,
-                                          paddingRight: 5,
-                                          borderRightWidth:
-                                            index + 1 ===
-                                            row?.typeOfHire?.length
-                                              ? 0
-                                              : 2,
-                                        }}
-                                      >
-                                        {row?.createdDate}
-                                      </p>
-                                      {/* );
+                                        <p
+                                          key={index}
+                                          style={{
+                                            color: "#47546770",
+                                            fontSize: 14,
+                                            paddingRight: 5,
+                                            borderRightWidth:
+                                              index + 1 ===
+                                              row?.typeOfHire?.length
+                                                ? 0
+                                                : 2,
+                                          }}
+                                        >
+                                          {row?.createdDate}
+                                        </p>
+                                        {/* );
                                   })} */}
-                                    </div>
-                                  </div>
-                                  <div className="pt-3 flex gap-3 rounded-lg">
-                                    <div className="w-12 h-12">
-                                      <img
-                                        src={row?.image}
-                                        alt="company logo"
-                                        style={{ borderRadius: 8 }}
-                                      />
-                                    </div>
-                                    <div className="grid grid-flow-row gap-1">
-                                      <p
-                                        style={{
-                                          color: "#475467",
-                                          fontSize: 14,
-                                        }}
-                                      >
-                                        {row?.companyName}
-                                      </p>
-                                      <p
-                                        style={{
-                                          color: "#47546770",
-                                          fontSize: 12,
-                                          fontWeight: 500,
-                                        }}
-                                      >
-                                        Hiring Manger :{" "}
-                                        <span style={{ color: "#101828" }}>
-                                          {row?.hiringManager}
-                                        </span>
-                                      </p>
-                                    </div>
-                                  </div>
-                                </CardContent>
-                                <Divider />
-                                <CardActions>
-                                  {row?.jobProgress < 100 ? (
-                                    <div className="w-full ">
-                                      <div className="flex justify-between pb-1">
-                                        <p
-                                          style={{
-                                            color: "#121212",
-                                            fontSize: 12,
-                                            fontWeight: 500,
-                                          }}
-                                        >
-                                          Job Progress
-                                        </p>
-                                        <p
-                                          style={{
-                                            color: "#121212",
-                                            fontSize: 12,
-                                            fontWeight: 500,
-                                          }}
-                                        >
-                                          {row?.jobProgress} %
-                                        </p>
                                       </div>
-                                      <Box sx={{ width: "100%" }}>
-                                        <BorderLinearProgress
-                                          variant="determinate"
-                                          value={row?.jobProgress || 0}
+                                    </div>
+                                    <div className="pt-3 flex gap-3 rounded-lg">
+                                      <div className="w-12 h-12">
+                                        <img
+                                          src={row?.image}
+                                          alt="company logo"
+                                          style={{ borderRadius: 8 }}
                                         />
-                                      </Box>
-                                      <div className="flex justify-end w-full">
-                                        <Button
-                                          size="small"
-                                          onClick={() =>
-                                            navigate("/job/createJob", {
-                                              state: row.id,
-                                            })
-                                          }
-                                          style={{
-                                            color: "#008080",
-                                            textTransform: "none",
-                                            fontSize: 16,
-                                            fontWeight: 500,
-                                            textDecoration: "underline",
-                                            padding: 0,
-                                          }}
-                                          endIcon={<MdOutlineArrowOutward />}
-                                        >
-                                          Complete Job
-                                        </Button>
                                       </div>
-                                    </div>
-                                  ) : (
-                                    <div className="w-full ">
-                                      <div className="flex justify-between pb-1">
+                                      <div className="grid grid-flow-row gap-1">
                                         <p
                                           style={{
-                                            color: "#121212",
+                                            color: "#475467",
+                                            fontSize: 14,
+                                          }}
+                                        >
+                                          {row?.companyName}
+                                        </p>
+                                        <p
+                                          style={{
+                                            color: "#47546770",
                                             fontSize: 12,
                                             fontWeight: 500,
                                           }}
                                         >
-                                          Job Progress
+                                          Hiring Manger :{" "}
+                                          <span style={{ color: "#101828" }}>
+                                            {row?.hiringManager}
+                                          </span>
                                         </p>
-                                        <p
-                                          style={{
-                                            color: "#121212",
-                                            fontSize: 12,
-                                            fontWeight: 500,
-                                          }}
-                                        >
-                                          {row?.jobProgress} %
-                                        </p>
-                                      </div>
-                                      <Box sx={{ width: "100%" }}>
-                                        <BorderLinearProgress
-                                          variant="determinate"
-                                          value={row?.jobProgress || 100}
-                                        />
-                                      </Box>
-                                      <div className="flex justify-end w-full">
-                                        <Button
-                                          size="small"
-                                          onClick={() =>
-                                            navigate("/job/createJob", {
-                                              state: row.id,
-                                            })
-                                          }
-                                          style={{
-                                            color: "#008080",
-                                            textTransform: "none",
-                                            fontSize: 16,
-                                            fontWeight: 500,
-                                            textDecoration: "underline",
-                                            padding: 0,
-                                          }}
-                                          endIcon={<MdOutlineArrowOutward />}
-                                        >
-                                          More Details
-                                        </Button>
                                       </div>
                                     </div>
-                                  )}
-                                </CardActions>
-                              </Card>
-                            </div>
-                          );
-                        })}
+                                  </CardContent>
+                                  <Divider />
+                                  <CardActions>
+                                    {row?.jobProgress < 100 ? (
+                                      <div className="w-full ">
+                                        <div className="flex justify-between pb-1">
+                                          <p
+                                            style={{
+                                              color: "#121212",
+                                              fontSize: 12,
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            Job Progress
+                                          </p>
+                                          <p
+                                            style={{
+                                              color: "#121212",
+                                              fontSize: 12,
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            {row?.jobProgress} %
+                                          </p>
+                                        </div>
+                                        <Box sx={{ width: "100%" }}>
+                                          <BorderLinearProgress
+                                            variant="determinate"
+                                            value={row?.jobProgress || 0}
+                                          />
+                                        </Box>
+                                        <div className="flex justify-end w-full">
+                                          <Button
+                                            size="small"
+                                            onClick={() =>
+                                              navigate("/job/createJob", {
+                                                state: row.id,
+                                              })
+                                            }
+                                            style={{
+                                              color: "#008080",
+                                              textTransform: "none",
+                                              fontSize: 16,
+                                              fontWeight: 500,
+                                              textDecoration: "underline",
+                                              padding: 0,
+                                            }}
+                                            endIcon={<MdOutlineArrowOutward />}
+                                          >
+                                            Complete Job
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className="w-full ">
+                                        <div className="flex justify-between pb-1">
+                                          <p
+                                            style={{
+                                              color: "#121212",
+                                              fontSize: 12,
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            Job Progress
+                                          </p>
+                                          <p
+                                            style={{
+                                              color: "#121212",
+                                              fontSize: 12,
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            {row?.jobProgress} %
+                                          </p>
+                                        </div>
+                                        <Box sx={{ width: "100%" }}>
+                                          <BorderLinearProgress
+                                            variant="determinate"
+                                            value={row?.jobProgress || 100}
+                                          />
+                                        </Box>
+                                        <div className="flex justify-end w-full">
+                                          <Button
+                                            size="small"
+                                            onClick={() =>
+                                              navigate("/job/createJob", {
+                                                state: row.id,
+                                              })
+                                            }
+                                            style={{
+                                              color: "#008080",
+                                              textTransform: "none",
+                                              fontSize: 16,
+                                              fontWeight: 500,
+                                              textDecoration: "underline",
+                                              padding: 0,
+                                            }}
+                                            endIcon={<MdOutlineArrowOutward />}
+                                          >
+                                            More Details
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </CardActions>
+                                </Card>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 

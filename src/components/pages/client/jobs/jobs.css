@@ -1,0 +1,27 @@
+/* Media query start*/
+@media (max-width: 1024px) {
+    .all-jobs 
+  .jobs-summary .job-mobile {
+    flex-direction: column;
+  }
+
+  .jobs-summary .job-mobile .css-8j6b76-MuiInputBase-root-MuiOutlinedInput-root,  
+  .jobs-summary .job-mobile .css-edsu1d-MuiButtonGroup-root {
+    width: 290px;
+  }
+
+  .boardview-mobile .board-card {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .boardview-mobile .board-card .css-1rzkd1g-MuiPaper-root-MuiCard-root {
+    width: 81%;
+  }
+  
+  .top-nav-jobs {
+    padding: 1px;
+  }
+}
+
+
+/* Media query end*/
