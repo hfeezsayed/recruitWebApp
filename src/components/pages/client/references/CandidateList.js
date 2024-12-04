@@ -135,7 +135,7 @@ const CandidateList = () => {
               Choose the Candidate for sent their references
             </p>
             <div className="reference-search-block">
-              <div className="flex py-8 justify-between pl-4">
+              <div className="ref-mob flex py-8 justify-between pl-4 gap-4">
                 <TextField
                   size="small"
                   value=""

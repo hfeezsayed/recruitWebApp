@@ -179,3 +179,12 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+@media (max-width: 1024px) {
+  .reference-search-block .ref-mob {
+    flex-direction: column;
+  }
+  .refernce-status .reference-text p {
+    font-size: 14px;
+  }
+}

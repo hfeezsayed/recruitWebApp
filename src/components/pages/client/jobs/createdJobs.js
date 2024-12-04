@@ -90,7 +90,8 @@ export const CreatedJobs = () => {
             <div className="py-5 grid grid-flow-col gap-8 justify-between items-center">
               <ButtonGroup
                 style={{ color: "#008080" }}
-                aria-label="Medium-sized button group">
+                aria-label="Medium-sized button group"
+              >
                 <Button
                   style={{
                     backgroundColor: "#F8F9FA",
@@ -99,7 +100,8 @@ export const CreatedJobs = () => {
                     textTransform: "none",
                   }}
                   startIcon={<HiOutlineSquares2X2 />}
-                  onClick={() => setCurrentView("Card")}>
+                  onClick={() => setCurrentView("Card")}
+                >
                   Board View
                 </Button>
                 <Button
@@ -110,7 +112,8 @@ export const CreatedJobs = () => {
                     textTransform: "none",
                   }}
                   startIcon={<IoMenu />}
-                  onClick={() => setCurrentView("List")}>
+                  onClick={() => setCurrentView("List")}
+                >
                   List View
                 </Button>
               </ButtonGroup>
@@ -141,7 +144,8 @@ export const CreatedJobs = () => {
                     fontWeight: 500,
                     borderRadius: 8,
                   }}
-                  startIcon={<IoFilterSharp />}>
+                  startIcon={<IoFilterSharp />}
+                >
                   Filter
                 </Button>
                 <Button
@@ -156,7 +160,8 @@ export const CreatedJobs = () => {
                     navigate("/job/createJob", {
                       state: anchorData?.id,
                     });
-                  }}>
+                  }}
+                >
                   Create New Job
                 </Button>
               </div>
@@ -180,7 +185,8 @@ export const CreatedJobs = () => {
                                     color: "#101828",
                                     fontSize: 16,
                                     fontWeight: 500,
-                                  }}>
+                                  }}
+                                >
                                   {row?.jobName}
                                 </p>
                                 {row?.new ? (
@@ -193,7 +199,8 @@ export const CreatedJobs = () => {
                                       borderRadius: 3,
                                       paddingLeft: 5,
                                       paddingRight: 5,
-                                    }}>
+                                    }}
+                                  >
                                     New post
                                   </p>
                                 ) : (
@@ -205,7 +212,8 @@ export const CreatedJobs = () => {
                                   onClick={(e) => {
                                     handleClick(e);
                                     setAnchorData(row);
-                                  }}>
+                                  }}
+                                >
                                   <HiDotsVertical
                                     style={{ color: "#D9D9D9" }}
                                   />
@@ -233,7 +241,8 @@ export const CreatedJobs = () => {
                                           index + 1 === row?.typeOfHire?.length
                                             ? 0
                                             : 2,
-                                      }}>
+                                      }}
+                                    >
                                       {data}
                                     </p>
                                   );
@@ -257,7 +266,8 @@ export const CreatedJobs = () => {
                                     color: "#47546770",
                                     fontSize: 12,
                                     fontWeight: 500,
-                                  }}>
+                                  }}
+                                >
                                   Hiring Manger :{" "}
                                   <span style={{ color: "#101828" }}>
                                     {row?.hiringManager}
@@ -285,7 +295,8 @@ export const CreatedJobs = () => {
                                       state: row?.id,
                                     });
                                   }}
-                                  endIcon={<MdOutlineArrowOutward />}>
+                                  endIcon={<MdOutlineArrowOutward />}
+                                >
                                   More Details
                                 </Button>
                               </div>
@@ -296,14 +307,16 @@ export const CreatedJobs = () => {
                                   navigate("/job/createJob", {
                                     state: row?.id,
                                   });
-                                }}>
+                                }}
+                              >
                                 <div className="flex justify-between pb-1">
                                   <p
                                     style={{
                                       color: "#121212",
                                       fontSize: 12,
                                       fontWeight: 500,
-                                    }}>
+                                    }}
+                                  >
                                     Job Progress
                                   </p>
                                   <p
@@ -311,7 +324,8 @@ export const CreatedJobs = () => {
                                       color: "#121212",
                                       fontSize: 12,
                                       fontWeight: 500,
-                                    }}>
+                                    }}
+                                  >
                                     {row?.jobProgress} %
                                   </p>
                                 </div>
@@ -345,7 +359,8 @@ export const CreatedJobs = () => {
                                   color: "#101828",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 Job Name
                               </TableCell>
                               <TableCell
@@ -354,7 +369,8 @@ export const CreatedJobs = () => {
                                   color: "#101828",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 Location
                               </TableCell>
                               <TableCell
@@ -363,7 +379,8 @@ export const CreatedJobs = () => {
                                   color: "#101828",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 Type of Hire
                               </TableCell>
                               <TableCell
@@ -372,7 +389,8 @@ export const CreatedJobs = () => {
                                   color: "#101828",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 Hiring Manger
                               </TableCell>
                               <TableCell
@@ -382,7 +400,8 @@ export const CreatedJobs = () => {
                                   color: "#101828",
                                   border: 1,
                                   borderColor: "#D0D5DD50",
-                                }}>
+                                }}
+                              >
                                 Actions
                               </TableCell>
                             </TableRow>
@@ -396,7 +415,8 @@ export const CreatedJobs = () => {
                                       color: "#475467",
                                       border: 1,
                                       borderColor: "#D0D5DD50",
-                                    }}>
+                                    }}
+                                  >
                                     {row?.jobName}
                                   </TableCell>
                                   <TableCell
@@ -404,7 +424,8 @@ export const CreatedJobs = () => {
                                       color: "#475467",
                                       border: 1,
                                       borderColor: "#D0D5DD50",
-                                    }}>
+                                    }}
+                                  >
                                     {row?.location}
                                   </TableCell>
                                   <TableCell
@@ -413,7 +434,8 @@ export const CreatedJobs = () => {
                                       padding: 0,
                                       border: 1,
                                       borderColor: "#D0D5DD50",
-                                    }}>
+                                    }}
+                                  >
                                     <div className="flex gap-2">
                                       {row?.typeOfHire.map((data, index) => {
                                         return (
@@ -433,7 +455,8 @@ export const CreatedJobs = () => {
                                               borderRadius: 3,
                                               paddingLeft: 8,
                                               paddingRight: 8,
-                                            }}>
+                                            }}
+                                          >
                                             {data}
                                           </p>
                                         );
@@ -445,7 +468,8 @@ export const CreatedJobs = () => {
                                       color: "#475467",
                                       border: 1,
                                       borderColor: "#D0D5DD50",
-                                    }}>
+                                    }}
+                                  >
                                     {row?.hiringManager}
                                   </TableCell>
                                   <TableCell
@@ -455,12 +479,14 @@ export const CreatedJobs = () => {
                                       color: "#475467",
                                       border: 1,
                                       borderColor: "#D0D5DD50",
-                                    }}>
+                                    }}
+                                  >
                                     <IconButton
                                       onClick={(e) => {
                                         handleClick(e);
                                         setAnchorData(row);
-                                      }}>
+                                      }}
+                                    >
                                       <HiDotsVertical
                                         style={{ color: "#D9D9D9" }}
                                       />
@@ -494,13 +520,15 @@ export const CreatedJobs = () => {
                   vertical: "top",
                   horizontal: "right",
                 }}
-                TransitionComponent={Fade}>
+                TransitionComponent={Fade}
+              >
                 <MenuItem
                   onClick={() => {
                     navigate("/job/createJob", {
                       state: anchorData?.id,
                     });
-                  }}>
+                  }}
+                >
                   <div className="flex gap-1 items-center">
                     <TbEdit style={{ color: "#5FAEDA", fontSize: 14 }} />
                     <p
@@ -508,7 +536,8 @@ export const CreatedJobs = () => {
                         color: "#5FAEDA",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Edit
                     </p>
                   </div>
@@ -523,7 +552,8 @@ export const CreatedJobs = () => {
                         color: "#E05880",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Delete
                     </p>
                   </div>
@@ -536,7 +566,8 @@ export const CreatedJobs = () => {
                         color: "#58A20F",
                         fontSize: 14,
                         fontWeight: 500,
-                      }}>
+                      }}
+                    >
                       Clone
                     </p>
                   </div>

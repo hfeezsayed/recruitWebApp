@@ -226,7 +226,8 @@ export const JobWorkValueTemplate = () => {
                           color: "#101828",
                           fontSize: 16,
                           fontWeight: 500,
-                        }}>
+                        }}
+                      >
                         Select
                       </span>
                     );
@@ -234,14 +235,16 @@ export const JobWorkValueTemplate = () => {
 
                   return selected;
                 }}
-                sx={{ minWidth: 250, color: "#101828", mt: 1 }}>
+                sx={{ minWidth: 250, color: "#101828", mt: 1 }}
+              >
                 <MenuItem disabled value="">
                   <span
                     style={{
                       color: "#475467",
                       fontSize: 16,
                       fontWeight: 600,
-                    }}>
+                    }}
+                  >
                     Actions
                   </span>
                 </MenuItem>
@@ -251,7 +254,8 @@ export const JobWorkValueTemplate = () => {
                     value={name}
                     style={{
                       color: name === actions ? "#66B2B2" : "#54595E",
-                    }}>
+                    }}
+                  >
                     <Radio
                       checked={name === actions}
                       sx={{
@@ -275,7 +279,8 @@ export const JobWorkValueTemplate = () => {
                         color: "#101828",
                         fontSize: 22,
                         fontWeight: 700,
-                      }}>
+                      }}
+                    >
                       Choose Work Value Templates
                     </p>
                     <p
@@ -283,7 +288,8 @@ export const JobWorkValueTemplate = () => {
                         color: "#475467",
                         fontSize: 14,
                         fontWeight: 400,
-                      }}>
+                      }}
+                    >
                       Please choose a work value template from the available
                       options.
                     </p>
@@ -315,20 +321,24 @@ export const JobWorkValueTemplate = () => {
                                 />
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Serial Number
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Template Name
                                 </TableCell>
                                 <TableCell
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Created By
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}>
+                                  sx={{ bgcolor: "#F8F9FA", color: "#101828" }}
+                                >
                                   Result
                                 </TableCell>
                               </TableRow>
@@ -372,7 +382,8 @@ export const JobWorkValueTemplate = () => {
                                           handlepopup(row);
                                           // setViewData(row.valuesData);
                                           // setShowPopup(true);
-                                        }}>
+                                        }}
+                                      >
                                         View
                                       </Button>
                                     </TableCell>
@@ -406,7 +417,8 @@ export const JobWorkValueTemplate = () => {
                           style={{
                             color: "#ffffff",
                             backgroundColor: "#008080",
-                          }}>
+                          }}
+                        >
                           Choose Template
                         </Button>
                       </div>
@@ -429,7 +441,8 @@ export const JobWorkValueTemplate = () => {
                             color: "#101828",
                             fontSize: 22,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Output of Work Value Analysis Result
                         </p>
                         <p
@@ -437,7 +450,8 @@ export const JobWorkValueTemplate = () => {
                             color: "#475467",
                             fontSize: 14,
                             fontWeight: 400,
-                          }}>
+                          }}
+                        >
                           Below are the result of the Work Value Analysis taken.
                         </p>
                       </div>
@@ -446,7 +460,8 @@ export const JobWorkValueTemplate = () => {
                           height={350}
                           width={450}
                           outerRadius="80%"
-                          data={ratingList}>
+                          data={ratingList}
+                        >
                           <PolarGrid />
                           <Tooltip />
                           <PolarAngleAxis dataKey="value" />
@@ -471,7 +486,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     width: 250,
-                                  }}>
+                                  }}
+                                >
                                   Work Attribute
                                 </TableCell>
                                 <TableCell
@@ -480,7 +496,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#101828",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Frequency Selected
                                 </TableCell>
                               </TableRow>
@@ -492,7 +509,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 1
                                 </TableCell>
                                 <TableCell
@@ -501,7 +519,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#C2E0E8",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {ratingList?.map((data) => {
                                       return Number(data?.rating) === 4 ? (
@@ -517,7 +536,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 2
                                 </TableCell>
                                 <TableCell
@@ -526,7 +546,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#F2EFC9",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {ratingList?.map((data) => {
                                       return Number(data?.rating) === 3 ? (
@@ -542,7 +563,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 3
                                 </TableCell>
                                 <TableCell
@@ -551,7 +573,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#D1E6D5",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {ratingList?.map((data) => {
                                       return Number(data?.rating) === 2 ? (
@@ -567,7 +590,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   Priority 4
                                 </TableCell>
                                 <TableCell
@@ -576,7 +600,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#ECCCB7",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {ratingList?.map((data) => {
                                       return Number(data?.rating) === 1 ? (
@@ -592,7 +617,8 @@ export const JobWorkValueTemplate = () => {
                                     color: "#171717",
                                     border: 1,
                                     borderColor: "#D0D5DD50",
-                                  }}>
+                                  }}
+                                >
                                   No Priority
                                 </TableCell>
                                 <TableCell
@@ -601,7 +627,8 @@ export const JobWorkValueTemplate = () => {
                                     border: 1,
                                     borderColor: "#D0D5DD50",
                                     backgroundColor: "#EDDAD3",
-                                  }}>
+                                  }}
+                                >
                                   <div className="grid grid-cols-4 gap-y-2">
                                     {ratingList?.map((data) => {
                                       return Number(data?.rating) === 0 ? (
@@ -624,18 +651,20 @@ export const JobWorkValueTemplate = () => {
                           }}
                           onClick={() => {
                             setShowRatingResult(false);
-                          }}>
+                          }}
+                        >
                           Back
                         </Button>
                         <Button
-                            onClick={handleSubmitRating}
-                            variant="outlined"
-                            style={{
-                              color: "#ffffff",
-                              backgroundColor: "#008080",
-                            }}>
-                            SAVE
-                          </Button>
+                          onClick={handleSubmitRating}
+                          variant="outlined"
+                          style={{
+                            color: "#ffffff",
+                            backgroundColor: "#008080",
+                          }}
+                        >
+                          SAVE
+                        </Button>
                         <Button
                           onClick={() => {
                             setShowRatingPopUp(true);
@@ -644,7 +673,8 @@ export const JobWorkValueTemplate = () => {
                           style={{
                             backgroundColor: "#008080",
                             color: "#ffffff",
-                          }}>
+                          }}
+                        >
                           SAVE AS TEMPLATE
                         </Button>
                       </div>
@@ -653,7 +683,8 @@ export const JobWorkValueTemplate = () => {
                         <DialogTitle>Template Details</DialogTitle>
                         <IconButton
                           onClick={closePopup}
-                          style={{ position: "absolute", top: 10, right: 10 }}>
+                          style={{ position: "absolute", top: 10, right: 10 }}
+                        >
                           <IoIosCloseCircleOutline />
                         </IconButton>
                         <Divider />
@@ -665,7 +696,8 @@ export const JobWorkValueTemplate = () => {
                                   color: "#344054",
                                   fontSize: 14,
                                   fontWeight: 500,
-                                }}>
+                                }}
+                              >
                                 Work Value Template Name
                               </p>
                               <TextField
@@ -684,7 +716,8 @@ export const JobWorkValueTemplate = () => {
                                   color: "#344054",
                                   fontSize: 14,
                                   fontWeight: 500,
-                                }}>
+                                }}
+                              >
                                 Work Value Template Tags
                               </p>
                               <TextField
@@ -702,7 +735,8 @@ export const JobWorkValueTemplate = () => {
                                 color: "#344054",
                                 fontSize: 14,
                                 fontWeight: 500,
-                              }}>
+                              }}
+                            >
                               Work Value Template Description
                             </p>
                             <textarea
@@ -727,7 +761,8 @@ export const JobWorkValueTemplate = () => {
                             style={{
                               color: "#ffffff",
                               backgroundColor: "#008080",
-                            }}>
+                            }}
+                          >
                             SAVE
                           </Button>
                         </DialogActions>
@@ -741,7 +776,8 @@ export const JobWorkValueTemplate = () => {
                             color: "#101828",
                             fontSize: 22,
                             fontWeight: 600,
-                          }}>
+                          }}
+                        >
                           Work Value Analysis
                         </p>
                         <p
@@ -749,7 +785,8 @@ export const JobWorkValueTemplate = () => {
                             color: "#475467",
                             fontSize: 14,
                             fontWeight: 400,
-                          }}>
+                          }}
+                        >
                           Please complete the work value analysis.
                         </p>
                       </div>
@@ -763,21 +800,24 @@ export const JobWorkValueTemplate = () => {
                                     sx={{
                                       bgcolor: "#F8F9FA",
                                       color: "#101828",
-                                    }}>
+                                    }}
+                                  >
                                     Value
                                   </TableCell>
                                   <TableCell
                                     sx={{
                                       bgcolor: "#F8F9FA",
                                       color: "#101828",
-                                    }}>
+                                    }}
+                                  >
                                     Statements
                                   </TableCell>
                                   <TableCell
                                     sx={{
                                       bgcolor: "#F8F9FA",
                                       color: "#101828",
-                                    }}>
+                                    }}
+                                  >
                                     Ratings
                                   </TableCell>
                                 </TableRow>
@@ -789,19 +829,22 @@ export const JobWorkValueTemplate = () => {
                                       <TableCell
                                         sx={{
                                           color: "#475467",
-                                        }}>
+                                        }}
+                                      >
                                         {row.value}
                                       </TableCell>
                                       <TableCell
                                         sx={{
                                           color: "#475467",
-                                        }}>
+                                        }}
+                                      >
                                         {row.statement}
                                       </TableCell>
                                       <TableCell
                                         sx={{
                                           color: "#475467",
-                                        }}>
+                                        }}
+                                      >
                                         <Rating
                                           value={row?.rating}
                                           onChange={(e, newvalue) =>
@@ -825,7 +868,8 @@ export const JobWorkValueTemplate = () => {
                               color: "#475467",
                               borderColor: "#D0D5DD",
                             }}
-                            onClick={() => navigate(-1)}>
+                            onClick={() => navigate(-1)}
+                          >
                             Back
                           </Button>
                           <Button
@@ -836,7 +880,8 @@ export const JobWorkValueTemplate = () => {
                             style={{
                               backgroundColor: "#008080",
                               color: "#ffffff",
-                            }}>
+                            }}
+                          >
                             CONFIRM
                           </Button>
                         </div>
